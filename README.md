@@ -7,6 +7,4 @@
 * Jason Moore
 * Kyle Heath
 * Daniel Neely
-## Mentors
-* Will Dixon is Awesome
 
