@@ -1,4 +1,6 @@
 # corkboard-sample
 
 ## Contributors
-* Will Dixon
+
+## Mentors
+* Will Dixon is Awesome
