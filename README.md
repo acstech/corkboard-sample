@@ -4,6 +4,7 @@
 
 * Ben Wornom
 * Savannah Barber
+* Kyle Heath
 
 
 ## Mentors
