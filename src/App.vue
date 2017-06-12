@@ -20,14 +20,21 @@
 </template>
 
 <script>
+
+    import Login from './Login.vue'
+
     export default {
         name: 'app',
+        components: {
+            login: Login
+        },
         data () {
             return {
                 msg: 'Welcome to Your Vue.js App'
             }
         }
     }
+
 </script>
 
 <style>
