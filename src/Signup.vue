@@ -70,7 +70,7 @@
             }
         },
         methods: {
-            submit() {
+            register() {
                 var registration = {
                     firstname: this.newUser.firstname,
                     lastname: this.newUser.lastname,
@@ -78,6 +78,9 @@
                     username: this.newUser.username,
                     password: this.newUser.password,
                     confirmPassword: this.newUser.confirmPassword
+                }
+                if (registration.password !== registration.confirmPassword) {
+                    return this.error = 'Your passwords do not match.'
                 }
                 // TODO: Add validation steps and perhaps send to add user endpoint?
             }
