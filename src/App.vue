@@ -1,19 +1,31 @@
 <template>
     <div id="app">
-        <h1>{{ msg }}</h1>
-        <h2>Component Tests</h2>
-        <signup></signup>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    <li><router-link to="/">Home</router-link></li>
+                    <li><router-link to="/login"> <!--v-if="!user.authenticated"-->Login</router-link></li>
+                    <li><router-link to="/signup"> <!--v-if="!user.authenticated"-->Sign Up</router-link></li>
+                    <li><router-link to="/"> <!--v-if="user.authenticated" @click="logout()"-->Logout</router-link></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
 <script>
 
+    import ProductList from './ProductList.vue'
     import Login from './Login.vue'
     import Signup from './Signup.vue'
 
     export default {
         name: 'app',
         components: {
+            products: ProductList,
             login: Login,
             signup: Signup
         },
@@ -33,7 +45,6 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        margin-top: 60px;
     }
 
     h1, h2 {

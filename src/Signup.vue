@@ -25,6 +25,15 @@
         </div>
         <div class="form-group">
             <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Email address"
+                    v-model="newUser.email"
+                    required
+            >
+        </div>
+        <div class="form-group">
+            <input
                     type="text"
                     class="form-control"
                     placeholder="Username"
@@ -82,7 +91,7 @@
                 if (registration.password !== registration.confirmPassword) {
                     return this.error = 'Your passwords do not match.'
                 }
-                // TODO: Add validation steps and perhaps send to add user endpoint?
+                // TODO: Add validation steps and perhaps send to add user endpoint? (POST)
             }
         }
     }
