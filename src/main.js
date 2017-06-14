@@ -6,11 +6,12 @@ import { routes } from './routes'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-    routes: routes
+  routes: routes
 })
 
+/* eslint-disable no-new */
 new Vue({
-    el: '#app',
-    router: router,
-    render: h => h(App)
+  el: '#app',
+  router: router,
+  render: h => h(App)
 })

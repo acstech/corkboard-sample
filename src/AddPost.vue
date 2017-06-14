@@ -30,32 +30,31 @@
 </template>
 
 <script>
-    import Post from './Post.vue'
-
-    export default {
-        // Will need more data attributes
-        data () {
-            return {
-                title: '',
-                price: '',
-                description: ''
-            }
-        },
-        methods: {
-            close: function () {
-                this.title = '';
-                this.price = '';
-                this.description = '';
-            },
-            savePost: function () {
-                // Insert AJAX call here...
-                this.close();
-            }
-        },
-        components: {
-            post: Post
-        }
+import Post from './Post.vue'
+export default {
+  // Will need more data attributes
+  data () {
+    return {
+      title: '',
+      price: '',
+      description: ''
     }
+  },
+  methods: {
+    close: function () {
+      this.title = ''
+      this.price = ''
+      this.description = ''
+    },
+    savePost: function () {
+      // Insert AJAX call here...
+      this.close()
+    }
+  },
+  components: {
+    post: Post
+  }
+}
 </script>
 
 <style scoped>

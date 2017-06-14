@@ -66,37 +66,38 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                newUser: {
-                    firstname: '',
-                    lastname: '',
-                    email: '',
-                    username: '',
-                    password: '',
-                    confirmPassword: ''
-                },
-                error: ''
-            }
-        },
-        methods: {
-            register() {
-                var registration = {
-                    firstname: this.newUser.firstname,
-                    lastname: this.newUser.lastname,
-                    email: this.newUser.email,
-                    username: this.newUser.username,
-                    password: this.newUser.password,
-                    confirmPassword: this.newUser.confirmPassword
-                }
-                if (registration.password !== registration.confirmPassword) {
-                    return this.error = 'Your passwords do not match.'
-                }
-                // TODO: Add validation steps and perhaps send to add user endpoint? (POST)
-            }
-        }
+export default {
+  data () {
+    return {
+      newUser: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        username: '',
+        password: '',
+        confirmPassword: ''
+      },
+      error: ''
     }
+  },
+  methods: {
+    register () {
+      var registration = {
+        firstname: this.newUser.firstname,
+        lastname: this.newUser.lastname,
+        email: this.newUser.email,
+        username: this.newUser.username,
+        password: this.newUser.password,
+        confirmPassword: this.newUser.confirmPassword
+      }
+      if (registration.password !== registration.confirmPassword) {
+        this.error = 'Your passwords do not match.'
+        return
+      }
+      // TODO: Add validation steps and perhaps send to add user endpoint? (POST)
+    }
+  }
+}
 </script>
 
 <style scoped>
