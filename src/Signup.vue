@@ -98,5 +98,7 @@
 </script>
 
 <style scoped>
-
+    button {
+        font-weight: bold;
+    }
 </style>
