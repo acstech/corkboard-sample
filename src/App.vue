@@ -1,36 +1,37 @@
 <template>
     <div id="app">
-        <img src="./assets/logo.png">
-        <h1>{{ msg }}</h1>
-        <h2>Essential Links</h2>
-        <ul>
-            <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-            <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-            <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-            <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-        </ul>
-        <h2>Ecosystem</h2>
-        <ul>
-            <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-            <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-            <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-            <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-        </ul>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    <li><router-link to="/">Home</router-link></li>
+                    <li><router-link to="/login"> <!--v-if="!user.authenticated"-->Login</router-link></li>
+                    <li><router-link to="/signup"> <!--v-if="!user.authenticated"-->Sign Up</router-link></li>
+                    <li><router-link to="/"> <!--v-if="user.authenticated" @click="logout()"-->Logout</router-link></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
 <script>
 
+    import ProductList from './ProductList.vue'
     import Login from './Login.vue'
+    import Signup from './Signup.vue'
 
     export default {
         name: 'app',
         components: {
-            login: Login
+            products: ProductList,
+            login: Login,
+            signup: Signup
         },
         data () {
             return {
-                msg: 'Welcome to Your Vue.js App'
+                msg: 'Welcome to Your Marketplace App'
             }
         }
     }
@@ -44,7 +45,6 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        margin-top: 60px;
     }
 
     h1, h2 {

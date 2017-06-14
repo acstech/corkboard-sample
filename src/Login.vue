@@ -21,7 +21,7 @@
                     v-model="credentials.password"
             >
         </div>
-        <button class="btn btn-primary" @click="submit()">Access</button>
+        <button class="btn btn-primary" @click.prevent="logIn()">Log In!</button>
     </div>
 </template>
 
@@ -37,7 +37,7 @@
             }
         },
         methods: {
-            submit() {
+            logIn() {
                 var credentials = {
                     username: this.credentials.username,
                     password: this.credentials.password
