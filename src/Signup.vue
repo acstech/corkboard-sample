@@ -5,61 +5,63 @@
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
-        <div class="form-group">
-            <input
-                    type="text"
-                    class="form-control"
-                    placeholder="First name"
-                    v-model="newUser.firstname"
-                    required
-            >
-        </div>
-        <div class="form-group">
-            <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Last name"
-                    v-model="newUser.lastname"
-                    required
-            >
-        </div>
-        <div class="form-group">
-            <input
-                    type="email"
-                    class="form-control"
-                    placeholder="Email address"
-                    v-model="newUser.email"
-                    required
-            >
-        </div>
-        <div class="form-group">
-            <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Username"
-                    v-model="newUser.username"
-                    required
-            >
-        </div>
-        <div class="form-group">
-            <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Password"
-                    v-model="newUser.password"
-                    required
-            >
-        </div>
-        <div class="form-group">
-            <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Confirm password"
-                    v-model="newUser.confirmPassword"
-                    required
-            >
-        </div>
-        <button class="btn btn-primary" @click.prevent="register()">Register</button>
+        <form>
+            <div class="form-group">
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="First name"
+                        v-model="newUser.firstname"
+                        required
+                >
+            </div>
+            <div class="form-group">
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Last name"
+                        v-model="newUser.lastname"
+                        required
+                >
+            </div>
+            <div class="form-group">
+                <input
+                        type="email"
+                        class="form-control"
+                        placeholder="Email address"
+                        v-model="newUser.email"
+                        required
+                >
+            </div>
+            <div class="form-group">
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Username"
+                        v-model="newUser.username"
+                        required
+                >
+            </div>
+            <div class="form-group">
+                <input
+                        type="password"
+                        class="form-control"
+                        placeholder="Password"
+                        v-model="newUser.password"
+                        required
+                >
+            </div>
+            <div class="form-group">
+                <input
+                        type="password"
+                        class="form-control"
+                        placeholder="Confirm password"
+                        v-model="newUser.confirmPassword"
+                        required
+                >
+            </div>
+            <input type="submit" class="btn btn-primary" @submit.prevent="register()" value="Register">
+        </form>
     </div>
 </template>
 
@@ -98,5 +100,7 @@
 </script>
 
 <style scoped>
-
+    button {
+        font-weight: bold;
+    }
 </style>

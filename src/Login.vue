@@ -5,23 +5,25 @@
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
-        <div class="form-group">
-            <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter your username"
-                    v-model="credentials.username"
-            >
-        </div>
-        <div class="form-group">
-            <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Enter your password"
-                    v-model="credentials.password"
-            >
-        </div>
-        <button class="btn btn-primary" @click.prevent="logIn()">Log In!</button>
+        <form>
+            <div class="form-group">
+                <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter your username"
+                        v-model="credentials.username"
+                >
+            </div>
+            <div class="form-group">
+                <input
+                        type="password"
+                        class="form-control"
+                        placeholder="Enter your password"
+                        v-model="credentials.password"
+                >
+            </div>
+            <input type="submit" class="btn btn-primary" @submit.prevent="logIn()" value="Log In">
+        </form>
     </div>
 </template>
 
@@ -49,5 +51,7 @@
 </script>
 
 <style scoped>
-
+    button {
+        font-weight: bold;
+    }
 </style>
