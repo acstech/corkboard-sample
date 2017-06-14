@@ -28,26 +28,27 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                credentials: {
-                    username: '',
-                    password: ''
-                },
-                error: ''
-            }
-        },
-        methods: {
-            logIn() {
-                var credentials = {
-                    username: this.credentials.username,
-                    password: this.credentials.password
-                }
-                // TODO: Add authentication steps
-            }
-        }
+export default {
+  data () {
+    return {
+      credentials: {
+        username: '',
+        password: ''
+      },
+      error: ''
     }
+  },
+  methods: {
+    logIn () {
+      var credentials = {
+        username: this.credentials.username,
+        password: this.credentials.password
+      }
+      console.log(credentials)
+      // TODO: Add authentication steps
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -19,27 +19,25 @@
 </template>
 
 <script>
+import ProductList from './ProductList.vue'
+import Login from './Login.vue'
+import Signup from './Signup.vue'
+import AddPost from './AddPost.vue'
 
-    import ProductList from './ProductList.vue'
-    import Login from './Login.vue'
-    import Signup from './Signup.vue'
-    import AddPost from './AddPost.vue'
-
-    export default {
-        name: 'app',
-        components: {
-            products: ProductList,
-            login: Login,
-            signup: Signup,
-            addPost: AddPost
-        },
-        data () {
-            return {
-                msg: 'Welcome to Your Marketplace App'
-            }
-        }
+export default {
+  name: 'app',
+  components: {
+    products: ProductList,
+    login: Login,
+    signup: Signup,
+    addPost: AddPost
+  },
+  data () {
+    return {
+      msg: 'Welcome to Your Marketplace App'
     }
-
+  }
+}
 </script>
 
 <style>

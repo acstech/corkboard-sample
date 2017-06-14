@@ -11,5 +11,5 @@ export const routes = [
         {path: '/login', component: Login},
         {path: '/signup', component: Signup},
         {path: '/addpost', components: {default: AddPost, modal: ProductList}},
-        {path: '*', component: ProductList},
+        {path: '*', component: ProductList}
 ]
