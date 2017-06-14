@@ -1,8 +1,18 @@
-# tmp
+# corkboard-sample		+# tmp
 
-> A Vue.js project
+[![Build Status](https://travis-ci.org/acstech/corkboard-sample.svg?branch=master)](https://travis-ci.org/acstech/corkboard-sample)
+
+## Contributors		
+
+* Ben Wornom		
+* Savannah Barber		
+* Jason Moore		
+* Kyle Heath		
+* Daniel Neely
 
 ## Build Setup
+
+Uses the webpack scaffolding:
 
 ``` bash
 # install dependencies

@@ -1,8 +1,8 @@
 {
-  "name": "tmp",
+  "name": "corkboard-sample",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "Will Dixon <dixonwille@hotmail.com>",
+  "description": "A Vue.js front-end to show usage of the corkboard API",
+  "author": "",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
