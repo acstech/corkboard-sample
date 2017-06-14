@@ -22,7 +22,7 @@
 
             <div class="modal-footer text-right">
                 <button class="btn btn-primary" @click="savePost()">
-                    <router-link to="/">Save</router-link>
+                    <router-link to="/">Add Post</router-link>
                 </button>
             </div>
         </post>
@@ -33,6 +33,7 @@
     import Post from './Post.vue'
 
     export default {
+        // Will need more data attributes
         data () {
             return {
                 title: '',
