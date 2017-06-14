@@ -36,12 +36,14 @@
         data () {
             return {
                 title: '',
+                price: '',
                 description: ''
             }
         },
         methods: {
             close: function () {
                 this.title = '';
+                this.price = '';
                 this.description = '';
             },
             savePost: function () {

@@ -13,6 +13,7 @@
         </nav>
         <div class="container">
             <router-view></router-view>
+            <router-view name="modal"></router-view>
         </div>
     </div>
 </template>

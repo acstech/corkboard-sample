@@ -10,6 +10,6 @@ export const routes = [
         {path: '', component: ProductList},
         {path: '/login', component: Login},
         {path: '/signup', component: Signup},
-        {path: '/addpost', component: AddPost},
+        {path: '/addpost', components: {default: AddPost, modal: ProductList}},
         {path: '*', component: ProductList},
 ]
