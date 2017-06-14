@@ -1,6 +1,6 @@
 <template>
     <div id="new-post-modal-template">
-        <post :on-close="close">
+        <post>
             <div class="modal-header">
                 <h3>New Post</h3>
             </div>
@@ -9,6 +9,10 @@
                 <label class="form-label">
                     Title
                     <input v-model="title" class="form-control">
+                </label>
+                <label class="form-label">
+                    Price
+                    <input v-model="price" class="form-control">
                 </label>
                 <label class="form-label">
                     Description
@@ -38,7 +42,7 @@
         methods: {
             close: function () {
                 this.title = '';
-                this.body = '';
+                this.description = '';
             },
             savePost: function () {
                 // Insert AJAX call here...

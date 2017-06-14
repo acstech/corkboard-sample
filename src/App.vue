@@ -80,8 +80,8 @@
     }
 
     .modal-container {
-        width: 300px;
-        margin: 40px auto 0;
+        width: 600px;
+        margin: 50px auto 0;
         padding: 20px 30px;
         background-color: #fff;
         border-radius: 2px;
