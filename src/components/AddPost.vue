@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import Post from './Post.vue'
+  import Post from './PostModal.vue'
   export default {
     // Will need more data attributes
     data () {
