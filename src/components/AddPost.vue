@@ -1,6 +1,6 @@
 <template>
   <div id="new-post-modal-template">
-    <post>
+    <post-modal>
       <div class="modal-header">
         <h3>New Post</h3>
         <router-link class="close" to="/">X</router-link>
@@ -34,12 +34,12 @@
           <router-link to="/"><span>Add Post</span></router-link>
         </button>
       </div>
-    </post>
+    </post-modal>
   </div>
 </template>
 
 <script>
-  import Post from './PostModal.vue'
+  import PostModal from './PostModal.vue'
   export default {
     // Will need more data attributes
     data () {
@@ -89,7 +89,7 @@
       }
     },
     components: {
-      post: Post
+      postModal: PostModal
     }
   }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <!-- This is where data should be retrieved from the DB and a v-for directive is used to iterate over the data -->
-  <div class="row">
-    <div class="col-sm-6 col-md-4" v-for="post in posts"> <!-- v-for on this element -->
+  <div class="row grid">
+    <div class="col-sm-6 col-md-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
         <img src="../assets/logo.png" alt="...">
         <div class="caption">
@@ -35,6 +35,18 @@ export default {
         }
       ]
     }
+  },
+  mounted () {
+    var elem = document.querySelector('.grid')
+
+    /* eslint-disable no-undef */
+    var msnry = new Masonry(elem, {
+      // options
+      itemSelector: '.grid-item',
+      columnWidth: 200
+    })
+
+    console.log(msnry)
   }
 }
 </script>
