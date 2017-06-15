@@ -23,6 +23,15 @@
           Description
           <textarea v-model="description" rows="5" class="form-control"></textarea>
         </label>
+        <label class="form-label">
+          Category
+          <select>
+            <option>None</option>
+            <option>Category 1</option>
+            <option>Category 2</option>
+            <option>Category 3</option>
+          </select>
+        </label>
       </div>
 
       <div class="modal-footer text-right">
