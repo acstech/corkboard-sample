@@ -18,7 +18,7 @@
         </label>
         <label class="form-label">
           Price
-          <input v-model="price" class="form-control">
+          $<input v-model="price" class="form-control currency" type="number" min="0.00" step="0.50">
         </label>
         <label class="form-label">
           Description
@@ -114,5 +114,10 @@
   }
   .cancel {
     float: left;
+  }
+  .currency {
+    position: relative;
+    width: 30%;
+    left: 35%;
   }
 </style>
