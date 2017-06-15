@@ -8,7 +8,7 @@
       <div class="modal-body">
         <label class="form-label">
           Image
-          <input name="files" id="files" type="file" multiple>
+          <input class="form-control" name="files" id="files" type="file" multiple>
         </label>
         <div id="preview"></div>
         <label class="form-label">
@@ -25,7 +25,7 @@
         </label>
         <label class="form-label">
           Category
-          <select>
+          <select class="form-control">
             <option>None</option>
             <option>Category 1</option>
             <option>Category 2</option>
