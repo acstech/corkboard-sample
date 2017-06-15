@@ -36,18 +36,6 @@ export default {
         }
       ]
     }
-  },
-  mounted () {
-    var elem = document.querySelector('.grid')
-
-    /* eslint-disable no-undef */
-    var msnry = new Masonry(elem, {
-      // options
-      itemSelector: '.grid-item',
-      columnWidth: 200
-    })
-
-    console.log(msnry)
   }
 }
 </script>
