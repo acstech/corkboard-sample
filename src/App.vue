@@ -80,6 +80,8 @@ export default {
 
     .modal-container {
         width: 600px;
+        max-height: 800px;
+        overflow: scroll;
         margin: 50px auto 0;
         padding: 20px 30px;
         background-color: #fff;
