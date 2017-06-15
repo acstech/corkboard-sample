@@ -2,7 +2,7 @@
     <post-modal>
       <div class="modal-header">
         <h3>New Post</h3>
-        <router-link class="close" to="/">X</router-link>
+        <router-link class="close" to="/">&times;</router-link>
       </div>
 
       <div class="modal-body">
