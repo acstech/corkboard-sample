@@ -1,5 +1,4 @@
 <template>
-  <div id="new-post-modal-template">
     <post-modal>
       <div class="modal-header">
         <h3>New Post</h3>
@@ -35,7 +34,6 @@
         </button>
       </div>
     </post-modal>
-  </div>
 </template>
 
 <script>
@@ -53,19 +51,19 @@
     mounted () {
       // Check File API support
       if (window.File && window.FileList && window.FileReader) {
-        var filesInput = document.getElementById('files')
+        let filesInput = document.getElementById('files')
         filesInput.onchange = function (event) {
-          var files = event.target.files // FileList object
+          let files = event.target.files // FileList object
           for (var i = 0; i < files.length; i++) {
-            var file = files[i]
+            let file = files[i]
             // Only preview images
             if (!file.type.match('image')) {
               continue
             }
-            var picReader = new FileReader()
+            let picReader = new FileReader()
             picReader.onload = function (event) {
-              var picFile = event.target
-              var preview = document.getElementById('preview')
+              let picFile = event.target
+              let preview = document.getElementById('preview')
               preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
                 "title='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
             }

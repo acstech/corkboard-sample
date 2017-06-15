@@ -8,7 +8,8 @@
           <h3>{{ post.title }}</h3>
           <h4>{{ post.price | currency }}</h4>
           <p>Description goes here</p>
-          <p><a href="#" class="btn btn-primary" role="button">View Post</a> <a href="#" class="btn btn-default" role="button">Contact Seller</a></p>
+          <!-- Hard-coded id for now -->
+          <p><router-link to="/viewPost/1" class="btn btn-primary" role="button">View Post</router-link> <a href="#" class="btn btn-default" role="button">Contact Seller</a></p>
         </div>
       </div>
     </div>
