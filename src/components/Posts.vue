@@ -9,7 +9,7 @@
           <h4>{{ post.price | currency }}</h4>
           <p>Description goes here</p>
           <!-- Hard-coded id for now -->
-          <p><router-link to="/viewPost/1" class="btn btn-primary" role="button">View Post</router-link> <a href="#" class="btn btn-default" role="button">Contact Seller</a></p>
+          <p><router-link to="/viewPost/1" class="btn btn-primary" role="button" @click="viewPost">View Post</router-link> <a href="#" class="btn btn-default" role="button">Contact Seller</a></p>
         </div>
       </div>
     </div>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { eventBus } from '../main'
 export default {
   data () {
     return {
@@ -35,6 +36,16 @@ export default {
           price: 6.00
         }
       ]
+    }
+  },
+  methods: {
+    viewPost (post) {
+      // TODO: Have this communicate post data to ViewPost.vue
+      eventBus.$emit('viewPost', {
+        data: {
+          post: post
+        }
+      })
     }
   }
 }
