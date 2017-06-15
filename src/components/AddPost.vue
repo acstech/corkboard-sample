@@ -3,6 +3,7 @@
     <post>
       <div class="modal-header">
         <h3>New Post</h3>
+        <router-link class="close" to="/">X</router-link>
       </div>
 
       <div class="modal-body">
@@ -26,6 +27,9 @@
       </div>
 
       <div class="modal-footer text-right">
+        <button class="btn btn-danger cancel">
+          <router-link to="/"><span>Cancel</span></router-link>
+        </button>
         <button class="btn btn-primary" @click="savePost()">
           <router-link to="/"><span>Add Post</span></router-link>
         </button>
@@ -100,5 +104,15 @@
   span:hover {
     text-decoration: none;
     color: white;
+  }
+  .close {
+    display: inline;
+    float: right;
+  }
+  h3 {
+    display: inline;
+  }
+  .cancel {
+    float: left;
   }
 </style>
