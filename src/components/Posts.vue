@@ -5,8 +5,8 @@
       <div class="thumbnail">
         <img src="../assets/logo.png" alt="...">
         <div class="caption">
-          <h3>Thumbnail Label #{{ post }}</h3>
-          <h4>Price</h4>
+          <h3>{{ post.title }}</h3>
+          <h4>{{ post.price | currency }}</h4>
           <p>Description goes here</p>
           <p><a href="#" class="btn btn-primary" role="button">View Post</a> <a href="#" class="btn btn-default" role="button">Contact Seller</a></p>
         </div>
@@ -20,7 +20,20 @@ export default {
   data () {
     return {
       // Dummy data to make v-for display multiple thumbnails
-      posts: ['1', '2', '3', '4']
+      posts: [
+        {title: 'Super Cool Item',
+          price: 4.50
+        },
+        {title: 'Stuff You Do Not Want',
+          price: 10.00
+        },
+        {title: 'Free Thing',
+          price: 0.00
+        },
+        {title: 'Handmade Thing Grandma Made',
+          price: 6.00
+        }
+      ]
     }
   }
 }
