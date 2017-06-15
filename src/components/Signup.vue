@@ -5,7 +5,7 @@
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
-        <form>
+        <form @submit.prevent="register()">
             <div class="form-group">
                 <input
                         type="text"
@@ -60,7 +60,7 @@
                         required
                 >
             </div>
-            <input type="submit" class="btn btn-primary" @submit.prevent="register()" value="Register">
+            <input type="submit" class="btn btn-primary" value="Register">
         </form>
     </div>
 </template>
