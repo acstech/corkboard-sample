@@ -3,7 +3,7 @@
   <div class="row grid">
     <div class="col-sm-6 col-md-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
-        <img src="../assets/logo.png" alt="...">
+        <img :src="post.imgSrc" alt="...">
         <div class="caption">
           <h3>{{ post.title }}</h3>
           <h4>{{ post.price | currency }}</h4>
@@ -24,16 +24,20 @@ export default {
       // Dummy data to make v-for display multiple thumbnails
       posts: [
         {title: 'Super Cool Item',
-          price: 4.50
+          price: 4.50,
+          imgSrc: 'https://i.ytimg.com/vi/prALrHUJ8Ns/hqdefault.jpg'
         },
         {title: 'Stuff You Do Not Want',
-          price: 10.00
+          price: 10.00,
+          imgSrc: 'http://unrealitymag.com/wp-content/uploads/2012/11/opener-465x465.jpg'
         },
         {title: 'Free Thing',
-          price: 0.00
+          price: 0.00,
+          imgSrc: 'http://s2.dmcdn.net/Ub1O8/1280x720-mCQ.jpg'
         },
         {title: 'Handmade Thing Grandma Made',
-          price: 6.00
+          price: 6.00,
+          imgSrc: 'http://media.techeblog.com/images/fun_gadgets.jpg'
         }
       ]
     }
