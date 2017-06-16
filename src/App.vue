@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import ProductList from './ProductList.vue'
-import Login from './Login.vue'
-import Signup from './Signup.vue'
-import AddPost from './AddPost.vue'
+import ProductList from './components/ProductList.vue'
+import Login from './components/Login.vue'
+import Signup from './components/Signup.vue'
+import AddPost from './components/AddPost.vue'
 
 export default {
   name: 'app',
