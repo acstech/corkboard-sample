@@ -5,7 +5,7 @@
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
-        <form>
+        <form @submit.prevent="register()">
             <div class="form-group">
                 <input
                         type="text"
@@ -15,6 +15,7 @@
                         required
                 >
             </div>
+            
             <div class="form-group">
                 <input
                         type="text"
@@ -24,6 +25,7 @@
                         required
                 >
             </div>
+            
             <div class="form-group">
                 <input
                         type="email"
@@ -42,6 +44,7 @@
                         required
                 >
             </div>
+            
             <div class="form-group">
                 <input
                         type="password"
@@ -56,48 +59,83 @@
                         type="password"
                         class="form-control"
                         placeholder="Confirm password"
-                        v-model="newUser.confirmPassword"
+                        v-model="newUser.confirm"
                         required
                 >
             </div>
-            <input type="submit" class="btn btn-primary" @submit.prevent="register()" value="Register">
+            <!--div class="form-group">
+                <input
+                       type="siteId"
+                       class="form-control"
+                       placeholder="Site ID"
+                       v-model="newUser.siteId"
+                
+                >
+            </div>
+            <!-->
+            <input type="submit" class="btn btn-primary" value="Register">
         </form>
     </div>
 </template>
 
 <script>
+    import axios from 'axios'
+    function generateUUID () {
+      var d = new Date().getTime()
+      var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0
+        d = Math.floor(d / 16)
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
+      })
+      return uuid
+    }
+
 export default {
   data () {
-    return {
-      newUser: {
-        firstname: '',
-        lastname: '',
-        email: '',
-        username: '',
-        password: '',
-        confirmPassword: ''
+        return {
+          newUser: {
+            firstname: '',
+            lastname: '',
+            email: '',
+            username: '',
+            password: '',
+            confirm: '',
+            siteId: generateUUID()
+          },
+          error: ''
+        }
       },
-      error: ''
-    }
-  },
-  methods: {
-    register () {
-      var registration = {
-        firstname: this.newUser.firstname,
-        lastname: this.newUser.lastname,
-        email: this.newUser.email,
-        username: this.newUser.username,
-        password: this.newUser.password,
-        confirmPassword: this.newUser.confirmPassword
+      methods: {
+        register () {
+          /* var registration = {
+            // firstname: this.newUser.firstname,
+            // lastname: this.newUser.lastname,
+            email: this.newUser.email,
+            // username: this.newUser.username,
+            password: this.newUser.password,
+            confirm: this.newUser.confirm,
+            siteId: document.getElementById('uuid').innerHTML = generateUUID();
+          }
+          */
+          if (this.newUser.password !== this.newUser.confirm) {
+            this.error = 'Your passwords do not match.'
+            return
+          }
+          // TODO: Add validation steps and perhaps send to add user endpoint? (POST)
+          axios({
+            method: 'post',
+            url: '/api/register',
+            data: this.newUser
+          })
+          .then(res => {
+            console.log(res)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
       }
-      if (registration.password !== registration.confirmPassword) {
-        this.error = 'Your passwords do not match.'
-        return
-      }
-      // TODO: Add validation steps and perhaps send to add user endpoint? (POST)
     }
-  }
-}
 </script>
 
 <style scoped>
