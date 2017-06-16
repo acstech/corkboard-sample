@@ -8,6 +8,7 @@ import AddPost from './components/AddPost.vue'
 import ViewPost from './components/ViewPost.vue'
 import UserProfile from './components/UserProfile.vue'
 import EditProfile from './components/EditProfile.vue'
+import EditPost from './components/EditPost.vue'
 
 export const routes = [
         {path: '', component: ProductList},
@@ -15,6 +16,7 @@ export const routes = [
         {path: '/signup', component: Signup},
         {path: '/addpost', components: {default: AddPost, modal: ProductList}},
         {path: '/viewPost/:post_id', components: {default: ViewPost, modal: ProductList}},
+        {path: '/editPost/:post_id', components: {default: EditPost, modal: UserProfile}},
         {path: '/editProfile/:user_id', components: {default: EditProfile, modal: UserProfile}},
         {path: '/viewProfile/:user_id', component: UserProfile},
         {path: '*', component: ProductList}

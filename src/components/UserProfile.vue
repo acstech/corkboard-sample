@@ -22,7 +22,7 @@
                 <h4>{{ post.price | currency }}</h4>
                 <p>Description goes here</p>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
-                <p><router-link to="/" class="btn btn-primary" role="button">Edit Post</router-link>
+                <p><router-link to="/editPost/1" class="btn btn-primary" role="button">Edit Post</router-link>
                   <router-link to="/" class="btn btn-danger" role="button">Delete Post</router-link></p>
               </div>
             </div>
