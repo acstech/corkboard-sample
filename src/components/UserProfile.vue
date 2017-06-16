@@ -5,7 +5,7 @@
           <img src="../assets/jumpingCat.jpg" class="profile-pic">
           <h4 class="sub-header">User Profile</h4>
           <br>
-          <router-link to="/" class="btn btn-info" role="button">Edit Profile</router-link>
+          <router-link to="/editProfile/1" class="btn btn-info" role="button">Edit Profile</router-link>
           <br><br>
           <li class="profile-info">First Name:</li>
           <li class="profile-info">Last Name:</li>
