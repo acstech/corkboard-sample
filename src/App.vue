@@ -10,7 +10,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       <li><router-link to="/addpost"> <!--v-if="user.authenticated"-->Add Post</router-link></li>
-                      <li><router-link to="/"> <!--v-if="user.authenticated" @click="logout()"-->Profile Settings</router-link></li>
+                      <li><router-link to="/viewProfile/1"> <!--v-if="user.authenticated" @click="logout()"-->Profile Settings</router-link></li>
                       <li role="separator" class="divider"></li>
                       <li><router-link to="/"> <!--v-if="user.authenticated" @click="logout()"-->Logout</router-link></li>
                     </ul>

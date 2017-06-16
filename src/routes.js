@@ -6,6 +6,7 @@ import Login from './components/Login.vue'
 import Signup from './components/Signup.vue'
 import AddPost from './components/AddPost.vue'
 import ViewPost from './components/ViewPost.vue'
+import UserProfile from './components/UserProfile.vue'
 
 export const routes = [
         {path: '', component: ProductList},
@@ -13,5 +14,6 @@ export const routes = [
         {path: '/signup', component: Signup},
         {path: '/addpost', components: {default: AddPost, modal: ProductList}},
         {path: '/viewPost/:post_id', components: {default: ViewPost, modal: ProductList}},
+        {path: '/viewProfile/:user_id', component: UserProfile},
         {path: '*', component: ProductList}
 ]
