@@ -2,7 +2,7 @@
     <div class="row">
       <div class="col-sm-4 col-md-3 sidebar" style="display: inline">
         <ul class="nav nav-sidebar">
-          <img src="../assets/logo.png">
+          <img src="../assets/jumpingCat.jpg" class="profile-pic">
           <h4 class="sub-header">User Profile</h4>
           <br>
           <router-link to="/" class="btn btn-info" role="button">Edit Profile</router-link>
@@ -57,4 +57,14 @@ export default {
 .btn {
   font-weight: bold;
 }
+  .profile-pic {
+    border: solid white 2px;
+    margin-top: 10px;
+    width: 50%;
+    height: 50%;
+    max-height: 200px;
+    max-width: 200px;
+    min-height: 150px;
+    min-width: 150px;
+  }
 </style>
