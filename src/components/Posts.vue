@@ -38,6 +38,14 @@ export default {
         {title: 'Handmade Thing Grandma Made',
           price: 6.00,
           imgSrc: 'http://media.techeblog.com/images/fun_gadgets.jpg'
+        },
+        {title: 'Random Stuff',
+          price: 35.00,
+          imgSrc: 'http://images.designntrend.com/data/images/full/50404/top-5-gadgets-list-image-jpg.jpg?w=780'
+        },
+        {title: 'Random Stuff Again',
+          price: 35.00,
+          imgSrc: 'https://www.techprevue.com/wp-content/uploads/2016/03/tech-items-1024x682.jpg'
         }
       ]
     }

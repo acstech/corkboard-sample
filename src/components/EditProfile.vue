@@ -6,7 +6,24 @@
     </div>
 
     <div class="modal-body">
-      <div>Form for changing data would go here.</div>
+      <form>
+        <label class="form-label">
+          Profile Picture
+          <input type="file" class="form-control">
+        </label>
+        <label class="form-label">
+          First Name
+          <input type="text" class="form-control" v-model="user.firstName">
+        </label>
+        <label class="form-label">
+          Last Name
+          <input type="text" class="form-control" v-model="user.lastName">
+        </label>
+        <label class="form-label">
+          Email
+          <input type="email" class="form-control" v-model="user.email">
+        </label>
+      </form>
     </div>
 
     <div class="modal-footer text-right">
@@ -23,6 +40,16 @@
 <script>
 import PostModal from './PostModal.vue'
 export default {
+  data () {
+    return {
+      user: {
+        profilePic: null,
+        firstName: '',
+        lastName: '',
+        email: ''
+      }
+    }
+  },
   components: {
     postModal: PostModal
   }
