@@ -6,7 +6,33 @@
     </div>
 
     <div class="modal-body">
-      <div>Form for changing data would go here.</div>
+      <form>
+        <label class="form-label">
+          Pictures
+          <input type="file" class="form-control" multiple>
+        </label>
+        <label class="form-label">
+          Title
+          <input type="text" class="form-control">
+        </label>
+        <label class="form-label">
+          Price
+          <input type="text" class="form-control">
+        </label>
+        <label class="form-label">
+          Description
+          <textarea rows="5" class="form-control"></textarea>
+        </label>
+        <label class="form-label">
+          Category
+          <select class="form-control">
+            <option>None</option>
+            <option>Category 1</option>
+            <option>Category 2</option>
+            <option>Category 3</option>
+          </select>
+        </label>
+      </form>
     </div>
 
     <div class="modal-footer text-right">
