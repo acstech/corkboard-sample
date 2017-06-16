@@ -1,7 +1,8 @@
 <template>
   <!-- This is where data should be retrieved from the DB and a v-for directive is used to iterate over the data -->
   <div class="row grid">
-    <div class="col-sm-6 col-md-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
+    <div class="grid-sizer col-xs-4"></div>
+    <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
         <img :src="post.imgSrc" alt="...">
         <div class="caption">
@@ -17,7 +18,7 @@
 </template>
 
 <script>
-import { eventBus } from '../main'
+import { Masonry, eventBus } from '../main'
 export default {
   data () {
     return {
@@ -50,6 +51,15 @@ export default {
       ]
     }
   },
+  mounted () {
+    /* eslint-disable no-undef */
+    var masonry = new Masonry('.grid', {
+      selector: '.grid-item',
+      columWidth: '.grid-sizer',
+      percentPosition: true
+    })
+    console.log(masonry)
+  },
   methods: {
     viewPost (post) {
       // TODO: Have this communicate post data to ViewPost.vue
@@ -64,5 +74,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

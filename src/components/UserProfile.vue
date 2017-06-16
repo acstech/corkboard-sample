@@ -13,8 +13,10 @@
           <li class="profile-info">Anything Else:</li>
         </ul>
       </div>
-      <div class="">
-          <div class="col-sm-6 col-md-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
+      <div class="container">
+      <div class="grid">
+          <div class="grid-sizer col-xs-4"></div>
+          <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
             <div class="thumbnail">
               <img :src="post.imgSrc" alt="...">
               <div class="caption">
@@ -28,10 +30,12 @@
             </div>
           </div>
         </div>
+      </div>
     </div>
 </template>
 
 <script>
+import { Masonry } from '../main'
 export default {
   data () {
     return {
@@ -44,9 +48,21 @@ export default {
         {title: 'Stuff You Do Not Want',
           price: 10.00,
           imgSrc: 'http://unrealitymag.com/wp-content/uploads/2012/11/opener-465x465.jpg'
+        },
+        {title: 'Stuff You Do Not Want',
+          price: 10.00,
+          imgSrc: 'http://unrealitymag.com/wp-content/uploads/2012/11/opener-465x465.jpg'
         }
       ]
     }
+  },
+  mounted () {
+    /* eslint-disable no-undef */
+    var masonry = new Masonry('.grid', {
+      selector: '.grid-item',
+      columWidth: '.grid-sizer'
+    })
+    console.log(masonry)
   }
 }
 </script>

@@ -3,6 +3,10 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
 
+export const Masonry = require('masonry-layout')
+
+console.log(Masonry)
+
 Vue.use(VueRouter)
 
 export const eventBus = new Vue()
