@@ -38,6 +38,7 @@ export default {
     let vm = this
     eventBus.$on('viewPost', function (post) {
       vm.info.title = post.title
+      alert('event emitted and received!')
     })
   },
   components: {

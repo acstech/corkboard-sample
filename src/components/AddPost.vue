@@ -17,7 +17,7 @@
         </label>
         <label class="form-label">
           Price
-          $<input v-model="price" class="form-control currency" type="number" min="0.00" step="0.50">
+          $<money v-model="price" v-bind="moneyConfig" class="form-control currency"></money>
         </label>
         <label class="form-label">
           Description
@@ -47,14 +47,29 @@
 
 <script>
   import PostModal from './PostModal.vue'
+  import { Money } from 'v-money'
   export default {
     // Will need more data attributes
     data () {
       return {
         title: '',
         pictures: [],
-        price: '',
-        description: ''
+        price: 0.00,
+        description: '',
+        moneyConfig: {
+          // The character used to show the decimal place.
+          decimal: '.',
+          // The character used to separate numbers in groups of three.
+          thousands: ',',
+          // The currency name or symbol followed by a space.
+          prefix: '$ ',
+          // The suffix (If a suffix is used by the target currency.)
+          suffix: '',
+          // Level of decimal precision. REQUIRED
+          precision: 2,
+          // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
+          masked: true
+        }
       }
     },
     mounted () {
@@ -96,7 +111,8 @@
       }
     },
     components: {
-      postModal: PostModal
+      postModal: PostModal,
+      money: Money
     }
   }
 </script>
