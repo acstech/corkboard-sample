@@ -22,7 +22,7 @@ import { Masonry, eventBus } from '../main'
 export default {
   data () {
     return {
-      // Dummy data to make v-for display multiple thumbnails
+      // Dummy data to make v-for display multiple thumbnails. This would be grabbed from a DB
       posts: [
         {title: 'Super Cool Item',
           price: 4.50,

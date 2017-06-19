@@ -5,6 +5,7 @@
           <img src="../assets/jumpingCat.jpg" class="profile-pic">
           <h4 class="sub-header">User Profile</h4>
           <br>
+          <!-- v-if user is authenticated && id matches profile id -->
           <router-link to="/editProfile/1" class="btn btn-info" role="button">Edit Profile</router-link>
           <br><br>
           <li class="profile-info">First Name:</li>
@@ -22,7 +23,7 @@
               <div class="caption">
                 <h3>{{ post.title }}</h3>
                 <h4>{{ post.price | currency }}</h4>
-                <p>Description goes here</p>
+                <p>{{ post.description }}</p>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
                 <p><router-link to="/editPost/1" class="btn btn-primary" role="button">Edit Post</router-link>
                   <router-link to="/" class="btn btn-danger" role="button">Delete Post</router-link></p>
@@ -41,17 +42,20 @@ export default {
     return {
       // Dummy data to make v-for display multiple thumbnails
       posts: [
-        {title: 'Super Cool Item',
-          price: 4.50,
-          imgSrc: 'https://i.ytimg.com/vi/prALrHUJ8Ns/hqdefault.jpg'
-        },
         {title: 'Stuff You Do Not Want',
           price: 10.00,
+          description: 'You may not want this item but I hope that someone will.',
           imgSrc: 'http://unrealitymag.com/wp-content/uploads/2012/11/opener-465x465.jpg'
         },
-        {title: 'Stuff You Do Not Want',
-          price: 10.00,
-          imgSrc: 'http://unrealitymag.com/wp-content/uploads/2012/11/opener-465x465.jpg'
+        {title: 'Free Thing',
+          price: 0.00,
+          description: 'Yes it is free, so please take it!',
+          imgSrc: 'http://s2.dmcdn.net/Ub1O8/1280x720-mCQ.jpg'
+        },
+        {title: 'Handmade Thing Grandma Made',
+          price: 6.00,
+          description: 'Yeah, so grandma is quite good at making things. She is also a lunatic.',
+          imgSrc: 'http://media.techeblog.com/images/fun_gadgets.jpg'
         }
       ]
     }
