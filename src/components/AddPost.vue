@@ -10,19 +10,23 @@
           Image
           <input class="form-control" name="files" id="files" type="file" multiple>
         </label>
+
         <div id="preview"></div>
         <label class="form-label">
           Title
           <input v-model="title" class="form-control">
         </label>
+
         <label class="form-label">
           Price
-          $<input v-model="price" class="form-control currency" type="number" min="0.00" step="0.50">
+          $ <input v-model="price" class="form-control currency" type="number" min="0.00" step="0.50">
         </label>
+
         <label class="form-label">
           Description
           <textarea v-model="description" rows="5" class="form-control"></textarea>
         </label>
+
         <label class="form-label">
           Category
           <select class="form-control">
@@ -35,26 +39,28 @@
       </div>
 
       <div class="modal-footer text-right">
-        <button class="btn btn-danger cancel">
-          <router-link to="/"><span>Cancel</span></router-link>
-        </button>
-        <button class="btn btn-primary" @click="savePost()">
-          <router-link to="/"><span>Add Post</span></router-link>
-        </button>
+        <router-link to="/"><button class="btn btn-danger cancel">
+          <span>Cancel</span>
+        </button></router-link>
+        <router-link to="/"><button class="btn btn-primary" @click="savePost()">
+          <span>Add Post</span>
+        </button></router-link>
       </div>
     </post-modal>
 </template>
 
 <script>
+
   import PostModal from './PostModal.vue'
   export default {
     // Will need more data attributes
+
     data () {
       return {
         title: '',
         pictures: [],
-        price: '',
-        description: ''
+        description: '',
+        price: ''
       }
     },
     mounted () {

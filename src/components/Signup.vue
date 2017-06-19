@@ -87,6 +87,8 @@ export default {
       if (this.newUser.password !== this.newUser.confirm) {
         this.error = 'Your passwords do not match.'
         return
+      } else {
+        this.error = ''
       }
       // TODO: Add validation steps and perhaps send to add user endpoint? (POST)
       axios({
