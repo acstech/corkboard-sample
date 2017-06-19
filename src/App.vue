@@ -6,8 +6,15 @@
                     <li><router-link to="/">Home</router-link></li>
                     <li><router-link to="/login"> <!--v-if="!user.authenticated"-->Login</router-link></li>
                     <li><router-link to="/signup"> <!--v-if="!user.authenticated"-->Sign Up</router-link></li>
-                    <li><router-link to="/"> <!--v-if="user.authenticated" @click="logout()"-->Logout</router-link></li>
-                    <li><router-link to="/addpost"> <!--v-if="user.authenticated"-->Add Post</router-link></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><router-link to="/addpost"> <!--v-if="user.authenticated"-->Add Post</router-link></li>
+                      <li><router-link to="/viewProfile/1"> <!--v-if="user.authenticated"-->Profile Settings</router-link></li>
+                      <li role="separator" class="divider"></li>
+                      <li><router-link to="/"> <!--v-if="user.authenticated" @click="logout()"-->Logout</router-link></li>
+                    </ul>
+                  </li>
                 </ul>
             </div>
         </nav>
@@ -31,11 +38,6 @@ export default {
     login: Login,
     signup: Signup,
     addPost: AddPost
-  },
-  data () {
-    return {
-      msg: 'Welcome to Your Marketplace App'
-    }
   }
 }
 </script>
@@ -80,6 +82,8 @@ export default {
 
     .modal-container {
         width: 600px;
+        max-height: 800px;
+        overflow: scroll;
         margin: 50px auto 0;
         padding: 20px 30px;
         background-color: #fff;

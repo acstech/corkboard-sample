@@ -1,12 +1,14 @@
 <template>
-    <div>
-        <h1>Hello Product List! Would be cool to retrieve the list of products and populate with v-for</h1>
-    </div>
+  <posts></posts>
 </template>
 
 <script>
-    export default {
-    }
+import Posts from './Posts.vue'
+export default {
+  components: {
+    posts: Posts
+  }
+}
 </script>
 
 <style scoped>
