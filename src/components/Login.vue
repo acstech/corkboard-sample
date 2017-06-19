@@ -34,6 +34,7 @@ export default {
       credentials: {
         username: '',
         password: ''
+        siteId: '12341234-1234-1234-1234-123412341234'
       },
       error: ''
     }
@@ -46,6 +47,16 @@ export default {
       }
       console.log(credentials)
       // TODO: Add authentication steps
+      axios({
+        method: 'post',
+        url: '/api/authenticate',
+        data: this.credentials
+      })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(error => {
+        console.log(error)
     }
   }
 }
