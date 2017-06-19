@@ -5,7 +5,7 @@
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
-        <form>
+        <form @submit.prevent="register()">
             <div class="form-group">
                 <input
                         type="text"
@@ -55,17 +55,18 @@
                 <input
                         type="password"
                         class="form-control"
-                        placeholder="Confirm password"
-                        v-model="newUser.confirmPassword"
+                        placeholder="confirm password"
+                        v-model="newUser.confirm"
                         required
                 >
             </div>
-            <input type="submit" class="btn btn-primary" @submit.prevent="register()" value="Register">
+            <input type="submit" class="btn btn-primary" value="Register">
         </form>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -75,26 +76,30 @@ export default {
         email: '',
         username: '',
         password: '',
-        confirmPassword: ''
+        confirm: '',
+        siteId: '12341234-1234-1234-1234-432143214321'
       },
       error: ''
     }
   },
   methods: {
     register () {
-      var registration = {
-        firstname: this.newUser.firstname,
-        lastname: this.newUser.lastname,
-        email: this.newUser.email,
-        username: this.newUser.username,
-        password: this.newUser.password,
-        confirmPassword: this.newUser.confirmPassword
-      }
-      if (registration.password !== registration.confirmPassword) {
+      if (this.newUser.password !== this.newUser.confirm) {
         this.error = 'Your passwords do not match.'
         return
       }
       // TODO: Add validation steps and perhaps send to add user endpoint? (POST)
+      axios({
+        method: 'post',
+        url: '/api/register',
+        data: this.newUser
+      })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 }
