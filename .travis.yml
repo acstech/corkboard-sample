@@ -2,4 +2,16 @@ language: node_js
 node_js:
   - "node"
 script:
-  - "npm build"
+  - "npm run build"
+deploy:
+  - provider: s3
+    access_key_id: AKIAI6J3DLDG65WB423Q
+    secret_access_key:
+      secure: oZ6mrwnbMjf5EjAMZDgy5xJTPECKEGpzmRIGzXn0KruCn/ls1C1vR4AWEvO5P82e7jHEOcSAYja7bFOGTMKD8SRx1h+wpYUDTtjdMIMQecURdNG2NDDI4x6j71aypVviZEqdzFxGi8MJkc9d+dfTXRLjxRPsWjsOheyMyPFH/1OXEpm9Q8The8zlRhdR6VrRaBrssGhJO9HDDVDjJd66XDutM7GHHXNmeGTsWlGg5vDlu3wwe4+WrLXVOZH5KQzKf4gtjjLqq5E2yODLtFXNqt4TDT/kpdtNG8BGxbsnIo6HWizUZpQS+wDXbZY4X8PBktkKP+cJJWEkYvrlOxL5Dw8UNlXbAbWe2ffIfro2VdXkQZu3pIeLXyD9gO8q3MIDfEEHwnrH+Vzb4/vivWXgvmKEu2qQyX+wn97pPp/KuKflP/r7xn+ZLWzUFDoubwhVTq5ZG60a31y24301cDVm2uJHJwBgBA5PUs1OfC53hc8AC9Dt8CaA8OIUUc2JHkMHaH/tWqye3rF/zmcReNQbYHdmIWxTx7GjSDPYftljVAfirSuQya6pygRQfur0hl1cPNvuf3VhdVOx4l9UXYCILfGzovlIOClaaTHrR8DNP9qgBy7SJuHZn6vSsG/mtB+S0mwzbBpwnhkGwFrk1G/KU4/XlD9/qhTc/l+bMP/gQQI=
+    bucket: acst-play-testing-corkboard-media
+    skip_cleanup: true
+    local_dir: dist
+    on:
+      repo: acstech/corkboard-sample
+      branch: master
+      tags: true
