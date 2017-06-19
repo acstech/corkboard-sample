@@ -28,12 +28,13 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
       credentials: {
         username: '',
-        password: ''
+        password: '',
         siteId: '12341234-1234-1234-1234-123412341234'
       },
       error: ''
@@ -57,6 +58,7 @@ export default {
       })
       .catch(error => {
         console.log(error)
+      })
     }
   }
 }
