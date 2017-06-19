@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-      <div class="col-sm-4 col-md-3 sidebar" style="display: inline">
+      <div class="col-sm-4 col-md-3 sidebar">
         <ul class="nav nav-sidebar">
           <img src="../assets/jumpingCat.jpg" class="profile-pic">
           <h4 class="sub-header">User Profile</h4>
@@ -14,7 +14,7 @@
         </ul>
       </div>
       <div class="container">
-      <div class="grid">
+      <div class="grid col-md-offset-3 col-sm-offset-4">
           <div class="grid-sizer col-xs-4"></div>
           <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
             <div class="thumbnail">
