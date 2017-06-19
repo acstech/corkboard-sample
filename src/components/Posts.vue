@@ -4,13 +4,16 @@
     <div class="grid-sizer col-xs-4"></div>
     <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
-        <img :src="post.imgSrc" alt="...">
+        <router-link to="/viewPost/1"><img :src="post.imgSrc" alt="..."></router-link>
         <div class="caption">
           <h3>{{ post.title }}</h3>
           <h4>{{ post.price | currency }}</h4>
           <p>{{ post.description }}</p>
           <!-- Hard-coded id for now -->
-          <p><router-link to="/viewPost/1" class="btn btn-primary" role="button" @click="viewPost(post)">View Post</router-link> <a href="#" class="btn btn-default" role="button">Contact Seller</a></p>
+          <p>
+            <router-link to="/viewPost/1" class="btn btn-primary" role="button" @click="viewPost">View Post</router-link>
+            <a href="#" class="btn btn-default" role="button">Contact Seller</a>
+          </p>
         </div>
       </div>
     </div>

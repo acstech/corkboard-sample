@@ -55,13 +55,13 @@ export default {
         url: '/api/authenticate',
         data: this.credentials
       })
-        .then(res => {
-          console.log(res)
-          vm.isAuthenticated = true
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      .then(res => {
+        console.log(res)
+        vm.isAuthenticated = true
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 }
