@@ -52,6 +52,7 @@
 <script>
 
   import PostModal from './PostModal.vue'
+  import { Money } from 'v-money'
   export default {
     // Will need more data attributes
 
@@ -102,7 +103,8 @@
       }
     },
     components: {
-      postModal: PostModal
+      postModal: PostModal,
+      money: Money
     }
   }
 </script>

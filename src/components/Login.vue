@@ -30,6 +30,7 @@
 <script>
 import axios from 'axios'
 export default {
+  props: ['isAuthenticated'],
   data () {
     return {
       credentials: {
@@ -42,6 +43,7 @@ export default {
   },
   methods: {
     logIn () {
+      var vm = this
       var credentials = {
         username: this.credentials.username,
         password: this.credentials.password
@@ -55,6 +57,7 @@ export default {
       })
       .then(res => {
         console.log(res)
+        vm.isAuthenticated = true
       })
       .catch(error => {
         console.log(error)

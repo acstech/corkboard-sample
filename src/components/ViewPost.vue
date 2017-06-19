@@ -60,7 +60,22 @@
 
 <script>
 import PostModal from './PostModal.vue'
+import { eventBus } from '../main'
 export default {
+  data () {
+    return {
+      info: {
+        title: 'Test'
+      }
+    }
+  },
+  created () {
+    let vm = this
+    eventBus.$on('viewPost', function (post) {
+      vm.info.title = post.title
+      alert('event emitted and received!')
+    })
+  },
   components: {
     postModal: PostModal
   }

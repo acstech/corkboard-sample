@@ -72,11 +72,7 @@ export default {
   methods: {
     viewPost (post) {
       // TODO: Have this communicate post data to ViewPost.vue
-      eventBus.$emit('viewPost', {
-        data: {
-          post: post
-        }
-      })
+      eventBus.$emit('viewPost', post)
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-mask" @click="close" transition="modal">
+    <div class="modal-mask" transition="modal">
         <div class="modal-container">
             <slot></slot>
         </div>
