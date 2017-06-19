@@ -33,6 +33,11 @@ import AddPost from './components/AddPost.vue'
 
 export default {
   name: 'app',
+  data () {
+    return {
+      isAuthenticated: false
+    }
+  },
   components: {
     products: ProductList,
     login: Login,
