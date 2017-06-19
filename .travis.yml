@@ -13,5 +13,6 @@ deploy:
     local_dir: dist
     on:
       repo: acstech/corkboard-sample
+      all_branches: true # Remove before merge
       # branch: master # Uncomment before merge
       # tags: true # Uncomment before merge
