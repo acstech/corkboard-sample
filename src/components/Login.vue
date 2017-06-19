@@ -28,12 +28,13 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
       credentials: {
         username: '',
-        password: ''
+        password: '',
         siteId: '12341234-1234-1234-1234-123412341234'
       },
       error: ''
@@ -52,11 +53,12 @@ export default {
         url: '/api/authenticate',
         data: this.credentials
       })
-      .then(res => {
-        console.log(res)
-      })
-      .catch(error => {
-        console.log(error)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }

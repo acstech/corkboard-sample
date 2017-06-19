@@ -1,7 +1,7 @@
 <template>
   <post-modal>
     <div class="modal-header">
-      <h3>Viewed Post Title</h3>
+      <h3>{{ info.title }}</h3>
     </div>
 
     <div class="modal-body">
@@ -25,7 +25,21 @@
 
 <script>
 import PostModal from './PostModal.vue'
+import { eventBus } from '../main'
 export default {
+  data () {
+    return {
+      info: {
+        title: 'Test'
+      }
+    }
+  },
+  created () {
+    let vm = this
+    eventBus.$on('viewPost', function (post) {
+      vm.info.title = post.title
+    })
+  },
   components: {
     postModal: PostModal
   }
