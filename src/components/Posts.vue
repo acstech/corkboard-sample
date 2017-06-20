@@ -70,6 +70,7 @@ export default {
   },
   methods: {
     viewPost (post) {
+      // Updates the state with the selected post's info
       this.$store.commit('getActivePost', {post: post.post})
     }
   }
