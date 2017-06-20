@@ -11,7 +11,7 @@
           <p>{{ post.description }}</p>
           <!-- Hard-coded id for now -->
           <p>
-            <router-link to="/viewPost/1" class="btn btn-primary" role="button" @click="viewPost(post)">View Post</router-link>
+            <router-link to="/viewPost/1"><button class="btn btn-primary" @click="viewPost({post})">View Post</button></router-link>
             <a href="#" class="btn btn-default" role="button">Contact Seller</a>
           </p>
         </div>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { Masonry, eventBus } from '../main'
+import { Masonry } from '../main'
 export default {
   data () {
     return {
@@ -61,18 +61,17 @@ export default {
     }
   },
   mounted () {
-    /* eslint-disable no-undef */
+    // eslint-disable-next-line no-unused-vars
     var masonry = new Masonry('.grid', {
       selector: '.grid-item',
-      columWidth: '.grid-sizer',
+      columnWidth: '.grid-sizer',
       percentPosition: true
     })
-    console.log(masonry)
   },
   methods: {
     viewPost (post) {
-      // TODO: Have this communicate post data to ViewPost.vue
-      eventBus.$emit('viewPost', post)
+      // Updates the state with the selected post's info
+      this.$store.commit('getActivePost', {post: post.post})
     }
   }
 }

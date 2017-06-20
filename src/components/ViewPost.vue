@@ -1,7 +1,7 @@
 <template>
   <post-modal>
     <div class="modal-header">
-      <h3>{{ info.title }}</h3>
+      <h3>{{ currentPost.title }}</h3>
       <router-link class="close" to="/">&times;</router-link>
     </div>
 
@@ -41,9 +41,9 @@
         </a>
       </div>
 
-      <h4>Price Here</h4>
+      <h4>{{ currentPost.price | currency }}</h4>
       <h4>Seller: Seller Name</h4>
-      <p>Description</p>
+      <p>{{ currentPost.description }}</p>
 
     </div>
 
@@ -60,20 +60,11 @@
 
 <script>
 import PostModal from './PostModal.vue'
-import { eventBus } from '../main'
 export default {
-  data () {
-    return {
-      info: {
-        title: 'Test'
-      }
+  computed: {
+    currentPost () {
+      return this.$store.state.activePost
     }
-  },
-  created () {
-    let vm = this
-    eventBus.$on('viewPost', function (post) {
-      vm.info.title = post.title
-    })
   },
   components: {
     postModal: PostModal
