@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import { routes } from './routes'
 
 export const Masonry = require('masonry-layout')
+export const imagesLoaded = require('imagesloaded')
 
 Vue.use(VueRouter)
 Vue.use(Vuex)

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { Masonry } from '../main'
+import { Masonry, imagesLoaded } from '../main'
 export default {
   data () {
     return {
@@ -62,10 +62,14 @@ export default {
   },
   mounted () {
     // eslint-disable-next-line no-unused-vars
-    var masonry = new Masonry('.grid', {
-      selector: '.grid-item',
-      columnWidth: '.grid-sizer',
-      percentPosition: true
+    var posts = document.querySelectorAll('.post')
+    imagesLoaded(posts, function () {
+      // eslint-disable-next-line no-unused-vars
+      var masonry = new Masonry('.grid', {
+        selector: '.grid-item',
+        columnWidth: '.grid-sizer',
+        percentPosition: true
+      })
     })
   },
   methods: {

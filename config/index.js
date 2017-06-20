@@ -2,7 +2,7 @@
 var path = require('path')
 // URLs for dev and production api servers
 var apiDev = 'http://localhost:8080'
-var apiProd = 'api.corkboard.ac.st'
+var apiProd = 'api.corkboard.t.ac.st'
 
 module.exports = {
   build: {
