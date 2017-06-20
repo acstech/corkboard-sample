@@ -104,6 +104,8 @@ export default {
       .then(res => {
         console.log(res)
         this.$store.commit('authenticate')
+        // TODO: Route to user profile for editing and adding more info after sign up
+        this.$router.push('/')
       })
       .catch(error => {
         console.log(error)
