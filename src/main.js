@@ -19,11 +19,23 @@ const router = new VueRouter({
 // eslint-disable-next-line no-unused-vars
 const store = new Vuex.Store({
   state: {
-    isAuthenticated: false
+    isAuthenticated: false,
+    activePost: {
+      title: '',
+      price: null,
+      description: '',
+      imgSrc: null
+    }
   },
   mutations: {
     authenticate (state) {
       state.isAuthenticated = true
+    },
+    getActivePost (state, post) {
+      state.activePost.title = post.post.title
+      state.activePost.price = post.post.price
+      state.activePost.description = post.post.description
+      state.activePost.imgSrc = post.post.imgSrc
     }
   }
 })

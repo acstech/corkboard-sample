@@ -90,7 +90,6 @@ export default {
       } else {
         this.error = ''
       }
-      // TODO: Add validation steps and perhaps send to add user endpoint? (POST)
       axios({
         method: 'post',
         url: '/api/register',

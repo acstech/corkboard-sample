@@ -30,7 +30,6 @@
 <script>
 import axios from 'axios'
 export default {
-  props: ['isAuthenticated'],
   data () {
     return {
       credentials: {
