@@ -1,67 +1,75 @@
 <template>
-    <post-modal>
-      <div class="modal-header">
-        <h3>New Post</h3>
-        <router-link class="close" to="/">&times;</router-link>
-      </div>
+  <post-modal>
+    <div class="modal-header">
+      <h3>New Post</h3>
+      <router-link class="close" to="/">&times;</router-link>
+    </div>
 
-      <div class="modal-body">
-        <label class="form-label">
-          Image
-          <input class="form-control" name="files" id="files" type="file" multiple>
-        </label>
+    <div class="modal-body">
+      <label class="form-label">
+        Image
+        <input class="form-control" name="files" id="files" type="file" multiple>
+      </label>
+      <div id="preview"></div>
+      <label class="form-label">
+        Title
+        <input v-model="title" class="form-control">
+      </label>
+      <label class="form-label">
+        Price
+        <money v-model="price" v-bind="moneyConfig" class="form-control currency"></money>
+      </label>
+      <label class="form-label">
+        Description
+        <textarea v-model="description" rows="5" class="form-control"></textarea>
+      </label>
+      <label class="form-label">
+        Category
+        <select class="form-control">
+          <option>None</option>
+          <option>Category 1</option>
+          <option>Category 2</option>
+          <option>Category 3</option>
+        </select>
+      </label>
+    </div>
 
-        <div id="preview"></div>
-        <label class="form-label">
-          Title
-          <input v-model="title" class="form-control">
-        </label>
-
-        <label class="form-label">
-          Price
-          $ <input v-model="price" class="form-control currency" type="number" min="0.00" step="0.50">
-        </label>
-
-        <label class="form-label">
-          Description
-          <textarea v-model="description" rows="5" class="form-control"></textarea>
-        </label>
-
-        <label class="form-label">
-          Category
-          <select class="form-control">
-            <option>None</option>
-            <option>Category 1</option>
-            <option>Category 2</option>
-            <option>Category 3</option>
-          </select>
-        </label>
-      </div>
-
-      <div class="modal-footer text-right">
-        <router-link to="/"><button class="btn btn-danger cancel">
-          <span>Cancel</span>
-        </button></router-link>
-        <router-link to="/"><button class="btn btn-primary" @click="savePost()">
-          <span>Add Post</span>
-        </button></router-link>
-      </div>
-    </post-modal>
+    <div class="modal-footer text-right">
+      <button class="btn btn-danger cancel">
+        <router-link to="/"><span>Cancel</span></router-link>
+      </button>
+      <button class="btn btn-primary" @click="savePost()">
+        <router-link to="/"><span>Add Post</span></router-link>
+      </button>
+    </div>
+  </post-modal>
 </template>
 
 <script>
-
   import PostModal from './PostModal.vue'
   import { Money } from 'v-money'
   export default {
     // Will need more data attributes
-
     data () {
       return {
         title: '',
         pictures: [],
+        price: 0.00,
         description: '',
-        price: ''
+        moneyConfig: {
+          // The character used to show the decimal place.
+          decimal: '.',
+          // The character used to separate numbers in groups of three.
+          thousands: ',',
+          // The currency name or symbol followed by a space.
+          prefix: '$ ',
+          // The suffix (If a suffix is used by the target currency.)
+          suffix: '',
+          // Level of decimal precision. REQUIRED
+          precision: 2,
+          // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
+          masked: true
+        }
       }
     },
     mounted () {
