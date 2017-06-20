@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { Masonry } from '../main'
+import { Masonry, imagesLoaded } from '../main'
 export default {
   data () {
     return {
@@ -61,12 +61,16 @@ export default {
     }
   },
   mounted () {
-    /* eslint-disable no-undef */
-    var masonry = new Masonry('.grid', {
-      selector: '.grid-item',
-      columWidth: '.grid-sizer'
+    // eslint-disable-next-line no-unused-vars
+    var posts = document.querySelectorAll('.grid-item')
+    imagesLoaded(posts, function () {
+      // eslint-disable-next-line no-unused-vars
+      var masonry = new Masonry('.grid', {
+        selector: '.grid-item',
+        columnWidth: '.grid-sizer',
+        percentPosition: true
+      })
     })
-    console.log(masonry)
   }
 }
 </script>

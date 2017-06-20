@@ -62,7 +62,7 @@ export default {
   },
   mounted () {
     // eslint-disable-next-line no-unused-vars
-    var posts = document.querySelectorAll('.post')
+    var posts = document.querySelectorAll('.grid-item')
     imagesLoaded(posts, function () {
       // eslint-disable-next-line no-unused-vars
       var masonry = new Masonry('.grid', {
