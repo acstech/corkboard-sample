@@ -59,6 +59,10 @@
                         v-model="newUser.confirm"
                         required
                 >
+              <br>
+              <div v-if="newUser.password == '' && newUser.confirm == ''"></div>
+              <div v-else-if="(newUser.password.length > 0 || newUser.confirm.length > 0) && !passwordMatch" class="alert alert-danger">Passwords do not match</div>
+              <div v-else-if="passwordMatch" class="alert alert-success">Passwords Match!</div>
             </div>
             <input type="submit" class="btn btn-primary" value="Register">
         </form>
@@ -82,13 +86,15 @@ export default {
       error: ''
     }
   },
+  computed: {
+    passwordMatch () {
+      return this.newUser.password === this.newUser.confirm
+    }
+  },
   methods: {
     register () {
-      if (this.newUser.password !== this.newUser.confirm) {
-        this.error = 'Your passwords do not match.'
+      if (!this.passwordMatch) {
         return
-      } else {
-        this.error = ''
       }
       axios({
         method: 'post',
