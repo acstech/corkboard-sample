@@ -1,5 +1,8 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
+// URLs for dev and production api servers
+var apiDev = 'http://localhost:8080'
+var apiProd = 'api.corkboard.ac.st'
 
 module.exports = {
   build: {
@@ -19,7 +22,13 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
+    proxy: {
+      '/api': {
+        target: apiProd,
+        secure: false
+      }
+    }
   },
   dev: {
     env: require('./dev.env'),
@@ -27,9 +36,9 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
+    proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: apiDev,
         secure: false
       }
     },

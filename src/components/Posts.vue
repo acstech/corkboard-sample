@@ -11,7 +11,7 @@
           <p>{{ post.description }}</p>
           <!-- Hard-coded id for now -->
           <p>
-            <router-link to="/viewPost/1" class="btn btn-primary" role="button" @click="viewPost">View Post</router-link>
+            <router-link to="/viewPost/1" class="btn btn-primary" role="button" @click="viewPost(post)">View Post</router-link>
             <a href="#" class="btn btn-default" role="button">Contact Seller</a>
           </p>
         </div>
