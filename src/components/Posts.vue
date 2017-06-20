@@ -70,11 +70,7 @@ export default {
   },
   methods: {
     viewPost (post) {
-      // TODO: Thinking about simplifying this to a getItem API call to the post matching the one that was clicked
-      // The param above would contain the specific post's data
       this.$store.commit('getActivePost', {post: post.post})
-      console.log(post)
-      // this.$router.push('viewPost/1')
     }
   }
 }

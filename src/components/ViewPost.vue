@@ -63,7 +63,6 @@ import PostModal from './PostModal.vue'
 export default {
   computed: {
     currentPost () {
-      console.log(this.$store.state.activePost)
       return this.$store.state.activePost
     }
   },
