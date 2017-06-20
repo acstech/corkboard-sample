@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     logIn () {
-      var vm = this
       var credentials = {
         username: this.credentials.username,
         password: this.credentials.password
@@ -57,7 +56,7 @@ export default {
       })
       .then(res => {
         console.log(res)
-        vm.isAuthenticated = true
+        this.$store.commit('authenticate')
       })
       .catch(error => {
         console.log(error)

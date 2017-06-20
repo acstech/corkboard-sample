@@ -1,7 +1,7 @@
 <template>
   <post-modal>
     <div class="modal-header">
-      <h3>Viewed Post Title</h3>
+      <h3>{{ info.title }}</h3>
       <router-link class="close" to="/">&times;</router-link>
     </div>
 
@@ -73,7 +73,6 @@ export default {
     let vm = this
     eventBus.$on('viewPost', function (post) {
       vm.info.title = post.title
-      alert('event emitted and received!')
     })
   },
   components: {

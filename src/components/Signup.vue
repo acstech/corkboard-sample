@@ -98,6 +98,7 @@ export default {
       })
       .then(res => {
         console.log(res)
+        this.$store.commit('authenticate')
       })
       .catch(error => {
         console.log(error)
