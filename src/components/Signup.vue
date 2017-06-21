@@ -35,7 +35,7 @@
               <br>
               <div v-if="newUser.password == '' && newUser.confirm == ''"></div>
               <div v-else-if="!passwordAccept" class="alert alert-danger">Passwords do not match</div>
-              <div v-else-if="passwordAccept" class="alert alert-success">Passwords Match!</div>
+              <div v-else class="alert alert-success">Passwords Match!</div>
             </div>
             <input type="submit" class="btn btn-primary" value="Register">
         </form>
