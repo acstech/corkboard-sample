@@ -4,7 +4,9 @@
     <div class="grid-sizer col-xs-4"></div>
     <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
-        <router-link to="/viewPost/1"><img :src="post.imgSrc" alt="..."></router-link>
+        <router-link to="/viewPost/1">
+          <img :src="post.imgSrc" alt="..." @click = "viewPost({post})">
+        </router-link>
         <div class="caption">
           <h3>{{ post.title }}</h3>
           <h4>{{ post.price | currency }}</h4>
