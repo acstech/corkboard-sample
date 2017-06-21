@@ -8,37 +8,10 @@
         <form @submit.prevent="register()">
             <div class="form-group">
                 <input
-                        type="text"
-                        class="form-control"
-                        placeholder="First name"
-                        v-model="newUser.firstname"
-                        required
-                >
-            </div>
-            <div class="form-group">
-                <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Last name"
-                        v-model="newUser.lastname"
-                        required
-                >
-            </div>
-            <div class="form-group">
-                <input
                         type="email"
                         class="form-control"
                         placeholder="Email address"
                         v-model="newUser.email"
-                        required
-                >
-            </div>
-            <div class="form-group">
-                <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Username"
-                        v-model="newUser.username"
                         required
                 >
             </div>
@@ -55,10 +28,14 @@
                 <input
                         type="password"
                         class="form-control"
-                        placeholder="confirm password"
+                        placeholder="Confirm password"
                         v-model="newUser.confirm"
                         required
                 >
+              <br>
+              <div v-if="newUser.password == '' && newUser.confirm == ''"></div>
+              <div v-else-if="!passwordAccept" class="alert alert-danger">Passwords do not match</div>
+              <div v-else class="alert alert-success">Passwords Match!</div>
             </div>
             <input type="submit" class="btn btn-primary" value="Register">
         </form>
@@ -71,10 +48,7 @@ export default {
   data () {
     return {
       newUser: {
-        firstname: '',
-        lastname: '',
         email: '',
-        username: '',
         password: '',
         confirm: '',
         siteId: '12341234-1234-1234-1234-432143214321'
@@ -82,13 +56,15 @@ export default {
       error: ''
     }
   },
+  computed: {
+    passwordAccept () {
+      return (this.newUser.password === this.newUser.confirm) && this.newUser.password.length > 0
+    }
+  },
   methods: {
     register () {
-      if (this.newUser.password !== this.newUser.confirm) {
-        this.error = 'Your passwords do not match.'
+      if (!this.passwordAccept) {
         return
-      } else {
-        this.error = ''
       }
       axios({
         method: 'post',
@@ -98,6 +74,8 @@ export default {
       .then(res => {
         console.log(res)
         this.$store.commit('authenticate')
+        // TODO: Route to user profile for editing and adding more info after sign up
+        this.$router.push('/')
       })
       .catch(error => {
         console.log(error)

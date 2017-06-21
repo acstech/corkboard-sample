@@ -13,11 +13,12 @@
         </label>
         <label class="form-label">
           Title
-          <input type="text" class="form-control">
+          <br><span style="font-size: 12px">(Max 50 Characters)</span>
+          <input type="text" class="form-control" maxlength="50">
         </label>
         <label class="form-label">
           Price
-          <money v-model="price" v-bind="moneyConfig" class="form-control currency"></money>
+          <money v-model="itemprice" v-bind="moneyConfig" class="form-control currency"></money>
         </label>
         <label class="form-label">
           Description
@@ -31,6 +32,11 @@
             <option>Category 2</option>
             <option>Category 3</option>
           </select>
+        </label>
+        <label class="form-label">
+          Sale Status:
+          <input type="radio" v-model="salestatus" name="salestatus" value="Available"> Available
+          <input type="radio" v-model="salestatus" name="salestatus" value="Sale Pending"> Sale Pending
         </label>
       </form>
     </div>
@@ -52,10 +58,11 @@ import { Money } from 'v-money'
 export default {
   data () {
     return {
-      title: '',
+      itemname: '',
       pictures: [],
-      price: 0.00,
-      description: '',
+      itemprice: 0.00,
+      itemdesc: '',
+      salestatus: '',
       moneyConfig: {
         // The character used to show the decimal place.
         decimal: '.',
@@ -98,5 +105,9 @@ export default {
     position: relative;
     width: 30%;
     left: 35%;
+  }
+  [type="radio"] {
+    margin-left: 8px;
+    margin-right: 2px;
   }
 </style>
