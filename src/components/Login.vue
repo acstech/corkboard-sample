@@ -5,13 +5,13 @@
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
-        <form>
+        <form @submit.prevent="logIn()">
             <div class="form-group">
                 <input
                         type="text"
                         class="form-control"
-                        placeholder="Enter your username"
-                        v-model="credentials.username"
+                        placeholder="Enter your email"
+                        v-model="credentials.email"
                 >
             </div>
             <div class="form-group">
@@ -22,7 +22,7 @@
                         v-model="credentials.password"
                 >
             </div>
-            <input type="submit" class="btn btn-primary" @submit.prevent="logIn()" value="Log In">
+            <input type="submit" class="btn btn-primary" value="Log In">
         </form>
     </div>
 </template>
@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       credentials: {
-        username: '',
+        email: '',
         password: '',
         siteId: '12341234-1234-1234-1234-123412341234'
       },
@@ -42,11 +42,6 @@ export default {
   },
   methods: {
     logIn () {
-      var credentials = {
-        username: this.credentials.username,
-        password: this.credentials.password
-      }
-      console.log(credentials)
       // TODO: Add authentication steps
       axios({
         method: 'post',

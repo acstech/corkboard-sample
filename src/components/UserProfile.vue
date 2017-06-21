@@ -11,7 +11,7 @@
           <li class="profile-info">First Name:</li>
           <li class="profile-info">Last Name:</li>
           <li class="profile-info">Email:</li>
-          <li class="profile-info">Anything Else:</li>
+          <li class="profile-info">Phone:</li>
         </ul>
       </div>
       <div class="container">
@@ -21,9 +21,9 @@
             <div class="thumbnail">
               <img :src="post.imgSrc" alt="...">
               <div class="caption">
-                <h3>{{ post.title }}</h3>
-                <h4>{{ post.price | currency }}</h4>
-                <p>{{ post.description }}</p>
+                <h3>{{ post.itemname }}</h3>
+                <h4>{{ post.itemprice | currency }}</h4>
+                <p>{{ post.itemdesc }}</p>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
                 <p><router-link to="/editPost/1" class="btn btn-primary" role="button">Edit Post</router-link>
                   <router-link to="/" class="btn btn-danger" role="button">Delete Post</router-link></p>
@@ -42,19 +42,19 @@ export default {
     return {
       // Dummy data to make v-for display multiple thumbnails
       posts: [
-        {title: 'Stuff You Do Not Want',
-          price: 10.00,
-          description: 'You may not want this item but I hope that someone will.',
+        {itemname: 'Stuff You Do Not Want',
+          itemprice: 10.00,
+          itemdesc: 'You may not want this item but I hope that someone will.',
           imgSrc: 'http://unrealitymag.com/wp-content/uploads/2012/11/opener-465x465.jpg'
         },
-        {title: 'Free Thing',
-          price: 0.00,
-          description: 'Yes it is free, so please take it!',
+        {itemname: 'Free Thing',
+          itemprice: 0.00,
+          itemdesc: 'Yes it is free, so please take it!',
           imgSrc: 'http://s2.dmcdn.net/Ub1O8/1280x720-mCQ.jpg'
         },
-        {title: 'Handmade Thing Grandma Made',
-          price: 6.00,
-          description: 'Yeah, so grandma is quite good at making things. She is also a lunatic.',
+        {itemname: 'Handmade Thing Grandma Made',
+          itemprice: 6.00,
+          itemdesc: 'Yeah, so grandma is quite good at making things. She is also a lunatic.',
           imgSrc: 'http://media.techeblog.com/images/fun_gadgets.jpg'
         }
       ]

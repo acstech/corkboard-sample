@@ -13,11 +13,11 @@
         </label>
         <label class="form-label">
           First Name
-          <input type="text" class="form-control" v-model="user.firstName">
+          <input type="text" class="form-control" v-model="user.firstname">
         </label>
         <label class="form-label">
           Last Name
-          <input type="text" class="form-control" v-model="user.lastName">
+          <input type="text" class="form-control" v-model="user.lastname">
         </label>
         <label class="form-label">
           Email

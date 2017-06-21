@@ -17,7 +17,7 @@
         </label>
         <label class="form-label">
           Price
-          <money v-model="price" v-bind="moneyConfig" class="form-control currency"></money>
+          <money v-model="itemprice" v-bind="moneyConfig" class="form-control currency"></money>
         </label>
         <label class="form-label">
           Description
@@ -52,10 +52,10 @@ import { Money } from 'v-money'
 export default {
   data () {
     return {
-      title: '',
+      itemname: '',
       pictures: [],
-      price: 0.00,
-      description: '',
+      itemprice: 0.00,
+      itemdesc: '',
       moneyConfig: {
         // The character used to show the decimal place.
         decimal: '.',

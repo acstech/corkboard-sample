@@ -1,7 +1,7 @@
 <template>
   <post-modal>
     <div class="modal-header">
-      <h3>{{ currentPost.title }}</h3>
+      <h3>{{ currentPost.itemname }}</h3>
       <router-link class="close" to="/">&times;</router-link>
     </div>
 
@@ -41,9 +41,9 @@
         </a>
       </div>
 
-      <h4>{{ currentPost.price | currency }}</h4>
+      <h4>{{ currentPost.itemprice | currency }}</h4>
       <h4>Seller: Seller Name</h4>
-      <p>{{ currentPost.description }}</p>
+      <p>{{ currentPost.itemdesc }}</p>
 
     </div>
 

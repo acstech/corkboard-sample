@@ -17,7 +17,7 @@
       </label>
       <label class="form-label">
         Price
-        <money v-model="price" v-bind="moneyConfig" class="form-control currency"></money>
+        <money v-model="itemprice" v-bind="moneyConfig" class="form-control currency"></money>
       </label>
       <label class="form-label">
         Description
@@ -52,10 +52,10 @@
     // Will need more data attributes
     data () {
       return {
-        title: '',
+        itemname: '',
         pictures: [],
-        price: 0.00,
-        description: '',
+        itemprice: 0.00,
+        itemdesc: '',
         moneyConfig: {
           // The character used to show the decimal place.
           decimal: '.',
@@ -89,7 +89,7 @@
               let picFile = event.target
               let preview = document.getElementById('preview')
               preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
-                "title='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
+                "itemname='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
             }
             // Read the image
             picReader.readAsDataURL(file)
@@ -100,14 +100,8 @@
       }
     },
     methods: {
-      close: function () {
-        this.title = ''
-        this.price = ''
-        this.description = ''
-      },
       savePost: function () {
         // Insert AJAX call here...
-        this.close()
       }
     },
     components: {

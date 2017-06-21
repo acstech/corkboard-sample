@@ -34,8 +34,8 @@
                 >
               <br>
               <div v-if="newUser.password == '' && newUser.confirm == ''"></div>
-              <div v-else-if="(newUser.password.length > 0 || newUser.confirm.length > 0) && !passwordMatch" class="alert alert-danger">Passwords do not match</div>
-              <div v-else-if="passwordMatch" class="alert alert-success">Passwords Match!</div>
+              <div v-else-if="!passwordAccept" class="alert alert-danger">Passwords do not match</div>
+              <div v-else-if="passwordAccept" class="alert alert-success">Passwords Match!</div>
             </div>
             <input type="submit" class="btn btn-primary" value="Register">
         </form>
@@ -57,13 +57,13 @@ export default {
     }
   },
   computed: {
-    passwordMatch () {
-      return this.newUser.password === this.newUser.confirm
+    passwordAccept () {
+      return (this.newUser.password === this.newUser.confirm) && this.newUser.password.length > 0
     }
   },
   methods: {
     register () {
-      if (!this.passwordMatch) {
+      if (!this.passwordAccept) {
         return
       }
       axios({
