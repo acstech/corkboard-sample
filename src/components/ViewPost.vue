@@ -42,9 +42,9 @@
           </a>
         </div>
 
-        <h4>{{ currentPost.price | currency }}</h4>
-        <h4>Seller: Seller Name</h4>
-        <p>{{ currentPost.description }}</p>
+      <h4>{{ currentPost.itemprice | currency }}</h4>
+      <h4>Seller: Seller Name</h4>
+      <p>{{ currentPost.itemdesc }}</p>
 
       </div>
 

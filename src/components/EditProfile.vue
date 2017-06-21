@@ -13,15 +13,19 @@
         </label>
         <label class="form-label">
           First Name
-          <input type="text" class="form-control" v-model="user.firstName">
+          <input type="text" class="form-control" v-model="user.firstname">
         </label>
         <label class="form-label">
           Last Name
-          <input type="text" class="form-control" v-model="user.lastName">
+          <input type="text" class="form-control" v-model="user.lastname">
         </label>
         <label class="form-label">
           Email
           <input type="email" class="form-control" v-model="user.email">
+        </label>
+        <label class="form-label">
+          Phone
+          <input type="tel" class="form-control" v-model="user.phone">
         </label>
       </form>
     </div>
@@ -46,7 +50,8 @@ export default {
         profilePic: null,
         firstName: '',
         lastName: '',
-        email: ''
+        email: '',
+        phone: ''
       }
     }
   },
