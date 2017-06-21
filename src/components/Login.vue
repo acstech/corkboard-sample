@@ -42,7 +42,6 @@ export default {
   },
   methods: {
     logIn () {
-      // TODO: Add authentication steps
       axios({
         method: 'post',
         url: '/api/authenticate',

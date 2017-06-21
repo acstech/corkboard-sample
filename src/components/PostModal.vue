@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-mask" transition="modal">
+    <div class="modal-mask" id="mask" transition="modal">
         <div class="modal-container">
             <slot></slot>
         </div>
@@ -7,9 +7,8 @@
 </template>
 
 <script>
-    export default {
-
-    }
+export default {
+}
 </script>
 
 <style scoped>

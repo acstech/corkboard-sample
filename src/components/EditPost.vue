@@ -32,6 +32,11 @@
             <option>Category 3</option>
           </select>
         </label>
+        <label class="form-label">
+          Sale Status:
+          <input type="radio" v-model="salestatus" name="salestatus" value="Available"> Available
+          <input type="radio" v-model="salestatus" name="salestatus" value="Sale Pending"> Sale Pending
+        </label>
       </form>
     </div>
 
@@ -56,6 +61,7 @@ export default {
       pictures: [],
       itemprice: 0.00,
       itemdesc: '',
+      salestatus: '',
       moneyConfig: {
         // The character used to show the decimal place.
         decimal: '.',
@@ -98,5 +104,9 @@ export default {
     position: relative;
     width: 30%;
     left: 35%;
+  }
+  [type="radio"] {
+    margin-left: 8px;
+    margin-right: 2px;
   }
 </style>

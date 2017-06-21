@@ -25,7 +25,7 @@
       </label>
       <label class="form-label">
         Category
-        <select class="form-control">
+        <select class="form-control" v-model="itemcat">
           <option>None</option>
           <option>Category 1</option>
           <option>Category 2</option>
@@ -56,6 +56,7 @@
         pictures: [],
         itemprice: 0.00,
         itemdesc: '',
+        itemcat: '',
         moneyConfig: {
           // The character used to show the decimal place.
           decimal: '.',
