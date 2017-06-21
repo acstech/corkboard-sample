@@ -14,19 +14,19 @@
       <label class="form-label">
         Title
         <br><span style="font-size: 12px">(Max 50 Characters)</span>
-        <input v-model="title" class="form-control" maxlength="50">
+        <input v-model="newPost.title" class="form-control" maxlength="50">
       </label>
       <label class="form-label">
         Price
-        <money v-model="itemprice" v-bind="moneyConfig" class="form-control currency"></money>
+        <money v-model="newPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
       </label>
       <label class="form-label">
         Description
-        <textarea v-model="description" rows="5" class="form-control"></textarea>
+        <textarea v-model="newPost.itemdesc" rows="5" class="form-control"></textarea>
       </label>
       <label class="form-label">
         Category
-        <select class="form-control" v-model="itemcat">
+        <select class="form-control" v-model="newPost.itemcat">
           <option>None</option>
           <option>Category 1</option>
           <option>Category 2</option>
@@ -49,15 +49,19 @@
 <script>
   import PostModal from './PostModal.vue'
   import { Money } from 'v-money'
+  import axios from 'axios'
   export default {
     // Will need more data attributes
     data () {
       return {
-        itemname: '',
-        pictures: [],
-        itemprice: 0.00,
-        itemdesc: '',
-        itemcat: '',
+        newPost: {
+          itemname: '',
+          // pictures: [],
+          itemprice: 0.00,
+          itemdesc: '',
+          itemcat: '',
+          salestatus: 'Available'
+        },
         moneyConfig: {
           // The character used to show the decimal place.
           decimal: '.',
@@ -91,7 +95,7 @@
               let picFile = event.target
               let preview = document.getElementById('preview')
               preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
-                "itemname='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
+                "title='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
             }
             // Read the image
             picReader.readAsDataURL(file)
@@ -103,7 +107,18 @@
     },
     methods: {
       savePost: function () {
-        // Insert AJAX call here...
+        // Should fail out for right now
+        axios({
+          method: 'post',
+          url: '/api/items/new',
+          data: this.newPost
+        })
+          .then(res => {
+            console.log(res)
+          })
+          .catch(error => {
+            console.log(error)
+          })
       }
     },
     components: {
