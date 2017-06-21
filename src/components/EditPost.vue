@@ -13,7 +13,8 @@
         </label>
         <label class="form-label">
           Title
-          <input type="text" class="form-control">
+          <br><span style="font-size: 12px">(Max 50 Characters)</span>
+          <input type="text" class="form-control" maxlength="50">
         </label>
         <label class="form-label">
           Price

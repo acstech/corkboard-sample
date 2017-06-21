@@ -23,6 +23,10 @@
           Email
           <input type="email" class="form-control" v-model="user.email">
         </label>
+        <label class="form-label">
+          Phone
+          <input type="tel" class="form-control" v-model="user.phone">
+        </label>
       </form>
     </div>
 
@@ -46,7 +50,8 @@ export default {
         profilePic: null,
         firstName: '',
         lastName: '',
-        email: ''
+        email: '',
+        phone: ''
       }
     }
   },

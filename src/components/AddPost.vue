@@ -13,7 +13,8 @@
       <div id="preview"></div>
       <label class="form-label">
         Title
-        <input v-model="title" class="form-control">
+        <br><span style="font-size: 12px">(Max 50 Characters)</span>
+        <input v-model="title" class="form-control" maxlength="50">
       </label>
       <label class="form-label">
         Price
