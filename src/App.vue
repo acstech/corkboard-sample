@@ -61,6 +61,10 @@ export default {
         color: #2c3e50;
     }
 
+    .navbar {
+      box-shadow: 1px 4px 5px grey;
+    }
+
     h1, h2 {
         font-weight: normal;
     }

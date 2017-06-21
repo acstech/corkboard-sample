@@ -99,4 +99,11 @@ export default {
     margin-top: 8px;
     text-align: left;
   }
+.thumbnail {
+  box-shadow: 4px 4px 6px grey;
+  border: 2px solid #003458;
+}
+img {
+  box-shadow: 0 4px 6px grey;
+}
 </style>
