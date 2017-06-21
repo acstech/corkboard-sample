@@ -21,11 +21,17 @@ const router = new VueRouter({
 const store = new Vuex.Store({
   state: {
     isAuthenticated: false,
+    // Likely not best practice to place these states here globally like this
     activePost: {
       title: '',
       price: null,
       description: '',
       imgSrc: null
+    },
+    viewedUserProfile: {
+      firstName: '',
+      lastName: '',
+      email: ''
     }
   },
   mutations: {
@@ -37,6 +43,11 @@ const store = new Vuex.Store({
       state.activePost.price = post.post.price
       state.activePost.description = post.post.description
       state.activePost.imgSrc = post.post.imgSrc
+    },
+    getViewedProfile (state, profile) {
+      state.viewedUserProfile.firstName = profile.firstName
+      state.viewedUserProfile.lastName = profile.lastName
+      state.viewedUserProfile.email = profile.email
     }
   }
 })

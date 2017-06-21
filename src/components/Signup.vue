@@ -8,37 +8,10 @@
         <form @submit.prevent="register()">
             <div class="form-group">
                 <input
-                        type="text"
-                        class="form-control"
-                        placeholder="First name"
-                        v-model="newUser.firstname"
-                        required
-                >
-            </div>
-            <div class="form-group">
-                <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Last name"
-                        v-model="newUser.lastname"
-                        required
-                >
-            </div>
-            <div class="form-group">
-                <input
                         type="email"
                         class="form-control"
                         placeholder="Email address"
                         v-model="newUser.email"
-                        required
-                >
-            </div>
-            <div class="form-group">
-                <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Username"
-                        v-model="newUser.username"
                         required
                 >
             </div>
@@ -55,7 +28,7 @@
                 <input
                         type="password"
                         class="form-control"
-                        placeholder="confirm password"
+                        placeholder="Confirm password"
                         v-model="newUser.confirm"
                         required
                 >
@@ -75,10 +48,7 @@ export default {
   data () {
     return {
       newUser: {
-        firstname: '',
-        lastname: '',
         email: '',
-        username: '',
         password: '',
         confirm: '',
         siteId: '12341234-1234-1234-1234-432143214321'

@@ -81,6 +81,7 @@ export default {
   color: white;
   font-weight: bold;
   min-height: 800px;
+  box-shadow: 4px 4px 6px grey;
 }
 .btn {
   font-weight: bold;
