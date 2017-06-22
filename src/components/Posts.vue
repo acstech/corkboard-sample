@@ -23,8 +23,7 @@
 </template>
 
 <script>
-import { Masonry, imagesLoaded } from '../main'
-import axios from 'axios'
+import { Masonry, imagesLoaded, axios } from '../main'
 export default {
   data () {
     return {

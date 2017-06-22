@@ -6,6 +6,10 @@ import { routes } from './routes'
 
 export const Masonry = require('masonry-layout')
 export const imagesLoaded = require('imagesloaded')
+export const axios = require('axios').create({
+  baseURL: process.env.API_URL,
+  headers: {'Content-Type': 'application/json'}
+})
 
 Vue.use(VueRouter)
 Vue.use(Vuex)

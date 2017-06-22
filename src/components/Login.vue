@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '../main'
 export default {
   data () {
     return {
