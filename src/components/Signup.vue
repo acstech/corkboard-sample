@@ -74,8 +74,8 @@ export default {
       .then(res => {
         console.log(res)
         this.$store.commit('authenticate')
-        // TODO: Route to user profile for editing and adding more info after sign up
-        this.$router.push('/')
+        this.$store.commit('getViewedProfile', this.newUser)
+        this.$router.push('/editProfile/new')
       })
       .catch(error => {
         console.log(error)
