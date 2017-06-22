@@ -1,7 +1,8 @@
 <template>
     <div class="col-sm-4 col-sm-offset-4">
-        <h2>Log In</h2>
-        <p>Log in to your account to buy and sell on the marketplace!</p>
+        <h2>Login</h2>
+        <p>Log in to your account to buy and sell on Corkboard!</p>
+        <p>Don't have an account? Make one <router-link to="/signup" style="font-weight:bold;color:#656565">here!</router-link>
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>

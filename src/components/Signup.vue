@@ -1,7 +1,7 @@
 <template>
     <div class="col-sm-4 col-sm-offset-4">
         <h2>Sign Up</h2>
-        <p>Sign up now to buy and sell on the marketplace!</p>
+        <p>Sign up now to buy and sell on Corkboard!</p>
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
@@ -34,8 +34,8 @@
                 >
               <br>
               <div v-if="newUser.password == '' && newUser.confirm == ''"></div>
-              <div v-else-if="!passwordAccept" class="alert alert-danger">Passwords do not match</div>
-              <div v-else class="alert alert-success">Passwords Match!</div>
+              <div v-else-if="!passwordAccept" class="alert alert-danger">Passwords do not match... :(</div>
+              <div v-else class="alert alert-success">Passwords match!</div>
             </div>
             <input type="submit" class="btn btn-primary" value="Register">
         </form>
