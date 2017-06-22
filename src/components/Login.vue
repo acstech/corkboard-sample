@@ -13,6 +13,7 @@
                         class="form-control"
                         placeholder="Enter your email"
                         v-model="credentials.email"
+                        required
                 >
             </div>
             <div class="form-group">
@@ -21,6 +22,7 @@
                         class="form-control"
                         placeholder="Enter your password"
                         v-model="credentials.password"
+                        required
                 >
             </div>
             <input type="submit" class="btn btn-primary" value="Log In">
@@ -51,6 +53,7 @@ export default {
       .then(res => {
         console.log(res)
         this.$store.commit('authenticate')
+        this.$router.push('/')
       })
       .catch(error => {
         console.log(error)

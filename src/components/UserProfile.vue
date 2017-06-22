@@ -8,10 +8,10 @@
           <!-- v-if user is authenticated && id matches profile id -->
           <router-link to="/editProfile/1" class="btn btn-info" role="button">Edit Profile</router-link>
           <br><br>
-          <li class="profile-info">First Name:</li>
-          <li class="profile-info">Last Name:</li>
-          <li class="profile-info">Email:</li>
-          <li class="profile-info">Phone:</li>
+          <li class="profile-info">First Name: {{ userProfile.firstname }}</li>
+          <li class="profile-info">Last Name: {{ userProfile.lastname }}</li>
+          <li class="profile-info">Email: {{ userProfile.email }}</li>
+          <li class="profile-info">Phone: {{ userProfile.phone }}</li>
         </ul>
       </div>
       <div class="container">
@@ -38,6 +38,11 @@
 <script>
 import { Masonry, imagesLoaded } from '../main'
 export default {
+  computed: {
+    userProfile () {
+      return this.$store.state.viewedUserProfile
+    }
+  },
   data () {
     return {
       // Dummy data to make v-for display multiple thumbnails
