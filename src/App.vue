@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <ul class="nav navbar-nav">
                   <router-link to="/"><div class="navbar-brand"><img src="../static/generatedtext.png"></div></router-link>
@@ -19,7 +19,7 @@
                 </ul>
             </div>
         </nav>
-        <div class="container">
+        <div class="container" style="margin-top:80px">
             <router-view></router-view>
             <router-view name="modal"></router-view>
         </div>
