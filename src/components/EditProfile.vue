@@ -4,9 +4,8 @@
       <h3>Edit Profile</h3>
       <router-link class="close" to="/viewProfile/1">&times;</router-link>
     </div>
-
+    <form @submit="saveProfileSettings(userProfile)">
     <div class="modal-body">
-      <form>
         <label class="form-label">
           Profile Picture
           <input type="file" class="form-control">
@@ -27,17 +26,13 @@
           Phone
           <input type="tel" class="form-control" v-model="userProfile.phone">
         </label>
-      </form>
     </div>
 
     <div class="modal-footer text-right">
-      <button class="btn btn-danger cancel">
-        <router-link to="/viewProfile/1"><span>Cancel</span></router-link>
-      </button>
-      <button class="btn btn-primary">
-        <router-link to="/viewProfile/1"><span>Save Changes</span></router-link>
-      </button>
+      <router-link to="/viewProfile/1"><input type="button" class="btn btn-danger cancel" value="Cancel"></router-link>
+      <router-link to="/viewProfile/1"><input type="submit" class="btn btn-primary" value="Save Changes"></router-link>
     </div>
+    </form>
   </post-modal>
 </template>
 
@@ -47,6 +42,11 @@ export default {
   computed: {
     userProfile () {
       return this.$store.state.viewedUserProfile
+    }
+  },
+  methods: {
+    saveProfileSettings (user) {
+      this.$store.commit('getViewedProfile', user)
     }
   },
   components: {
