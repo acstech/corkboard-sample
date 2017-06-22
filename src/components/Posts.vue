@@ -24,10 +24,12 @@
 
 <script>
 import { Masonry, imagesLoaded } from '../main'
+import axios from 'axios'
 export default {
   data () {
     return {
       // Dummy data to make v-for display multiple thumbnails. This would be grabbed from a DB
+      // posts: null
       posts: [
         {itemname: 'Super Cool Item',
           itemprice: 4.50,
@@ -65,7 +67,8 @@ export default {
           imgSrc: 'http://images.designntrend.com/data/images/full/50404/top-5-gadgets-list-image-jpg.jpg?w=780',
           salestatus: 'Available'
         },
-        {itemname: 'Random Stuff Again',
+        {
+          itemname: 'Random Stuff Again',
           itemprice: 35.00,
           itemdesc: 'Oh look, more random stuff!',
           imgSrc: 'https://www.techprevue.com/wp-content/uploads/2016/03/tech-items-1024x682.jpg',
@@ -85,6 +88,18 @@ export default {
         percentPosition: true
       })
     })
+    // Retrieve all items call to API
+    axios({
+      method: 'get',
+      url: '/api/items'
+    })
+      .then(res => {
+        console.log(res)
+        // this.posts = res.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   methods: {
     viewPost (post) {

@@ -72,7 +72,7 @@ export default {
         data: this.newUser
       })
       .then(res => {
-        console.log(res)
+        console.log(res.data)
         this.$store.commit('authenticate')
         this.$store.commit('getViewedProfile', this.newUser)
         this.$router.push('/editProfile/new')
