@@ -3,7 +3,7 @@
         <nav class="navbar navbar-default">
             <div class="container">
                 <ul class="nav navbar-nav">
-                  <div class="navbar-brand"><img src="../static/generatedtext.png" style="margin-top: 0"></div>
+                  <router-link to="/"><div class="navbar-brand"><img src="../static/generatedtext.png"></div></router-link>
                     <li><router-link to="/">Home</router-link></li>
                     <li><router-link to="/login" v-if="!authenticated">Login</router-link></li>
                     <li><router-link to="/signup" v-if="!authenticated">Sign Up</router-link></li>
