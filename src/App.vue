@@ -3,6 +3,7 @@
         <nav class="navbar navbar-default">
             <div class="container">
                 <ul class="nav navbar-nav">
+                  <div class="navbar-brand"><img src="../static/generatedtext.png" style="margin-top: 0"></div>
                     <li><router-link to="/">Home</router-link></li>
                     <li><router-link to="/login" v-if="!authenticated">Login</router-link></li>
                     <li><router-link to="/signup" v-if="!authenticated">Sign Up</router-link></li>
@@ -81,7 +82,11 @@ export default {
     }
 
     a {
-        color: #f7f4fd;
+      color: #f7f4fd;
+    }
+
+    .navbar-brand {
+      padding: 10px 10px 10px 36px;
     }
 
     .modal-mask {

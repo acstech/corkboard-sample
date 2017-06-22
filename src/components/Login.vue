@@ -44,7 +44,7 @@ export default {
     logIn () {
       axios({
         method: 'post',
-        url: '/api/authenticate',
+        url: '/api/users/auth',
         data: this.credentials
       })
       .then(res => {

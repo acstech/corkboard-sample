@@ -68,7 +68,7 @@ export default {
       }
       axios({
         method: 'post',
-        url: '/api/register',
+        url: '/api/users/register',
         data: this.newUser
       })
       .then(res => {
