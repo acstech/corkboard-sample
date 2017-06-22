@@ -14,7 +14,7 @@
       <label class="form-label">
         Title
         <br><span style="font-size: 12px">(Max 50 Characters)</span>
-        <input v-model="newPost.title" class="form-control" maxlength="50">
+        <input v-model="newPost.itemname" class="form-control" maxlength="50">
       </label>
       <label class="form-label">
         Price
@@ -107,7 +107,6 @@
     },
     methods: {
       savePost: function () {
-        // Should fail out for right now
         axios({
           method: 'post',
           url: '/api/items/new',
