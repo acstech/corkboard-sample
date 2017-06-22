@@ -13,19 +13,19 @@
         </label>
         <label class="form-label">
           First Name
-          <input type="text" class="form-control" v-model="user.firstname">
+          <input type="text" class="form-control" v-model="userProfile.firstname">
         </label>
         <label class="form-label">
           Last Name
-          <input type="text" class="form-control" v-model="user.lastname">
+          <input type="text" class="form-control" v-model="userProfile.lastname">
         </label>
         <label class="form-label">
           Email
-          <input type="email" class="form-control" v-model="user.email">
+          <input type="email" class="form-control" v-model="userProfile.email">
         </label>
         <label class="form-label">
           Phone
-          <input type="tel" class="form-control" v-model="user.phone">
+          <input type="tel" class="form-control" v-model="userProfile.phone">
         </label>
       </form>
     </div>
@@ -44,15 +44,9 @@
 <script>
 import PostModal from './PostModal.vue'
 export default {
-  data () {
-    return {
-      user: {
-        profilePic: null,
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: ''
-      }
+  computed: {
+    userProfile () {
+      return this.$store.state.viewedUserProfile
     }
   },
   components: {

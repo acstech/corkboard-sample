@@ -2,7 +2,7 @@
   <transition name="modal">
     <post-modal>
       <div class="modal-header">
-        <h3>{{ currentPost.title }}</h3>
+        <h3>{{ currentPost.itemname }}</h3>
         <router-link class="close" to="/">&times;</router-link>
       </div>
 
