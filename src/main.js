@@ -3,10 +3,12 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import { routes } from './routes'
+import Masonry from 'masonry-layout'
+import imagesLoaded from 'imagesloaded'
+import Axios from 'axios'
 
-export const Masonry = require('masonry-layout')
-export const imagesLoaded = require('imagesloaded')
-export const axios = require('axios').create({
+export { Masonry, imagesLoaded }
+export const axios = Axios.create({
   baseURL: process.env.API_URL,
   headers: {'Content-Type': 'application/json'}
 })
