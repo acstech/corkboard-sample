@@ -20,7 +20,7 @@
         </label>
         <label class="form-label">
           Email
-          <input type="email" class="form-control" v-model="userProfile.email">
+          <input type="email" class="form-control" v-model="userProfile.email" required>
         </label>
         <label class="form-label">
           Phone
@@ -30,7 +30,7 @@
 
     <div class="modal-footer text-right">
       <router-link to="/viewProfile/1"><input type="button" class="btn btn-danger cancel" value="Cancel"></router-link>
-      <router-link to="/viewProfile/1"><input type="submit" class="btn btn-primary" value="Save Changes"></router-link>
+      <input type="submit" class="btn btn-primary" value="Save Changes">
     </div>
     </form>
   </post-modal>
@@ -38,6 +38,8 @@
 
 <script>
 import PostModal from './PostModal.vue'
+// eslint-disable-next-line no-unused-vars
+import axios from 'axios'
 export default {
   computed: {
     userProfile () {
@@ -46,7 +48,23 @@ export default {
   },
   methods: {
     saveProfileSettings (user) {
+      // TODO: Need user id somehow to route correctly!
+      /*
+      axios({
+        method: 'put',
+        url: '/api/users/edit/ID',
+        data: this.credentials
+      })
+        .then(res => {
+          console.log(res)
+          this.$router.push('/viewProfile/ID')
+        })
+        .catch(error => {
+          console.log(error)
+        })
+        */
       this.$store.commit('getViewedProfile', user)
+      this.$router.push('/viewProfile/1')
     }
   },
   components: {
