@@ -1,8 +1,10 @@
 language: node_js
 node_js:
-  - "node"
+- node
 script:
-  - "npm run build"
+- npm run build
+before_deploy:
+- tar -czvf corkboardFrontend.tar.gz -C dist .
 deploy:
   - provider: s3
     access_key_id: AKIAI6J3DLDG65WB423Q
@@ -15,4 +17,12 @@ deploy:
     on:
       repo: acstech/corkboard-sample
       branch: master
+      tags: true
+  - provider: releases
+    api_key:
+      secure: VBPwOCxn+nW1y06K/Zn9KTJGGGXedpstttrCh/9eg0rHMgV/K/piZuWwiYBp65pcP18Nv+qwc1Aj3lLhg4TI/sVmTH1OjpgNs8GuVEy5Q5VY8epjxZvdLZUO7i94nGCqygUBIYXWyyH7YbczuN4UtZifoXQjsMznj1N0M6pazJzG/42F+9wQpKHq76pHGG4EB+gqVM7xSa932bZ+Tt0cl66E4ubcU41xzg77WCuinoPwhu/ivDDUJcX06CnePN8zlXVTAJBB0Cq3AzxLFsFlFNavkNrccLI6Id3DZZIyaragqTDG3Arfsmto+Czj/AYSm6b6b3HxNlekoIxvjfhiLbzJswiX1K79RrlxGCW3oN2ob2f2VMN6EhNCaHmRJOBgXbnaQ/c13bpWifjkC3f81t/2T1la7UnMh+bqdbEIpgz6HaFkybcem+kPs8QY9Z1vsWrAdrt2Z9aaGYhXC+8KfhHHw367P5VknBDJl8SkxDo5SD6eTi97zb0pDVG7Ga/9K/9XrqhCSJB3bGsDW002DPxCjasz9n+DtEyhT+Zo89kKHBKzrAmGfHNmKEeAL21jxmUyo8+pkhDuVAgGO7jhsMQxemyVIIFDlBJfyfxHcLE9lqeIneXXQH3LIjl3JHA+CSAaCzpYwPymy1kRPgQEw70DsR0iYqu3Tw+z8aLE4Rk=
+    file: corkboardFrontend.tar.gz
+    skip_cleanup: true
+    on:
+      repo: acstech/corkboard-sample
       tags: true
