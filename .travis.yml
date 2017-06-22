@@ -11,6 +11,7 @@ deploy:
     bucket: corkboard.t.ac.st
     skip_cleanup: true
     local_dir: dist
+    acl: public_read
     on:
       repo: acstech/corkboard-sample
       branch: master
