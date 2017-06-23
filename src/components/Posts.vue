@@ -2,6 +2,7 @@
   <!-- This is where data should be retrieved from the DB and a v-for directive is used to iterate over the data -->
   <div class="row grid">
     <div class="grid-sizer col-xs-4"></div>
+    <h1 v-if="posts.length == 0">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
         <router-link to="/viewPost/1">
@@ -28,8 +29,8 @@ export default {
   data () {
     return {
       // Dummy data to make v-for display multiple thumbnails. This would be grabbed from a DB
-      // posts: null
-      posts: [
+      posts: null
+      /* posts: [
         {itemname: 'Super Cool Item',
           itemprice: 4.50,
           itemdesc: 'This item is so dang cool that you must want to buy it now!',
@@ -73,7 +74,7 @@ export default {
           imgSrc: 'https://www.techprevue.com/wp-content/uploads/2016/03/tech-items-1024x682.jpg',
           salestatus: 'Available'
         }
-      ]
+      ] */
     }
   },
   mounted () {
@@ -97,7 +98,7 @@ export default {
     })
       .then(res => {
         console.log(res)
-        // this.posts = res.data
+        this.posts = res.data
       })
       .catch(error => {
         if (error.response.status === 401) {
