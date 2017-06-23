@@ -13,7 +13,7 @@
       <div id="preview"></div>
       <label class="form-label">
         Title
-        <br><span style="font-size: 12px">(Max 50 Characters)</span>
+        <p style="font-size: 12px">(Max 50 Characters)</p>
         <input v-model="newPost.itemname" class="form-control" maxlength="50" required>
       </label>
       <label class="form-label">
