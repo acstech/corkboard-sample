@@ -13,7 +13,7 @@
                       <li><router-link to="/addpost">Add Post</router-link></li>
                       <li><router-link to="/viewProfile/1">Profile Settings</router-link></li>
                       <li role="separator" class="divider"></li>
-                      <li><router-link to="/"> <!--@click="logout()"-->Logout</router-link></li>
+                      <li @click="logOut()"><router-link to="/">Logout</router-link></li>
                     </ul>
                   </li>
                 </ul>
@@ -42,6 +42,11 @@ export default {
   data () {
     return {
       isAuthenticated: this.$store.state.isAuthenticated
+    }
+  },
+  methods: {
+    logOut () {
+      // TODO: Remove token and unauthenticate
     }
   },
   components: {

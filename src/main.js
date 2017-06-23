@@ -26,6 +26,8 @@ const router = new VueRouter({
 const store = new Vuex.Store({
   state: {
     isAuthenticated: false,
+    // Perhaps a place to store the token?
+    token: null,
     // Likely not best practice to place these states here globally like this
     activePost: {
       itemname: '',
