@@ -14,15 +14,15 @@
         <label class="form-label">
           Title
           <br><span style="font-size: 12px">(Max 50 Characters)</span>
-          <input type="text" class="form-control" maxlength="50">
+          <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50">
         </label>
         <label class="form-label">
           Price
-          <money v-model="itemprice" v-bind="moneyConfig" class="form-control currency"></money>
+          <money v-model="currentPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
         </label>
         <label class="form-label">
           Description
-          <textarea rows="5" class="form-control"></textarea>
+          <textarea rows="5" class="form-control" v-model="currentPost.itemdesc"></textarea>
         </label>
         <label class="form-label">
           Category
@@ -56,6 +56,11 @@
 import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
 export default {
+  computed: {
+    currentPost () {
+      return this.$store.state.activePost
+    }
+  },
   data () {
     return {
       itemname: '',
