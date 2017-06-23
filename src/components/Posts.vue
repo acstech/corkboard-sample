@@ -96,9 +96,10 @@ export default {
         console.log(res)
         // this.posts = res.data
       })
-      // eslint-disable-next-line handle-callback-err
       .catch(error => {
-        this.$router.push('/signup')
+        if (error.response.status === 401) {
+          this.$router.push('/signup')
+        }
       })
   },
   methods: {
