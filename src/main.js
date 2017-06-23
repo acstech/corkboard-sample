@@ -6,6 +6,7 @@ import { routes } from './routes'
 import Masonry from 'masonry-layout'
 import imagesLoaded from 'imagesloaded'
 import Axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
 
 export { Masonry, imagesLoaded }
 export const axios = Axios.create({
@@ -24,6 +25,7 @@ const router = new VueRouter({
 // Vuex management here
 // eslint-disable-next-line no-unused-vars
 const store = new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     isAuthenticated: false,
     // Perhaps a place to store the token?

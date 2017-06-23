@@ -2,7 +2,7 @@
   <!-- This is where data should be retrieved from the DB and a v-for directive is used to iterate over the data -->
   <div class="row grid">
     <div class="grid-sizer col-xs-4"></div>
-    <h1 v-if="posts.length == 0">No posts yet! Create one!</h1>
+    <h1 v-if="posts == null">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
         <router-link to="/viewPost/1">
