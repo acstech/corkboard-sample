@@ -28,8 +28,8 @@ export default {
   data () {
     return {
       // Dummy data to make v-for display multiple thumbnails. This would be grabbed from a DB
-      // posts: null
-      posts: [
+      posts: null
+      /* posts: [
         {itemname: 'Super Cool Item',
           itemprice: 4.50,
           itemdesc: 'This item is so dang cool that you must want to buy it now!',
@@ -73,7 +73,7 @@ export default {
           imgSrc: 'https://www.techprevue.com/wp-content/uploads/2016/03/tech-items-1024x682.jpg',
           salestatus: 'Available'
         }
-      ]
+      ] */
     }
   },
   mounted () {
@@ -97,7 +97,7 @@ export default {
     })
       .then(res => {
         console.log(res)
-        // this.posts = res.data
+        this.posts = res.data
       })
       .catch(error => {
         if (error.response.status === 401) {
