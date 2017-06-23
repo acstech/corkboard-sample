@@ -13,8 +13,8 @@
       <div id="preview"></div>
       <label class="form-label">
         Title
-        <br><span style="font-size: 12px">(Max 50 Characters)</span>
-        <input v-model="newPost.title" class="form-control" maxlength="50">
+        <p style="font-size: 12px">(Max 50 Characters)</p>
+        <input v-model="newPost.itemname" class="form-control" maxlength="50" required>
       </label>
       <label class="form-label">
         Price
@@ -22,7 +22,7 @@
       </label>
       <label class="form-label">
         Description
-        <textarea v-model="newPost.itemdesc" rows="5" class="form-control"></textarea>
+        <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required></textarea>
       </label>
       <label class="form-label">
         Category
@@ -36,12 +36,8 @@
     </div>
 
     <div class="modal-footer text-right">
-      <button class="btn btn-danger cancel">
-        <router-link to="/"><span>Cancel</span></router-link>
-      </button>
-      <button class="btn btn-primary" @click="savePost()">
-        <router-link to="/"><span>Add Post</span></router-link>
-      </button>
+        <router-link to="/"><button class="btn btn-danger cancel">Cancel</button></router-link>
+        <router-link to="/"><button class="btn btn-primary" @click="savePost()">Add Post</button></router-link>
     </div>
   </post-modal>
 </template>
@@ -107,10 +103,12 @@
     },
     methods: {
       savePost: function () {
-        // Should fail out for right now
         axios({
           method: 'post',
           url: '/api/items/new',
+          headers: {
+            'Authorization': 'Bearer ' + this.$store.state.token
+          },
           data: this.newPost
         })
           .then(res => {

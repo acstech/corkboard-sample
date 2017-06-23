@@ -2,10 +2,11 @@
   <!-- This is where data should be retrieved from the DB and a v-for directive is used to iterate over the data -->
   <div class="row grid">
     <div class="grid-sizer col-xs-4"></div>
+    <h1 v-if="posts == null">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
         <router-link to="/viewPost/1">
-          <img :src="post.imgSrc" alt="..." @click = "viewPost({post})">
+          <img :src="post.imgSrc" alt="..." @click="viewPost({post})">
         </router-link>
         <div class="caption">
           <h3>{{ post.itemname }}</h3>
@@ -23,12 +24,13 @@
 </template>
 
 <script>
-import { Masonry, imagesLoaded } from '../main'
+import { Masonry, imagesLoaded, axios } from '../main'
 export default {
   data () {
     return {
       // Dummy data to make v-for display multiple thumbnails. This would be grabbed from a DB
-      posts: [
+      posts: null
+      /* posts: [
         {itemname: 'Super Cool Item',
           itemprice: 4.50,
           itemdesc: 'This item is so dang cool that you must want to buy it now!',
@@ -65,13 +67,14 @@ export default {
           imgSrc: 'http://images.designntrend.com/data/images/full/50404/top-5-gadgets-list-image-jpg.jpg?w=780',
           salestatus: 'Available'
         },
-        {itemname: 'Random Stuff Again',
+        {
+          itemname: 'Random Stuff Again',
           itemprice: 35.00,
           itemdesc: 'Oh look, more random stuff!',
           imgSrc: 'https://www.techprevue.com/wp-content/uploads/2016/03/tech-items-1024x682.jpg',
           salestatus: 'Available'
         }
-      ]
+      ] */
     }
   },
   mounted () {
@@ -85,6 +88,23 @@ export default {
         percentPosition: true
       })
     })
+    // Retrieve all items call to API
+    axios({
+      method: 'get',
+      url: '/api/items',
+      headers: {
+        'Authorization': 'Bearer ' + this.$store.state.token
+      }
+    })
+      .then(res => {
+        console.log(res)
+        this.posts = res.data
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          this.$router.push('/signup')
+        }
+      })
   },
   methods: {
     viewPost (post) {

@@ -2,6 +2,7 @@
     <div class="col-sm-4 col-sm-offset-4">
         <h2>Sign Up</h2>
         <p>Sign up now to buy and sell on Corkboard!</p>
+        <p>Already have an account? Log in <router-link to="/login" style="font-weight:bold;color:#656565">here!</router-link>
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
@@ -43,7 +44,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '../main'
 export default {
   data () {
     return {
@@ -72,7 +73,7 @@ export default {
         data: this.newUser
       })
       .then(res => {
-        console.log(res)
+        console.log(res.data)
         this.$store.commit('authenticate')
         this.$store.commit('getViewedProfile', this.newUser)
         this.$router.push('/editProfile/new')
