@@ -41,7 +41,8 @@ export default {
   },
   methods: {
     logOut () {
-      // TODO: Remove token and unauthenticate
+      this.$store.commit('authenticate', null)
+      this.$router.push('/login')
     }
   },
   components: {
