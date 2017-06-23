@@ -106,6 +106,9 @@
         axios({
           method: 'post',
           url: '/api/items/new',
+          headers: {
+            'Authorization': 'Bearer ' + this.$store.state.token
+          },
           data: this.newPost
         })
           .then(res => {

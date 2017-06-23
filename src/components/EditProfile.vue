@@ -53,6 +53,9 @@ export default {
       axios({
         method: 'put',
         url: '/api/users/edit/ID',
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
         data: this.credentials
       })
         .then(res => {
