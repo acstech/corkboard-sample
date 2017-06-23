@@ -26,6 +26,8 @@ const router = new VueRouter({
 const store = new Vuex.Store({
   state: {
     isAuthenticated: false,
+    // Perhaps a place to store the token?
+    token: null,
     // Likely not best practice to place these states here globally like this
     activePost: {
       itemname: '',
@@ -45,8 +47,8 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    authenticate (state) {
-      state.isAuthenticated = true
+    authenticate (state, token) {
+      state.token = token
     },
     getActivePost (state, post) {
       state.activePost.itemname = post.post.itemname

@@ -13,16 +13,16 @@
         </label>
         <label class="form-label">
           Title
-          <br><span style="font-size: 12px">(Max 50 Characters)</span>
-          <input type="text" class="form-control" maxlength="50">
+          <p style="font-size: 12px">(Max 50 Characters)</p>
+          <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50">
         </label>
         <label class="form-label">
           Price
-          <money v-model="itemprice" v-bind="moneyConfig" class="form-control currency"></money>
+          <money v-model="currentPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
         </label>
         <label class="form-label">
           Description
-          <textarea rows="5" class="form-control"></textarea>
+          <textarea rows="5" class="form-control" v-model="currentPost.itemdesc"></textarea>
         </label>
         <label class="form-label">
           Category
@@ -42,12 +42,8 @@
     </div>
 
     <div class="modal-footer text-right">
-      <button class="btn btn-danger cancel">
-        <router-link to="/viewProfile/1"><span>Cancel</span></router-link>
-      </button>
-      <button class="btn btn-primary">
-        <router-link to="/viewProfile/1"><span>Save Changes</span></router-link>
-      </button>
+      <router-link to="/viewProfile/1"><button class="btn btn-danger cancel">Cancel</button></router-link>
+      <router-link to="/viewProfile/1"><button class="btn btn-primary">Save Changes</button></router-link>
     </div>
   </post-modal>
 </template>
@@ -56,6 +52,11 @@
 import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
 export default {
+  computed: {
+    currentPost () {
+      return this.$store.state.activePost
+    }
+  },
   data () {
     return {
       itemname: '',
