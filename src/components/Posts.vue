@@ -90,7 +90,10 @@ export default {
     // Retrieve all items call to API
     axios({
       method: 'get',
-      url: '/api/items'
+      url: '/api/items',
+      headers: {
+        'Authorization': 'Bearer ' + this.$store.state.token
+      }
     })
       .then(res => {
         console.log(res)
