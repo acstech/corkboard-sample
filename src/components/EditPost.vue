@@ -42,12 +42,8 @@
     </div>
 
     <div class="modal-footer text-right">
-      <button class="btn btn-danger cancel">
-        <router-link to="/viewProfile/1"><span>Cancel</span></router-link>
-      </button>
-      <button class="btn btn-primary">
-        <router-link to="/viewProfile/1"><span>Save Changes</span></router-link>
-      </button>
+      <router-link to="/viewProfile/1"><button class="btn btn-danger cancel">Cancel</button></router-link>
+      <router-link to="/viewProfile/1"><button class="btn btn-primary">Save Changes</button></router-link>
     </div>
   </post-modal>
 </template>

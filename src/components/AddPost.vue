@@ -36,12 +36,8 @@
     </div>
 
     <div class="modal-footer text-right">
-      <button class="btn btn-danger cancel">
-        <router-link to="/"><span>Cancel</span></router-link>
-      </button>
-      <button class="btn btn-primary" @click="savePost()">
-        <router-link to="/"><span>Add Post</span></router-link>
-      </button>
+        <router-link to="/"><button class="btn btn-danger cancel">Cancel</button></router-link>
+        <router-link to="/"><button class="btn btn-primary" @click="savePost()">Add Post</button></router-link>
     </div>
   </post-modal>
 </template>
