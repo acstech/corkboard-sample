@@ -2,6 +2,7 @@
     <div class="col-sm-4 col-sm-offset-4">
         <h2>Sign Up</h2>
         <p>Sign up now to buy and sell on Corkboard!</p>
+        <p>Already have an account? Log in <router-link to="/login" style="font-weight:bold;color:#656565">here!</router-link>
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>

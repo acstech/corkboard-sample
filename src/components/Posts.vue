@@ -5,7 +5,7 @@
     <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
         <router-link to="/viewPost/1">
-          <img :src="post.imgSrc" alt="..." @click = "viewPost({post})">
+          <img :src="post.imgSrc" alt="..." @click="viewPost({post})">
         </router-link>
         <div class="caption">
           <h3>{{ post.itemname }}</h3>
@@ -97,7 +97,9 @@ export default {
         // this.posts = res.data
       })
       .catch(error => {
-        console.log(error)
+        if (error.response.status === 401) {
+          this.$router.push('/signup')
+        }
       })
   },
   methods: {
