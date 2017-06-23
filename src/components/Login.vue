@@ -38,7 +38,7 @@ export default {
       credentials: {
         email: '',
         password: '',
-        siteId: '12341234-1234-1234-1234-123412341234'
+        siteId: '12341234-1234-1234-1234-432143214321'
       },
       error: ''
     }
@@ -51,8 +51,8 @@ export default {
         data: this.credentials
       })
       .then(res => {
-        console.log(res)
-        this.$store.commit('authenticate')
+        console.log(res.data.token)
+        this.$store.commit('authenticate', res.data.token)
         this.$router.push('/')
       })
       .catch(error => {
