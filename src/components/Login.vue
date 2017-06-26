@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '../main'
 export default {
   data () {
     return {
@@ -51,8 +51,8 @@ export default {
         data: this.credentials
       })
       .then(res => {
-        console.log(res)
-        this.$store.commit('authenticate')
+        console.log(res.data.token)
+        this.$store.commit('authenticate', res.data.token)
         this.$router.push('/')
       })
       .catch(error => {

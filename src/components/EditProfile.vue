@@ -4,7 +4,7 @@
       <h3>Edit Profile</h3>
       <router-link class="close" to="/viewProfile/1">&times;</router-link>
     </div>
-    <form @submit="saveProfileSettings(userProfile)">
+    <form @submit.prevent="saveProfileSettings(userProfile)">
     <div class="modal-body">
         <label class="form-label">
           Profile Picture
@@ -53,22 +53,24 @@ export default {
   methods: {
     saveProfileSettings (user) {
       // TODO: Need user id somehow to route correctly!
-      /*
       axios({
         method: 'put',
-        url: '/api/users/edit/ID',
+        url: '/api/users/edit/' + this.userProfile.id,
+
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
+
         data: this.credentials
       })
         .then(res => {
           console.log(res)
-          this.$router.push('/viewProfile/ID')
+          this.$store.commit('getViewedProfile', user)
+          this.$router.push('/viewProfile/' + this.userProfile.id)
         })
         .catch(error => {
           console.log(error)
         })
-        */
-      this.$store.commit('getViewedProfile', user)
-      this.$router.push('/viewProfile/1')
     }
   },
   components: {

@@ -37,6 +37,7 @@
 
 <script>
 import { Masonry, imagesLoaded } from '../main'
+import axios from 'axios'
 export default {
   computed: {
     userProfile () {
@@ -46,6 +47,7 @@ export default {
   data () {
     return {
       // Dummy data to make v-for display multiple thumbnails
+      // TODO: Query for all posts matching the user through an API call
       posts: [
         {itemname: 'Stuff You Do Not Want',
           itemprice: 10.00,
@@ -76,6 +78,34 @@ export default {
         percentPosition: true
       })
     })
+  },
+  methods: {
+    editPost (post) {
+      // Updates the state with the selected post's info
+      this.$store.commit('getActivePost', {post: post.post})
+    },
+    deletePost (post) {
+      // TODO: Need user id somehow to route correctly!
+      if (confirm('Are you sure? This action cannot be undone!')) {
+        axios({
+          method: 'delete',
+          url: '/api/items/delete/' + post.post.itemid,
+          headers: {
+            'Authorization': 'Bearer ' + this.$store.state.token
+          },
+          data: this.credentials
+        })
+          .then(res => {
+            console.log(res)
+            this.$router.push('/viewProfile/' + this.userProfile.id)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      } else {
+        this.$router.push('/viewProfile/' + this.userProfile.id)
+      }
+    }
   }
 }
 </script>
