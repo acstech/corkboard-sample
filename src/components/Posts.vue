@@ -10,11 +10,11 @@
         </router-link>
         <div class="caption">
           <h3>{{ post.itemname }}</h3>
-          <h4>{{ post.itemprice }}</h4>
+          <h4>{{ post.itemprice | currency }}</h4>
           <p>{{ post.itemdesc }}</p>
           <!-- Hard-coded id for now -->
           <p>
-            <router-link to="/viewPost/1"><button class="btn btn-primary" @click="viewPost({post})">View Post</button></router-link>
+            <button class="btn btn-primary" @click="viewPost({post})">View Post</button>
             <a href="#" class="btn btn-default" role="button">Contact Seller</a>
           </p>
         </div>
@@ -110,6 +110,7 @@ export default {
     viewPost (post) {
       // Updates the state with the selected post's info
       this.$store.commit('getActivePost', {post: post.post})
+      this.$router.push('/viewPost/' + post.post.itemid)
     }
   }
 }
