@@ -5,10 +5,8 @@
     <h1 v-if="posts == null">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
-        <router-link to="/viewPost/1">
-          <img :src="post.imgSrc" alt="..." @click = "viewPost({post})">
-          <span class="text-content"><span @click = "viewPost({post})">  Location  </span></span>
-        </router-link>
+        <img :src="post.imgSrc" alt="..." @click = "viewPost({post})">
+        <span class="text-content"><span @click = "viewPost({post})">  Location  </span></span>
         <div class="caption">
           {{ post.itemname }}
           <h4> {{ post.itemprice | currency }}
