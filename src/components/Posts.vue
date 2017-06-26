@@ -10,7 +10,7 @@
         </router-link>
         <div class="caption">
           <h3>{{ post.itemname }}</h3>
-          <h4>{{ post.itemprice | currency }}</h4>
+          <h4>{{ post.itemprice }}</h4>
           <p>{{ post.itemdesc }}</p>
           <!-- Hard-coded id for now -->
           <p>
