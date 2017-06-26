@@ -6,16 +6,13 @@
       <div class="thumbnail">
         <router-link to="/viewPost/1">
           <img :src="post.imgSrc" alt="..." @click = "viewPost({post})">
+          <span class="text-content"><span @click = "viewPost({post})">  Location  </span></span>
         </router-link>
         <div class="caption">
-          <h3>{{ post.itemname }}</h3>
-          <h4>{{ post.itemprice | currency }}</h4>
-          <p>{{ post.itemdesc }}</p>
-          <!-- Hard-coded id for now -->
-          <p>
-            <router-link to="/viewPost/1"><button class="btn btn-primary" @click="viewPost({post})">View Post</button></router-link>
-            <a href="#" class="btn btn-default" role="button">Contact Seller</a>
-          </p>
+          {{ post.itemname }}
+          <h4> {{ post.itemprice | currency }}
+            <a href="#"><span class="glyphicon glyphicon-envelope" style="float:right"></span></a>
+          </h4>
         </div>
       </div>
     </div>
@@ -103,4 +100,36 @@ export default {
   img {
     box-shadow: 0 4px 6px grey;
   }
+  span.glyphicon {
+    font-size: 1.1em;
+    color: black;
+  }
+  span.glyphicon:hover {
+    color: lightgray;
+  }
+  span.text-content {
+  background: rgba(0,0,0,0.8);
+  color: white;
+  cursor: pointer;
+  display: table;
+  height: 60px;
+  left: 21px;
+  position: absolute;
+  top: 6px;
+  width: 348px;
+  opacity: 0;
+  -webkit-transition: opacity 500ms;
+  -moz-transition: opacity 500ms;
+  -o-transition: opacity 500ms;
+  transition: opacity 500ms;
+  }
+  span.text-content span {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  }
+  span:hover {
+    opacity: 1;
+  }
+
 </style>

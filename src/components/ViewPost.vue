@@ -49,12 +49,10 @@
       </div>
 
       <div class="modal-footer text-right">
-        <router-link to="/"><button class="btn btn-danger cancel">
-          <span>Cancel</span>
-          </button></router-link>
-        <router-link to="/"><button class="btn btn-primary">
-          <span>Contact Seller</span>
-          </button></router-link>
+        <p align="left">
+          <router-link to="/"><span class="glyphicon glyphicon-arrow-left"></span></router-link>
+          <router-link to="/" class="btn btn-default" style="float:right"><span class="glyphicon glyphicon-envelope"></span> Contact</router-link>
+        </p>
       </div>
     </post-modal>
   </transition>
@@ -85,5 +83,15 @@ export default {
   span:hover {
     text-decoration: none;
     color: white;
+  }
+  span.glyphicon-envelope:hover {
+    color: #303030;
+  }
+  span.glyphicon-arrow-left {
+    font-size: 2.0em;
+    color: black;
+  }
+  span.glyphicon-arrow-left:hover {
+    color: lightgray;
   }
 </style>

@@ -36,12 +36,11 @@
     </div>
 
     <div class="modal-footer text-right">
-      <button class="btn btn-danger cancel">
-        <router-link to="/"><span>Cancel</span></router-link>
+    <p align="left"><router-link to="/"><span class="glyphicon glyphicon-arrow-left"></span></router-link>
+      <button style="float:right" class="btn btn-primary" @click="savePost()">
+        <router-link to="/"><span> Post! </span></router-link>
       </button>
-      <button class="btn btn-primary" @click="savePost()">
-        <router-link to="/"><span>Add Post</span></router-link>
-      </button>
+    </p>
     </div>
   </post-modal>
 </template>
@@ -134,6 +133,13 @@
     width: 100px;
     height: 100px;
     margin: 10px;
+  }
+  span.glyphicon {
+    font-size: 2.0em;
+    color: black;
+  }
+  span.glyphicon:hover {
+    color: maroon;
   }
   span:hover {
     text-decoration: none;
