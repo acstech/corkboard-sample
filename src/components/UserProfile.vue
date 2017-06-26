@@ -8,10 +8,10 @@
           <!-- v-if user is authenticated && id matches profile id -->
           <router-link to="/editProfile/1" class="btn btn-info" role="button">Edit Profile</router-link>
           <br><br>
-          <li class="profile-info">First Name: {{ userProfile.firstname }}</li>
-          <li class="profile-info">Last Name: {{ userProfile.lastname }}</li>
+          <li class="profile-info">Name: {{ userProfile.firstname }} {{ userProfile.lastname }}</li>
           <li class="profile-info">Email: {{ userProfile.email }}</li>
           <li class="profile-info">Phone: {{ userProfile.phone }}</li>
+          <li class="profile-info">Zip: {{ userProfile.zip }}</li>
         </ul>
       </div>
       <div class="container">
@@ -25,8 +25,8 @@
                 <h4>{{ post.itemprice | currency }}</h4>
                 <p>{{ post.itemdesc }}</p>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
-                <p><router-link to="/editPost/1"><button class="btn btn-primary" @click="editPost({post})">Edit Post</button></router-link>
-                  <router-link to="/"><button class="btn btn-danger" @click="deletePost({post})">Delete Post</button></router-link></p>
+                <p><router-link to="/editPost/1"><span class="glyphicon glyphicon-pencil"></span></router-link>
+                  <router-link to="/"><span class="glyphicon glyphicon-trash"></span></router-link></p>
               </div>
             </div>
           </div>
@@ -135,11 +135,21 @@ export default {
     margin-top: 8px;
     text-align: left;
   }
-.thumbnail {
-  box-shadow: 4px 4px 6px grey;
-  border: 2px solid #003458;
-}
-img {
-  box-shadow: 0 4px 6px grey;
-}
+  .thumbnail {
+    box-shadow: 4px 4px 6px grey;
+    border: 2px solid #003458;
+  }
+  span.glyphicon {
+    color: black;
+    font-size: 2.0em;
+  }
+  span.glyphicon-pencil:hover {
+    color: lightgray;
+  }
+  span.glyphicon-trash:hover {
+    color: maroon;
+  }
+  img {
+    box-shadow: 0 4px 6px grey;
+  }
 </style>
