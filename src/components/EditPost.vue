@@ -5,8 +5,8 @@
       <router-link class="close" to="/viewProfile/1">&times;</router-link>
     </div>
 
+    <form @submit.prevent="updatePost(currentPost)">
     <div class="modal-body">
-      <form>
         <label class="form-label">
           Pictures
           <input type="file" class="form-control" multiple>
@@ -38,19 +38,20 @@
           <input type="radio" v-model="salestatus" name="salestatus" value="Available"> Available
           <input type="radio" v-model="salestatus" name="salestatus" value="Sale Pending"> Sale Pending
         </label>
-      </form>
     </div>
 
     <div class="modal-footer text-right">
       <router-link to="/viewProfile/1"><button class="btn btn-danger cancel">Cancel</button></router-link>
-      <router-link to="/viewProfile/1"><button class="btn btn-primary">Save Changes</button></router-link>
+      <input type="submit" class="btn btn-primary" value="Save Changes">
     </div>
+    </form>
   </post-modal>
 </template>
 
 <script>
 import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
+import axios from 'axios'
 export default {
   computed: {
     currentPost () {
@@ -78,6 +79,26 @@ export default {
         // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
         masked: true
       }
+    }
+  },
+  methods: {
+    updatePost (post) {
+      axios({
+        method: 'put',
+        url: '/api/items/edit/' + this.currentPost.id,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
+        data: this.credentials
+      })
+        .then(res => {
+          console.log(res)
+          this.$store.commit('getCurrentPost', post)
+          this.$router.push('/viewProfile/' + this.currentPost.id)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   components: {
