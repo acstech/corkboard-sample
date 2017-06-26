@@ -89,7 +89,7 @@ export default {
       if (confirm('Are you sure? This action cannot be undone!')) {
         axios({
           method: 'delete',
-          url: '/api/items/delete/' + this.post.id,
+          url: '/api/items/delete/' + post.post.itemid,
           headers: {
             'Authorization': 'Bearer ' + this.$store.state.token
           },
