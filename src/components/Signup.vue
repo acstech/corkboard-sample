@@ -54,6 +54,11 @@ export default {
         confirm: '',
         siteId: '12341234-1234-1234-1234-432143214321'
       },
+      credentials: {
+        email: '',
+        password: '',
+        siteId: '12341234-1234-1234-1234-432143214321'
+      },
       error: ''
     }
   },
@@ -74,13 +79,28 @@ export default {
       })
       .then(res => {
         console.log(res.data)
-        this.$store.commit('authenticate')
         this.$store.commit('getViewedProfile', this.newUser)
-        this.$router.push('/editProfile/new')
       })
       .catch(error => {
         console.log(error)
       })
+      this.credentials.email = this.newUser.email
+      this.credentials.password = this.newUser.password
+      axios({
+        method: 'post',
+        url: '/api/users/auth',
+        data: this.credentials
+      })
+        .then(res => {
+          this.$store.commit('authenticate', res.data.token)
+          var base64Url = res.data.token.split('.')[1]
+          var base64 = base64Url.replace('-', '+').replace('_', '/')
+          this.$store.commit('getCurrentUser', JSON.parse(window.atob(base64)).uid)
+          this.$router.push('/editProfile/new')
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
