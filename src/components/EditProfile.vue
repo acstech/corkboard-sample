@@ -26,10 +26,12 @@
           Phone
           <input type="tel" class="form-control" v-model="userProfile.phone">
         </label>
+      <!-- For later. API needs to accept this into JSON before use
         <label class="form-label">
           Zip
           <input type="number" min="0" step="1" class="form-control" v-model="userProfile.zip">
         </label>
+        -->
     </div>
 
     <div class="modal-footer text-right">
