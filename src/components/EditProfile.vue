@@ -63,7 +63,7 @@ export default {
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         },
-        data: this.credentials
+        data: this.userProfile
       })
         .then(res => {
           console.log(res)

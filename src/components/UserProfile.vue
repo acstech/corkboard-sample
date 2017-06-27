@@ -100,7 +100,7 @@ export default {
           headers: {
             'Authorization': 'Bearer ' + this.$store.state.token
           },
-          data: this.credentials
+          data: post.post
         })
           .then(res => {
             console.log(res)
