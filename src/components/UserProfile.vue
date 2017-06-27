@@ -6,7 +6,7 @@
           <h4 class="sub-header">User Profile</h4>
           <br>
           <!-- v-if user is authenticated && id matches profile id -->
-          <router-link to="/editProfile/1" class="btn btn-info" role="button">Edit Profile</router-link>
+          <button class="btn btn-info" @click="editProfile">Edit Profile</button>
           <br><br>
           <li class="profile-info">Name: {{ userProfile.firstname }} {{ userProfile.lastname }}</li>
           <li class="profile-info">Email: {{ userProfile.email }}</li>
@@ -21,11 +21,10 @@
             <div class="thumbnail">
               <img :src="post.imgSrc" alt="...">
               <div class="caption">
-                <h3>{{ post.itemname }}</h3>
-                <h4>{{ post.itemprice | currency }}</h4>
-                <p>{{ post.itemdesc }}</p>
+                <h4>{{ post.itemname }}</h4>
+                <h5>{{ post.itemprice | currency }}</h5>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
-                <p><router-link to="/editPost/1"><span class="glyphicon glyphicon-pencil"></span></router-link>
+                <p><router-link to="/editPost/1"><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></router-link>
                   <router-link to="/"><span class="glyphicon glyphicon-trash"></span></router-link></p>
               </div>
             </div>
@@ -84,6 +83,10 @@ export default {
       // Updates the state with the selected post's info
       this.$store.commit('getActivePost', {post: post.post})
     },
+    editProfile () {
+      // Hi
+      this.$router.push('/editProfile/')
+    },
     deletePost (post) {
       // TODO: Need user id somehow to route correctly!
       if (confirm('Are you sure? This action cannot be undone!')) {
@@ -138,6 +141,9 @@ export default {
   .thumbnail {
     box-shadow: 4px 4px 6px grey;
     border: 2px solid #003458;
+  }
+  .caption {
+    padding-bottom: 0;
   }
   span.glyphicon {
     color: black;

@@ -51,8 +51,10 @@ export default {
         data: this.credentials
       })
       .then(res => {
-        console.log(res.data.token)
         this.$store.commit('authenticate', res.data.token)
+        var base64Url = res.data.token.split('.')[1]
+        var base64 = base64Url.replace('-', '+').replace('_', '/')
+        this.$store.commit('getCurrentUser', JSON.parse(window.atob(base64)).uid)
         this.$router.push('/')
       })
       .catch(error => {

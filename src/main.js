@@ -45,9 +45,11 @@ const store = new Vuex.Store({
       lastname: '',
       email: '',
       phone: '',
-      zip: ''
+      zip: '',
+      id: ''
       // posts
-    }
+    },
+    currentUser: ''
   },
   mutations: {
     authenticate (state, token) {
@@ -63,11 +65,15 @@ const store = new Vuex.Store({
       state.activePost.salestatus = post.post.salestatus
     },
     getViewedProfile (state, profile) {
+      state.viewedUserProfile.id = profile.id
       state.viewedUserProfile.firstname = profile.firstname
       state.viewedUserProfile.lastname = profile.lastname
       state.viewedUserProfile.email = profile.email
       state.viewedUserProfile.phone = profile.phone
       state.viewedUserProfile.zip = profile.zip
+    },
+    getCurrentUser (state, user) {
+      state.currentUser = user
     }
   }
 })
