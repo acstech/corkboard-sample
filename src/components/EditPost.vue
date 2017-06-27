@@ -42,12 +42,12 @@
     </div>
 
     <div class="modal-footer text-right">
-      <button class="btn btn-danger cancel">
-        <router-link to="/viewProfile/1"><span>Cancel</span></router-link>
-      </button>
-      <button class="btn btn-primary">
-        <router-link to="/viewProfile/1"><span>Save Changes</span></router-link>
-      </button>
+      <p align="left">
+        <router-link to="/viewProfile/1"><input type="button" class="btn btn-danger cancel" value="Cancel"></router-link>
+        <router-link to="/viewProfile/1"><button class="btn btn-primary" style="float:right">
+        <span>Save Changes</span>
+        </button></router-link>
+      </p>
     </div>
   </post-modal>
 </template>
@@ -109,5 +109,12 @@ export default {
   [type="radio"] {
     margin-left: 8px;
     margin-right: 2px;
+  }
+  span.glyphicon-arrow-left {
+    font-size: 2.0em;
+    color: black;
+  }
+  span.glyphicon-arrow-left:hover {
+    color: lightgray;
   }
 </style>

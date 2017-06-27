@@ -6,13 +6,14 @@
       <div class="thumbnail">
         <router-link to="/viewPost/1">
           <img :src="post.imgSrc" alt="..." @click = "viewPost({post})">
-          <span class="text-content"><span @click = "viewPost({post})">  Location  </span></span>
+          <span class="text-content"><span @click = "viewPost({post})">  Location </span></span>
         </router-link>
         <div class="caption">
           {{ post.itemname }}
-          <h4> {{ post.itemprice | currency }}
-            <a href="#"><span class="glyphicon glyphicon-envelope" style="float:right"></span></a>
+          <h4><div class="temp">{{ post.itemprice | currency }}</div>
+            <a href="#"><span class="glyphicon glyphicon-envelope" style="float:left"></span></a>
           </h4>
+          <br>
         </div>
       </div>
     </div>
@@ -97,12 +98,20 @@ export default {
     box-shadow: 4px 4px 6px grey;
     border: 2px solid #003458;
   }
+  .temp {
+    float: right;
+    color: maroon;
+  }
   img {
     box-shadow: 0 4px 6px grey;
   }
   span.glyphicon {
     font-size: 1.1em;
     color: black;
+  }
+  .caption {
+    font-size: 18px;
+    padding-top: 12px;
   }
   span.glyphicon:hover {
     color: lightgray;

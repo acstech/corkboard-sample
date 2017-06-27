@@ -25,8 +25,11 @@
                 <h4>{{ post.itemprice | currency }}</h4>
                 <p>{{ post.itemdesc }}</p>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
-                <p><router-link to="/editPost/1"><span class="glyphicon glyphicon-pencil"></span></router-link>
-                  <router-link to="/"><span class="glyphicon glyphicon-trash"></span></router-link></p>
+                <p>
+                  <router-link to="/editPost/1"><span class="glyphicon glyphicon-pencil"></span></router-link>
+                  <router-link to="/"><span class="glyphicon glyphicon-trash"></span></router-link>
+                </p>
+                <br>
               </div>
             </div>
           </div>
@@ -109,9 +112,15 @@ export default {
     box-shadow: 4px 4px 6px grey;
     border: 2px solid #003458;
   }
-  span.glyphicon {
+  span.glyphicon-pencil {
     color: black;
-    font-size: 2.0em;
+    font-size: 1.6em;
+    float: left;
+  }
+  span.glyphicon-trash {
+    color: black;
+    font-size: 1.6em;
+    float: right;
   }
   span.glyphicon-pencil:hover {
     color: lightgray;

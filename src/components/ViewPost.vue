@@ -48,10 +48,11 @@
 
       </div>
 
-      <div class="modal-footer text-right">
-        <p align="left">
-          <router-link to="/"><span class="glyphicon glyphicon-arrow-left"></span></router-link>
-          <router-link to="/" class="btn btn-default" style="float:right"><span class="glyphicon glyphicon-envelope"></span> Contact</router-link>
+      <div class="modal-footer">
+        <p align="center">
+          <router-link to="/" class="btn btn-lg btn-default" style="margin-top:20px">
+            <span class="glyphicon glyphicon-envelope"></span> Contact
+          </router-link>
         </p>
       </div>
     </post-modal>
