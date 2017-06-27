@@ -32,6 +32,7 @@ const store = new Vuex.Store({
     token: null,
     // Likely not best practice to place these states here globally like this
     activePost: {
+      itemid: '',
       itemname: '',
       itemprice: null,
       itemdesc: '',
@@ -56,6 +57,7 @@ const store = new Vuex.Store({
       state.token = token
     },
     getActivePost (state, post) {
+      state.activePost.id = post.post.itemid
       state.activePost.itemname = post.post.itemname
       state.activePost.itemprice = post.post.itemprice
       state.activePost.itemdesc = post.post.itemdesc

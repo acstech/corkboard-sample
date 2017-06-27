@@ -33,7 +33,7 @@
     </div>
 
     <div class="modal-footer text-right">
-      <router-link to="/viewProfile/1"><input type="button" class="btn btn-danger cancel" value="Cancel"></router-link>
+      <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel">
       <input type="submit" class="btn btn-primary" value="Save Changes">
     </div>
     </form>
@@ -48,29 +48,32 @@ export default {
   computed: {
     userProfile () {
       return this.$store.state.viewedUserProfile
+    },
+    getCurrentUser () {
+      return this.$store.state.currentUser
     }
   },
   methods: {
     saveProfileSettings (user) {
-      // TODO: Need user id somehow to route correctly!
       axios({
         method: 'put',
-        url: '/api/users/edit/' + this.userProfile.id,
-
+        url: '/api/users/edit/' + this.getCurrentUser,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         },
-
         data: this.credentials
       })
         .then(res => {
           console.log(res)
           this.$store.commit('getViewedProfile', user)
-          this.$router.push('/viewProfile/' + this.userProfile.id)
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    cancel () {
+      this.$router.push('/viewProfile/' + this.getCurrentUser)
     }
   },
   components: {
