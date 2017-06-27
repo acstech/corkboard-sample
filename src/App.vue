@@ -5,15 +5,15 @@
                 <ul class="nav navbar-nav">
                   <router-link to="/"><div class="navbar-brand"><img src="../static/generatedtext.png"></div></router-link>
                     <li><router-link to="/">Home</router-link></li>
-                    <li><router-link to="/login" v-if="!authenticated">Login</router-link></li>
-                    <li><router-link to="/signup" v-if="!authenticated">Sign Up</router-link></li>
-                  <li class="dropdown" v-if="authenticated">
+                    <li><router-link to="/login" v-if="getToken == null">Login</router-link></li>
+                    <li><router-link to="/signup" v-if="getToken == null">Sign Up</router-link></li>
+                  <li class="dropdown" v-if="getToken != null">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       <li><router-link to="/addpost">Add Post</router-link></li>
-                      <li><router-link to="/viewProfile/1">Profile Settings</router-link></li>
+                      <li @click="viewSettings"><router-link to="">Profile Settings</router-link></li>
                       <li role="separator" class="divider"></li>
-                      <li><router-link to="/"> <!--@click="logout()"-->Logout</router-link></li>
+                      <li @click="logOut()"><router-link to="">Logout</router-link></li>
                     </ul>
                   </li>
                 </ul>
@@ -35,13 +35,21 @@ import AddPost from './components/AddPost.vue'
 export default {
   name: 'app',
   computed: {
-    authenticated () {
-      return this.$store.state.isAuthenticated
+    getToken () {
+      return this.$store.state.token
+    },
+    getCurrentUser () {
+      return this.$store.state.currentUser
     }
   },
-  data () {
-    return {
-      isAuthenticated: this.$store.state.isAuthenticated
+  methods: {
+    logOut () {
+      this.$store.commit('authenticate', null)
+      this.$router.push('/login')
+    },
+    viewSettings () {
+      // TODO: Axios call to get user by iD using this.getCurrentUser
+      this.$router.push('viewProfile/' + this.getCurrentUser)
     }
   },
   components: {

@@ -5,24 +5,24 @@
       <router-link class="close" to="/viewProfile/1">&times;</router-link>
     </div>
 
+    <form @submit.prevent="updatePost(currentPost)">
     <div class="modal-body">
-      <form>
         <label class="form-label">
           Pictures
           <input type="file" class="form-control" multiple>
         </label>
         <label class="form-label">
           Title
-          <br><span style="font-size: 12px">(Max 50 Characters)</span>
-          <input type="text" class="form-control" maxlength="50">
+          <p style="font-size: 12px">(Max 50 Characters)</p>
+          <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50">
         </label>
         <label class="form-label">
           Price
-          <money v-model="itemprice" v-bind="moneyConfig" class="form-control currency"></money>
+          <money v-model="currentPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
         </label>
         <label class="form-label">
           Description
-          <textarea rows="5" class="form-control"></textarea>
+          <textarea rows="5" class="form-control" v-model="currentPost.itemdesc"></textarea>
         </label>
         <label class="form-label">
           Category
@@ -38,24 +38,29 @@
           <input type="radio" v-model="salestatus" name="salestatus" value="Available"> Available
           <input type="radio" v-model="salestatus" name="salestatus" value="Sale Pending"> Sale Pending
         </label>
-      </form>
     </div>
 
     <div class="modal-footer text-right">
-      <p align="left">
-        <router-link to="/viewProfile/1"><input type="button" class="btn btn-danger cancel" value="Cancel"></router-link>
-        <router-link to="/viewProfile/1"><button class="btn btn-primary" style="float:right">
-        <span>Save Changes</span>
-        </button></router-link>
-      </p>
+      <router-link to=""><button class="btn btn-danger cancel" @click="cancel">Cancel</button></router-link>
+      <input type="submit" class="btn btn-primary" value="Save Changes">
     </div>
+    </form>
   </post-modal>
 </template>
 
 <script>
 import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
+import axios from 'axios'
 export default {
+  computed: {
+    currentPost () {
+      return this.$store.state.activePost
+    },
+    getCurrentUser () {
+      return this.$store.state.currentUser
+    }
+  },
   data () {
     return {
       itemname: '',
@@ -77,6 +82,29 @@ export default {
         // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
         masked: true
       }
+    }
+  },
+  methods: {
+    updatePost (post) {
+      axios({
+        method: 'put',
+        url: '/api/items/edit/' + this.currentPost.itemid,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
+        data: this.currentPost
+      })
+        .then(res => {
+          console.log(res)
+          this.$store.commit('getCurrentPost', post)
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    cancel () {
+      this.$router.push('/viewProfile/' + this.getCurrentUser)
     }
   },
   components: {

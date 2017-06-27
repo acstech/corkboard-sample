@@ -4,7 +4,7 @@
       <h3>Edit Profile</h3>
       <router-link class="close" to="/viewProfile/1">&times;</router-link>
     </div>
-    <form @submit="saveProfileSettings(userProfile)">
+    <form @submit.prevent="saveProfileSettings(userProfile)">
     <div class="modal-body">
         <label class="form-label">
           Profile Picture
@@ -26,14 +26,16 @@
           Phone
           <input type="tel" class="form-control" v-model="userProfile.phone">
         </label>
+      <!-- For later. API needs to accept this into JSON before use
         <label class="form-label">
           Zip
           <input type="number" min="0" step="1" class="form-control" v-model="userProfile.zip">
         </label>
+        -->
     </div>
 
     <div class="modal-footer text-right">
-      <router-link to="/viewProfile/1"><input type="button" class="btn btn-danger cancel" value="Cancel"></router-link>
+      <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel">
       <input type="submit" class="btn btn-primary" value="Save Changes">
     </div>
     </form>
@@ -48,27 +50,32 @@ export default {
   computed: {
     userProfile () {
       return this.$store.state.viewedUserProfile
+    },
+    getCurrentUser () {
+      return this.$store.state.currentUser
     }
   },
   methods: {
     saveProfileSettings (user) {
-      // TODO: Need user id somehow to route correctly!
-      /*
       axios({
         method: 'put',
-        url: '/api/users/edit/ID',
-        data: this.credentials
+        url: '/api/users/edit/' + this.getCurrentUser,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
+        data: this.userProfile
       })
         .then(res => {
           console.log(res)
-          this.$router.push('/viewProfile/ID')
+          this.$store.commit('getViewedProfile', user)
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
         })
         .catch(error => {
           console.log(error)
         })
-        */
-      this.$store.commit('getViewedProfile', user)
-      this.$router.push('/viewProfile/1')
+    },
+    cancel () {
+      this.$router.push('/viewProfile/' + this.getCurrentUser)
     }
   },
   components: {
