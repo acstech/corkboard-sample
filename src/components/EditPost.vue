@@ -41,7 +41,7 @@
     </div>
 
     <div class="modal-footer text-right">
-      <router-link to="/viewProfile/1"><button class="btn btn-danger cancel">Cancel</button></router-link>
+      <router-link to=""><button class="btn btn-danger cancel" @click="cancel">Cancel</button></router-link>
       <input type="submit" class="btn btn-primary" value="Save Changes">
     </div>
     </form>
@@ -56,6 +56,9 @@ export default {
   computed: {
     currentPost () {
       return this.$store.state.activePost
+    },
+    getCurrentUser () {
+      return this.$store.state.currentUser
     }
   },
   data () {
@@ -85,20 +88,23 @@ export default {
     updatePost (post) {
       axios({
         method: 'put',
-        url: '/api/items/edit/' + this.currentPost.id,
+        url: '/api/items/edit/' + this.currentPost.itemid,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         },
-        data: this.credentials
+        data: this.currentPost
       })
         .then(res => {
           console.log(res)
           this.$store.commit('getCurrentPost', post)
-          this.$router.push('/viewProfile/' + this.currentPost.id)
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    cancel () {
+      this.$router.push('/viewProfile/' + this.getCurrentUser)
     }
   },
   components: {

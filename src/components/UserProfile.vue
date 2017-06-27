@@ -6,7 +6,7 @@
           <h4 class="sub-header">User Profile</h4>
           <br>
           <!-- v-if user is authenticated && id matches profile id -->
-          <router-link to="/editProfile/1" class="btn btn-info" role="button">Edit Profile</router-link>
+          <button class="btn btn-info" @click="editProfile">Edit Profile</button>
           <br><br>
           <li class="profile-info">Name: {{ userProfile.firstname }} {{ userProfile.lastname }}</li>
           <li class="profile-info">Email: {{ userProfile.email }}</li>
@@ -21,12 +21,11 @@
             <div class="thumbnail">
               <img :src="post.imgSrc" alt="...">
               <div class="caption">
-                <h3>{{ post.itemname }}</h3>
-                <h4>{{ post.itemprice | currency }}</h4>
-                <p>{{ post.itemdesc }}</p>
+                <h4>{{ post.itemname }}</h4>
+                <h5>{{ post.itemprice | currency }}</h5>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
-                <p><router-link to="/editPost/1"><span class="glyphicon glyphicon-pencil"></span></router-link>
-                  <router-link to="/"><span class="glyphicon glyphicon-trash"></span></router-link></p>
+                <p><router-link to=""><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></router-link>
+                  <router-link to=""><span @click="deletePost({post})" class="glyphicon glyphicon-trash"></span></router-link></p>
               </div>
             </div>
           </div>
@@ -42,6 +41,9 @@ export default {
   computed: {
     userProfile () {
       return this.$store.state.viewedUserProfile
+    },
+    getCurrentUser () {
+      return this.$store.state.currentUser
     }
   },
   data () {
@@ -50,16 +52,19 @@ export default {
       // TODO: Query for all posts matching the user through an API call
       posts: [
         {itemname: 'Stuff You Do Not Want',
+          itemid: '1',
           itemprice: 10.00,
           itemdesc: 'You may not want this item but I hope that someone will.',
           imgSrc: 'http://unrealitymag.com/wp-content/uploads/2012/11/opener-465x465.jpg'
         },
         {itemname: 'Free Thing',
+          itemid: '2',
           itemprice: 0.00,
           itemdesc: 'Yes it is free, so please take it!',
           imgSrc: 'http://s2.dmcdn.net/Ub1O8/1280x720-mCQ.jpg'
         },
         {itemname: 'Handmade Thing Grandma Made',
+          itemid: '3',
           itemprice: 6.00,
           itemdesc: 'Yeah, so grandma is quite good at making things. She is also a lunatic.',
           imgSrc: 'http://media.techeblog.com/images/fun_gadgets.jpg'
@@ -81,11 +86,13 @@ export default {
   },
   methods: {
     editPost (post) {
-      // Updates the state with the selected post's info
       this.$store.commit('getActivePost', {post: post.post})
+      this.$router.push('/editPost/' + post.post.itemid)
+    },
+    editProfile () {
+      this.$router.push('/editProfile/' + this.getCurrentUser)
     },
     deletePost (post) {
-      // TODO: Need user id somehow to route correctly!
       if (confirm('Are you sure? This action cannot be undone!')) {
         axios({
           method: 'delete',
@@ -93,7 +100,7 @@ export default {
           headers: {
             'Authorization': 'Bearer ' + this.$store.state.token
           },
-          data: this.credentials
+          data: post.post
         })
           .then(res => {
             console.log(res)
@@ -138,6 +145,9 @@ export default {
   .thumbnail {
     box-shadow: 4px 4px 6px grey;
     border: 2px solid #003458;
+  }
+  .caption {
+    padding-bottom: 0;
   }
   span.glyphicon {
     color: black;

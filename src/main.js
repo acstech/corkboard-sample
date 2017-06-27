@@ -32,6 +32,7 @@ const store = new Vuex.Store({
     token: null,
     // Likely not best practice to place these states here globally like this
     activePost: {
+      itemid: '',
       itemname: '',
       itemprice: null,
       itemdesc: '',
@@ -45,15 +46,18 @@ const store = new Vuex.Store({
       lastname: '',
       email: '',
       phone: '',
-      zip: ''
+      zip: '',
+      id: ''
       // posts
-    }
+    },
+    currentUser: ''
   },
   mutations: {
     authenticate (state, token) {
       state.token = token
     },
     getActivePost (state, post) {
+      state.activePost.id = post.post.itemid
       state.activePost.itemname = post.post.itemname
       state.activePost.itemprice = post.post.itemprice
       state.activePost.itemdesc = post.post.itemdesc
@@ -63,11 +67,15 @@ const store = new Vuex.Store({
       state.activePost.salestatus = post.post.salestatus
     },
     getViewedProfile (state, profile) {
+      state.viewedUserProfile.id = profile.id
       state.viewedUserProfile.firstname = profile.firstname
       state.viewedUserProfile.lastname = profile.lastname
       state.viewedUserProfile.email = profile.email
       state.viewedUserProfile.phone = profile.phone
-      state.viewedUserProfile.zip = profile.zip
+      // state.viewedUserProfile.zip = profile.zip
+    },
+    getCurrentUser (state, user) {
+      state.currentUser = user
     }
   }
 })
