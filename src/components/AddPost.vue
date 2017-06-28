@@ -37,8 +37,12 @@
     </div>
 
     <div class="modal-footer text-right">
-    <p align="left"><router-link to="/"><span class="glyphicon glyphicon-arrow-left"></span></router-link>
-      <input type="submit" style="float:right" class="btn btn-primary" value="Post!">
+    <p align="center">
+      <router-link to="/">
+        <button class="btn btn-lg btn-default" @click="savePost()">
+          <span style="color:black"> Post! </span>
+        </button>
+      </router-link>
     </p>
     </div>
     </form>

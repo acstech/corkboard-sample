@@ -2,7 +2,7 @@
   <post-modal>
     <div class="modal-header">
       <h3>Edit Profile</h3>
-      <router-link class="close" to="/viewProfile/1">&times;</router-link>
+      <a @click="cancel()" class="close">&times;</a>
     </div>
     <form @submit.prevent="saveProfileSettings(userProfile)">
     <div class="modal-body">
@@ -35,7 +35,7 @@
     </div>
 
     <div class="modal-footer text-right">
-      <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel">
+      <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel()">
       <input type="submit" class="btn btn-primary" value="Save Changes">
     </div>
     </form>
