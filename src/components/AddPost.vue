@@ -5,6 +5,7 @@
       <router-link class="close" to="/">&times;</router-link>
     </div>
 
+    <form @submit.prevent="savePost()">
     <div class="modal-body">
       <label class="form-label">
         Image
@@ -37,11 +38,10 @@
 
     <div class="modal-footer text-right">
     <p align="left"><router-link to="/"><span class="glyphicon glyphicon-arrow-left"></span></router-link>
-      <button style="float:right" class="btn btn-primary" @click="savePost()">
-        <router-link to="/"><span> Post! </span></router-link>
-      </button>
+      <input type="submit" style="float:right" class="btn btn-primary" value="Post!">
     </p>
     </div>
+    </form>
   </post-modal>
 </template>
 
@@ -116,6 +116,8 @@
         })
           .then(res => {
             console.log(res)
+            this.newPost = {}
+            this.$router.push('/')
           })
           .catch(error => {
             console.log(error)
