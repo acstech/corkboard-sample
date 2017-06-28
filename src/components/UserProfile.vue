@@ -146,12 +146,15 @@ export default {
     box-shadow: 4px 4px 6px grey;
     border: 2px solid #003458;
   }
-  .caption {
-    padding-bottom: 0;
-  }
-  span.glyphicon {
+  span.glyphicon-pencil {
     color: black;
-    font-size: 2.0em;
+    font-size: 1.6em;
+    float: left;
+  }
+  span.glyphicon-trash {
+    color: black;
+    font-size: 1.6em;
+    float: right;
   }
   span.glyphicon-pencil:hover {
     color: lightgray;

@@ -138,4 +138,11 @@ export default {
     margin-left: 8px;
     margin-right: 2px;
   }
+  span.glyphicon-arrow-left {
+    font-size: 2.0em;
+    color: black;
+  }
+  span.glyphicon-arrow-left:hover {
+    color: lightgray;
+  }
 </style>
