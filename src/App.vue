@@ -11,7 +11,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Username<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       <li><router-link to="/addpost">Add Post</router-link></li>
-                      <li @click="viewSettings"><router-link to="">Profile Settings</router-link></li>
+                      <li @click="viewSettings()"><router-link to="">Profile Settings</router-link></li>
                       <li role="separator" class="divider"></li>
                       <li @click="logOut()"><router-link to="">Logout</router-link></li>
                     </ul>
@@ -50,7 +50,9 @@ export default {
     },
     viewSettings () {
       // TODO: Axios call to get user by iD using this.getCurrentUser
-      this.$router.push('viewProfile/' + this.getCurrentUser)
+      if (this.$router.currentRoute.path === '/') {
+        this.$router.push('viewProfile/' + this.getCurrentUser)
+      }
     }
   },
   components: {
