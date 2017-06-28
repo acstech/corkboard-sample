@@ -8,11 +8,19 @@
 
 <script>
 export default {
+  compute: {
+    getCurrentUser () {
+      return this.$store.state.currentUser
+    },
+    currentPost () {
+      return this.$store.state.activePost
+    }
+  },
   mounted () {
-    var vm = this
+    // var vm = this
     document.addEventListener('click', function (e) {
       if (e.target.id === 'mask') {
-        vm.$router.push('/')
+        // vm.$router.back()
       }
     })
   }
