@@ -19,7 +19,8 @@ Vue.use(Vuex)
 
 export const eventBus = new Vue()
 const router = new VueRouter({
-  routes: routes
+  routes: routes,
+  mode: 'history'
 })
 
 // Vuex management here
@@ -57,7 +58,7 @@ const store = new Vuex.Store({
       state.token = token
     },
     getActivePost (state, post) {
-      state.activePost.id = post.post.itemid
+      state.activePost.itemid = post.post.itemid
       state.activePost.itemname = post.post.itemname
       state.activePost.itemprice = post.post.itemprice
       state.activePost.itemdesc = post.post.itemdesc

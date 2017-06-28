@@ -45,13 +45,12 @@ export default {
   methods: {
     logOut () {
       this.$store.commit('authenticate', null)
+      this.$store.commit('getCurrentUser', null)
       this.$router.push('/login')
     },
     viewSettings () {
       // TODO: Axios call to get user by iD using this.getCurrentUser
-      if (window.location.href.indexOf(this.getCurrentUser) > -1) {
-        return
-      } else {
+      if (this.$router.currentRoute.path === '/') {
         this.$router.push('viewProfile/' + this.getCurrentUser)
       }
     }

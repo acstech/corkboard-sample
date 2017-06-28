@@ -58,7 +58,9 @@ export default {
         this.$router.push('/')
       })
       .catch(error => {
-        console.log(error)
+        if (error.response.status === 401) {
+          this.error = 'Username or password is incorrect. Please try again.'
+        }
       })
     }
   }

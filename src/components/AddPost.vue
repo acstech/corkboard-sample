@@ -5,6 +5,7 @@
       <router-link class="close" to="/">&times;</router-link>
     </div>
 
+    <form @submit.prevent="savePost()">
     <div class="modal-body">
       <label class="form-label">
         Image
@@ -44,6 +45,7 @@
       </router-link>
     </p>
     </div>
+    </form>
   </post-modal>
 </template>
 
@@ -118,6 +120,8 @@
         })
           .then(res => {
             console.log(res)
+            this.newPost = {}
+            this.$router.push('/')
           })
           .catch(error => {
             console.log(error)

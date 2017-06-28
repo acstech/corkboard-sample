@@ -80,27 +80,29 @@ export default {
       .then(res => {
         console.log(res.data)
         this.$store.commit('getViewedProfile', this.newUser)
+        this.credentials.email = this.newUser.email
+        this.credentials.password = this.newUser.password
+        axios({
+          method: 'post',
+          url: '/api/users/auth',
+          data: this.credentials
+        })
+          .then(res => {
+            this.$store.commit('authenticate', res.data.token)
+            var base64Url = res.data.token.split('.')[1]
+            var base64 = base64Url.replace('-', '+').replace('_', '/')
+            this.$store.commit('getCurrentUser', JSON.parse(window.atob(base64)).uid)
+            this.$router.push('/editProfile/new')
+          })
+          .catch(error => {
+            console.log(error)
+          })
       })
       .catch(error => {
-        console.log(error)
+        if (error.response.status === 400) {
+          this.error = 'Email is already registered.'
+        }
       })
-      this.credentials.email = this.newUser.email
-      this.credentials.password = this.newUser.password
-      axios({
-        method: 'post',
-        url: '/api/users/auth',
-        data: this.credentials
-      })
-        .then(res => {
-          this.$store.commit('authenticate', res.data.token)
-          var base64Url = res.data.token.split('.')[1]
-          var base64 = base64Url.replace('-', '+').replace('_', '/')
-          this.$store.commit('getCurrentUser', JSON.parse(window.atob(base64)).uid)
-          this.$router.push('/editProfile/new')
-        })
-        .catch(error => {
-          console.log(error)
-        })
     }
   }
 }
