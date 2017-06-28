@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  compute: {
+  computed: {
     getCurrentUser () {
       return this.$store.state.currentUser
     },
@@ -20,7 +20,7 @@ export default {
     // var vm = this
     document.addEventListener('click', function (e) {
       if (e.target.id === 'mask') {
-        // vm.$router.back()
+        // window.history.back()
       }
     })
   }
