@@ -20,7 +20,7 @@
         </label>
         <label class="form-label">
           Email
-          <input type="email" class="form-control" v-model="userProfile.email" required>
+          <input type="email" class="form-control" v-model="userProfile.email" required maxlength="40">
         </label>
         <label class="form-label">
           Phone

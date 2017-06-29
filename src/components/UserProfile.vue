@@ -3,15 +3,15 @@
       <div class="col-sm-4 col-md-3 sidebar">
         <ul class="nav nav-sidebar">
           <img src="../assets/jumpingCat.jpg" class="profile-pic">
-          <h4 class="sub-header">User Profile</h4>
+          <h3 class="sub-header">User Profile</h3>
           <br>
           <!-- v-if user is authenticated && id matches profile id -->
           <button class="btn btn-info" @click="editProfile">Edit Profile</button>
           <br><br>
-          <li class="profile-info">Name: {{ userProfile.firstname }} {{ userProfile.lastname }}</li>
-          <li class="profile-info">Email: {{ userProfile.email }}</li>
-          <li class="profile-info">Phone: {{ userProfile.phone }}</li>
-          <li class="profile-info">Zip: {{ userProfile.zip }}</li>
+          <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
+          <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
+          <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
+          <li class="profile-info"><h4>Zip</h4>{{ userProfile.zip }}</li>
         </ul>
       </div>
       <div class="container">
@@ -143,7 +143,9 @@ export default {
   }
   .profile-info {
     margin-top: 8px;
-    text-align: left;
+  }
+  h4 {
+    border-bottom: 2px solid white;
   }
   .thumbnail {
     box-shadow: 4px 4px 6px grey;

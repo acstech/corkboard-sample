@@ -14,6 +14,7 @@
                         placeholder="Enter your email"
                         v-model="credentials.email"
                         required
+                        maxlength="40"
                 >
             </div>
             <div class="form-group">
