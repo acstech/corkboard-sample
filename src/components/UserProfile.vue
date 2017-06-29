@@ -17,7 +17,7 @@
           <div class="grid-sizer col-xs-4"></div>
           <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
             <div class="thumbnail">
-              <img :src="post.imgSrc" alt="...">
+              <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="...">
               <div class="caption">
                 <h4>{{ post.itemname }}</h4>
                 <h5 v-if="post.itemprice">{{ post.itemprice | currency }}</h5>
