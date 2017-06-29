@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       // Dummy data to make v-for display multiple thumbnails. This would be grabbed from a DB
-      posts: null
+      posts: []
       /* posts: [
         {itemname: 'Super Cool Item',
           itemprice: 4.50,
@@ -93,7 +93,7 @@ export default {
       }
     })
       .then(res => {
-        console.log(res)
+        console.log(res.data)
         this.posts = res.data
       })
       .catch(error => {

@@ -83,6 +83,7 @@ export default {
           },
           data: post.post.itemid
         })
+          // Retrieve updated user profile page
           .then(res => {
             console.log(res)
             axios({
