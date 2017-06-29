@@ -24,7 +24,7 @@
         </label>
         <label class="form-label">
           Phone
-          <input id="phoneNumber" type="tel" class="form-control" v-model.lazy="userProfile.phone" @keypress="numberPressed" maxlength="16">
+          <input id="phoneNumber" type="tel" class="form-control" v-model.lazy="userProfile.phone" @keypress="numberPressed" minlength="16" maxlength="16">
         </label>
       <!-- For later. API needs to accept this into JSON before use
         <label class="form-label">

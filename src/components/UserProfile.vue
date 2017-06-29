@@ -51,26 +51,7 @@ export default {
     return {
       // Dummy data to make v-for display multiple thumbnails
       // TODO: Query for all posts matching the user through an API call
-      posts: [
-        {itemname: 'Stuff You Do Not Want',
-          itemid: '1',
-          itemprice: 10.00,
-          itemdesc: 'You may not want this item but I hope that someone will.',
-          imgSrc: 'http://unrealitymag.com/wp-content/uploads/2012/11/opener-465x465.jpg'
-        },
-        {itemname: 'Free Thing',
-          itemid: '2',
-          itemprice: 0.00,
-          itemdesc: 'Yes it is free, so please take it!',
-          imgSrc: 'http://s2.dmcdn.net/Ub1O8/1280x720-mCQ.jpg'
-        },
-        {itemname: 'Handmade Thing Grandma Made',
-          itemid: '3',
-          itemprice: 6.00,
-          itemdesc: 'Yeah, so grandma is quite good at making things. She is also a lunatic.',
-          imgSrc: 'http://media.techeblog.com/images/fun_gadgets.jpg'
-        }
-      ]
+      posts: null
     }
   },
   mounted () {
@@ -84,6 +65,7 @@ export default {
         percentPosition: true
       })
     })
+    this.posts = this.userProfile.items
   },
   methods: {
     editPost (post) {
@@ -101,7 +83,7 @@ export default {
           headers: {
             'Authorization': 'Bearer ' + this.$store.state.token
           },
-          data: post.post
+          data: post.post.itemid
         })
           .then(res => {
             console.log(res)
