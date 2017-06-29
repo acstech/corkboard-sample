@@ -31,6 +31,7 @@ import ProductList from './components/ProductList.vue'
 import Login from './components/Login.vue'
 import Signup from './components/Signup.vue'
 import AddPost from './components/AddPost.vue'
+import axios from 'axios'
 
 export default {
   name: 'app',
@@ -49,9 +50,23 @@ export default {
       this.$router.push('/login')
     },
     viewSettings () {
-      // TODO: Axios call to get user by iD using this.getCurrentUser
+      // Axios call to get current user by iD using this.getCurrentUser
       if (this.$router.currentRoute.path === '/') {
-        this.$router.push('viewProfile/' + this.getCurrentUser)
+        axios({
+          method: 'get',
+          url: '/api/users/' + this.getCurrentUser,
+          headers: {
+            'Authorization': 'Bearer ' + this.$store.state.token
+          }
+        })
+          .then(res => {
+            console.log(res)
+            this.$store.commit('getViewedProfile', res.data)
+            this.$router.push('/viewProfile/' + this.getCurrentUser)
+          })
+          .catch(error => {
+            console.log(error)
+          })
       }
     }
   },

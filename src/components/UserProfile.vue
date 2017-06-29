@@ -2,16 +2,14 @@
     <div class="row">
       <div class="col-sm-4 col-md-3 sidebar">
         <ul class="nav nav-sidebar">
+          <h3 class="sub-header">User Profile</h3>
           <img src="../assets/jumpingCat.jpg" class="profile-pic">
-          <h4 class="sub-header">User Profile</h4>
-          <br>
-          <!-- v-if user is authenticated && id matches profile id -->
-          <button class="btn btn-info" @click="editProfile">Edit Profile</button>
-          <br><br>
-          <li class="profile-info">Name: {{ userProfile.firstname }} {{ userProfile.lastname }}</li>
-          <li class="profile-info">Email: {{ userProfile.email }}</li>
-          <li class="profile-info">Phone: {{ userProfile.phone }}</li>
-          <li class="profile-info">Zip: {{ userProfile.zip }}</li>
+            <!-- v-if="userProfile.id == getCurrentUser" -->
+          <button class="btn btn-info" @click="editProfile" id="edit_profile">Edit Profile</button>
+          <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
+          <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
+          <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
+          <li class="profile-info"><h4>Zip</h4>{{ userProfile.zip }}</li>
         </ul>
       </div>
       <div class="container">
@@ -53,26 +51,7 @@ export default {
     return {
       // Dummy data to make v-for display multiple thumbnails
       // TODO: Query for all posts matching the user through an API call
-      posts: [
-        {itemname: 'Stuff You Do Not Want',
-          itemid: '1',
-          itemprice: 10.00,
-          itemdesc: 'You may not want this item but I hope that someone will.',
-          imgSrc: 'http://unrealitymag.com/wp-content/uploads/2012/11/opener-465x465.jpg'
-        },
-        {itemname: 'Free Thing',
-          itemid: '2',
-          itemprice: 0.00,
-          itemdesc: 'Yes it is free, so please take it!',
-          imgSrc: 'http://s2.dmcdn.net/Ub1O8/1280x720-mCQ.jpg'
-        },
-        {itemname: 'Handmade Thing Grandma Made',
-          itemid: '3',
-          itemprice: 6.00,
-          itemdesc: 'Yeah, so grandma is quite good at making things. She is also a lunatic.',
-          imgSrc: 'http://media.techeblog.com/images/fun_gadgets.jpg'
-        }
-      ]
+      posts: null
     }
   },
   mounted () {
@@ -86,6 +65,7 @@ export default {
         percentPosition: true
       })
     })
+    this.posts = this.userProfile.items
   },
   methods: {
     editPost (post) {
@@ -103,7 +83,7 @@ export default {
           headers: {
             'Authorization': 'Bearer ' + this.$store.state.token
           },
-          data: post.post
+          data: post.post.itemid
         })
           .then(res => {
             console.log(res)
@@ -122,7 +102,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  background-color: #0969b9;
+  background-color: #003458;
   color: white;
   font-weight: bold;
   min-height: 800px;
@@ -141,9 +121,16 @@ export default {
     min-height: 150px;
     min-width: 150px;
   }
+  #edit_profile {
+    display: block;
+    /* Not a good way to center, not responsive */
+    margin: 5% 0 5% 31%;
+  }
   .profile-info {
     margin-top: 8px;
-    text-align: left;
+  }
+  h4 {
+    border-bottom: 2px solid white;
   }
   .thumbnail {
     box-shadow: 4px 4px 6px grey;

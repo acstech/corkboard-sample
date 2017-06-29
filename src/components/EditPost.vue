@@ -41,7 +41,7 @@
     </div>
 
     <div class="modal-footer text-right">
-      <button class="btn btn-danger cancel" @click="cancel()">Cancel</button>
+      <button class="btn btn-danger cancel" @click.prevent="cancel()">Cancel</button>
       <input type="submit" class="btn btn-primary" value="Save Changes">
     </div>
     </form>

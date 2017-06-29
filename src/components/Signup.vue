@@ -14,6 +14,7 @@
                         placeholder="Email address"
                         v-model="newUser.email"
                         required
+                        maxlength="40"
                 >
             </div>
             <div class="form-group">
