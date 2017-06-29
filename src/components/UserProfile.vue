@@ -49,8 +49,6 @@ export default {
   },
   data () {
     return {
-      // Dummy data to make v-for display multiple thumbnails
-      // TODO: Query for all posts matching the user through an API call
       posts: null
     }
   },
@@ -87,7 +85,21 @@ export default {
         })
           .then(res => {
             console.log(res)
-            this.$router.push('/viewProfile/' + this.userProfile.id)
+            axios({
+              method: 'get',
+              url: '/api/users/' + this.getCurrentUser,
+              headers: {
+                'Authorization': 'Bearer ' + this.$store.state.token
+              }
+            })
+              .then(res => {
+                console.log(res)
+                this.$store.commit('getViewedProfile', res.data)
+              })
+              .catch(error => {
+                console.log(error)
+              })
+            this.$router.go('/viewProfile/' + this.userProfile.id)
           })
           .catch(error => {
             console.log(error)

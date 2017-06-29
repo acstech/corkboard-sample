@@ -96,7 +96,7 @@ export default {
       })
         .then(res => {
           console.log(res)
-          this.$store.commit('getCurrentPost', post)
+          this.$store.commit('getActivePost', post)
           this.$router.push('/viewProfile/' + this.getCurrentUser)
         })
         .catch(error => {
