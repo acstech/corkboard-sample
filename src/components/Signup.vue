@@ -76,28 +76,13 @@ export default {
       .then(res => {
         console.log(res.data)
         this.$store.commit('getViewedProfile', this.newUser)
+        this.$router.push('/login')
       })
       .catch(error => {
         if (error.response.status === 400) {
           this.error = 'Email is already registered.'
         }
       })
-      console.log(this.credentials)
-      axios({
-        method: 'post',
-        url: '/api/users/auth',
-        data: {email: this.newUser.email, password: this.newUser.password, siteId: this.newUser.siteId}
-      })
-        .then(res => {
-          this.$store.commit('authenticate', res.data.token)
-          var base64Url = res.data.token.split('.')[1]
-          var base64 = base64Url.replace('-', '+').replace('_', '/')
-          this.$store.commit('getCurrentUser', JSON.parse(window.atob(base64)).uid)
-          this.$router.push('/editProfile/new')
-        })
-        .catch(error => {
-          console.log(error)
-        })
     }
   }
 }
