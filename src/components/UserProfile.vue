@@ -2,12 +2,10 @@
     <div class="row">
       <div class="col-sm-4 col-md-3 sidebar">
         <ul class="nav nav-sidebar">
-          <img src="../assets/jumpingCat.jpg" class="profile-pic">
           <h3 class="sub-header">User Profile</h3>
-          <br>
-          <!-- v-if user is authenticated && id matches profile id -->
-          <button class="btn btn-info" @click="editProfile">Edit Profile</button>
-          <br><br>
+          <img src="../assets/jumpingCat.jpg" class="profile-pic">
+            <!-- v-if="userProfile.id == getCurrentUser" -->
+          <button class="btn btn-info" @click="editProfile" id="edit_profile">Edit Profile</button>
           <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
@@ -122,7 +120,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  background-color: #0969b9;
+  background-color: #003458;
   color: white;
   font-weight: bold;
   min-height: 800px;
@@ -140,6 +138,11 @@ export default {
     max-width: 200px;
     min-height: 150px;
     min-width: 150px;
+  }
+  #edit_profile {
+    display: block;
+    /* Not a good way to center, not responsive */
+    margin: 5% 0 5% 31%;
   }
   .profile-info {
     margin-top: 8px;
