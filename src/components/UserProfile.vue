@@ -20,7 +20,7 @@
               <img :src="post.imgSrc" alt="...">
               <div class="caption">
                 <h4>{{ post.itemname }}</h4>
-                <h5>{{ post.itemprice | currency }}</h5>
+                <h5 v-if="post.itemprice">{{ post.itemprice | currency }}</h5>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
                 <p>
                   <router-link to=""><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></router-link>

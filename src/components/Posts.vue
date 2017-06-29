@@ -5,7 +5,7 @@
     <h1 v-if="posts.length == 0">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
-        <img :src="post.imgSrc" alt="..." @click = "viewPost({post})">
+        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture" @click = "viewPost({post})">
         <span class="text-content"><span @click = "viewPost({post})">  Location </span></span>
         <div class="caption">
           {{ post.itemname }}
