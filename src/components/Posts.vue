@@ -114,7 +114,7 @@ export default {
 
 <style scoped>
   .thumbnail {
-    box-shadow: 4px 4px 6px grey;
+    box-shadow: 4px 4px 6px black;
     border: 2px solid #003458;
   }
   .temp {

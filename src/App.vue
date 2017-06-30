@@ -80,6 +80,11 @@ export default {
 </script>
 
 <style>
+  body {
+    background-image: url('/static/corkboard-bg.jpg');
+    background-repeat: repeat;
+  }
+
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -89,8 +94,9 @@ export default {
     }
 
     .navbar {
-      box-shadow: 1px 4px 5px grey;
+      box-shadow: 1px 4px 5px black;
       font-weight: bold;
+      margin-bottom: 0;
     }
 
     h1, h2 {

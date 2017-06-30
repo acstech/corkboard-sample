@@ -24,7 +24,7 @@
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
                 <p>
                   <router-link to=""><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></router-link>
-                  <router-link to=""><span @click="deletePost({post})" class="glyphicon glyphicon-trash"></span></router-link>
+                  <router-link to=""><span @click.prevent="deletePost({post})" class="glyphicon glyphicon-trash"></span></router-link>
                </p>
                <br>
               </div>
