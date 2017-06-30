@@ -76,7 +76,6 @@ export default {
     }
   },
   created () {
-    // eslint-disable-next-line no-unused-vars
     var posts = document.querySelectorAll('.grid-item')
     imagesLoaded(posts, function () {
       // eslint-disable-next-line no-unused-vars

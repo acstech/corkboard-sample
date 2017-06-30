@@ -27,10 +27,10 @@
         <label class="form-label">
           Category
           <select class="form-control">
-            <option>None</option>
-            <option>Category 1</option>
-            <option>Category 2</option>
-            <option>Category 3</option>
+            <option value="None">None</option>
+            <option value="Category 1">Category 1</option>
+            <option value="Category 2">Category 2</option>
+            <option value="Category 3">Category 3</option>
           </select>
         </label>
         <label class="form-label">
@@ -96,7 +96,6 @@ export default {
       })
         .then(res => {
           console.log(res)
-          this.$store.commit('getActivePost', post)
           this.$router.push('/viewProfile/' + this.getCurrentUser)
         })
         .catch(error => {
