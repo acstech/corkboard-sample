@@ -4,8 +4,7 @@
         <ul class="nav nav-sidebar">
           <h3 class="sub-header">User Profile</h3>
           <img src="../assets/jumpingCat.jpg" class="profile-pic">
-            <!-- v-if="userProfile.id == getCurrentUser" -->
-          <button class="btn btn-info" @click="editProfile" id="edit_profile">Edit Profile</button>
+          <button v-if="userProfile.id == getCurrentUser" class="btn btn-default" @click="editProfile" id="edit_profile">Edit Profile</button>
           <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
@@ -15,7 +14,7 @@
       <div class="container">
       <div class="grid col-md-offset-3 col-sm-offset-4">
           <div class="grid-sizer col-xs-4"></div>
-          <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
+          <div class="col-xs-4 grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
             <div class="thumbnail">
               <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="...">
               <div class="caption">
@@ -23,10 +22,10 @@
                 <h5 v-if="post.itemprice != 0">{{ post.itemprice | currency }}</h5>
                 <h5 v-else>Free</h5>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
-                <p>
+                <p v-if="userProfile.id == getCurrentUser">
                   <router-link to=""><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></router-link>
                   <router-link to=""><span @click.prevent="deletePost({post})" class="glyphicon glyphicon-trash"></span></router-link>
-               </p>
+                </p>
                <br>
               </div>
             </div>
@@ -48,11 +47,6 @@ export default {
       return this.$store.state.currentUser
     }
   },
-  data () {
-    return {
-      posts: null
-    }
-  },
   mounted () {
     // eslint-disable-next-line no-unused-vars
     var posts = document.querySelectorAll('.grid-item')
@@ -64,7 +58,6 @@ export default {
         percentPosition: true
       })
     })
-    this.posts = this.userProfile.items
   },
   methods: {
     editPost (post) {

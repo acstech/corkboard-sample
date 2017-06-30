@@ -12,11 +12,11 @@
         </label>
         <label class="form-label">
           First Name
-          <input type="text" class="form-control" v-model="userProfile.firstname">
+          <input type="text" class="form-control" v-model="userProfile.firstname" maxlength="40">
         </label>
         <label class="form-label">
           Last Name
-          <input type="text" class="form-control" v-model="userProfile.lastname">
+          <input type="text" class="form-control" v-model="userProfile.lastname" maxlength="40">
         </label>
         <label class="form-label">
           Email
@@ -44,7 +44,6 @@
 
 <script>
 import PostModal from './PostModal.vue'
-// eslint-disable-next-line no-unused-varss
 import axios from 'axios'
 export default {
   computed: {

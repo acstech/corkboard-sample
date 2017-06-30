@@ -96,6 +96,20 @@ export default {
       })
         .then(res => {
           console.log(res)
+          axios({
+            method: 'get',
+            url: '/api/users/' + this.getCurrentUser,
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+            .then(res => {
+              console.log(res.data)
+              this.$store.commit('getViewedProfile', res.data)
+            })
+            .catch(error => {
+              console.log(error)
+            })
           this.$router.push('/viewProfile/' + this.getCurrentUser)
         })
         .catch(error => {
