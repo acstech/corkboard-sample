@@ -117,6 +117,7 @@
         })
           .then(res => {
             console.log(res.config.data)
+            this.$store.commit('addPost', res.config.data)
             var posts = document.querySelectorAll('.grid-item')
             imagesLoaded(posts, function () {
               // eslint-disable-next-line no-unused-vars
@@ -126,7 +127,6 @@
                 percentPosition: true
               })
             })
-            this.$store.commit('addPost', res.config.data)
             this.newPost = {}
             this.newPost.itemprice = 0.00
           })

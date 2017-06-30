@@ -94,7 +94,7 @@ export default {
               .catch(error => {
                 console.log(error)
               })
-            this.$router.go('/viewProfile/' + this.userProfile.id)
+            this.$router.push('/viewProfile/' + this.userProfile.id)
           })
           .catch(error => {
             console.log(error)
