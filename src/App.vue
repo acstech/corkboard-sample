@@ -84,8 +84,7 @@ export default {
     background-image: url('/static/corkboard-bg.jpg');
     background-repeat: repeat;
   }
-
-    #app {
+  #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -147,7 +146,7 @@ export default {
 
     .modal-header h3 {
         margin-top: 0;
-        color: #0969b9;
+        color: #003458;
     }
 
     .modal-body {

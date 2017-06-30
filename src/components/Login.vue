@@ -1,8 +1,10 @@
 <template>
     <div class="col-sm-4 col-sm-offset-4">
+      <div id="login_section">
         <h2>Login</h2>
         <p>Log in to your account to buy and sell on Corkboard!</p>
-        <p>Don't have an account? Make one <router-link to="/signup" style="font-weight:bold;color:#656565">here!</router-link>
+        <p>Don't have an account? Make one <router-link to="/signup" style="font-weight:bold;color:#656565">here!</router-link></p>
+      </div>
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
@@ -26,7 +28,7 @@
                         required
                 >
             </div>
-            <input type="submit" class="btn btn-primary" value="Log In">
+            <input type="submit" class="btn btn-default" value="Log In">
         </form>
     </div>
 </template>
@@ -72,4 +74,14 @@ export default {
     button {
         font-weight: bold;
     }
+    #login_section {
+      background-color: white;
+      border: 2px solid #003458;
+      box-shadow: 4px 4px 8px black;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+  input {
+    box-shadow: 4px 4px 8px black;
+  }
 </style>
