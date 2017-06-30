@@ -119,7 +119,7 @@ export default {
   color: white;
   font-weight: bold;
   min-height: 800px;
-  box-shadow: 4px 4px 6px grey;
+  box-shadow: 4px 4px 6px black;
 }
 .btn {
   font-weight: bold;
@@ -146,7 +146,7 @@ export default {
     border-bottom: 2px solid white;
   }
   .thumbnail {
-    box-shadow: 4px 4px 6px grey;
+    box-shadow: 4px 4px 6px black;
     border: 2px solid #003458;
   }
   span.glyphicon-pencil {
@@ -162,8 +162,14 @@ export default {
   span.glyphicon-pencil:hover {
     color: lightgray;
   }
+  span.glyphicon-pencil:hover:active {
+    color: gray;
+  }
   span.glyphicon-trash:hover {
     color: maroon;
+  }
+  span.glyphicon-trash:hover:active {
+    color: rgb(80,0,0);
   }
   img {
     box-shadow: 0 4px 6px grey;
