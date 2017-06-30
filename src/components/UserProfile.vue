@@ -5,7 +5,7 @@
           <h3 class="sub-header">User Profile</h3>
           <img src="../assets/jumpingCat.jpg" class="profile-pic">
             <!-- v-if="userProfile.id == getCurrentUser" -->
-          <button class="btn btn-info" @click="editProfile" id="edit_profile">Edit Profile</button>
+          <button class="btn btn-default" @click="editProfile" id="edit_profile">Edit Profile</button>
           <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
