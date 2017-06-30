@@ -81,9 +81,6 @@ const store = new Vuex.Store({
     },
     getAllPosts (state, posts) {
       state.allPosts = posts
-    },
-    addPost (state, post) {
-      state.allPosts.push(post)
     }
   }
 })
