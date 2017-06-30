@@ -9,7 +9,8 @@
         <span class="text-content"><span @click = "viewPost({post})">  Location </span></span>
         <div class="caption">
           {{ post.itemname }}
-          <h4><div class="temp">{{ post.itemprice | currency }}</div>
+          <h4><div class="temp" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
+            <div class="temp" v-else>Free</div>
             <a href="#"><span class="glyphicon glyphicon-envelope" style="float:left"></span></a>
           </h4>
           <br>
@@ -20,7 +21,8 @@
 </template>
 
 <script>
-import { Masonry, imagesLoaded, axios } from '../main'
+import { Masonry, imagesLoaded } from '../main'
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -73,8 +75,7 @@ export default {
       ] */
     }
   },
-  mounted () {
-    // eslint-disable-next-line no-unused-vars
+  created () {
     var posts = document.querySelectorAll('.grid-item')
     imagesLoaded(posts, function () {
       // eslint-disable-next-line no-unused-vars
@@ -114,7 +115,7 @@ export default {
 
 <style scoped>
   .thumbnail {
-    box-shadow: 4px 4px 6px black;
+    box-shadow: 4px 4px 12px black;
     border: 2px solid #003458;
   }
   .temp {
@@ -159,5 +160,7 @@ export default {
   span:hover {
     opacity: 1;
   }
-
+  h1 {
+    color: white;
+  }
 </style>

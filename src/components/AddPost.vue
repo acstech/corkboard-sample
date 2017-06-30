@@ -28,10 +28,10 @@
       <label class="form-label">
         Category
         <select class="form-control" v-model="newPost.itemcat">
-          <option>None</option>
-          <option>Category 1</option>
-          <option>Category 2</option>
-          <option>Category 3</option>
+          <option value="None">None</option>
+          <option value="Category 1">Category 1</option>
+          <option value="Category 2">Category 2</option>
+          <option value="Category 3">Category 3</option>
         </select>
       </label>
     </div>
@@ -117,6 +117,7 @@
           .then(res => {
             console.log(res)
             this.newPost = {}
+            this.newPost.itemprice = 0.00
           })
           .catch(error => {
             console.log(error)

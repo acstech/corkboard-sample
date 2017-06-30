@@ -1,8 +1,10 @@
 <template>
     <div class="col-sm-4 col-sm-offset-4">
+      <div id="signup_section">
         <h2>Sign Up</h2>
         <p>Sign up now to buy and sell on Corkboard!</p>
-        <p>Already have an account? Log in <router-link to="/login" style="font-weight:bold;color:#656565">here!</router-link>
+        <p>Already have an account? Log in <router-link to="/login" style="font-weight:bold;color:#656565">here!</router-link></p>
+      </div>
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
@@ -39,7 +41,7 @@
               <div v-else-if="!passwordAccept" class="alert alert-danger">Passwords do not match... :(</div>
               <div v-else class="alert alert-success">Passwords match!</div>
             </div>
-            <input type="submit" class="btn btn-primary" value="Register">
+            <input type="submit" class="btn btn-default" value="Register">
         </form>
     </div>
 </template>
@@ -91,5 +93,15 @@ export default {
 <style scoped>
     button {
         font-weight: bold;
+    }
+    #signup_section {
+      background-color: white;
+      border: 2px solid #003458;
+      box-shadow: 4px 4px 8px black;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+    input {
+      box-shadow: 4px 4px 8px black;
     }
 </style>
