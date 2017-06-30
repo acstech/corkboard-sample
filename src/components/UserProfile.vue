@@ -4,8 +4,7 @@
         <ul class="nav nav-sidebar">
           <h3 class="sub-header">User Profile</h3>
           <img src="../assets/jumpingCat.jpg" class="profile-pic">
-            <!-- v-if="userProfile.id == getCurrentUser" -->
-          <button class="btn btn-default" @click="editProfile" id="edit_profile">Edit Profile</button>
+          <button v-if="userProfile.id == getCurrentUser" class="btn btn-default" @click="editProfile" id="edit_profile">Edit Profile</button>
           <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
@@ -23,10 +22,10 @@
                 <h5 v-if="post.itemprice != 0">{{ post.itemprice | currency }}</h5>
                 <h5 v-else>Free</h5>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
-                <p>
+                <p v-if="userProfile.id == getCurrentUser">
                   <router-link to=""><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></router-link>
                   <router-link to=""><span @click.prevent="deletePost({post})" class="glyphicon glyphicon-trash"></span></router-link>
-               </p>
+                </p>
                <br>
               </div>
             </div>
