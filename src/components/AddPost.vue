@@ -48,6 +48,7 @@
 <script>
   import PostModal from './PostModal.vue'
   import { Money } from 'v-money'
+  import { imagesLoaded, Masonry } from '../main'
   import axios from 'axios'
   export default {
     // Will need more data attributes
@@ -115,9 +116,37 @@
           data: this.newPost
         })
           .then(res => {
-            console.log(res)
-            this.newPost = {}
-            this.newPost.itemprice = 0.00
+            let vm = this
+            setTimeout(function () {
+              // Retrieve all items call to API
+              axios({
+                method: 'get',
+                url: '/api/items',
+                headers: {
+                  'Authorization': 'Bearer ' + vm.$store.state.token
+                }
+              })
+                .then(res2 => {
+                  console.log(res2.data)
+                  vm.$store.commit('getAllPosts', res2.data)
+                  var posts = document.querySelectorAll('.grid-item')
+                  imagesLoaded(posts, function () {
+                    // eslint-disable-next-line no-unused-vars
+                    var masonry = new Masonry('.grid', {
+                      selector: '.grid-item',
+                      columnWidth: '.grid-sizer',
+                      percentPosition: true
+                    })
+                  })
+                })
+                .catch(error => {
+                  if (error.response.status === 401) {
+                    vm.$router.push('/signup')
+                  }
+                })
+              vm.newPost = {}
+              vm.newPost.itemprice = 0.00
+            }, 100)
           })
           .catch(error => {
             console.log(error)

@@ -28,7 +28,6 @@ const router = new VueRouter({
 const store = new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
-    isAuthenticated: false,
     // Perhaps a place to store the token?
     token: null,
     // Likely not best practice to place these states here globally like this
@@ -51,7 +50,8 @@ const store = new Vuex.Store({
       id: '',
       items: []
     },
-    currentUser: ''
+    currentUser: '',
+    allPosts: []
   },
   mutations: {
     authenticate (state, token) {
@@ -78,6 +78,9 @@ const store = new Vuex.Store({
     },
     getCurrentUser (state, user) {
       state.currentUser = user
+    },
+    getAllPosts (state, posts) {
+      state.allPosts = posts
     }
   }
 })
