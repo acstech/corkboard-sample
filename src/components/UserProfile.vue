@@ -163,8 +163,14 @@ export default {
   span.glyphicon-pencil:hover {
     color: lightgray;
   }
+  span.glyphicon-pencil:hover:active {
+    color: gray;
+  }
   span.glyphicon-trash:hover {
     color: maroon;
+  }
+  span.glyphicon-trash:hover:active {
+    color: rgb(80,0,0);
   }
   img {
     box-shadow: 0 4px 6px;

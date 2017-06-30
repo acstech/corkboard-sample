@@ -5,7 +5,7 @@
     <h1 v-if="posts.length == 0">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
-        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture" @click = "viewPost({post})">
+        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture" @click = "viewPost({post})" style="cursor:pointer">
         <span class="text-content"><span @click = "viewPost({post})">  Location </span></span>
         <div class="caption">
           {{ post.itemname }}
@@ -135,6 +135,9 @@ export default {
   }
   span.glyphicon:hover {
     color: lightgray;
+  }
+  span.glyphicon:hover:active {
+    color: gray;
   }
   span.text-content {
   background: rgba(0,0,0,0.8);
