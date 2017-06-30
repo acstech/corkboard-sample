@@ -14,7 +14,7 @@
       <div class="container">
       <div class="grid col-md-offset-3 col-sm-offset-4">
           <div class="grid-sizer col-xs-4"></div>
-          <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
+          <div class="col-xs-4 grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
             <div class="thumbnail">
               <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="...">
               <div class="caption">
@@ -47,11 +47,6 @@ export default {
       return this.$store.state.currentUser
     }
   },
-  data () {
-    return {
-      posts: null
-    }
-  },
   mounted () {
     // eslint-disable-next-line no-unused-vars
     var posts = document.querySelectorAll('.grid-item')
@@ -63,7 +58,6 @@ export default {
         percentPosition: true
       })
     })
-    this.posts = this.userProfile.items
   },
   methods: {
     editPost (post) {

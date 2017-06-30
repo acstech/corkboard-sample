@@ -49,7 +49,7 @@ const store = new Vuex.Store({
       phone: '',
       zip: '',
       id: '',
-      items: null
+      items: []
     },
     currentUser: ''
   },
