@@ -48,6 +48,7 @@
 <script>
   import PostModal from './PostModal.vue'
   import { Money } from 'v-money'
+  import { imagesLoaded, Masonry } from '../main'
   import axios from 'axios'
   export default {
     // Will need more data attributes
@@ -115,7 +116,17 @@
           data: this.newPost
         })
           .then(res => {
-            console.log(res)
+            console.log(res.config.data)
+            var posts = document.querySelectorAll('.grid-item')
+            imagesLoaded(posts, function () {
+              // eslint-disable-next-line no-unused-vars
+              var masonry = new Masonry('.grid', {
+                selector: '.grid-item',
+                columnWidth: '.grid-sizer',
+                percentPosition: true
+              })
+            })
+            this.$store.commit('addPost', res.config.data)
             this.newPost = {}
             this.newPost.itemprice = 0.00
           })
