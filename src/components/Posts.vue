@@ -20,7 +20,8 @@
 </template>
 
 <script>
-import { Masonry, imagesLoaded, axios } from '../main'
+import { Masonry, imagesLoaded } from '../main'
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -73,7 +74,7 @@ export default {
       ] */
     }
   },
-  mounted () {
+  created () {
     // eslint-disable-next-line no-unused-vars
     var posts = document.querySelectorAll('.grid-item')
     imagesLoaded(posts, function () {
@@ -159,5 +160,7 @@ export default {
   span:hover {
     opacity: 1;
   }
-
+  h1 {
+    color: white;
+  }
 </style>

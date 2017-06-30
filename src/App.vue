@@ -84,8 +84,7 @@ export default {
     background-image: url('/static/corkboard-bg.jpg');
     background-repeat: repeat;
   }
-
-    #app {
+  #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
