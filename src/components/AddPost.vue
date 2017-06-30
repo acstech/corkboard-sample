@@ -117,6 +117,7 @@
           .then(res => {
             console.log(res)
             this.newPost = {}
+            this.newPost.itemprice = 0.00
           })
           .catch(error => {
             console.log(error)
