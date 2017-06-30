@@ -119,7 +119,7 @@ export default {
   color: white;
   font-weight: bold;
   min-height: 800px;
-  box-shadow: 4px 4px 6px black;
+  box-shadow: 4px 4px 12px black;
 }
 .btn {
   font-weight: bold;
@@ -146,7 +146,7 @@ export default {
     border-bottom: 2px solid white;
   }
   .thumbnail {
-    box-shadow: 4px 4px 6px black;
+    box-shadow: 4px 4px 12px black;
     border: 2px solid #003458;
   }
   span.glyphicon-pencil {
