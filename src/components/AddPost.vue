@@ -38,11 +38,7 @@
 
     <div class="modal-footer text-right">
     <p align="center">
-      <router-link to="/">
-        <button class="btn btn-lg btn-default" @click="savePost()">
-          <span style="color:black"> Post! </span>
-        </button>
-      </router-link>
+      <input type="submit" class="btn btn-lg btn-default" value="Post!">
     </p>
     </div>
     </form>
@@ -121,11 +117,11 @@
           .then(res => {
             console.log(res)
             this.newPost = {}
-            this.$router.push('/')
           })
           .catch(error => {
             console.log(error)
           })
+        this.$router.push('/')
       }
     },
     components: {

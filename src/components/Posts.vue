@@ -5,7 +5,7 @@
     <h1 v-if="posts.length == 0">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
       <div class="thumbnail">
-        <img :src="post.imgSrc" alt="..." @click = "viewPost({post})">
+        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture" @click = "viewPost({post})">
         <span class="text-content"><span @click = "viewPost({post})">  Location </span></span>
         <div class="caption">
           {{ post.itemname }}
@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       // Dummy data to make v-for display multiple thumbnails. This would be grabbed from a DB
-      posts: null
+      posts: []
       /* posts: [
         {itemname: 'Super Cool Item',
           itemprice: 4.50,
@@ -93,7 +93,7 @@ export default {
       }
     })
       .then(res => {
-        console.log(res)
+        console.log(res.data)
         this.posts = res.data
       })
       .catch(error => {
@@ -114,7 +114,7 @@ export default {
 
 <style scoped>
   .thumbnail {
-    box-shadow: 4px 4px 6px grey;
+    box-shadow: 4px 4px 6px black;
     border: 2px solid #003458;
   }
   .temp {

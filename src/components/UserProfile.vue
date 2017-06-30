@@ -17,14 +17,14 @@
           <div class="grid-sizer col-xs-4"></div>
           <div class="col-xs-4 grid-item" v-for="post in posts"> <!-- v-for on this element -->
             <div class="thumbnail">
-              <img :src="post.imgSrc" alt="...">
+              <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="...">
               <div class="caption">
                 <h4>{{ post.itemname }}</h4>
-                <h5>{{ post.itemprice | currency }}</h5>
+                <h5 v-if="post.itemprice">{{ post.itemprice | currency }}</h5>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
                 <p>
                   <router-link to=""><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></router-link>
-                  <router-link to=""><span @click="deletePost({post})" class="glyphicon glyphicon-trash"></span></router-link>
+                  <router-link to=""><span @click.prevent="deletePost({post})" class="glyphicon glyphicon-trash"></span></router-link>
                </p>
                <br>
               </div>
@@ -49,8 +49,6 @@ export default {
   },
   data () {
     return {
-      // Dummy data to make v-for display multiple thumbnails
-      // TODO: Query for all posts matching the user through an API call
       posts: null
     }
   },
@@ -85,9 +83,24 @@ export default {
           },
           data: post.post.itemid
         })
+          // Retrieve updated user profile page
           .then(res => {
             console.log(res)
-            this.$router.push('/viewProfile/' + this.userProfile.id)
+            axios({
+              method: 'get',
+              url: '/api/users/' + this.getCurrentUser,
+              headers: {
+                'Authorization': 'Bearer ' + this.$store.state.token
+              }
+            })
+              .then(res => {
+                console.log(res)
+                this.$store.commit('getViewedProfile', res.data)
+              })
+              .catch(error => {
+                console.log(error)
+              })
+            this.$router.go('/viewProfile/' + this.userProfile.id)
           })
           .catch(error => {
             console.log(error)
