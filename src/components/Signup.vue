@@ -97,8 +97,11 @@ export default {
     #signup_section {
       background-color: white;
       border: 2px solid #003458;
-      box-shadow: 4px 4px 5px black;
+      box-shadow: 4px 4px 8px black;
       border-radius: 3px;
       margin-bottom: 20px;
+    }
+    input {
+      box-shadow: 4px 4px 8px black;
     }
 </style>
