@@ -9,7 +9,8 @@
         <span class="text-content"><span @click = "viewPost({post})">  Location </span></span>
         <div class="caption">
           {{ post.itemname }}
-          <h4><div class="temp">{{ post.itemprice | currency }}</div>
+          <h4><div class="temp" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
+            <div class="temp" v-else>Free</div>
             <a href="#"><span class="glyphicon glyphicon-envelope" style="float:left"></span></a>
           </h4>
           <br>
