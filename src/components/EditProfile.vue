@@ -12,15 +12,15 @@
         </label>
         <label class="form-label">
           First Name
-          <input type="text" class="form-control" v-model="userProfile.firstname" maxlength="40">
+          <input type="text" class="form-control" v-model.lazy="userProfile.firstname" maxlength="40">
         </label>
         <label class="form-label">
           Last Name
-          <input type="text" class="form-control" v-model="userProfile.lastname" maxlength="40">
+          <input type="text" class="form-control" v-model.lazy="userProfile.lastname" maxlength="40">
         </label>
         <label class="form-label">
           Email
-          <input type="email" class="form-control" v-model="userProfile.email" required maxlength="40">
+          <input type="email" class="form-control" v-model.lazy="userProfile.email" required maxlength="40">
         </label>
         <label class="form-label">
           Phone

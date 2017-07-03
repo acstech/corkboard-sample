@@ -4,12 +4,24 @@
         <ul class="nav nav-sidebar">
           <h3 class="sub-header">User Profile</h3>
           <img src="../assets/jumpingCat.jpg" class="profile-pic">
-          <button v-if="userProfile.id == getCurrentUser" class="btn btn-default" @click="editProfile" id="edit_profile">Edit Profile</button>
+          <br>
+          <br>
+          <br>
           <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
           <li class="profile-info"><h4>Zip</h4>{{ userProfile.zip }}</li>
         </ul>
+        <br>
+        <br>
+        <br>
+        <button
+          v-if="userProfile.id == getCurrentUser"
+          class="btn btn-default"
+          @click="editProfile"
+          id="edit_profile">
+          Edit Profile
+        </button>
       </div>
       <div class="container">
       <div class="grid col-md-offset-3 col-sm-offset-4">
@@ -110,14 +122,13 @@ export default {
 <style scoped>
 .sidebar {
   background-color: #003458;
-  color: white;
   font-weight: bold;
   min-height: 800px;
   box-shadow: 4px 4px 12px black;
-}
-.btn {
+  }
+  .btn {
   font-weight: bold;
-}
+  }
   .profile-pic {
     border: solid white 2px;
     margin-top: 10px;
@@ -138,6 +149,12 @@ export default {
   }
   h4 {
     border-bottom: 2px solid white;
+  }
+  h3 {
+    color: white;
+  }
+  li {
+    color: white;
   }
   .thumbnail {
     box-shadow: 4px 4px 12px black;
