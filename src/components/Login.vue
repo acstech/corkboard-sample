@@ -17,6 +17,8 @@
                         v-model="credentials.email"
                         required
                         maxlength="40"
+                        autofocus="autofocus"
+                        onfocus="this.select()"
                 >
             </div>
             <div class="form-group">
