@@ -75,7 +75,7 @@ export default {
 
 <style>
   body {
-    background-image: url('/static/corkboard-bg.jpg');
+    background-image: url('/static/004-polished-wood.png');
     background-repeat: repeat;
   }
   #app {
