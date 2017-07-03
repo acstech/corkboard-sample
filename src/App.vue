@@ -41,7 +41,7 @@ export default {
     logOut () {
       this.$store.commit('authenticate', null)
       this.$store.commit('getCurrentUser', null)
-      this.$router.push('/#/login')
+      this.$router.push('/login')
     },
     viewSettings () {
       // Axios call to get current user by iD using this.getCurrentUser

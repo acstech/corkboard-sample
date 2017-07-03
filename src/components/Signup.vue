@@ -78,7 +78,7 @@ export default {
       .then(res => {
         console.log(res.data)
         this.$store.commit('getViewedProfile', this.newUser)
-        this.$router.push('/#/login')
+        this.$router.push('/login')
       })
       .catch(error => {
         if (error.response.status === 400) {
