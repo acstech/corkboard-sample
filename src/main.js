@@ -14,7 +14,7 @@ export { Masonry, imagesLoaded }
   // headers: {'Content-Type': 'application/json'}
 // })
 
-Axios.defaults.baseURL = 'process.env.API_URL'
+Axios.defaults.baseURL = process.env.API_URL
 Axios.defaults.headers.common['Content-Type'] = 'application/json'
 
 Vue.use(VueRouter)
