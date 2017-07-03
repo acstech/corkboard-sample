@@ -96,12 +96,18 @@ export default {
     }
     #signup_section {
       background-color: white;
-      border: 2px solid #003458;
+      padding-top: 15px;
+      padding-bottom: 15px;
       box-shadow: 4px 4px 8px black;
       border-radius: 3px;
       margin-bottom: 20px;
     }
     input {
       box-shadow: 4px 4px 8px black;
+      -webkit-transition: box-shadow .7s;
+      transition: box-shadow .7s;
+    }
+    input:hover {
+      box-shadow: none;
     }
 </style>
