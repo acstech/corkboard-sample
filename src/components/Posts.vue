@@ -53,7 +53,7 @@ export default {
       })
       .catch(error => {
         if (error.response.status === 401) {
-          this.$router.push('/#/signup')
+          this.$router.push('/signup')
         }
       })
   },

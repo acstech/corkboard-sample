@@ -22,8 +22,7 @@ Vue.use(Vuex)
 
 export const eventBus = new Vue()
 const router = new VueRouter({
-  routes: routes,
-  mode: 'history'
+  routes: routes
 })
 
 // Vuex management here
