@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { axios } from '../main'
+import axios from 'axios'
 export default {
   data () {
     return {
