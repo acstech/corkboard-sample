@@ -9,10 +9,13 @@ import Axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
 
 export { Masonry, imagesLoaded }
-export const axios = Axios.create({
-  baseURL: process.env.API_URL,
-  headers: {'Content-Type': 'application/json'}
-})
+// export const axios = Axios.create({
+  // baseURL: process.env.API_URL,
+  // headers: {'Content-Type': 'application/json'}
+// })
+
+Axios.defaults.baseURL = 'process.env.API_URL'
+Axios.defaults.headers.common['Content-Type'] = 'application/json'
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
