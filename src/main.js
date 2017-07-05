@@ -71,8 +71,11 @@ const store = new Vuex.Store({
       state.activePost.salestatus = post.post.salestatus
     },
     getActiveSeller (state, user) {
-      console.log(user.user)
-      state.activeSeller = user.user.email
+      if (user.user.firstname && user.user.lastname) {
+        state.activeSeller = user.user.firstname + ' ' + user.user.lastname
+      } else {
+        state.activeSeller = user.user.email
+      }
     },
     getViewedProfile (state, profile) {
       state.viewedUserProfile.id = profile.id

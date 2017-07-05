@@ -43,7 +43,7 @@
         </div>
 
       <h4>{{ currentPost.itemprice | currency }}</h4>
-      <h4>{{ activeSeller }}</h4>
+      <h4 class="seller">Being sold by {{ activeSeller }}</h4>
       <p>{{ currentPost.itemdesc }}</p>
 
       </div>
@@ -97,5 +97,9 @@ export default {
   }
   span.glyphicon-arrow-left:hover {
     color: lightgray;
+  }
+  .seller {
+    border-bottom: 1px solid grey;
+    padding-bottom: 4px;
   }
 </style>
