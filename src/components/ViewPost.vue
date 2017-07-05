@@ -43,7 +43,7 @@
         </div>
 
       <h4>{{ currentPost.itemprice | currency }}</h4>
-      <h4>Seller: Seller Name</h4>
+      <h4>{{ activeSeller }}</h4>
       <p>{{ currentPost.itemdesc }}</p>
 
       </div>
@@ -66,6 +66,9 @@ export default {
   computed: {
     currentPost () {
       return this.$store.state.activePost
+    },
+    activeSeller () {
+      return this.$store.state.activeSeller
     }
   },
   components: {

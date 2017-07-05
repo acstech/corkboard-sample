@@ -48,7 +48,6 @@ export default {
       }
     })
       .then(res => {
-        console.log(res.data)
         this.$store.commit('getAllPosts', res.data)
       })
       .catch(error => {
@@ -59,9 +58,22 @@ export default {
   },
   methods: {
     viewPost (post) {
-      // Updates the state with the selected post's info
-      this.$store.commit('getActivePost', {post: post.post})
-      this.$router.push('/viewPost/' + post.post.itemid)
+      axios({
+        method: 'get',
+        url: '/api/users/' + post.post.userid,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      })
+        .then(res => {
+          console.log(res.data)
+          this.$store.commit('getActivePost', {post: post.post})
+          this.$store.commit('getActiveSeller', {user: res.data})
+          this.$router.push('/viewPost/' + post.post.itemid)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
