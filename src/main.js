@@ -48,7 +48,7 @@ const store = new Vuex.Store({
       lastname: '',
       email: '',
       phone: '',
-      zip: '',
+      zipcode: '',
       id: '',
       items: []
     },
@@ -76,7 +76,7 @@ const store = new Vuex.Store({
       state.viewedUserProfile.email = profile.email
       state.viewedUserProfile.phone = profile.phone
       state.viewedUserProfile.items = profile.items
-      // state.viewedUserProfile.zip = profile.zip
+      state.viewedUserProfile.zip = profile.zipcode
     },
     getCurrentUser (state, user) {
       state.currentUser = user
