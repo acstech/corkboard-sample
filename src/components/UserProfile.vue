@@ -91,7 +91,6 @@ export default {
         })
           // Retrieve updated user profile page
           .then(res => {
-            console.log(res)
             axios({
               method: 'get',
               url: '/api/users/' + this.getCurrentUser,
@@ -100,7 +99,6 @@ export default {
               }
             })
               .then(res => {
-                console.log(res)
                 this.$store.commit('getViewedProfile', res.data)
               })
               .catch(error => {

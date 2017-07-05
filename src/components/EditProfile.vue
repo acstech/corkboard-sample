@@ -93,7 +93,6 @@ export default {
         data: this.userProfile
       })
         .then(res => {
-          console.log(res)
           this.$store.commit('getViewedProfile', user)
           this.$router.push('/viewProfile/' + this.getCurrentUser)
         })

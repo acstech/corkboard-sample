@@ -95,7 +95,6 @@ export default {
         data: this.currentPost
       })
         .then(res => {
-          console.log(res)
           axios({
             method: 'get',
             url: '/api/users/' + this.getCurrentUser,
@@ -104,7 +103,6 @@ export default {
             }
           })
             .then(res => {
-              console.log(res.data)
               this.$store.commit('getViewedProfile', res.data)
             })
             .catch(error => {

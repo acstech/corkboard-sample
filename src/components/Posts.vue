@@ -66,7 +66,6 @@ export default {
         }
       })
         .then(res => {
-          console.log(res.data)
           this.$store.commit('getActivePost', {post: post.post})
           this.$store.commit('getActiveSeller', {user: res.data})
           this.$router.push('/viewPost/' + post.post.itemid)
