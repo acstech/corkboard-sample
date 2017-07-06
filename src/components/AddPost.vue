@@ -145,7 +145,7 @@
                 })
               vm.newPost = {}
               vm.newPost.itemprice = 0.00
-            }, 100)
+            }, 300)
           })
           .catch(error => {
             console.log(error)
