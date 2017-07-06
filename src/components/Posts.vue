@@ -11,7 +11,7 @@
           {{ post.itemname }}
           <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
             <div class="Price" v-else>Free</div>
-            <a href="#" ><span class="glyphicon glyphicon-envelope" style="float:left"></span></a>
+              <span class="glyphicon glyphicon-envelope" @click="contactSeller()" style="float:left; cursor:pointer"></span>
           </h4>
           <br>
         </div>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+var glyphicon
 import { Masonry, imagesLoaded } from '../main'
 import axios from 'axios'
 export default {
@@ -57,6 +58,9 @@ export default {
       })
   },
   methods: {
+    contactSeller (post) {
+      glyphicon = true
+    },
     viewPost (post) {
       axios({
         method: 'get',
@@ -66,9 +70,12 @@ export default {
         }
       })
         .then(res => {
-          this.$store.commit('getActivePost', {post: post.post})
-          this.$store.commit('getActiveSeller', {user: res.data})
-          this.$router.push('/viewPost/' + post.post.itemid)
+          if (glyphicon !== true) {
+            this.$store.commit('getActivePost', {post: post.post})
+            this.$store.commit('getActiveSeller', {user: res.data})
+            this.$router.push('/viewPost/' + post.post.itemid)
+          }
+          glyphicon = false
         })
         .catch(error => {
           console.log(error)
@@ -92,9 +99,6 @@ export default {
   .Price {
     float: right;
     color: maroon;
-  }
-  img {
-    box-shadow: 0 4px 6px grey;
   }
   span.glyphicon {
     font-size: 1.1em;
