@@ -57,18 +57,25 @@ export default {
     },
     getCurrentUser () {
       return this.$store.state.currentUser
+    },
+    getToken () {
+      return this.$store.state.token
     }
   },
   mounted () {
-    var posts = document.querySelectorAll('.grid-item')
-    imagesLoaded(posts, function () {
-      // eslint-disable-next-line no-unused-vars
-      var masonry = new Masonry('.grid', {
-        selector: '.grid-item',
-        columnWidth: '.grid-sizer',
-        percentPosition: true
+    if (this.getToken === null) {
+      this.$router.push('/login')
+    } else {
+      var posts = document.querySelectorAll('.grid-item')
+      imagesLoaded(posts, function () {
+        // eslint-disable-next-line no-unused-vars
+        var masonry = new Masonry('.grid', {
+          selector: '.grid-item',
+          columnWidth: '.grid-sizer',
+          percentPosition: true
+        })
       })
-    })
+    }
   },
   methods: {
     editPost (post) {
