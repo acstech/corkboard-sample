@@ -95,6 +95,9 @@ export default {
     color: black;
   }
   .caption {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
     font-size: 18px;
     padding-top: 12px;
   }

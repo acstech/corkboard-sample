@@ -41,11 +41,11 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-
-      <h4>{{ currentPost.itemprice | currency }}</h4>
-      <h4 class="seller">Being sold by {{ activeSeller }}</h4>
-      <p>{{ currentPost.itemdesc }}</p>
-
+        <div class="info">
+          <h4>{{ currentPost.itemprice | currency }}</h4>
+          <h4 class="seller">Being sold by {{ activeSeller }}</h4>
+          <p>{{ currentPost.itemdesc }}</p>
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -80,6 +80,14 @@ export default {
 <style scoped>
   h3 {
     display: inline;
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
+  }
+  .info {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
   }
   .cancel {
     float: left;
