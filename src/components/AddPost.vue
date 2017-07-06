@@ -5,7 +5,7 @@
       <router-link class="close" to="/">&times;</router-link>
     </div>
 
-    <form @submit.prevent="savePost()">
+    <form enctype="multipart/form-data" @submit.prevent="savePost()">
     <div class="modal-body">
       <label class="form-label">
         Image
@@ -78,8 +78,16 @@
         }
       }
     },
+    computed: {
+      getToken () {
+        return this.$store.state.token
+      }
+    },
     mounted () {
       // Check File API support
+      if (this.getToken === null) {
+        this.$router.push('/login')
+      }
       if (window.File && window.FileList && window.FileReader) {
         let filesInput = document.getElementById('files')
         filesInput.onchange = function (event) {
@@ -101,8 +109,6 @@
             picReader.readAsDataURL(file)
           }
         }
-      } else {
-        console.log('Your browser does not support File API')
       }
     },
     methods: {

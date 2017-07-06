@@ -50,16 +50,23 @@ export default {
     },
     getCurrentUser () {
       return this.$store.state.currentUser
+    },
+    getToken () {
+      return this.$store.state.token
     }
   },
   mounted () {
-    document.getElementById('phoneNumber').addEventListener('keyup', function (evt) {
-      var phoneNumber = document.getElementById('phoneNumber')
-      phoneNumber.value = phoneFormat(phoneNumber.value)
-    })
+    if (this.getToken === null) {
+      this.$router.push('/login')
+    } else {
+      document.getElementById('phoneNumber').addEventListener('keyup', function (evt) {
+        var phoneNumber = document.getElementById('phoneNumber')
+        phoneNumber.value = phoneFormat(phoneNumber.value)
+      })
 
-    // We need to manually format the phone number on page load
-    document.getElementById('phoneNumber').value = phoneFormat(document.getElementById('phoneNumber').value)
+      // We need to manually format the phone number on page load
+      document.getElementById('phoneNumber').value = phoneFormat(document.getElementById('phoneNumber').value)
+    }
 
     // A function to format text to look like a phone number
     function phoneFormat (input) {

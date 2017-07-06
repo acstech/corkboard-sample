@@ -7,10 +7,10 @@
           <br>
           <br>
           <br>
-          <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
-          <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
-          <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
-          <li class="profile-info"><h4>Zip</h4>{{ userProfile.zipcode }}</li>
+          <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
+          <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
+          <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
+          <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
         </ul>
         <br>
         <br>
@@ -57,18 +57,25 @@ export default {
     },
     getCurrentUser () {
       return this.$store.state.currentUser
+    },
+    getToken () {
+      return this.$store.state.token
     }
   },
   mounted () {
-    var posts = document.querySelectorAll('.grid-item')
-    imagesLoaded(posts, function () {
-      // eslint-disable-next-line no-unused-vars
-      var masonry = new Masonry('.grid', {
-        selector: '.grid-item',
-        columnWidth: '.grid-sizer',
-        percentPosition: true
+    if (this.getToken === null) {
+      this.$router.push('/login')
+    } else {
+      var posts = document.querySelectorAll('.grid-item')
+      imagesLoaded(posts, function () {
+        // eslint-disable-next-line no-unused-vars
+        var masonry = new Masonry('.grid', {
+          selector: '.grid-item',
+          columnWidth: '.grid-sizer',
+          percentPosition: true
+        })
       })
-    })
+    }
   },
   methods: {
     editPost (post) {
@@ -132,7 +139,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  background-color: #003458;
+  background-color: #f7f4fd;
   font-weight: bold;
   min-height: 800px;
   box-shadow: 4px 4px 12px black;
@@ -161,14 +168,14 @@ export default {
     word-wrap: break-word;      /* IE */
     margin-top: 8px;
   }
-  h4 {
-    border-bottom: 2px solid white;
+  .profile-info-title {
+    border-bottom: 2px solid #262626;
   }
   h3 {
-    color: white;
+    color: #262626;
   }
   li {
-    color: white;
+    color: #262626;
   }
   .thumbnail {
     box-shadow: 4px 4px 12px black;

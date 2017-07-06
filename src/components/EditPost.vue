@@ -59,6 +59,9 @@ export default {
     },
     getCurrentUser () {
       return this.$store.state.currentUser
+    },
+    getToken () {
+      return this.$store.state.token
     }
   },
   data () {
@@ -82,6 +85,11 @@ export default {
         // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
         masked: true
       }
+    }
+  },
+  mounted () {
+    if (this.getToken === null) {
+      this.router.push('/login')
     }
   },
   methods: {

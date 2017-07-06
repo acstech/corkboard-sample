@@ -69,6 +69,14 @@ export default {
     },
     activeSeller () {
       return this.$store.state.activeSeller
+    },
+    getToken () {
+      return this.$store.state.token
+    }
+  },
+  beforeCreate () {
+    if (this.getToken === null) {
+      this.$router.push('/login')
     }
   },
   components: {
