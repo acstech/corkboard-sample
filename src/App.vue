@@ -82,8 +82,7 @@ export default {
 
 <style>
   body {
-    background-repeat: repeat;
-    background-color: savannahcandothis;
+    background-color: #003458;
   }
   #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
