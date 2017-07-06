@@ -60,7 +60,6 @@ export default {
     }
   },
   mounted () {
-    // eslint-disable-next-line no-unused-vars
     var posts = document.querySelectorAll('.grid-item')
     imagesLoaded(posts, function () {
       // eslint-disable-next-line no-unused-vars
@@ -80,7 +79,9 @@ export default {
       this.$router.push('/editProfile/' + this.getCurrentUser)
     },
     deletePost (post) {
+      // Make sure user is sure to continue with deletion
       if (confirm('Are you sure? This action cannot be undone!')) {
+        // AXIOS: DELETE item call
         axios({
           method: 'delete',
           url: '/api/items/delete/' + post.post.itemid,
@@ -91,6 +92,7 @@ export default {
         })
           // Retrieve updated user profile page
           .then(res => {
+            // AXIOS: GET user call
             axios({
               method: 'get',
               url: '/api/users/' + this.getCurrentUser,
@@ -100,7 +102,7 @@ export default {
             })
               .then(res => {
                 this.$store.commit('getViewedProfile', res.data)
-                // eslint-disable-next-line no-unused-vars
+                // Refresh grid layout to account for deleted post
                 var posts = document.querySelectorAll('.grid-item')
                 imagesLoaded(posts, function () {
                   // eslint-disable-next-line no-unused-vars
@@ -120,6 +122,7 @@ export default {
             console.log(error)
           })
       } else {
+        // Take user back to profile if they decide to cancel delete request
         this.$router.push('/viewProfile/' + this.userProfile.id)
       }
     }
