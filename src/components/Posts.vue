@@ -11,7 +11,7 @@
           {{ post.itemname }}
           <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
             <div class="Price" v-else>Free</div>
-            <a href="#" ><span class="glyphicon glyphicon-envelope" @click="glyphiconValue()" style="float:left"></span></a>
+            <a href="#" ><span class="glyphicon glyphicon-envelope" style="float:left"></span></a>
           </h4>
           <br>
         </div>
@@ -21,7 +21,6 @@
 </template>
 
 <script>
-var glyphicon
 import { Masonry, imagesLoaded } from '../main'
 import axios from 'axios'
 export default {
@@ -58,9 +57,6 @@ export default {
       })
   },
   methods: {
-    glyphiconValue () {
-      glyphicon = true
-    },
     viewPost (post) {
       axios({
         method: 'get',
