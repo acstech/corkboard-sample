@@ -75,8 +75,8 @@ export default {
 
 <style>
   body {
-    background-image: url('/static/004-polished-wood.png');
     background-repeat: repeat;
+    background-color: savannahcandothis;
   }
   #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;

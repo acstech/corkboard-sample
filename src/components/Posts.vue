@@ -4,14 +4,14 @@
     <div class="grid-sizer col-xs-4"></div>
     <h1 v-if="allPosts.length == 0" style="color:black">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
-      <div class="thumbnail">
-        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture" @click = "viewPost({post})" style="cursor:pointer">
-        <span class="text-content"><span @click = "viewPost({post})">  Location </span></span>
+      <div class="thumbnail" @click="viewPost({post})">
+        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture" @click = "viewPost({post})">
+        <span class="text-content" style="cursor:default"><span @click = "viewPost({post})">  Location </span></span>
         <div class="caption">
           {{ post.itemname }}
-          <h4><div class="temp" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
-            <div class="temp" v-else>Free</div>
-            <a href="#"><span class="glyphicon glyphicon-envelope" style="float:left"></span></a>
+          <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
+            <div class="Price" v-else>Free</div>
+            <a href="#" ><span class="glyphicon glyphicon-envelope" @click="glyphiconValue()" style="float:left"></span></a>
           </h4>
           <br>
         </div>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+var glyphicon
 import { Masonry, imagesLoaded } from '../main'
 import axios from 'axios'
 export default {
@@ -57,6 +58,9 @@ export default {
       })
   },
   methods: {
+    glyphiconValue () {
+      glyphicon = true
+    },
     viewPost (post) {
       axios({
         method: 'get',
@@ -82,8 +86,14 @@ export default {
   .thumbnail {
     box-shadow: 4px 4px 12px black;
     border: 2px solid #003458;
+    cursor: default;
+    -webkit-transition: box-shadow .5s;
+    transition: box-shadow .5s;
   }
-  .temp {
+  .thumbnail:hover {
+    box-shadow: none;
+  }
+  .Price {
     float: right;
     color: maroon;
   }
@@ -107,7 +117,7 @@ export default {
   span.glyphicon:hover:active {
     color: gray;
   }
-  span.text-content {
+  .text-content {
   background: rgba(0,0,0,0.8);
   color: white;
   cursor: pointer;
@@ -115,8 +125,8 @@ export default {
   height: 60px;
   left: 21px;
   position: absolute;
+  width: 89%;
   top: 6px;
-  width: 348px;
   opacity: 0;
   -webkit-transition: opacity 500ms;
   -moz-transition: opacity 500ms;
