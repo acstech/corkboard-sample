@@ -43,6 +43,7 @@ const store = new Vuex.Store({
       salestatus: '',
       date: ''
     },
+    activeSeller: '',
     viewedUserProfile: {
       firstname: '',
       lastname: '',
@@ -68,6 +69,13 @@ const store = new Vuex.Store({
       state.activePost.date = post.post.date
       state.activePost.itemcat = post.post.itemcat
       state.activePost.salestatus = post.post.salestatus
+    },
+    getActiveSeller (state, user) {
+      if (user.user.firstname && user.user.lastname) {
+        state.activeSeller = user.user.firstname + ' ' + user.user.lastname
+      } else {
+        state.activeSeller = user.user.email
+      }
     },
     getViewedProfile (state, profile) {
       state.viewedUserProfile.id = profile.id

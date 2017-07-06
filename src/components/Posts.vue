@@ -48,20 +48,31 @@ export default {
       }
     })
       .then(res => {
-        console.log(res.data)
         this.$store.commit('getAllPosts', res.data)
       })
       .catch(error => {
         if (error.response.status === 401) {
-          this.$router.push('/signup')
+          this.$router.push('/login')
         }
       })
   },
   methods: {
     viewPost (post) {
-      // Updates the state with the selected post's info
-      this.$store.commit('getActivePost', {post: post.post})
-      this.$router.push('/viewPost/' + post.post.itemid)
+      axios({
+        method: 'get',
+        url: '/api/users/' + post.post.userid,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      })
+        .then(res => {
+          this.$store.commit('getActivePost', {post: post.post})
+          this.$store.commit('getActiveSeller', {user: res.data})
+          this.$router.push('/viewPost/' + post.post.itemid)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
@@ -84,6 +95,9 @@ export default {
     color: black;
   }
   .caption {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
     font-size: 18px;
     padding-top: 12px;
   }

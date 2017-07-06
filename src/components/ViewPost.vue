@@ -41,11 +41,11 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-
-      <h4>{{ currentPost.itemprice | currency }}</h4>
-      <h4>Seller: Seller Name</h4>
-      <p>{{ currentPost.itemdesc }}</p>
-
+        <div class="info">
+          <h4>{{ currentPost.itemprice | currency }}</h4>
+          <h4 class="seller">Being sold by {{ activeSeller }}</h4>
+          <p>{{ currentPost.itemdesc }}</p>
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -66,6 +66,9 @@ export default {
   computed: {
     currentPost () {
       return this.$store.state.activePost
+    },
+    activeSeller () {
+      return this.$store.state.activeSeller
     }
   },
   components: {
@@ -77,6 +80,14 @@ export default {
 <style scoped>
   h3 {
     display: inline;
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
+  }
+  .info {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
   }
   .cancel {
     float: left;
@@ -94,5 +105,9 @@ export default {
   }
   span.glyphicon-arrow-left:hover {
     color: lightgray;
+  }
+  .seller {
+    border-bottom: 1px solid grey;
+    padding-bottom: 4px;
   }
 </style>

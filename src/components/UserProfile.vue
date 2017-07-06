@@ -91,7 +91,6 @@ export default {
         })
           // Retrieve updated user profile page
           .then(res => {
-            console.log(res)
             axios({
               method: 'get',
               url: '/api/users/' + this.getCurrentUser,
@@ -100,7 +99,6 @@ export default {
               }
             })
               .then(res => {
-                console.log(res)
                 this.$store.commit('getViewedProfile', res.data)
               })
               .catch(error => {
@@ -145,6 +143,9 @@ export default {
     margin: 5% 0 5% 31%;
   }
   .profile-info {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
     margin-top: 8px;
   }
   h4 {
@@ -159,6 +160,11 @@ export default {
   .thumbnail {
     box-shadow: 4px 4px 12px black;
     border: 2px solid #003458;
+  }
+  .caption {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
   }
   span.glyphicon-pencil {
     color: black;
