@@ -3,8 +3,8 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <ul class="nav navbar-nav">
-                  <router-link to="/"><div class="navbar-brand"><img src="../static/generatedtext.png"></div></router-link>
-                    <li><router-link to="/">Home</router-link></li>
+                  <div class="navbar-brand" @click="toHome"><img src="../static/generatedtext.png"></div>
+                  <li @click="toHome"><router-link to="">Home</router-link></li>
                     <li><router-link to="/login" v-if="getToken == null">Login</router-link></li>
                     <li><router-link to="/signup" v-if="getToken == null">Sign Up</router-link></li>
                     <li v-if="getToken != null"><router-link to="/addpost">Add Post</router-link></li>
@@ -38,6 +38,13 @@ export default {
     }
   },
   methods: {
+    toHome () {
+      if (this.getToken === null) {
+        this.$router.push('/login')
+      } else {
+        this.$router.push('/')
+      }
+    },
     logOut () {
       this.$store.commit('authenticate', null)
       this.$store.commit('getCurrentUser', null)
