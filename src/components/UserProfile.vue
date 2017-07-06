@@ -10,7 +10,7 @@
           <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
-          <li class="profile-info"><h4>Zip</h4>{{ userProfile.zip }}</li>
+          <li class="profile-info"><h4>Zip</h4>{{ userProfile.zipcode }}</li>
         </ul>
         <br>
         <br>
