@@ -23,7 +23,7 @@
       </label>
       <label class="form-label">
         Description
-        <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required></textarea>
+        <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required maxlength="2000"></textarea>
       </label>
       <label class="form-label">
         Category
@@ -127,7 +127,6 @@
                 }
               })
                 .then(res2 => {
-                  console.log(res2.data)
                   vm.$store.commit('getAllPosts', res2.data)
                   var posts = document.querySelectorAll('.grid-item')
                   imagesLoaded(posts, function () {

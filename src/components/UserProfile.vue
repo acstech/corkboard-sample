@@ -10,7 +10,7 @@
           <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
-          <li class="profile-info"><h4>Zip</h4>{{ userProfile.zip }}</li>
+          <li class="profile-info"><h4>Zip</h4>{{ userProfile.zipcode }}</li>
         </ul>
         <br>
         <br>
@@ -60,7 +60,6 @@ export default {
     }
   },
   mounted () {
-    // eslint-disable-next-line no-unused-vars
     var posts = document.querySelectorAll('.grid-item')
     imagesLoaded(posts, function () {
       // eslint-disable-next-line no-unused-vars
@@ -80,7 +79,9 @@ export default {
       this.$router.push('/editProfile/' + this.getCurrentUser)
     },
     deletePost (post) {
+      // Make sure user is sure to continue with deletion
       if (confirm('Are you sure? This action cannot be undone!')) {
+        // AXIOS: DELETE item call
         axios({
           method: 'delete',
           url: '/api/items/delete/' + post.post.itemid,
@@ -91,7 +92,7 @@ export default {
         })
           // Retrieve updated user profile page
           .then(res => {
-            console.log(res)
+            // AXIOS: GET user call
             axios({
               method: 'get',
               url: '/api/users/' + this.getCurrentUser,
@@ -100,8 +101,17 @@ export default {
               }
             })
               .then(res => {
-                console.log(res)
                 this.$store.commit('getViewedProfile', res.data)
+                // Refresh grid layout to account for deleted post
+                var posts = document.querySelectorAll('.grid-item')
+                imagesLoaded(posts, function () {
+                  // eslint-disable-next-line no-unused-vars
+                  var masonry = new Masonry('.grid', {
+                    selector: '.grid-item',
+                    columnWidth: '.grid-sizer',
+                    percentPosition: true
+                  })
+                })
               })
               .catch(error => {
                 console.log(error)
@@ -112,6 +122,7 @@ export default {
             console.log(error)
           })
       } else {
+        // Take user back to profile if they decide to cancel delete request
         this.$router.push('/viewProfile/' + this.userProfile.id)
       }
     }
@@ -145,6 +156,9 @@ export default {
     margin: 5% 0 5% 31%;
   }
   .profile-info {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
     margin-top: 8px;
   }
   h4 {
@@ -159,6 +173,11 @@ export default {
   .thumbnail {
     box-shadow: 4px 4px 12px black;
     border: 2px solid #003458;
+  }
+  .caption {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
   }
   span.glyphicon-pencil {
     color: black;

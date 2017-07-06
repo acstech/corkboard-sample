@@ -26,12 +26,10 @@
           Phone
           <input id="phoneNumber" type="tel" class="form-control" v-model.lazy="userProfile.phone" @keypress="numberPressed" minlength="16" maxlength="16">
         </label>
-      <!-- For later. API needs to accept this into JSON before use
         <label class="form-label">
           Zip
-          <input type="number" min="0" step="1" class="form-control" v-model="userProfile.zip">
+          <input type="number" min="0" step="1" class="form-control" v-model="userProfile.zipcode">
         </label>
-        -->
     </div>
 
     <div class="modal-footer text-right">
@@ -93,7 +91,6 @@ export default {
         data: this.userProfile
       })
         .then(res => {
-          console.log(res)
           this.$store.commit('getViewedProfile', user)
           this.$router.push('/viewProfile/' + this.getCurrentUser)
         })
