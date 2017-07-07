@@ -280,13 +280,15 @@
     left: 35%;
   }
   .dropbox {
-    outline: 2px solid #003458; /* the dash box */
-    outline-offset: -10px;
-    background: rgba(211, 213, 209, 0.33);
-    color: dimgray;
-    min-height: 50px; /* minimum height */
-    position: relative;
-    padding: 3% 30%;
+    justify-content: center;
+  }
+  .input-file {
+    box-shadow: 4px 4px 8px black;
+    min-height: 30px;
+    padding: 4px;
+    margin-left: 23%;
+    margin-top: 6px;
+    margin-bottom: 10px;
   }
   .dropbox p {
     font-size: 1.2em;
