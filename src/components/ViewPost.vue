@@ -97,9 +97,6 @@ export default {
     white-space: -o-pre-wrap;   /* Opera 7 */
     word-wrap: break-word;      /* IE */
   }
-  .cancel {
-    float: left;
-  }
   span:hover {
     text-decoration: none;
     color: white;

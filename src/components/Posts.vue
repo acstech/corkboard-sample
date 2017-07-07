@@ -11,7 +11,7 @@
           {{ post.itemname }}
           <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
             <div class="Price" v-else>Free</div>
-              <span class="glyphicon glyphicon-envelope" @click="contactSeller()" style="float:left; cursor:pointer"></span>
+            <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
           </h4>
           <br>
         </div>
@@ -60,6 +60,19 @@ export default {
   methods: {
     contactSeller (post) {
       glyphicon = true
+      axios({
+        method: 'get',
+        url: '/api/users/' + post.post.userid,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      })
+      .then(res => {
+        this.$router.push('/contactSeller/' + post.post.itemid)
+      })
+      .catch(error => {
+        console.log(error)
+      })
     },
     viewPost (post) {
       axios({
@@ -69,17 +82,17 @@ export default {
           'Authorization': 'Bearer ' + this.$store.state.token
         }
       })
-        .then(res => {
-          if (glyphicon !== true) {
-            this.$store.commit('getActivePost', {post: post.post})
-            this.$store.commit('getActiveSeller', {user: res.data})
-            this.$router.push('/viewPost/' + post.post.itemid)
-          }
-          glyphicon = false
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      .then(res => {
+        if (glyphicon !== true) {
+          this.$store.commit('getActivePost', {post: post.post})
+          this.$store.commit('getActiveSeller', {user: res.data})
+          this.$router.push('/viewPost/' + post.post.itemid)
+        }
+        glyphicon = false
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 }
@@ -87,14 +100,14 @@ export default {
 
 <style scoped>
   .thumbnail {
-    box-shadow: 4px 4px 12px black;
+    box-shadow: 4px 4px 12px #4d4d4d;
     border: 2px solid #003458;
     cursor: default;
     -webkit-transition: box-shadow .5s;
     transition: box-shadow .5s;
   }
   .thumbnail:hover {
-    box-shadow: none;
+    box-shadow: 10px 10px 18px #4d4d4d;
   }
   .Price {
     float: right;
