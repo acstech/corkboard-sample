@@ -27,7 +27,7 @@
       </div>
       <!--FAILED-->
       <div v-if="isFailed">
-        <h2>Uploaded failed.</h2>
+        <p>Uploaded failed.</p>
         <p>
           <a href="javascript:void(0)" @click="reset()">Try again</a>
         </p>
@@ -177,18 +177,10 @@
             this.currentStatus = STATUS_SUCCESS
             this.uploadedFiles.push(res.data.url)
           })
-          /*
-          .then(x => x.map(img => Object.assign({},
-            img, { url: `${BASE_URL}/images/${img.id}` })))
-          .then(x => {
-            this.uploadedFiles = [].concat(x)
-            this.currentStatus = STATUS_SUCCESS
-          })
           .catch(err => {
             this.uploadError = err.response
             this.currentStatus = STATUS_FAILED
           })
-          */
       },
       filesChange (fieldName, fileList) {
         // handle file changes
