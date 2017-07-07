@@ -30,6 +30,9 @@
           Zip
           <input type="text" class="form-control" v-model="userProfile.zipcode" @keypress="numberPressed" minlength="5" maxlength="5">
         </label>
+      <div class="alert alert-danger" v-if="phoneInputError">
+        <p>{{ phoneInputError }}</p>
+      </div>
     </div>
 
     <div class="modal-footer text-right">
@@ -44,6 +47,11 @@
 import PostModal from './PostModal.vue'
 import axios from 'axios'
 export default {
+  data () {
+    return {
+      phoneInputError: ''
+    }
+  },
   computed: {
     userProfile () {
       return this.$store.state.viewedUserProfile
@@ -89,6 +97,10 @@ export default {
   },
   methods: {
     saveProfileSettings (user) {
+      if (this.userProfile.phone.length !== 16) {
+        this.phoneInputError = 'Please enter a full phone number.'
+        return
+      }
       axios({
         method: 'put',
         url: '/api/users/edit/' + this.getCurrentUser,
