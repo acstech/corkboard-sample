@@ -5,12 +5,34 @@
       <router-link class="close" to="/">&times;</router-link>
     </div>
 
-    <form enctype="multipart/form-data" @submit.prevent="savePost()">
+    <form enctype="multipart/form-data" @submit.prevent="savePost()" novalidate>
     <div class="modal-body">
-      <label class="form-label">
-        Image
-        <input class="form-control" name="files" id="files" type="file" multiple>
-      </label>
+      <b>Image</b>
+      <div class="dropbox">
+        <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files)" accept="image/*" class="input-file">
+          <p v-if="isInitial">
+            Drag an image here<br> or click to browse for one!
+          </p>
+          <p v-if="isSaving">
+            Uploading file(s)...
+          </p>
+      </div>
+      <div v-if="isSuccess">
+        <p>Uploaded successfully.</p>
+        <ul class="list-unstyled">
+          <li v-for="item in uploadedFiles">
+            <img :src="item.url" class="thumbnail" :alt="item.originalName">
+          </li>
+        </ul>
+      </div>
+      <!--FAILED-->
+      <div v-if="isFailed">
+        <h2>Uploaded failed.</h2>
+        <p>
+          <a href="javascript:void(0)" @click="reset()">Try again</a>
+        </p>
+        <pre>{{ uploadError }}</pre>
+      </div>
       <div id="preview"></div>
       <label class="form-label">
         Title
@@ -50,10 +72,16 @@
   import { Money } from 'v-money'
   import { imagesLoaded, Masonry } from '../main'
   import axios from 'axios'
+  // eslint-disable-next-line one-var,no-unused-vars
+  const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3
   export default {
     // Will need more data attributes
     data () {
       return {
+        uploadedFiles: [],
+        uploadError: null,
+        currentStatus: null,
+        uploadFieldName: 'Image',
         newPost: {
           itemname: '',
           // pictures: [],
@@ -79,6 +107,18 @@
       }
     },
     computed: {
+      isInitial () {
+        return this.currentStatus === STATUS_INITIAL
+      },
+      isSaving () {
+        return this.currentStatus === STATUS_SAVING
+      },
+      isSuccess () {
+        return this.currentStatus === STATUS_SUCCESS
+      },
+      isFailed () {
+        return this.currentStatus === STATUS_FAILED
+      },
       getToken () {
         return this.$store.state.token
       }
@@ -88,6 +128,7 @@
       if (this.getToken === null) {
         this.$router.push('/login')
       }
+      /*
       if (window.File && window.FileList && window.FileReader) {
         let filesInput = document.getElementById('files')
         filesInput.onchange = function (event) {
@@ -110,8 +151,57 @@
           }
         }
       }
+      */
     },
     methods: {
+      reset () {
+        // reset form to initial state
+        this.currentStatus = STATUS_INITIAL
+        this.uploadedFiles = []
+        this.uploadError = null
+      },
+      save (formData) {
+        // upload data to the server
+        this.currentStatus = STATUS_SAVING
+
+        axios({
+          method: 'post',
+          url: '/api/image/new',
+          headers: {
+            'Authorization': 'Bearer ' + this.getToken
+          },
+          data: formData
+        })
+          .then(res => {
+            console.log(res)
+            this.currentStatus = STATUS_SUCCESS
+            this.uploadedFiles.push(res.data.url)
+          })
+          /*
+          .then(x => x.map(img => Object.assign({},
+            img, { url: `${BASE_URL}/images/${img.id}` })))
+          .then(x => {
+            this.uploadedFiles = [].concat(x)
+            this.currentStatus = STATUS_SUCCESS
+          })
+          .catch(err => {
+            this.uploadError = err.response
+            this.currentStatus = STATUS_FAILED
+          })
+          */
+      },
+      filesChange (fieldName, fileList) {
+        // handle file changes
+        var formData = new FormData()
+        if (!fileList.length) return
+
+        // append the files to FormData
+        for (var i = 0; i < fileList.length; ++i) {
+          formData.append(fieldName, fileList[i])
+          // save it
+          this.save(fileList)
+        }
+      },
       savePost: function () {
         axios({
           method: 'post',
@@ -198,5 +288,20 @@
     position: relative;
     width: 30%;
     left: 35%;
+  }
+  .dropbox {
+    outline: 2px solid #003458; /* the dash box */
+    outline-offset: -10px;
+    background: rgba(211, 213, 209, 0.33);
+    color: dimgray;
+    min-height: 50px; /* minimum height */
+    position: relative;
+    cursor: pointer;
+    padding: 3% 30%;
+  }
+  .dropbox p {
+    font-size: 1.2em;
+    text-align: center;
+    padding: 50px 0;
   }
 </style>
