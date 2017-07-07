@@ -15,13 +15,13 @@
         <br>
         <br>
         <br>
-        <button
+        <span
           v-if="userProfile.id == getCurrentUser"
-          class="btn btn-default"
           @click="editProfile"
-          id="edit_profile">
-          Edit Profile
-        </button>
+          id="edit_profile"
+          class="glyphicon glyphicon-pencil"
+          style="cursor:pointer; margin-left:1%; margin-top:78%">
+        </span>
       </div>
       <div class="container">
       <div class="grid col-md-offset-3 col-sm-offset-4">
