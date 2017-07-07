@@ -82,7 +82,7 @@ export default {
 
 <style>
   body {
-    background-color: #003458;
+    background-color: #d3d5d1;
   }
   #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;

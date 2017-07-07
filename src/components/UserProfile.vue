@@ -139,7 +139,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  background-color: #f7f4fd;
+  background-color: #003458;
   font-weight: bold;
   min-height: 800px;
   box-shadow: 4px 4px 12px black;
@@ -169,13 +169,13 @@ export default {
     margin-top: 8px;
   }
   .profile-info-title {
-    border-bottom: 2px solid #262626;
+    border-bottom: 2px solid #ffffff;
   }
   h3 {
-    color: #262626;
+    color: #ffffff;
   }
   li {
-    color: #262626;
+    color: #ffffff;
   }
   .thumbnail {
     box-shadow: 4px 4px 12px black;

@@ -74,7 +74,7 @@
   import { Money } from 'v-money'
   import { imagesLoaded, Masonry } from '../main'
   import axios from 'axios'
-  // eslint-disable-next-line one-var,no-unused-vars
+  // eslint-disable-next-line one-var
   const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3
   export default {
     // Will need more data attributes
@@ -86,7 +86,7 @@
         uploadFieldName: 'Image',
         newPost: {
           itemname: '',
-          // pictures: [],
+          pictureIds: [],
           itemprice: 0.00,
           itemdesc: '',
           itemcat: '',
