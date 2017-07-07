@@ -295,4 +295,28 @@
     text-align: center;
     padding: 50px 0;
   }
+  input {
+    box-shadow: 3px 3px 8px black;
+    -webkit-transition: box-shadow .7s;
+    transition: box-shadow .7s;
+  }
+  input:hover {
+    box-shadow: none;
+  }
+  textarea {
+    box-shadow: 3px 3px 8px black;
+    -webkit-transition: box-shadow .7s;
+    transition: box-shadow .7s;
+  }
+  textarea:hover {
+    box-shadow: none;
+  }
+  select {
+    box-shadow: 3px 3px 8px black;
+    -webkit-transition: box-shadow .7s;
+    transition: box-shadow .7s;
+  }
+  select:hover {
+    box-shadow: none;
+  }
 </style>
