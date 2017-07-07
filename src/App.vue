@@ -82,7 +82,7 @@ export default {
 
 <style>
   body {
-    background-color: #003458;
+    background-image: url("../static/testBG.png");
   }
   #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
