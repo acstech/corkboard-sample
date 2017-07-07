@@ -173,7 +173,7 @@
           .then(res => {
             console.log(res)
             this.currentStatus = STATUS_SUCCESS
-            this.uploadedFiles.push(res.data.url.substring(0, res.data.url.length - 1))
+            this.uploadedFiles.push(res.data.url)
           })
           .catch(err => {
             this.uploadError = err.response
@@ -286,7 +286,6 @@
     color: dimgray;
     min-height: 50px; /* minimum height */
     position: relative;
-    cursor: pointer;
     padding: 3% 30%;
   }
   .dropbox p {
