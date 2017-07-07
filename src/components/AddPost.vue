@@ -19,11 +19,13 @@
       </div>
       <div v-if="isSuccess">
         <p>Uploaded successfully.</p>
+        <!--
         <ul class="list-unstyled">
           <li v-for="item in uploadedFiles">
             <img :src="item.url" class="thumbnail" :alt="item.originalName">
           </li>
         </ul>
+        -->
       </div>
       <!--FAILED-->
       <div v-if="isFailed">
@@ -128,30 +130,26 @@
       if (this.getToken === null) {
         this.$router.push('/login')
       }
-      /*
-      if (window.File && window.FileList && window.FileReader) {
-        let filesInput = document.getElementById('files')
-        filesInput.onchange = function (event) {
-          let files = event.target.files // FileList object
-          for (var i = 0; i < files.length; i++) {
-            let file = files[i]
-            // Only preview images
-            if (!file.type.match('image')) {
-              continue
-            }
-            let picReader = new FileReader()
-            picReader.onload = function (event) {
-              let picFile = event.target
-              let preview = document.getElementById('preview')
-              preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
-                "title='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
-            }
-            // Read the image
-            picReader.readAsDataURL(file)
+      let filesInput = document.getElementById('files')
+      filesInput.onchange = function (event) {
+        let files = event.target.files // FileList object
+        for (var i = 0; i < files.length; i++) {
+          let file = files[i]
+          // Only preview images
+          if (!file.type.match('image')) {
+            continue
           }
+          let picReader = new FileReader()
+          picReader.onload = function (event) {
+            let picFile = event.target
+            let preview = document.getElementById('preview')
+            preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
+              "title='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
+          }
+          // Read the image
+          picReader.readAsDataURL(file)
         }
       }
-      */
     },
     methods: {
       reset () {
@@ -175,7 +173,7 @@
           .then(res => {
             console.log(res)
             this.currentStatus = STATUS_SUCCESS
-            this.uploadedFiles.push(res.data.url)
+            this.uploadedFiles.push(res.data.url.substring(0, res.data.url.length - 1))
           })
           .catch(err => {
             this.uploadError = err.response
