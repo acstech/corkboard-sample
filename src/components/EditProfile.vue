@@ -28,7 +28,7 @@
         </label>
         <label class="form-label">
           Zip
-          <input type="number" min="0" step="1" class="form-control" v-model="userProfile.zipcode">
+          <input type="text" class="form-control" v-model="userProfile.zipcode" @keypress="numberPressed" minlength="5" maxlength="5">
         </label>
     </div>
 
@@ -108,6 +108,7 @@ export default {
     numberPressed (evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode
       if (charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 36 || charCode > 40)) {
+        evt.preventDefault()
         return false
       }
       return true
