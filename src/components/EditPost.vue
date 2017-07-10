@@ -26,7 +26,7 @@
         </label>
         <label class="form-label">
           Category
-          <select class="form-control">
+          <select class="form-control" v-model="currentPost.itemcat">
             <option value="None">None</option>
             <option value="Category 1">Category 1</option>
             <option value="Category 2">Category 2</option>

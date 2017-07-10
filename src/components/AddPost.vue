@@ -10,12 +10,6 @@
       <b>Image</b>
       <div class="dropbox">
         <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files)" accept="image/*" class="input-file">
-          <p v-if="isInitial">
-            Drag an image here<br> or click to browse for one!
-          </p>
-          <p v-if="isSaving">
-            Uploading file(s)...
-          </p>
       </div>
       <div v-if="isSuccess">
         <p>Uploaded successfully.</p>
@@ -86,7 +80,7 @@
         uploadFieldName: 'Image',
         newPost: {
           itemname: '',
-          pictureIds: [],
+          picid: [],
           itemprice: 0.00,
           itemdesc: '',
           itemcat: '',
@@ -161,7 +155,7 @@
       save (formData) {
         // upload data to the server
         this.currentStatus = STATUS_SAVING
-
+        console.log(formData)
         axios({
           method: 'post',
           url: '/api/image/new',
@@ -174,6 +168,7 @@
             console.log(res)
             this.currentStatus = STATUS_SUCCESS
             this.uploadedFiles.push(res.data.url)
+            this.newPost.picid.push(res.data.picid)
           })
           .catch(err => {
             this.uploadError = err.response
@@ -182,14 +177,20 @@
       },
       filesChange (fieldName, fileList) {
         // handle file changes
-        var formData = new FormData()
-        if (!fileList.length) return
+        var imageReq = {checksum: '', extension: ''}
+        // var formData = new FormData()
 
         // append the files to FormData
         for (var i = 0; i < fileList.length; ++i) {
-          formData.append(fieldName, fileList[i])
+          // formData.append(fieldName, fileList[i])
           // save it
-          this.save(fileList)
+          // for (var p of formData) {
+          //  console.log(p)
+          // }
+          // eslint-disable-next-line no-undef
+          imageReq.checksum = 'Check' // CryptoJS.MD5(CryptoJS.enc.Latin1.parse(fileList[i]))
+          imageReq.extension = fileList[i].type
+          this.save(imageReq)
         }
       },
       savePost: function () {
@@ -202,6 +203,7 @@
           data: this.newPost
         })
           .then(res => {
+            console.log(res.data)
             let vm = this
             setTimeout(function () {
               // Retrieve all items call to API
@@ -235,6 +237,14 @@
           })
           .catch(error => {
             console.log(error)
+            // Token expiry
+            if (error.response.status === 401) {
+              this.$store.commit('authenticate', null)
+              let vm = this
+              setTimeout(function () {
+                vm.$router.push('/login')
+              }, 100)
+            }
           })
         this.$router.push('/')
       }

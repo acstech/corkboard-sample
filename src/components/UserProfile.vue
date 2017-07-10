@@ -3,7 +3,7 @@
       <div class="col-sm-4 col-md-3 sidebar">
         <ul class="nav nav-sidebar">
           <h3 class="sub-header">User Profile</h3>
-          <img src="../assets/jumpingCat.jpg" class="profile-pic">
+          <img src="../assets/funny-cats-sneezing-3.jpg" class="profile-pic">
           <br>
           <br>
           <br>

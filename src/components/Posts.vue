@@ -5,7 +5,7 @@
     <h1 v-if="allPosts.length == 0" style="color:black">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
       <div class="thumbnail" @click="viewPost({post})">
-        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture" @click = "viewPost({post})">
+        <!--:src="post.imgSrc" --><img src="../assets/catwill.jpg" alt="Post Picture" @click = "viewPost({post})">
         <span class="text-content" style="cursor:default"><span @click = "viewPost({post})">  Location </span></span>
         <div class="caption">
           {{ post.itemname }}
