@@ -5,8 +5,8 @@
     <h1 v-if="allPosts.length == 0" style="color:black">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
       <div class="thumbnail" @click="viewPost({post})">
-        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture" @click = "viewPost({post})">
-        <span class="text-content" style="cursor:default"><span @click = "viewPost({post})">  Location </span></span>
+        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture">
+        <span class="text-content" style="cursor:default" v-model="zip"><span class="city"> Location </span></span>
         <div class="caption">
           {{ post.itemname }}
           <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
