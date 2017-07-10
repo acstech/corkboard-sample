@@ -68,6 +68,7 @@
   import { Money } from 'v-money'
   import { imagesLoaded, Masonry } from '../main'
   import axios from 'axios'
+  import Crypto from 'crypto-js'
   // eslint-disable-next-line one-var
   const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3
   export default {
@@ -155,7 +156,6 @@
       save (formData) {
         // upload data to the server
         this.currentStatus = STATUS_SAVING
-        console.log(formData)
         axios({
           method: 'post',
           url: '/api/image/new',
@@ -187,13 +187,29 @@
           // for (var p of formData) {
           //  console.log(p)
           // }
-          // eslint-disable-next-line no-undef
-          imageReq.checksum = 'Check' // CryptoJS.MD5(CryptoJS.enc.Latin1.parse(fileList[i]))
-          imageReq.extension = fileList[i].type
+          imageReq.checksum = Crypto.MD5(fileList[i]).toString()
+          imageReq.extension = fileList[i].type.substring(6)
+          console.log(imageReq.checksum)
           this.save(imageReq)
         }
       },
       savePost: function () {
+        for (var i = 0; i < this.newPost.picid.length; ++i) {
+          axios({
+            method: 'post',
+            url: this.uploadedFiles[i],
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            },
+            data: this.newPost.picid[i]
+          })
+            .then(res => {
+              console.log(res)
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        }
         axios({
           method: 'post',
           url: '/api/items/new',
