@@ -60,8 +60,9 @@ export default {
   methods: {
     contactSeller () {
       glyphicon = true
+      var item = this.$store.state.activePost.itemname
       var email = this.$store.state.activeSeller
-      var subject = 'I\'m interested in your CorkBoard item!'
+      var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
       window.location.href = 'mailto:' + email + '?subject=' + subject
     },
     viewPost (post) {
