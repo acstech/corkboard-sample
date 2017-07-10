@@ -50,9 +50,9 @@
 
       <div class="modal-footer">
         <p align="center">
-          <router-link to="/" class="btn btn-lg btn-default" style="margin-top:20px">
+          <span class="btn btn-lg btn-default" style="margin-top:20px" @click="contactSeller()">
             <span class="glyphicon glyphicon-envelope"></span> Contact
-          </router-link>
+          </span>
         </p>
       </div>
     </post-modal>
@@ -79,6 +79,13 @@ export default {
       this.$router.push('/login')
     }
   },
+  methods: {
+    contactSeller () {
+      var email = this.$store.state.activeSeller
+      var subject = 'I\'m interested in your CorkBoard item!'
+      window.location.href = 'mailto:' + email + '?subject=' + subject
+    }
+  },
   components: {
     postModal: PostModal
   }
@@ -102,14 +109,7 @@ export default {
     color: white;
   }
   span.glyphicon-envelope:hover {
-    color: #303030;
-  }
-  span.glyphicon-arrow-left {
-    font-size: 2.0em;
-    color: black;
-  }
-  span.glyphicon-arrow-left:hover {
-    color: lightgray;
+    color: white;
   }
   .seller {
     border-bottom: 1px solid grey;

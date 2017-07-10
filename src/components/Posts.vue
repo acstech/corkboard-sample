@@ -11,7 +11,7 @@
           {{ post.itemname }}
           <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
             <div class="Price" v-else>Free</div>
-            <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
+            <span class="glyphicon glyphicon-envelope" @click="contactSeller()" style="float:left; cursor:pointer"></span>
           </h4>
           <br>
         </div>
@@ -58,21 +58,11 @@ export default {
       })
   },
   methods: {
-    contactSeller (post) {
+    contactSeller () {
       glyphicon = true
-      axios({
-        method: 'get',
-        url: '/api/users/' + post.post.userid,
-        headers: {
-          'Authorization': 'Bearer ' + this.$store.state.token
-        }
-      })
-      .then(res => {
-        this.$router.push('/contactSeller/' + post.post.itemid)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      var email = this.$store.state.activeSeller
+      var subject = 'I\'m interested in your CorkBoard item!'
+      window.location.href = 'mailto:' + email + '?subject=' + subject
     },
     viewPost (post) {
       axios({
