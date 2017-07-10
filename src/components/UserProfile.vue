@@ -7,21 +7,21 @@
           <br>
           <br>
           <br>
-          <li class="profile-info"><h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
-          <li class="profile-info"><h4>Email</h4>{{ userProfile.email }}</li><br>
-          <li class="profile-info"><h4>Phone</h4>{{ userProfile.phone }}</li><br>
-          <li class="profile-info"><h4>Zip</h4>{{ userProfile.zip }}</li>
+          <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
+          <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
+          <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
+          <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
         </ul>
         <br>
         <br>
         <br>
-        <button
+        <span
           v-if="userProfile.id == getCurrentUser"
-          class="btn btn-default"
           @click="editProfile"
-          id="edit_profile">
-          Edit Profile
-        </button>
+          id="edit_profile"
+          class="glyphicon glyphicon-pencil"
+          style="cursor:pointer; margin-left:1%; margin-top:78%">
+        </span>
       </div>
       <div class="container">
       <div class="grid col-md-offset-3 col-sm-offset-4">
@@ -57,19 +57,25 @@ export default {
     },
     getCurrentUser () {
       return this.$store.state.currentUser
+    },
+    getToken () {
+      return this.$store.state.token
     }
   },
   mounted () {
-    // eslint-disable-next-line no-unused-vars
-    var posts = document.querySelectorAll('.grid-item')
-    imagesLoaded(posts, function () {
-      // eslint-disable-next-line no-unused-vars
-      var masonry = new Masonry('.grid', {
-        selector: '.grid-item',
-        columnWidth: '.grid-sizer',
-        percentPosition: true
+    if (this.getToken === null) {
+      this.$router.push('/login')
+    } else {
+      var posts = document.querySelectorAll('.grid-item')
+      imagesLoaded(posts, function () {
+        // eslint-disable-next-line no-unused-vars
+        var masonry = new Masonry('.grid', {
+          selector: '.grid-item',
+          columnWidth: '.grid-sizer',
+          percentPosition: true
+        })
       })
-    })
+    }
   },
   methods: {
     editPost (post) {
@@ -80,7 +86,9 @@ export default {
       this.$router.push('/editProfile/' + this.getCurrentUser)
     },
     deletePost (post) {
+      // Make sure user is sure to continue with deletion
       if (confirm('Are you sure? This action cannot be undone!')) {
+        // AXIOS: DELETE item call
         axios({
           method: 'delete',
           url: '/api/items/delete/' + post.post.itemid,
@@ -91,7 +99,7 @@ export default {
         })
           // Retrieve updated user profile page
           .then(res => {
-            console.log(res)
+            // AXIOS: GET user call
             axios({
               method: 'get',
               url: '/api/users/' + this.getCurrentUser,
@@ -100,8 +108,17 @@ export default {
               }
             })
               .then(res => {
-                console.log(res)
                 this.$store.commit('getViewedProfile', res.data)
+                // Refresh grid layout to account for deleted post
+                var posts = document.querySelectorAll('.grid-item')
+                imagesLoaded(posts, function () {
+                  // eslint-disable-next-line no-unused-vars
+                  var masonry = new Masonry('.grid', {
+                    selector: '.grid-item',
+                    columnWidth: '.grid-sizer',
+                    percentPosition: true
+                  })
+                })
               })
               .catch(error => {
                 console.log(error)
@@ -112,6 +129,7 @@ export default {
             console.log(error)
           })
       } else {
+        // Take user back to profile if they decide to cancel delete request
         this.$router.push('/viewProfile/' + this.userProfile.id)
       }
     }
@@ -121,7 +139,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  background-color: #003458;
+  background-color: #f7f4fd;
   font-weight: bold;
   min-height: 800px;
   box-shadow: 4px 4px 12px black;
@@ -145,20 +163,28 @@ export default {
     margin: 5% 0 5% 31%;
   }
   .profile-info {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
     margin-top: 8px;
   }
-  h4 {
-    border-bottom: 2px solid white;
+  .profile-info-title {
+    border-bottom: 2px solid #262626;
   }
   h3 {
-    color: white;
+    color: #262626;
   }
   li {
-    color: white;
+    color: #262626;
   }
   .thumbnail {
     box-shadow: 4px 4px 12px black;
     border: 2px solid #003458;
+  }
+  .caption {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
   }
   span.glyphicon-pencil {
     color: black;

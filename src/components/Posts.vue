@@ -4,14 +4,14 @@
     <div class="grid-sizer col-xs-4"></div>
     <h1 v-if="allPosts.length == 0" style="color:black">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
-      <div class="thumbnail">
-        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture" @click = "viewPost({post})" style="cursor:pointer">
-        <span class="text-content"><span @click = "viewPost({post})">  Location </span></span>
+      <div class="thumbnail" @click="viewPost({post})">
+        <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture" @click = "viewPost({post})">
+        <span class="text-content" style="cursor:default"><span @click = "viewPost({post})">  Location </span></span>
         <div class="caption">
           {{ post.itemname }}
-          <h4><div class="temp" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
-            <div class="temp" v-else>Free</div>
-            <a href="#"><span class="glyphicon glyphicon-envelope" style="float:left"></span></a>
+          <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
+            <div class="Price" v-else>Free</div>
+            <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
           </h4>
           <br>
         </div>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+var glyphicon
 import { Masonry, imagesLoaded } from '../main'
 import axios from 'axios'
 export default {
@@ -48,20 +49,50 @@ export default {
       }
     })
       .then(res => {
-        console.log(res.data)
         this.$store.commit('getAllPosts', res.data)
       })
       .catch(error => {
         if (error.response.status === 401) {
-          this.$router.push('/signup')
+          this.$router.push('/login')
         }
       })
   },
   methods: {
+    contactSeller (post) {
+      glyphicon = true
+      axios({
+        method: 'get',
+        url: '/api/users/' + post.post.userid,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      })
+      .then(res => {
+        this.$router.push('/contactSeller/' + post.post.itemid)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
     viewPost (post) {
-      // Updates the state with the selected post's info
-      this.$store.commit('getActivePost', {post: post.post})
-      this.$router.push('/viewPost/' + post.post.itemid)
+      axios({
+        method: 'get',
+        url: '/api/users/' + post.post.userid,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      })
+      .then(res => {
+        if (glyphicon !== true) {
+          this.$store.commit('getActivePost', {post: post.post})
+          this.$store.commit('getActiveSeller', {user: res.data})
+          this.$router.push('/viewPost/' + post.post.itemid)
+        }
+        glyphicon = false
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 }
@@ -69,21 +100,27 @@ export default {
 
 <style scoped>
   .thumbnail {
-    box-shadow: 4px 4px 12px black;
+    box-shadow: 4px 4px 12px #4d4d4d;
     border: 2px solid #003458;
+    cursor: default;
+    -webkit-transition: box-shadow .5s;
+    transition: box-shadow .5s;
   }
-  .temp {
+  .thumbnail:hover {
+    box-shadow: 10px 10px 18px #4d4d4d;
+  }
+  .Price {
     float: right;
     color: maroon;
-  }
-  img {
-    box-shadow: 0 4px 6px grey;
   }
   span.glyphicon {
     font-size: 1.1em;
     color: black;
   }
   .caption {
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
     font-size: 18px;
     padding-top: 12px;
   }
@@ -93,7 +130,7 @@ export default {
   span.glyphicon:hover:active {
     color: gray;
   }
-  span.text-content {
+  .text-content {
   background: rgba(0,0,0,0.8);
   color: white;
   cursor: pointer;
@@ -101,8 +138,8 @@ export default {
   height: 60px;
   left: 21px;
   position: absolute;
+  width: 89%;
   top: 6px;
-  width: 348px;
   opacity: 0;
   -webkit-transition: opacity 500ms;
   -moz-transition: opacity 500ms;

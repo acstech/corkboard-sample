@@ -5,7 +5,7 @@
       <router-link class="close" to="/">&times;</router-link>
     </div>
 
-    <form @submit.prevent="savePost()">
+    <form enctype="multipart/form-data" @submit.prevent="savePost()">
     <div class="modal-body">
       <label class="form-label">
         Image
@@ -23,7 +23,7 @@
       </label>
       <label class="form-label">
         Description
-        <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required></textarea>
+        <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required maxlength="2000"></textarea>
       </label>
       <label class="form-label">
         Category
@@ -78,8 +78,16 @@
         }
       }
     },
+    computed: {
+      getToken () {
+        return this.$store.state.token
+      }
+    },
     mounted () {
       // Check File API support
+      if (this.getToken === null) {
+        this.$router.push('/login')
+      }
       if (window.File && window.FileList && window.FileReader) {
         let filesInput = document.getElementById('files')
         filesInput.onchange = function (event) {
@@ -101,8 +109,6 @@
             picReader.readAsDataURL(file)
           }
         }
-      } else {
-        console.log('Your browser does not support File API')
       }
     },
     methods: {
@@ -127,7 +133,6 @@
                 }
               })
                 .then(res2 => {
-                  console.log(res2.data)
                   vm.$store.commit('getAllPosts', res2.data)
                   var posts = document.querySelectorAll('.grid-item')
                   imagesLoaded(posts, function () {
@@ -146,7 +151,7 @@
                 })
               vm.newPost = {}
               vm.newPost.itemprice = 0.00
-            }, 100)
+            }, 300)
           })
           .catch(error => {
             console.log(error)

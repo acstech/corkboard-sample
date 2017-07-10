@@ -26,12 +26,13 @@
           Phone
           <input id="phoneNumber" type="tel" class="form-control" v-model.lazy="userProfile.phone" @keypress="numberPressed" minlength="16" maxlength="16">
         </label>
-      <!-- For later. API needs to accept this into JSON before use
         <label class="form-label">
           Zip
-          <input type="number" min="0" step="1" class="form-control" v-model="userProfile.zip">
+          <input type="text" class="form-control" v-model="userProfile.zipcode" @keypress="numberPressed" minlength="5" maxlength="5">
         </label>
-        -->
+      <div class="alert alert-danger" v-if="phoneInputError">
+        <p>{{ phoneInputError }}</p>
+      </div>
     </div>
 
     <div class="modal-footer text-right">
@@ -46,22 +47,34 @@
 import PostModal from './PostModal.vue'
 import axios from 'axios'
 export default {
+  data () {
+    return {
+      phoneInputError: ''
+    }
+  },
   computed: {
     userProfile () {
       return this.$store.state.viewedUserProfile
     },
     getCurrentUser () {
       return this.$store.state.currentUser
+    },
+    getToken () {
+      return this.$store.state.token
     }
   },
   mounted () {
-    document.getElementById('phoneNumber').addEventListener('keyup', function (evt) {
-      var phoneNumber = document.getElementById('phoneNumber')
-      phoneNumber.value = phoneFormat(phoneNumber.value)
-    })
+    if (this.getToken === null) {
+      this.$router.push('/login')
+    } else {
+      document.getElementById('phoneNumber').addEventListener('keyup', function (evt) {
+        var phoneNumber = document.getElementById('phoneNumber')
+        phoneNumber.value = phoneFormat(phoneNumber.value)
+      })
 
-    // We need to manually format the phone number on page load
-    document.getElementById('phoneNumber').value = phoneFormat(document.getElementById('phoneNumber').value)
+      // We need to manually format the phone number on page load
+      document.getElementById('phoneNumber').value = phoneFormat(document.getElementById('phoneNumber').value)
+    }
 
     // A function to format text to look like a phone number
     function phoneFormat (input) {
@@ -84,6 +97,10 @@ export default {
   },
   methods: {
     saveProfileSettings (user) {
+      if (this.userProfile.phone.length !== 16) {
+        this.phoneInputError = 'Please enter a full phone number.'
+        return
+      }
       axios({
         method: 'put',
         url: '/api/users/edit/' + this.getCurrentUser,
@@ -93,7 +110,6 @@ export default {
         data: this.userProfile
       })
         .then(res => {
-          console.log(res)
           this.$store.commit('getViewedProfile', user)
           this.$router.push('/viewProfile/' + this.getCurrentUser)
         })
@@ -103,7 +119,8 @@ export default {
     },
     numberPressed (evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode
-      if (charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 36 || charCode > 40)) {
+      if ((charCode < 48 || charCode > 57)) {
+        evt.preventDefault()
         return false
       }
       return true
