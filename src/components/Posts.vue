@@ -5,7 +5,7 @@
     <h1 v-if="allPosts.length == 0" style="color:black">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
       <div class="thumbnail" @click="viewPost({post})">
-        <!--:src="post.url" --><img :src="post.url" alt="Post Picture" @click = "viewPost({post})">
+        <img :src="post.url" alt="Post Picture" @click = "viewPost({post})">
         <span class="text-content" style="cursor:default"><span @click = "viewPost({post})">  Location </span></span>
         <div class="caption">
           {{ post.itemname }}
@@ -107,13 +107,15 @@ export default {
 <style scoped>
   .thumbnail {
     box-shadow: 4px 4px 12px #4d4d4d;
-    border: 2px solid #003458;
+    border: none;
     cursor: default;
     -webkit-transition: box-shadow .5s;
     transition: box-shadow .5s;
+    margin-left: -4%;
+    margin-top: -1%;
   }
   .thumbnail:hover {
-    box-shadow: 10px 10px 18px #4d4d4d;
+    box-shadow: 10px 10px 18px #383838;
   }
   .Price {
     float: right;
