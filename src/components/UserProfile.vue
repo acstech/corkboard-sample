@@ -180,13 +180,13 @@ export default {
     margin-top: 8px;
   }
   .profile-info-title {
-    border-bottom: 2px solid #ffffff;
+    border-bottom: 2px solid #262626;
   }
   h3 {
-    color: #ffffff;
+    color: #262626;
   }
   li {
-    color: #ffffff;
+    color: #262626;
   }
   .thumbnail {
     box-shadow: 1px 1px 3px #4d4d4d;
