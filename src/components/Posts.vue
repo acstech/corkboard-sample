@@ -90,9 +90,9 @@ export default {
       .then(res => {
         if (glyphicon !== true) {
           console.log(res)
-          this.$store.commit('getActivePost', {post: post.post})
-          this.$store.commit('getActiveSeller', {user: res.data})
-          this.$store.commit('getActiveEmail', {user: res.data})
+          this.$store.commit('getActivePost', {post: res.data})
+          // this.$store.commit('getActiveSeller', {user: res.data})
+          // this.$store.commit('getActiveEmail', {user: res.data})
           this.$router.push('/viewPost/' + post.post.itemid)
         }
         glyphicon = false

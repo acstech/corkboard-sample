@@ -60,7 +60,7 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 import PostModal from './PostModal.vue'
 export default {
   computed: {
@@ -80,6 +80,24 @@ export default {
   beforeCreate () {
     if (this.getToken === null) {
       this.$router.push('/login')
+    }
+  },
+  mounted () {
+    for (var i = 0; i < this.currentPost.url.length; ++i) {
+      console.log(this.currentPost.url[i])
+      axios({
+        method: 'get',
+        url: this.currentPost.url[i],
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   methods: {
