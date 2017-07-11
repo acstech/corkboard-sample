@@ -70,6 +70,9 @@ export default {
     activeSeller () {
       return this.$store.state.activeSeller
     },
+    activeEmail () {
+      return this.$store.state.activeEmail
+    },
     getToken () {
       return this.$store.state.token
     }
@@ -82,7 +85,7 @@ export default {
   methods: {
     contactSeller () {
       var item = this.$store.state.activePost.itemname
-      var email = this.$store.state.activeSeller
+      var email = this.$store.state.activeEmail
       var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
       window.location.href = 'mailto:' + email + '?subject=' + subject
     }
