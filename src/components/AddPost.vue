@@ -193,7 +193,7 @@
       saveImages: function () {
         for (var i = 0; i < this.newPost.picid.length; ++i) {
           axios({
-            method: 'post',
+            method: 'put',
             url: this.uploadedFileURLs[i],
             headers: {
               'Authorization': 'Bearer ' + this.$store.state.token
