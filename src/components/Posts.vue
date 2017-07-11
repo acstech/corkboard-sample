@@ -6,7 +6,7 @@
     <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
       <div class="thumbnail" @click="viewPost({post})">
         <!--:src="post.imgSrc" --><img src="../assets/jumpingCat.jpg" alt="Post Picture">
-        <span class="text-content" style="cursor:default"><span> Location </span></span>
+        <!--span class="text-content" style="cursor:default"><span> Location </span></span-->
         <div class="caption">
           {{ post.itemname }}
           <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
@@ -107,13 +107,15 @@ export default {
 <style scoped>
   .thumbnail {
     box-shadow: 4px 4px 12px #4d4d4d;
-    border: 2px solid #003458;
+    border: none;
     cursor: default;
     -webkit-transition: box-shadow .5s;
     transition: box-shadow .5s;
+    margin-left: -4%;
+    margin-top: -1%;
   }
   .thumbnail:hover {
-    box-shadow: 10px 10px 18px #4d4d4d;
+    box-shadow: 10px 10px 18px #383838;
   }
   .Price {
     float: right;

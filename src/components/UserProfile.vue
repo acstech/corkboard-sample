@@ -3,7 +3,12 @@
       <div class="col-sm-4 col-md-3 sidebar">
         <ul class="nav nav-sidebar">
           <h3 class="sub-header">User Profile</h3>
-          <img src="../assets/jumpingCat.jpg" class="profile-pic">
+          <img
+            v-if="userProfile.id == getCurrentUser"
+            @click="editProfile"
+            src="../assets/jumpingCat.jpg"
+            class="profile-pic"
+            style="cursor:pointer"/>
           <br>
           <br>
           <br>
@@ -38,7 +43,6 @@
                   <router-link to=""><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></router-link>
                   <router-link to=""><span @click.prevent="deletePost({post})" class="glyphicon glyphicon-trash"></span></router-link>
                 </p>
-               <br>
               </div>
             </div>
           </div>
@@ -139,10 +143,14 @@ export default {
 
 <style scoped>
 .sidebar {
-  background-color: #f7f4fd;
+  background: #; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(bottom, #F0F8FF, #ffffff); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(top, #F0F8FF, #ffffff); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(top, #F0F8FF, #ffffff); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to top, #efe3e7, #ffffff); /* Standard syntax */
   font-weight: bold;
   min-height: 800px;
-  box-shadow: 4px 4px 12px black;
+  box-shadow: 2px 2px 6px #4d4d4d;
   }
   .btn {
   font-weight: bold;
@@ -178,8 +186,8 @@ export default {
     color: #262626;
   }
   .thumbnail {
-    box-shadow: 4px 4px 12px black;
-    border: 2px solid #003458;
+    box-shadow: 1px 1px 3px #4d4d4d;
+    padding-bottom: 15px;
   }
   .caption {
     white-space: -moz-pre-wrap; /* Firefox */
@@ -188,12 +196,12 @@ export default {
   }
   span.glyphicon-pencil {
     color: black;
-    font-size: 1.6em;
+    font-size: 1.2em;
     float: left;
   }
   span.glyphicon-trash {
     color: black;
-    font-size: 1.6em;
+    font-size: 1.2em;
     float: right;
   }
   span.glyphicon-pencil:hover {
@@ -209,6 +217,6 @@ export default {
     color: rgb(80,0,0);
   }
   img {
-    box-shadow: 0 4px 6px;
+    box-shadow: 0 1px 2px #4d4d4d;
   }
 </style>

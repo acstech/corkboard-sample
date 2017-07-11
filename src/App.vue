@@ -3,7 +3,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <ul class="nav navbar-nav">
-                  <div class="navbar-brand" @click="toHome"><img src="../static/generatedtext.png"></div>
+                  <div class="navbar-brand" @click="toHome" style="cursor:pointer"><img src="../static/generatedtext.png"></div>
                   <li @click="toHome"><router-link to="">Home</router-link></li>
                     <li><router-link to="/login" v-if="getToken == null">Login</router-link></li>
                     <li><router-link to="/signup" v-if="getToken == null">Sign Up</router-link></li>
@@ -82,7 +82,7 @@ export default {
 
 <style>
   body {
-    background-image: url("../static/hm.jpg");
+    background-color: #f1f1f1;
   }
   #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -93,9 +93,15 @@ export default {
     }
 
     .navbar {
-      box-shadow: 1px 4px 5px black;
+      box-shadow: 1px 2px 5px black;
       font-weight: bold;
       margin-bottom: 0;
+    }
+
+    .navbar-default {
+      background-color: white;
+      background-image: none;
+      background-repeat: no-repeat;
     }
 
     h1, h2 {
@@ -112,12 +118,8 @@ export default {
         margin: 0 10px;
     }
 
-    a {
-      color: #f7f4fd;
-    }
-
     .navbar-brand {
-      padding: 10px 10px 10px 36px;
+        padding: 10px 10px 10px 36px;
     }
 
     .modal-mask {
