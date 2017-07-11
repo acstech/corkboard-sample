@@ -38,8 +38,8 @@ const store = new Vuex.Store({
       itemname: '',
       itemprice: null,
       itemdesc: '',
-      picid: '',
-      url: '',
+      picid: [],
+      url: [],
       itemcat: '',
       salestatus: '',
       date: ''
@@ -67,6 +67,7 @@ const store = new Vuex.Store({
       state.activePost.itemname = post.post.itemname
       state.activePost.itemprice = post.post.itemprice
       state.activePost.itemdesc = post.post.itemdesc
+      console.log(post.post.picid)
       state.activePost.picid = post.post.picid
       state.activePost.url = post.post.url
       state.activePost.date = post.post.date

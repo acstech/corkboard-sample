@@ -157,27 +157,27 @@
       save (formData, files) {
         // upload data to the server
         this.currentStatus = STATUS_SAVING
-        axios({
-          method: 'post',
-          url: '/api/image/new',
-          headers: {
-            'Authorization': 'Bearer ' + this.getToken
-          },
-          data: formData
-        })
-          .then(res => {
-            console.log(res)
-            this.currentStatus = STATUS_SUCCESS
-            for (var i = 0; i < files.length; ++i) {
-              this.uploadedFiles.push(files[i])
-            }
-            this.uploadedFileURLs.push(res.data.url)
-            this.newPost.picid.push(res.data.picid)
+        for (var i = 0; i < files.length; ++i) {
+          this.uploadedFiles.push(files[i])
+          axios({
+            method: 'post',
+            url: '/api/image/new',
+            headers: {
+              'Authorization': 'Bearer ' + this.getToken
+            },
+            data: formData
           })
-          .catch(err => {
-            this.uploadError = err.response
-            this.currentStatus = STATUS_FAILED
-          })
+            .then(res => {
+              this.currentStatus = STATUS_SUCCESS
+              console.log(res.data.picid)
+              this.uploadedFileURLs.push(res.data.url)
+              this.newPost.picid.push(res.data.picid)
+            })
+            .catch(err => {
+              this.uploadError = err.response
+              this.currentStatus = STATUS_FAILED
+            })
+        }
       },
       filesChange (fieldName, fileList) {
         var imageReq = {checksum: '', extension: ''}
@@ -201,7 +201,6 @@
             data: this.uploadedFiles[i]
           })
             .then(res => {
-              console.log('Response for image save')
               console.log(res)
             })
             .catch(error => {
@@ -212,7 +211,6 @@
       savePost: function () {
         // Populate image data and save to the URL
         this.saveImages()
-        console.log('Saving post...')
         axios({
           method: 'post',
           url: '/api/items/new',

@@ -82,13 +82,14 @@ export default {
     viewPost (post) {
       axios({
         method: 'get',
-        url: '/api/users/' + post.post.userid,
+        url: '/api/items/' + post.post.itemid,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         }
       })
       .then(res => {
         if (glyphicon !== true) {
+          console.log(res)
           this.$store.commit('getActivePost', {post: post.post})
           this.$store.commit('getActiveSeller', {user: res.data})
           this.$store.commit('getActiveEmail', {user: res.data})
