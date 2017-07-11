@@ -79,25 +79,6 @@ export default {
       this.$router.push('/login')
     }
   },
-  mounted () {
-    // for (var i = 0; i < this.currentPost.url.length; ++i) {
-    //   console.log(this.currentPost.url[i])
-    //   axios({
-    //     method: 'get',
-    //     url: this.currentPost.url[i],
-    //     headers: {
-    //       'Authorization': 'Bearer ' + this.$store.state.token
-    //     }
-    //   })
-    //     .then(res => {
-    //       this.images.push('data:image/jpeg;base64,' + btoa(unescape(encodeURIComponent(res.data))))
-    //       console.log(this.images)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
-    // }
-  },
   methods: {
     contactSeller () {
       var item = this.$store.state.activePost.itemname

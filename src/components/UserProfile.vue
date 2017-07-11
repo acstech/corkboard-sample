@@ -4,9 +4,9 @@
         <ul class="nav nav-sidebar">
           <h3 class="sub-header">User Profile</h3>
           <img
-            v-if="userProfile.id == getCurrentUser"
+            v-if="userProfile.url"
             @click="editProfile"
-            src="../assets/jumpingCat.jpg"
+            :src="userProfile.url"
             class="profile-pic"
             style="cursor:pointer"/>
           <br>
@@ -87,6 +87,9 @@ export default {
       this.$router.push('/editPost/' + post.post.itemid)
     },
     editProfile () {
+      if (this.userProfile.id !== this.getCurrentUser) {
+        return
+      }
       this.$router.push('/editProfile/' + this.getCurrentUser)
     },
     deletePost (post) {
