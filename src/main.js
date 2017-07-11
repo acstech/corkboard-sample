@@ -38,7 +38,8 @@ const store = new Vuex.Store({
       itemname: '',
       itemprice: null,
       itemdesc: '',
-      // imgSrc: null,
+      picid: '',
+      url: '',
       itemcat: '',
       salestatus: '',
       date: ''
@@ -65,7 +66,8 @@ const store = new Vuex.Store({
       state.activePost.itemname = post.post.itemname
       state.activePost.itemprice = post.post.itemprice
       state.activePost.itemdesc = post.post.itemdesc
-      // state.activePost.imgSrc = post.post.imgSrc
+      state.activePost.picid = post.post.picid
+      state.activePost.url = post.post.url
       state.activePost.date = post.post.date
       state.activePost.itemcat = post.post.itemcat
       state.activePost.salestatus = post.post.salestatus

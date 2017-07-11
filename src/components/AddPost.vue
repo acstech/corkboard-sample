@@ -15,7 +15,7 @@
         <p>Uploaded successfully.</p>
         <!--
         <ul class="list-unstyled">
-          <li v-for="item in uploadedFiles">
+          <li v-for="itemuploadedFileURLsiles">
             <img :src="item.url" class="thumbnail" :alt="item.originalName">
           </li>
         </ul>
@@ -23,7 +23,7 @@
       </div>
       <!--FAILED-->
       <div v-if="isFailed">
-        <p>Uploaded failed.</p>
+        <p>Upload failed.</p>
         <p>
           <a href="javascript:void(0)" @click="reset()">Try again</a>
         </p>
@@ -76,6 +76,7 @@
     data () {
       return {
         uploadedFiles: [],
+        uploadedFileURLs: [],
         uploadError: null,
         currentStatus: null,
         uploadFieldName: 'Image',
@@ -150,10 +151,10 @@
       reset () {
         // reset form to initial state
         this.currentStatus = STATUS_INITIAL
-        this.uploadedFiles = []
+        this.uploadedFileURLs = []
         this.uploadError = null
       },
-      save (formData) {
+      save (formData, files) {
         // upload data to the server
         this.currentStatus = STATUS_SAVING
         axios({
@@ -167,7 +168,10 @@
           .then(res => {
             console.log(res)
             this.currentStatus = STATUS_SUCCESS
-            this.uploadedFiles.push(res.data.url)
+            for (var i = 0; i < files.length; ++i) {
+              this.uploadedFiles.push(files[i])
+            }
+            this.uploadedFileURLs.push(res.data.url)
             this.newPost.picid.push(res.data.picid)
           })
           .catch(err => {
@@ -176,40 +180,39 @@
           })
       },
       filesChange (fieldName, fileList) {
-        // handle file changes
         var imageReq = {checksum: '', extension: ''}
-        // var formData = new FormData()
 
-        // append the files to FormData
+        // Grab checksum and extension
         for (var i = 0; i < fileList.length; ++i) {
-          // formData.append(fieldName, fileList[i])
-          // save it
-          // for (var p of formData) {
-          //  console.log(p)
-          // }
           imageReq.checksum = Crypto.MD5(fileList[i]).toString()
           imageReq.extension = fileList[i].type.substring(6)
           console.log(imageReq.checksum)
-          this.save(imageReq)
         }
+        this.save(imageReq, fileList)
       },
-      savePost: function () {
+      saveImages: function () {
         for (var i = 0; i < this.newPost.picid.length; ++i) {
           axios({
             method: 'post',
-            url: this.uploadedFiles[i],
+            url: this.uploadedFileURLs[i],
             headers: {
               'Authorization': 'Bearer ' + this.$store.state.token
             },
-            data: this.newPost.picid[i]
+            data: this.uploadedFiles[i]
           })
             .then(res => {
+              console.log('Response for image save')
               console.log(res)
             })
             .catch(error => {
               console.log(error)
             })
         }
+      },
+      savePost: function () {
+        // Populate image data and save to the URL
+        this.saveImages()
+        console.log('Saving post...')
         axios({
           method: 'post',
           url: '/api/items/new',
