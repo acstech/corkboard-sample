@@ -18,8 +18,8 @@
 
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <div class="item active" v-for="image in images">
-              <img :src="image" alt="Picture 1" style="width:100%">
+            <div class="item active" v-for="url in currentPost.url">
+              <img :src="url" alt="Picture 1" style="width:100%">
             </div>
           </div>
 
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import PostModal from './PostModal.vue'
 export default {
   data () {
@@ -80,23 +80,23 @@ export default {
     }
   },
   mounted () {
-    for (var i = 0; i < this.currentPost.url.length; ++i) {
-      console.log(this.currentPost.url[i])
-      axios({
-        method: 'get',
-        url: this.currentPost.url[i],
-        headers: {
-          'Authorization': 'Bearer ' + this.$store.state.token
-        }
-      })
-        .then(res => {
-          this.images.push(res.data)
-          console.log(this.images)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
+    // for (var i = 0; i < this.currentPost.url.length; ++i) {
+    //   console.log(this.currentPost.url[i])
+    //   axios({
+    //     method: 'get',
+    //     url: this.currentPost.url[i],
+    //     headers: {
+    //       'Authorization': 'Bearer ' + this.$store.state.token
+    //     }
+    //   })
+    //     .then(res => {
+    //       this.images.push('data:image/jpeg;base64,' + btoa(unescape(encodeURIComponent(res.data))))
+    //       console.log(this.images)
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // }
   },
   methods: {
     contactSeller () {
