@@ -11,7 +11,7 @@
           {{ post.itemname }}
           <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
             <div class="Price" v-else>Free</div>
-            <span class="glyphicon glyphicon-envelope" @click="contactSeller()" style="float:left; cursor:pointer"></span>
+            <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
           </h4>
           <br>
         </div>
@@ -58,12 +58,26 @@ export default {
       })
   },
   methods: {
-    contactSeller () {
+    contactSeller (post) {
       glyphicon = true
-      var item = this.$store.state.activePost.itemname
-      var email = this.$store.state.activeSeller
-      var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
-      window.location.href = 'mailto:' + email + '?subject=' + subject
+      axios({
+        method: 'get',
+        url: '/api/users/' + post.post.userid,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      })
+      .then(res => {
+        this.$store.commit('getActivePost', {post: post.post})
+        this.$store.commit('getActiveEmail', {user: res.data})
+        var item = this.$store.state.activePost.itemname
+        var email = this.$store.state.activeEmail
+        var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
+        window.location.href = 'mailto:' + email + '?subject=' + subject
+      })
+      .catch(error => {
+        console.log(error)
+      })
     },
     viewPost (post) {
       axios({
@@ -77,6 +91,7 @@ export default {
         if (glyphicon !== true) {
           this.$store.commit('getActivePost', {post: post.post})
           this.$store.commit('getActiveSeller', {user: res.data})
+          this.$store.commit('getActiveEmail', {user: res.data})
           this.$router.push('/viewPost/' + post.post.itemid)
         }
         glyphicon = false
