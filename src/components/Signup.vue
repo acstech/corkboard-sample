@@ -8,7 +8,7 @@
         <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
         </div>
-        <form @submit.prevent="register()">
+        <form @submit.prevent="register()" onsubmit="return passwordAccept()">
             <div class="form-group">
                 <input
                         type="email"
@@ -65,11 +65,32 @@ export default {
   computed: {
     passwordAccept () {
       return (this.newUser.password === this.newUser.confirm) && this.newUser.password.length > 0
+    },
+    // Only allows passwords to contain 6-16 characters,
+    // at least one special character, and at least one number,
+    // through regular expression
+    passwordValidation () {
+      var newPassword = this.newUser.password
+      var minNumberofChars = 6
+      var maxNumberofChars = 16
+      var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
+      if (newPassword.length < minNumberofChars || newPassword.length > maxNumberofChars) {
+        alert('Your password must be between 6-16 characters.')
+        return false
+      }
+      if (!regularExpression.test(newPassword)) {
+        alert('Your password must contain at least one number and one special character.')
+        return false
+      }
+      return true
     }
   },
   methods: {
     register () {
       if (!this.passwordAccept) {
+        return
+      }
+      if (!this.passwordValidation) {
         return
       }
       axios({
