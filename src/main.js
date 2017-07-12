@@ -71,9 +71,11 @@ const store = new Vuex.Store({
       state.activePost.itemname = post.post.itemname
       state.activePost.itemprice = post.post.itemprice
       state.activePost.itemdesc = post.post.itemdesc
-      for (var i = 0; i < post.post.picid.length; ++i) {
-        idArray.push(post.post.picid[i])
-        urlArray.push(post.post.url[i])
+      if (post.post.picid && typeof post.post.picid === typeof []) {
+        for (var i = 0; i < post.post.picid.length; ++i) {
+          idArray.push(post.post.picid[i])
+          urlArray.push(post.post.url[i])
+        }
       }
       state.activePost.picid = idArray
       state.activePost.url = urlArray
