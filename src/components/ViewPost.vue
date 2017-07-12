@@ -10,10 +10,8 @@
 
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+          <ol class="carousel-indicators" v-for="(url, index) in currentPost.url">
+            <li data-target="#myCarousel" :data-slide-to="{index}" :class="{active : index === 0}"></li>
           </ol>
 
           <!-- Wrapper for slides -->
