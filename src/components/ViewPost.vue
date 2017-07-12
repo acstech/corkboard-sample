@@ -18,8 +18,8 @@
 
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <div class="item active" v-for="url in currentPost.url">
-              <img :src="url" alt="Picture 1" style="width:100%">
+            <div :class="{item: currentPost.url, active: index === 0}" v-for="(url, index) in currentPost.url">
+              <img :src="url" alt="Picture" style="width:100%">
             </div>
           </div>
 
@@ -55,11 +55,6 @@
 // import axios from 'axios'
 import PostModal from './PostModal.vue'
 export default {
-  data () {
-    return {
-      images: []
-    }
-  },
   computed: {
     currentPost () {
       return this.$store.state.activePost
