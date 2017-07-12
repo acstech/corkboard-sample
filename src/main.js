@@ -32,6 +32,7 @@ const store = new Vuex.Store({
   state: {
     // Perhaps a place to store the token?
     token: null,
+    defaultPostImage: 'static/posttext.png',
     // Likely not best practice to place these states here globally like this
     activePost: {
       itemid: '',
