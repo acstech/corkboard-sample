@@ -4,11 +4,11 @@
       <h3>Edit Profile</h3>
       <a @click="cancel()" class="close">&times;</a>
     </div>
-    <form @submit.prevent="saveProfileSettings(userProfile)">
+    <form @submit.prevent="saveProfileSettings()">
     <div class="modal-body">
         <label class="form-label">
           Profile Picture
-          <input type="file" class="form-control">
+          <input type="file" class="form-control" @change="update($event.target.files)" accept="image/*">
         </label>
         <label class="form-label">
           First Name
@@ -46,9 +46,22 @@
 <script>
 import PostModal from './PostModal.vue'
 import axios from 'axios'
+import Crypto from 'crypto-js'
 export default {
   data () {
     return {
+      updateUser: {
+        id: '',
+        picid: '',
+        url: '',
+        firstname: '',
+        lastname: '',
+        items: [],
+        email: '',
+        phone: '',
+        zip: ''
+      },
+      profileImage: '',
       phoneInputError: ''
     }
   },
@@ -96,22 +109,100 @@ export default {
     }
   },
   methods: {
-    saveProfileSettings (user) {
+    update (files) {
+      // Pull image data needed for new image request
+      var imageReq = {checksum: '', extension: ''}
+      // Grab checksum and extension
+      imageReq.checksum = Crypto.MD5(files[0]).toString()
+      imageReq.extension = files[0].type.substring(6)
+      console.log(imageReq.checksum)
+      this.profileImage = files[0]
+      // upload data to the server
+      axios({
+        method: 'post',
+        url: '/api/image/new',
+        headers: {
+          'Authorization': 'Bearer ' + this.getToken
+        },
+        data: imageReq
+      })
+        .then(res => {
+          console.log(res.data)
+          // Save image Url and ID for later image saving and profile saving
+          this.updateUser.url = res.data.url
+          this.updateUser.picid = res.data.picid
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    saveImage: function () {
+      // Save the uploaded profile picture
+      axios({
+        method: 'put',
+        url: this.updateUser.url,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
+        data: this.profileImage
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    saveProfileSettings () {
       if (this.userProfile.phone.length !== 16) {
         this.phoneInputError = 'Please enter a full phone number.'
         return
       }
+      this.saveImage()
+      // Makes sure to set up data object with all data needed for vuex call
+      // *Honestly this is ridiculous and needs improvement, but it works for now*
+      this.updateUser.id = this.getCurrentUser
+      this.updateUser.firstname = this.userProfile.firstname
+      this.updateUser.lastname = this.userProfile.lastname
+      this.updateUser.email = this.userProfile.email
+      this.updateUser.phone = this.userProfile.phone
+      this.updateUser.items = this.userProfile.items
+      this.updateUser.zipcode = this.userProfile.zipcode
+      // Make API call to update the user info and refresh data on front-end
       axios({
         method: 'put',
         url: '/api/users/edit/' + this.getCurrentUser,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         },
-        data: this.userProfile
+        data: this.updateUser
       })
         .then(res => {
-          this.$store.commit('getViewedProfile', user)
-          this.$router.push('/viewProfile/' + this.getCurrentUser)
+          console.log(res)
+          // Make API to get the user again to fully update the DOM data
+          axios({
+            method: 'get',
+            url: '/api/users/' + this.getCurrentUser,
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+            .then(res => {
+              console.log(res)
+              this.$store.commit('getViewedProfile', res.data)
+              this.$router.push('/viewProfile/' + this.getCurrentUser)
+            })
+            .catch(error => {
+              console.log(error)
+              // Token expiry
+              if (error.response.status === 401) {
+                this.$store.commit('authenticate', null)
+                let vm = this
+                setTimeout(function () {
+                  vm.$router.push('/login')
+                }, 100)
+              }
+            })
         })
         .catch(error => {
           console.log(error)
