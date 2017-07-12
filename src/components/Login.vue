@@ -81,14 +81,14 @@ export default {
       background-color: white;
       padding-top: 15px;
       padding-bottom: 15px;
-      box-shadow: 4px 4px 8px black;
+      box-shadow: 4px 4px 8px #4d4d4d;
       border-radius: 3px;
       margin-bottom: 20px;
     }
     input {
-      box-shadow: 4px 4px 8px black;
-      -webkit-transition: box-shadow .7s;
-      transition: box-shadow .7s;
+      box-shadow: 4px 4px 8px #4d4d4d;
+      -webkit-transition: box-shadow .5s;
+      transition: box-shadow .5s;
     }
     input:hover {
       box-shadow: none;

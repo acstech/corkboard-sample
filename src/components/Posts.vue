@@ -120,7 +120,7 @@ export default {
 
 <style scoped>
   .thumbnail {
-    box-shadow: 4px 4px 12px #4d4d4d;
+    box-shadow: 2px 2px 8px #4d4d4d;
     border: none;
     cursor: default;
     -webkit-transition: box-shadow .5s;
