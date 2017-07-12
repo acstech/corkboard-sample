@@ -19,5 +19,5 @@ export const routes = [
   {path: '/editPost/:post_id', components: {default: EditPost, modal: UserProfile}},
   {path: '/editProfile/:user_id', components: {default: EditProfile, modal: UserProfile}},
   {path: '/viewProfile/:user_id', component: UserProfile},
-  {path: '*', component: ProductList}
+  {path: '*', component: {template: '<h2>Uh oh! This page does not exist!</h2>'}}
 ]
