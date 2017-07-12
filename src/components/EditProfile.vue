@@ -127,7 +127,6 @@ export default {
         data: imageReq
       })
         .then(res => {
-          console.log(res.data)
           // Save image Url and ID for later image saving and profile saving
           this.updateUser.url = res.data.url
           this.updateUser.picid = res.data.picid
@@ -147,7 +146,6 @@ export default {
         data: this.profileImage
       })
         .then(res => {
-          console.log(res)
         })
         .catch(error => {
           console.log(error)
@@ -178,7 +176,6 @@ export default {
         data: this.updateUser
       })
         .then(res => {
-          console.log(res)
           // Make API to get the user again to fully update the DOM data
           axios({
             method: 'get',
@@ -188,12 +185,10 @@ export default {
             }
           })
             .then(res => {
-              console.log(res)
               this.$store.commit('getViewedProfile', res.data)
               this.$router.push('/viewProfile/' + this.getCurrentUser)
             })
             .catch(error => {
-              console.log(error)
               // Token expiry
               if (error.response.status === 401) {
                 this.$store.commit('authenticate', null)

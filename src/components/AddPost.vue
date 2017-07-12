@@ -197,7 +197,6 @@
             data: this.uploadedFiles[i]
           })
             .then(res => {
-              console.log(res)
             })
             .catch(error => {
               console.log(error)
@@ -216,7 +215,6 @@
           data: this.newPost
         })
           .then(res => {
-            console.log(res.data)
             let vm = this
             setTimeout(function () {
               // Retrieve all items call to API
@@ -249,7 +247,6 @@
             }, 300)
           })
           .catch(error => {
-            console.log(error)
             // Token expiry
             if (error.response.status === 401) {
               this.$store.commit('authenticate', null)
