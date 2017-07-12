@@ -76,12 +76,16 @@ export default {
     },
     getToken () {
       return this.$store.state.token
+    },
+    getViewedProfile () {
+      return this.$store.state.viewedUserProfile
     }
   },
   mounted () {
     if (this.getToken === null) {
       this.$router.push('/login')
     } else {
+      // Phone number formatter -----------------------------------------------
       document.getElementById('phoneNumber').addEventListener('keyup', function (evt) {
         var phoneNumber = document.getElementById('phoneNumber')
         phoneNumber.value = phoneFormat(phoneNumber.value)
@@ -148,6 +152,7 @@ export default {
         data: this.profileImage
       })
         .then(res => {
+          this.hasPreviousImage = false
         })
         .catch(error => {
           console.log(error)
@@ -158,7 +163,6 @@ export default {
         this.phoneInputError = 'Please enter a full phone number.'
         return
       }
-      this.saveImage()
       // Makes sure to set up data object with all data needed for vuex call
       // *Honestly this is ridiculous and needs improvement, but it works for now*
       this.updateUser.id = this.getCurrentUser
