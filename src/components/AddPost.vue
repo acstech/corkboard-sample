@@ -160,12 +160,13 @@
         // Pull image data needed for new image request
         var imageReq = {checksum: '', extension: ''}
         this.currentStatus = STATUS_SAVING
-        // Reset previous upload attempts
+        // Reset previous upload attempts and thumbnails
         let preview = document.getElementById('preview')
         preview.innerHTML = ''
         this.uploadedFiles = []
         this.uploadedFileURLs = []
         this.newPost.picid = []
+        // Grab updated files in latest upload
         for (var i = 0; i < files.length; ++i) {
           // Grab checksum and extension
           imageReq.checksum = Crypto.MD5(files[i]).toString()
