@@ -90,9 +90,22 @@ export default {
       .then(res => {
         if (glyphicon !== true) {
           console.log(res)
+          axios({
+            method: 'get',
+            url: '/api/users/' + post.post.userid,
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+            .then(res => {
+              console.log(res)
+              this.$store.commit('getActiveSeller', {user: res.data})
+              this.$store.commit('getActiveEmail', {user: res.data})
+            })
+            .catch(error => {
+              console.log(error)
+            })
           this.$store.commit('getActivePost', {post: res.data})
-          // this.$store.commit('getActiveSeller', {user: res.data})
-          // this.$store.commit('getActiveEmail', {user: res.data})
           this.$router.push('/viewPost/' + post.post.itemid)
         }
         glyphicon = false
