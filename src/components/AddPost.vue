@@ -175,7 +175,7 @@
           })
             .then(res => {
               this.currentStatus = STATUS_SUCCESS
-              console.log(res.data.picid)
+              // Place URL and ID in new post data for saving
               this.uploadedFileURLs.push(res.data.url)
               this.newPost.picid.push(res.data.picid)
             })
@@ -186,6 +186,7 @@
         }
       },
       saveImages: function () {
+        // Save each uploaded picture by placing its data in each URL
         for (var i = 0; i < this.newPost.picid.length; ++i) {
           axios({
             method: 'put',
@@ -204,7 +205,7 @@
         }
       },
       savePost: function () {
-        // Populate image data and save to the URL
+        // Populate image data and save to the URL before adding the post
         this.saveImages()
         axios({
           method: 'post',
