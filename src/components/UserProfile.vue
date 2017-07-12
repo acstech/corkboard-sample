@@ -33,7 +33,8 @@
           <div class="grid-sizer col-xs-4"></div>
           <div class="col-xs-4 grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
             <div class="thumbnail">
-              <img :src="post.url" alt="...">
+              <!-- Show Primary image only -->
+              <img :src="post.url[0]" alt="...">
               <div class="caption">
                 <h4>{{ post.itemname }}</h4>
                 <h5 v-if="post.itemprice != 0">{{ post.itemprice | currency }}</h5>
@@ -146,7 +147,7 @@ export default {
 
 <style scoped>
 .sidebar {
-  background: #; /* For browsers that do not support gradients */
+  background: #efe3e7; /* For browsers that do not support gradients */
   background: -webkit-linear-gradient(bottom, #efe3e7, #ffffff); /* For Safari 5.1 to 6.0 */
   background: -o-linear-gradient(top, #efe3e7, #ffffff); /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient(top, #efe3e7, #ffffff); /* For Firefox 3.6 to 15 */
