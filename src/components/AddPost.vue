@@ -6,7 +6,7 @@
         <router-link class="close" to="/">&times;</router-link>
       </div>
 
-      <form enctype="multipart/form-data" @submit.prevent="savePost()" novalidate>
+      <form enctype="multipart/form-data" @submit.prevent="savePost()">
       <div class="modal-body">
         <b>Image</b>
         <div class="dropbox">
