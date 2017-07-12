@@ -10,7 +10,7 @@
 
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
-          <ol class="carousel-indicators" v-for="(url, index) in currentPost.url">
+          <ol class="carousel-indicators" v-if="currentPost.url.length > 1" v-for="(url, index) in currentPost.url">
             <li data-target="#myCarousel" :data-slide-to="{index}" :class="{active : index === 0}"></li>
           </ol>
 
@@ -22,11 +22,11 @@
           </div>
 
           <!-- Left and right controls -->
-          <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev" v-if="currentPost.url.length > 1">
             <span class="glyphicon glyphicon-chevron-left"></span>
             <span class="sr-only">Previous</span>
           </a>
-          <a class="right carousel-control" href="#myCarousel" data-slide="next">
+          <a class="right carousel-control" href="#myCarousel" data-slide="next" v-if="currentPost.url.length > 1">
             <span class="glyphicon glyphicon-chevron-right"></span>
             <span class="sr-only">Next</span>
           </a>
