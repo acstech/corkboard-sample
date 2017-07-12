@@ -5,12 +5,30 @@
       <router-link class="close" to="/">&times;</router-link>
     </div>
 
-    <form enctype="multipart/form-data" @submit.prevent="savePost()">
+    <form enctype="multipart/form-data" @submit.prevent="savePost()" novalidate>
     <div class="modal-body">
-      <label class="form-label">
-        Image
-        <input class="form-control" name="files" id="files" type="file" multiple>
-      </label>
+      <b>Image</b>
+      <div class="dropbox">
+        <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="update($event.target.files)" accept="image/*" class="input-file">
+      </div>
+      <div v-if="isSuccess">
+        <p>Uploaded successfully.</p>
+        <!--
+        <ul class="list-unstyled">
+          <li v-for="itemuploadedFileURLsiles">
+            <img :src="item.url" class="thumbnail" :alt="item.originalName">
+          </li>
+        </ul>
+        -->
+      </div>
+      <!--FAILED-->
+      <div v-if="isFailed">
+        <p>Upload failed.</p>
+        <p>
+          <a href="javascript:void(0)" @click="reset()">Try again</a>
+        </p>
+        <pre>{{ uploadError }}</pre>
+      </div>
       <div id="preview"></div>
       <label class="form-label">
         Title
@@ -50,13 +68,21 @@
   import { Money } from 'v-money'
   import { imagesLoaded, Masonry } from '../main'
   import axios from 'axios'
+  import Crypto from 'crypto-js'
+  // eslint-disable-next-line one-var
+  const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3
   export default {
     // Will need more data attributes
     data () {
       return {
+        uploadedFiles: [],
+        uploadedFileURLs: [],
+        uploadError: null,
+        currentStatus: null,
+        uploadFieldName: 'Image',
         newPost: {
           itemname: '',
-          // pictures: [],
+          picid: [],
           itemprice: 0.00,
           itemdesc: '',
           itemcat: '',
@@ -79,6 +105,18 @@
       }
     },
     computed: {
+      isInitial () {
+        return this.currentStatus === STATUS_INITIAL
+      },
+      isSaving () {
+        return this.currentStatus === STATUS_SAVING
+      },
+      isSuccess () {
+        return this.currentStatus === STATUS_SUCCESS
+      },
+      isFailed () {
+        return this.currentStatus === STATUS_FAILED
+      },
       getToken () {
         return this.$store.state.token
       }
@@ -88,31 +126,87 @@
       if (this.getToken === null) {
         this.$router.push('/login')
       }
-      if (window.File && window.FileList && window.FileReader) {
-        let filesInput = document.getElementById('files')
-        filesInput.onchange = function (event) {
-          let files = event.target.files // FileList object
-          for (var i = 0; i < files.length; i++) {
-            let file = files[i]
-            // Only preview images
-            if (!file.type.match('image')) {
-              continue
-            }
-            let picReader = new FileReader()
-            picReader.onload = function (event) {
-              let picFile = event.target
-              let preview = document.getElementById('preview')
-              preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
-                "title='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
-            }
-            // Read the image
-            picReader.readAsDataURL(file)
+      let filesInput = document.getElementById('files')
+      filesInput.onchange = function (event) {
+        let files = event.target.files // FileList object
+        for (var i = 0; i < files.length; i++) {
+          let file = files[i]
+          // Only preview images
+          if (!file.type.match('image')) {
+            continue
           }
+          let picReader = new FileReader()
+          picReader.onload = function (event) {
+            let picFile = event.target
+            let preview = document.getElementById('preview')
+            preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
+              "title='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
+          }
+          // Read the image
+          picReader.readAsDataURL(file)
         }
       }
     },
     methods: {
+      reset () {
+        // reset form to initial state
+        this.currentStatus = STATUS_INITIAL
+        this.uploadedFileURLs = []
+        this.uploadError = null
+      },
+      update (files) {
+        // Pull image data needed for new image request
+        var imageReq = {checksum: '', extension: ''}
+        this.currentStatus = STATUS_SAVING
+        for (var i = 0; i < files.length; ++i) {
+          // Grab checksum and extension
+          imageReq.checksum = Crypto.MD5(files[i]).toString()
+          imageReq.extension = files[i].type.substring(6)
+          console.log(imageReq.checksum)
+          this.uploadedFiles.push(files[i])
+          // upload data to the server
+          axios({
+            method: 'post',
+            url: '/api/image/new',
+            headers: {
+              'Authorization': 'Bearer ' + this.getToken
+            },
+            data: imageReq
+          })
+            .then(res => {
+              this.currentStatus = STATUS_SUCCESS
+              // Place URL and ID in new post data for saving
+              this.uploadedFileURLs.push(res.data.url)
+              this.newPost.picid.push(res.data.picid)
+            })
+            .catch(err => {
+              this.uploadError = err.response
+              this.currentStatus = STATUS_FAILED
+            })
+        }
+      },
+      saveImages: function () {
+        // Save each uploaded picture by placing its data in each URL
+        for (var i = 0; i < this.newPost.picid.length; ++i) {
+          axios({
+            method: 'put',
+            url: this.uploadedFileURLs[i],
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            },
+            data: this.uploadedFiles[i]
+          })
+            .then(res => {
+              console.log(res)
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        }
+      },
       savePost: function () {
+        // Populate image data and save to the URL before adding the post
+        this.saveImages()
         axios({
           method: 'post',
           url: '/api/items/new',
@@ -122,6 +216,7 @@
           data: this.newPost
         })
           .then(res => {
+            console.log(res.data)
             let vm = this
             setTimeout(function () {
               // Retrieve all items call to API
@@ -155,6 +250,14 @@
           })
           .catch(error => {
             console.log(error)
+            // Token expiry
+            if (error.response.status === 401) {
+              this.$store.commit('authenticate', null)
+              let vm = this
+              setTimeout(function () {
+                vm.$router.push('/login')
+              }, 100)
+            }
           })
         this.$router.push('/')
       }
@@ -198,5 +301,45 @@
     position: relative;
     width: 30%;
     left: 35%;
+  }
+  .dropbox {
+    justify-content: center;
+  }
+  .input-file {
+    box-shadow: 4px 4px 8px black;
+    min-height: 30px;
+    padding: 4px;
+    margin-left: 23%;
+    margin-top: 6px;
+    margin-bottom: 10px;
+  }
+  .dropbox p {
+    font-size: 1.2em;
+    text-align: center;
+    padding: 50px 0;
+  }
+  input {
+    box-shadow: 3px 3px 8px black;
+    -webkit-transition: box-shadow .7s;
+    transition: box-shadow .7s;
+  }
+  input:hover {
+    box-shadow: none;
+  }
+  textarea {
+    box-shadow: 3px 3px 8px black;
+    -webkit-transition: box-shadow .7s;
+    transition: box-shadow .7s;
+  }
+  textarea:hover {
+    box-shadow: none;
+  }
+  select {
+    box-shadow: 3px 3px 8px black;
+    -webkit-transition: box-shadow .7s;
+    transition: box-shadow .7s;
+  }
+  select:hover {
+    box-shadow: none;
   }
 </style>

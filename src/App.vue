@@ -67,6 +67,14 @@ export default {
           })
           .catch(error => {
             console.log(error)
+            // Token expiry
+            if (error.response.status === 401) {
+              this.$store.commit('authenticate', null)
+              let vm = this
+              setTimeout(function () {
+                vm.$router.push('/login')
+              }, 100)
+            }
           })
       }
     }

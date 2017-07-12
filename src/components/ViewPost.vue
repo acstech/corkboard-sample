@@ -10,24 +10,14 @@
 
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+          <ol class="carousel-indicators" v-for="(url, index) in currentPost.url">
+            <li data-target="#myCarousel" :data-slide-to="{index}" :class="{active : index === 0}"></li>
           </ol>
 
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            <div class="item active">
-              <img src="../assets/jumpingCat.jpg" alt="Picture 1" style="width:100%">
-            </div>
-
-            <div class="item">
-              <img src="../assets/jumpingCat.jpg" alt="Picture 2" style="width:100%">
-            </div>
-
-            <div class="item">
-                <img src="../assets/jumpingCat.jpg" alt="Picture 3" style="width:100%">
+            <div :class="{item: currentPost.url, active: index === 0}" v-for="(url, index) in currentPost.url">
+              <img :src="url" alt="Picture" style="width:100%">
             </div>
           </div>
 
@@ -60,7 +50,7 @@
 </template>
 
 <script>
-
+// import axios from 'axios'
 import PostModal from './PostModal.vue'
 export default {
   computed: {

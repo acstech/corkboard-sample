@@ -38,7 +38,8 @@ const store = new Vuex.Store({
       itemname: '',
       itemprice: null,
       itemdesc: '',
-      // imgSrc: null,
+      picid: [],
+      url: [],
       itemcat: '',
       salestatus: '',
       date: ''
@@ -62,11 +63,18 @@ const store = new Vuex.Store({
       state.token = token
     },
     getActivePost (state, post) {
+      var idArray = []
+      var urlArray = []
       state.activePost.itemid = post.post.itemid
       state.activePost.itemname = post.post.itemname
       state.activePost.itemprice = post.post.itemprice
       state.activePost.itemdesc = post.post.itemdesc
-      // state.activePost.imgSrc = post.post.imgSrc
+      for (var i = 0; i < post.post.picid.length; ++i) {
+        idArray.push(post.post.picid[i])
+        urlArray.push(post.post.url[i])
+      }
+      state.activePost.picid = idArray
+      state.activePost.url = urlArray
       state.activePost.date = post.post.date
       state.activePost.itemcat = post.post.itemcat
       state.activePost.salestatus = post.post.salestatus
