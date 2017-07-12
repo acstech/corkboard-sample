@@ -15,7 +15,7 @@
           <label class="form-label">
             Title
             <p style="font-size: 12px">(Max 50 Characters)</p>
-            <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50">
+            <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50" required>
           </label>
           <label class="form-label">
             Price
@@ -23,7 +23,7 @@
           </label>
           <label class="form-label">
             Description
-            <textarea rows="5" class="form-control" v-model="currentPost.itemdesc" maxlength="2000"></textarea>
+            <textarea rows="5" class="form-control" v-model="currentPost.itemdesc" maxlength="2000" required></textarea>
           </label>
           <label class="form-label">
             Category
