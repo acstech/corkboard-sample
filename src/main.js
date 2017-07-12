@@ -32,6 +32,7 @@ const store = new Vuex.Store({
   state: {
     // Perhaps a place to store the token?
     token: null,
+    defaultPostImage: 'static/posttext.png',
     // Likely not best practice to place these states here globally like this
     activePost: {
       itemid: '',
@@ -46,6 +47,7 @@ const store = new Vuex.Store({
     },
     activeSeller: '',
     viewedUserProfile: {
+      picid: '',
       firstname: '',
       lastname: '',
       email: '',
@@ -90,6 +92,8 @@ const store = new Vuex.Store({
       }
     },
     getViewedProfile (state, profile) {
+      state.viewedUserProfile.picid = profile.picid
+      state.viewedUserProfile.url = profile.url
       state.viewedUserProfile.id = profile.id
       state.viewedUserProfile.firstname = profile.firstname
       state.viewedUserProfile.lastname = profile.lastname

@@ -27,7 +27,9 @@
           <div class="grid-sizer col-xs-4"></div>
           <div class="col-xs-4 grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
             <div class="thumbnail" @click="postPreview({post})">
-              <img :src="post.url" alt="...">
+              <!-- Show Primary image only -->
+              <img v-if="shouldDisplayImage(post)" :src="post.url[0]" alt="...">
+              <img v-else :src= "$store.state.defaultPostImage" alt="...">
               <div class="caption">
                 <h4>{{ post.itemname }}</h4>
                 <h5 v-if="post.itemprice != 0">{{ post.itemprice | currency }}</h5>
@@ -77,6 +79,9 @@ export default {
     }
   },
   methods: {
+    shouldDisplayImage (post) {
+      return post.url && typeof post.url === typeof [] && post.url.length > 0
+    },
     editPost (post) {
       glyphicon = true
       this.$store.commit('getActivePost', {post: post.post})

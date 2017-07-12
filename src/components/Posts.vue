@@ -5,7 +5,8 @@
     <h1 v-if="allPosts.length == 0" style="color:black">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
       <div class="thumbnail" @click="viewPost({post})">
-        <img :src="post.url" alt="Post Picture" @click = "viewPost({post})">
+        <img v-if="shouldDisplayImage(post)" :src="post.url" alt="Post Picture" @click = "viewPost({post})">
+        <img v-else :src="$store.state.defaultPostImage" alt="..." @click = "viewPost({post})">
         <!--span class="text-content" style="cursor:default"><span @click = "viewPost({post})">  Location </span></span-->
         <div class="caption">
           {{ post.itemname }}
@@ -58,6 +59,9 @@ export default {
       })
   },
   methods: {
+    shouldDisplayImage (post) {
+      return post.url && post.url.length > 0
+    },
     contactSeller (post) {
       glyphicon = true
       axios({
@@ -89,7 +93,6 @@ export default {
       })
       .then(res => {
         if (glyphicon !== true) {
-          console.log(res)
           axios({
             method: 'get',
             url: '/api/users/' + post.post.userid,
@@ -98,7 +101,6 @@ export default {
             }
           })
             .then(res => {
-              console.log(res)
               this.$store.commit('getActiveSeller', {user: res.data})
               this.$store.commit('getActiveEmail', {user: res.data})
             })
