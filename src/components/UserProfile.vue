@@ -4,9 +4,9 @@
         <ul class="nav nav-sidebar">
           <h3 class="sub-header">User Profile</h3>
           <img
-            v-if="userProfile.id == getCurrentUser"
+            v-if="userProfile.url"
             @click="editProfile"
-            src="../assets/jumpingCat.jpg"
+            :src="userProfile.url"
             class="profile-pic"
             style="cursor:pointer"/>
           <br>
@@ -87,6 +87,9 @@ export default {
       this.$router.push('/editPost/' + post.post.itemid)
     },
     editProfile () {
+      if (this.userProfile.id !== this.getCurrentUser) {
+        return
+      }
       this.$router.push('/editProfile/' + this.getCurrentUser)
     },
     deletePost (post) {
@@ -143,15 +146,11 @@ export default {
 
 <style scoped>
 .sidebar {
-<<<<<<< HEAD
-  background-color: #003458;
-=======
   background: #; /* For browsers that do not support gradients */
   background: -webkit-linear-gradient(bottom, #efe3e7, #ffffff); /* For Safari 5.1 to 6.0 */
   background: -o-linear-gradient(top, #efe3e7, #ffffff); /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient(top, #efe3e7, #ffffff); /* For Firefox 3.6 to 15 */
   background: linear-gradient(to top, #efe3e7, #ffffff); /* Standard syntax */
->>>>>>> 1bd98134935eea6340839657ccef79c050f9b0fd
   font-weight: bold;
   min-height: 800px;
   box-shadow: 2px 2px 6px #4d4d4d;
@@ -181,13 +180,13 @@ export default {
     margin-top: 8px;
   }
   .profile-info-title {
-    border-bottom: 2px solid #ffffff;
+    border-bottom: 2px solid #262626;
   }
   h3 {
-    color: #ffffff;
+    color: #262626;
   }
   li {
-    color: #ffffff;
+    color: #262626;
   }
   .thumbnail {
     box-shadow: 1px 1px 3px #4d4d4d;
