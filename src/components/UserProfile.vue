@@ -260,7 +260,4 @@ export default {
   span.glyphicon-trash:hover:active {
     color: rgb(80,0,0);
   }
-  img {
-    box-shadow: 0 1px 2px #4d4d4d;
-  }
 </style>

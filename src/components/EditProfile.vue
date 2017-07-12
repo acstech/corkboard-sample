@@ -1,46 +1,48 @@
 <template>
-  <post-modal>
-    <div class="modal-header">
-      <h3>Edit Profile</h3>
-      <a @click="cancel()" class="close">&times;</a>
-    </div>
-    <form @submit.prevent="saveProfileSettings()">
-    <div class="modal-body">
-        <label class="form-label">
-          Profile Picture
-          <input type="file" class="form-control" @change="update($event.target.files)" accept="image/*">
-        </label>
-        <label class="form-label">
-          First Name
-          <input type="text" class="form-control" v-model.lazy="userProfile.firstname" maxlength="40">
-        </label>
-        <label class="form-label">
-          Last Name
-          <input type="text" class="form-control" v-model.lazy="userProfile.lastname" maxlength="40">
-        </label>
-        <label class="form-label">
-          Email
-          <input type="email" class="form-control" v-model.lazy="userProfile.email" required maxlength="40">
-        </label>
-        <label class="form-label">
-          Phone
-          <input id="phoneNumber" type="tel" class="form-control" v-model.lazy="userProfile.phone" @keypress="numberPressed" minlength="16" maxlength="16">
-        </label>
-        <label class="form-label">
-          Zip
-          <input type="text" class="form-control" v-model="userProfile.zipcode" @keypress="numberPressed" minlength="5" maxlength="5">
-        </label>
-      <div class="alert alert-danger" v-if="phoneInputError">
-        <p>{{ phoneInputError }}</p>
+  <transition name="modal">
+    <post-modal>
+      <div class="modal-header">
+        <h3>Edit Profile</h3>
+        <a @click="cancel()" class="close">&times;</a>
       </div>
-    </div>
+      <form @submit.prevent="saveProfileSettings()">
+      <div class="modal-body">
+          <label class="form-label">
+            Profile Picture
+            <input type="file" class="form-control" @change="update($event.target.files)" accept="image/*">
+          </label>
+          <label class="form-label">
+            First Name
+            <input type="text" class="form-control" v-model.lazy="userProfile.firstname" maxlength="40">
+          </label>
+          <label class="form-label">
+            Last Name
+            <input type="text" class="form-control" v-model.lazy="userProfile.lastname" maxlength="40">
+          </label>
+          <label class="form-label">
+            Email
+            <input type="email" class="form-control" v-model.lazy="userProfile.email" required maxlength="40">
+          </label>
+          <label class="form-label">
+            Phone
+            <input id="phoneNumber" type="tel" class="form-control" v-model.lazy="userProfile.phone" @keypress="numberPressed" minlength="16" maxlength="16">
+          </label>
+          <label class="form-label">
+            Zip
+            <input type="text" class="form-control" v-model="userProfile.zipcode" @keypress="numberPressed" minlength="5" maxlength="5">
+          </label>
+        <div class="alert alert-danger" v-if="phoneInputError">
+          <p>{{ phoneInputError }}</p>
+        </div>
+      </div>
 
-    <div class="modal-footer text-right">
-      <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel()">
-      <input type="submit" class="btn btn-primary" value="Save Changes">
-    </div>
-    </form>
-  </post-modal>
+      <div class="modal-footer text-right">
+        <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel()">
+        <input type="submit" class="btn btn-primary" value="Save Changes">
+      </div>
+      </form>
+    </post-modal>
+  </transition>
 </template>
 
 <script>
@@ -239,5 +241,19 @@ export default {
   }
   .cancel {
     float: left;
+  }
+  .input-file {
+    box-shadow: 1px 1px 2px #4d4d4d;
+  }
+  input {
+    box-shadow: 1px 1px 2px #4d4d4d;
+  }
+
+  textarea {
+    box-shadow: 1px 1px 2px #4d4d4d;
+  }
+
+  select {
+    box-shadow: 1px 1px 2px #4d4d4d;
   }
 </style>

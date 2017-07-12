@@ -15,8 +15,8 @@
           </ol>
 
           <!-- Wrapper for slides -->
-          <div class="carousel-inner">
-            <div :class="{item: currentPost.url, active: index === 0}" v-for="(url, index) in currentPost.url">
+          <div class="carousel-inner" style=" width:100%; height: 500px !important;">
+            <div :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
               <img :src="url" alt="Picture" style="width:100%">
             </div>
           </div>

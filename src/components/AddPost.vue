@@ -1,66 +1,68 @@
 <template>
-  <post-modal>
-    <div class="modal-header">
-      <h3>New Post</h3>
-      <router-link class="close" to="/">&times;</router-link>
-    </div>
+  <transition name="modal">
+    <post-modal>
+      <div class="modal-header">
+        <h3>New Post</h3>
+        <router-link class="close" to="/">&times;</router-link>
+      </div>
 
-    <form enctype="multipart/form-data" @submit.prevent="savePost()" novalidate>
-    <div class="modal-body">
-      <b>Image</b>
-      <div class="dropbox">
-        <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="update($event.target.files)" accept="image/*" class="input-file">
+      <form enctype="multipart/form-data" @submit.prevent="savePost()" novalidate>
+      <div class="modal-body">
+        <b>Image</b>
+        <div class="dropbox">
+          <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="update($event.target.files)" accept="image/*" class="input-file">
+        </div>
+        <div v-if="isSuccess">
+          <p>Uploaded successfully.</p>
+          <!--
+          <ul class="list-unstyled">
+            <li v-for="itemuploadedFileURLsiles">
+              <img :src="item.url" class="thumbnail" :alt="item.originalName">
+            </li>
+          </ul>
+          -->
+        </div>
+        <!--FAILED-->
+        <div v-if="isFailed">
+          <p>Upload failed.</p>
+          <p>
+            <a href="javascript:void(0)" @click="reset()">Try again</a>
+          </p>
+          <pre>{{ uploadError }}</pre>
+        </div>
+        <div id="preview"></div>
+        <label class="form-label">
+          Title
+          <p style="font-size: 12px">(Max 50 Characters)</p>
+          <input v-model="newPost.itemname" class="form-control" maxlength="50" required>
+        </label>
+        <label class="form-label">
+          Price
+          <money v-model="newPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
+        </label>
+        <label class="form-label">
+          Description
+          <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required maxlength="2000"></textarea>
+        </label>
+        <label class="form-label">
+          Category
+          <select class="form-control" v-model="newPost.itemcat">
+            <option value="None">None</option>
+            <option value="Category 1">Category 1</option>
+            <option value="Category 2">Category 2</option>
+            <option value="Category 3">Category 3</option>
+          </select>
+        </label>
       </div>
-      <div v-if="isSuccess">
-        <p>Uploaded successfully.</p>
-        <!--
-        <ul class="list-unstyled">
-          <li v-for="itemuploadedFileURLsiles">
-            <img :src="item.url" class="thumbnail" :alt="item.originalName">
-          </li>
-        </ul>
-        -->
-      </div>
-      <!--FAILED-->
-      <div v-if="isFailed">
-        <p>Upload failed.</p>
-        <p>
-          <a href="javascript:void(0)" @click="reset()">Try again</a>
-        </p>
-        <pre>{{ uploadError }}</pre>
-      </div>
-      <div id="preview"></div>
-      <label class="form-label">
-        Title
-        <p style="font-size: 12px">(Max 50 Characters)</p>
-        <input v-model="newPost.itemname" class="form-control" maxlength="50" required>
-      </label>
-      <label class="form-label">
-        Price
-        <money v-model="newPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
-      </label>
-      <label class="form-label">
-        Description
-        <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required maxlength="2000"></textarea>
-      </label>
-      <label class="form-label">
-        Category
-        <select class="form-control" v-model="newPost.itemcat">
-          <option value="None">None</option>
-          <option value="Category 1">Category 1</option>
-          <option value="Category 2">Category 2</option>
-          <option value="Category 3">Category 3</option>
-        </select>
-      </label>
-    </div>
 
-    <div class="modal-footer text-right">
-    <p align="center">
-      <input type="submit" class="btn btn-lg btn-default" value="Post!">
-    </p>
-    </div>
-    </form>
-  </post-modal>
+      <div class="modal-footer text-right">
+      <p align="center">
+        <input type="submit" class="btn btn-lg btn-default" value="Post!">
+      </p>
+      </div>
+      </form>
+    </post-modal>
+  </transition>
 </template>
 
 <script>
