@@ -9,7 +9,7 @@
     <div class="modal-body">
       <b>Image</b>
       <div class="dropbox">
-        <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files)" accept="image/*" class="input-file">
+        <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="update($event.target.files)" accept="image/*" class="input-file">
       </div>
       <div v-if="isSuccess">
         <p>Uploaded successfully.</p>
@@ -154,18 +154,24 @@
         this.uploadedFileURLs = []
         this.uploadError = null
       },
-      save (formData, files) {
-        // upload data to the server
+      update (files) {
+        // Pull image data needed for new image request
+        var imageReq = {checksum: '', extension: ''}
         this.currentStatus = STATUS_SAVING
         for (var i = 0; i < files.length; ++i) {
+          // Grab checksum and extension
+          imageReq.checksum = Crypto.MD5(files[i]).toString()
+          imageReq.extension = files[i].type.substring(6)
+          console.log(imageReq.checksum)
           this.uploadedFiles.push(files[i])
+          // upload data to the server
           axios({
             method: 'post',
             url: '/api/image/new',
             headers: {
               'Authorization': 'Bearer ' + this.getToken
             },
-            data: formData
+            data: imageReq
           })
             .then(res => {
               this.currentStatus = STATUS_SUCCESS
@@ -178,17 +184,6 @@
               this.currentStatus = STATUS_FAILED
             })
         }
-      },
-      filesChange (fieldName, fileList) {
-        var imageReq = {checksum: '', extension: ''}
-
-        // Grab checksum and extension
-        for (var i = 0; i < fileList.length; ++i) {
-          imageReq.checksum = Crypto.MD5(fileList[i]).toString()
-          imageReq.extension = fileList[i].type.substring(6)
-          console.log(imageReq.checksum)
-        }
-        this.save(imageReq, fileList)
       },
       saveImages: function () {
         for (var i = 0; i < this.newPost.picid.length; ++i) {
