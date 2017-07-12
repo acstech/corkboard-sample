@@ -306,7 +306,7 @@
     justify-content: center;
   }
   .input-file {
-    box-shadow: 4px 4px 5px #4d4d4d;
+    box-shadow: 1px 1px 2px #4d4d4d;
     min-height: 30px;
     padding: 4px;
     margin-left: 23%;
@@ -319,14 +319,14 @@
     padding: 50px 0;
   }
   input {
-    box-shadow: 3px 3px 5px #4d4d4d;
+    box-shadow: 1px 1px 2px #4d4d4d;
   }
 
   textarea {
-    box-shadow: 3px 3px 5px #4d4d4d;
+    box-shadow: 1px 1px 2px #4d4d4d;
   }
 
   select {
-    box-shadow: 3px 3px 5px #4d4d4d;
+    box-shadow: 1px 1px 2px #4d4d4d;
   }
 </style>

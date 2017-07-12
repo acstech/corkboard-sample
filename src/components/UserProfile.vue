@@ -2,24 +2,18 @@
     <div class="row">
       <div class="col-sm-4 col-md-3 sidebar">
         <ul class="nav nav-sidebar">
-          <h3 class="sub-header">User Profile</h3>
+          <h3 class="sub-header" style="padding-bottom:20px">User Profile</h3>
           <img
             v-if="userProfile.url"
             @click="editProfile"
             :src="userProfile.url"
             class="profile-pic"
-            style="cursor:pointer"/>
-          <br>
-          <br>
-          <br>
+            style="cursor:pointer;padding-bottom:20px"/>
           <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
         </ul>
-        <br>
-        <br>
-        <br>
         <span
           v-if="userProfile.id == getCurrentUser"
           @click="editProfile"
@@ -32,7 +26,7 @@
       <div class="grid col-md-offset-3 col-sm-offset-4">
           <div class="grid-sizer col-xs-4"></div>
           <div class="col-xs-4 grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
-            <div class="thumbnail">
+            <div class="thumbnail" @click="postPreview({post})">
               <img :src="post.url" alt="...">
               <div class="caption">
                 <h4>{{ post.itemname }}</h4>
@@ -52,6 +46,7 @@
 </template>
 
 <script>
+var glyphicon
 import { Masonry, imagesLoaded } from '../main'
 import axios from 'axios'
 export default {
@@ -83,6 +78,7 @@ export default {
   },
   methods: {
     editPost (post) {
+      glyphicon = true
       this.$store.commit('getActivePost', {post: post.post})
       this.$router.push('/editPost/' + post.post.itemid)
     },
@@ -93,6 +89,7 @@ export default {
       this.$router.push('/editProfile/' + this.getCurrentUser)
     },
     deletePost (post) {
+      glyphicon = true
       // Make sure user is sure to continue with deletion
       if (confirm('Are you sure? This action cannot be undone!')) {
         // AXIOS: DELETE item call
@@ -139,6 +136,41 @@ export default {
         // Take user back to profile if they decide to cancel delete request
         this.$router.push('/viewProfile/' + this.userProfile.id)
       }
+    },
+    postPreview (post) {
+      axios({
+        method: 'get',
+        url: '/api/items/' + post.post.itemid,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      })
+      .then(res => {
+        if (glyphicon !== true) {
+          console.log(res)
+          axios({
+            method: 'get',
+            url: '/api/users/' + post.post.userid,
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+            .then(res => {
+              console.log(res)
+              this.$store.commit('getActiveSeller', {user: res.data})
+              this.$store.commit('getActiveEmail', {user: res.data})
+            })
+            .catch(error => {
+              console.log(error)
+            })
+          this.$store.commit('getActivePost', {post: res.data})
+          this.$router.push('/postPreview/' + post.post.itemid)
+        }
+        glyphicon = false
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }
   }
 }
@@ -146,14 +178,13 @@ export default {
 
 <style scoped>
 .sidebar {
-  background: #; /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(bottom, #efe3e7, #ffffff); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(top, #efe3e7, #ffffff); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(top, #efe3e7, #ffffff); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to top, #efe3e7, #ffffff); /* Standard syntax */
+  background: -webkit-linear-gradient(bottom, #efe3e7, #ffffff);
+  background: -o-linear-gradient(top, #efe3e7, #ffffff);
+  background: -moz-linear-gradient(top, #efe3e7, #ffffff);
+  background: linear-gradient(to top, #efe3e7, #ffffff);
   font-weight: bold;
-  min-height: 800px;
-  box-shadow: 2px 2px 6px #4d4d4d;
+  min-height: 400px;
+  box-shadow: 1px 1px 3px #4d4d4d;
   }
   .btn {
   font-weight: bold;
@@ -191,6 +222,11 @@ export default {
   .thumbnail {
     box-shadow: 1px 1px 3px #4d4d4d;
     padding-bottom: 15px;
+    -webkit-transition: box-shadow .5s;
+    transition: box-shadow .5s;
+  }
+  .thumbnail:hover {
+    box-shadow: 5px 5px 8px #383838;
   }
   .caption {
     white-space: -moz-pre-wrap; /* Firefox */
