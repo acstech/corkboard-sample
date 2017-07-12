@@ -306,7 +306,7 @@
     justify-content: center;
   }
   .input-file {
-    box-shadow: 4px 4px 8px black;
+    box-shadow: 4px 4px 5px #4d4d4d;
     min-height: 30px;
     padding: 4px;
     margin-left: 23%;
@@ -319,27 +319,14 @@
     padding: 50px 0;
   }
   input {
-    box-shadow: 3px 3px 8px black;
-    -webkit-transition: box-shadow .7s;
-    transition: box-shadow .7s;
+    box-shadow: 3px 3px 5px #4d4d4d;
   }
-  input:hover {
-    box-shadow: none;
-  }
+
   textarea {
-    box-shadow: 3px 3px 8px black;
-    -webkit-transition: box-shadow .7s;
-    transition: box-shadow .7s;
+    box-shadow: 3px 3px 5px #4d4d4d;
   }
-  textarea:hover {
-    box-shadow: none;
-  }
+
   select {
-    box-shadow: 3px 3px 8px black;
-    -webkit-transition: box-shadow .7s;
-    transition: box-shadow .7s;
-  }
-  select:hover {
-    box-shadow: none;
+    box-shadow: 3px 3px 5px #4d4d4d;
   }
 </style>
