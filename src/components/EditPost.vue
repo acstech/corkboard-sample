@@ -6,16 +6,17 @@
         <a class="close" @click="cancel()">&times;</a>
       </div>
 
-      <form @submit.prevent="updatePost(currentPost)">
+      <form @submit.prevent="updatePost">
       <div class="modal-body">
           <label class="form-label">
             Pictures
-            <input type="file" class="form-control" multiple>
+            <input type="file" id="files" class="form-control input-file" @change="update" accept="image/*" multiple>
           </label>
+          <div id="preview"></div>
           <label class="form-label">
             Title
             <p style="font-size: 12px">(Max 50 Characters)</p>
-            <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50">
+            <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50" required>
           </label>
           <label class="form-label">
             Price
@@ -23,7 +24,7 @@
           </label>
           <label class="form-label">
             Description
-            <textarea rows="5" class="form-control" v-model="currentPost.itemdesc" maxlength="2000"></textarea>
+            <textarea rows="5" class="form-control" v-model="currentPost.itemdesc" maxlength="2000" required></textarea>
           </label>
           <label class="form-label">
             Category
@@ -36,8 +37,8 @@
           </label>
           <label class="form-label">
             Sale Status:
-            <input type="radio" v-model="salestatus" name="salestatus" value="Available" style="box-shadow:none"> Available
-            <input type="radio" v-model="salestatus" name="salestatus" value="Sale Pending" style="box-shadow:none"> Sale Pending
+            <input type="radio" v-model="currentPost.salestatus" name="salestatus" value="Available" style="box-shadow:none"> Available
+            <input type="radio" v-model="currentPost.salestatus" name="salestatus" value="Sale Pending" style="box-shadow:none"> Sale Pending
           </label>
       </div>
 
@@ -54,6 +55,8 @@
 import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
 import axios from 'axios'
+import Crypto from 'crypto-js'
+import { Masonry, imagesLoaded } from '../main'
 export default {
   computed: {
     currentPost () {
@@ -68,11 +71,14 @@ export default {
   },
   data () {
     return {
-      itemname: '',
-      pictures: [],
-      itemprice: 0.00,
-      itemdesc: '',
-      salestatus: '',
+      updatedPost: {
+        itemname: '',
+        itemprice: 0.00,
+        itemdesc: '',
+        itemcat: '',
+        salestatus: '',
+        picid: []
+      },
       moneyConfig: {
         // The character used to show the decimal place.
         decimal: '.',
@@ -86,7 +92,9 @@ export default {
         precision: 2,
         // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
         masked: true
-      }
+      },
+      uploadedFiles: [],
+      uploadedFileURLs: []
     }
   },
   mounted () {
@@ -95,14 +103,100 @@ export default {
     }
   },
   methods: {
-    updatePost (post) {
+    reset () {
+      this.uploadError = null
+      // Reset previous upload attempts and thumbnails
+      let preview = document.getElementById('preview')
+      preview.innerHTML = ''
+      this.uploadedFiles = []
+      this.uploadedFileURLs = []
+      this.updatedPost.picid = []
+    },
+    update (event) {
+      let vm = this
+      let files = event.target.files
+      // Pull image data needed for new image request
+      // Grab updated files in latest upload
+      for (var i = 0; i < files.length; ++i) {
+        let file = files[i]
+        // Don't do anything if it isn't an image
+        if (!file.type.match('image')) {
+          continue
+        }
+        // Setup a FileReader for uploading the preview to AddPost
+        let picDisplayer = new FileReader()
+        picDisplayer.onload = (function (file) {
+          return function (event) {
+            let picFile = event.target
+            let preview = document.getElementById('preview')
+            preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
+              "title='" + file.name + "' width='150px' height='150px' style='display: inline'/>"
+          }
+        })(file)
+        // Setup a FilerReader to generate a NewImageURL for each image
+        let picHasher = new FileReader()
+        picHasher.onload = (function (file) {
+          return function (event) {
+            let picFile = event.target
+            axios({
+              method: 'post',
+              url: '/api/image/new',
+              data: {
+                checksum: Crypto.MD5(picFile.result).toString(),
+                extension: file.type.split('/')[1]
+              },
+              headers: {
+                'Authorization': 'Bearer ' + vm.getToken
+              }
+            })
+              .then(res => {
+                // Place URL and ID in new post data for saving
+                vm.uploadedFiles.push({file: file, url: res.data.url})
+                vm.updatedPost.picid.push(res.data.picid)
+              })
+              .catch(err => {
+                vm.uploadError = err.response
+              })
+          }
+        })(file)
+        // Read the image
+        picDisplayer.readAsDataURL(file)
+        picHasher.readAsBinaryString(file)
+      }
+    },
+    saveImages: function () {
+      // Save each uploaded picture by placing its data in each URL
+      for (var i = 0; i < this.uploadedFiles.length; ++i) {
+        axios({
+          method: 'put',
+          url: this.uploadedFiles[i].url,
+          data: this.uploadedFiles[i].file
+        })
+          .then(res => {
+            console.log(res)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
+    },
+    updatePost () {
+      // Save the image uploads
+      this.saveImages()
+      // Set the rest of the data to update or persist
+      this.updatedPost.itemid = this.currentPost.itemid // Should not change
+      this.updatedPost.itemname = this.currentPost.itemname
+      this.updatedPost.itemdesc = this.currentPost.itemdesc
+      this.updatedPost.itemcat = this.currentPost.itemcat
+      this.updatedPost.itemprice = this.currentPost.itemprice
+      this.updatedPost.salestatus = this.currentPost.salestatus
       axios({
         method: 'put',
         url: '/api/items/edit/' + this.currentPost.itemid,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         },
-        data: this.currentPost
+        data: this.updatedPost
       })
         .then(res => {
           axios({
@@ -114,6 +208,15 @@ export default {
           })
             .then(res => {
               this.$store.commit('getViewedProfile', res.data)
+              var posts = document.querySelectorAll('.grid-item')
+              imagesLoaded(posts, function () {
+                // eslint-disable-next-line no-unused-vars
+                var masonry = new Masonry('.grid', {
+                  selector: '.grid-item',
+                  columnWidth: '.grid-sizer',
+                  percentPosition: true
+                })
+              })
             })
             .catch(error => {
               console.log(error)

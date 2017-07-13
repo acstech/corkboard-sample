@@ -20,21 +20,15 @@
             accept="image/*"
             class="input-file">
         </div>
+        <a class="reset-option" @click="reset">Reset Uploads</a>
         <div v-if="isSuccess">
           <p>Uploaded successfully.</p>
-          <!--
-          <ul class="list-unstyled">
-            <li v-for="itemuploadedFileURLsiles">
-              <img :src="item.url" class="thumbnail" :alt="item.originalName">
-            </li>
-          </ul>
-          -->
         </div>
         <!--FAILED-->
         <div v-if="isFailed">
           <p>Upload failed.</p>
           <p>
-            <a href="javascript:void(0)" @click="reset()">Try again</a>
+            <a href="javascript:void(0)" @click="reset">Try again</a>
           </p>
           <pre>{{ uploadError }}</pre>
         </div>
@@ -86,7 +80,6 @@
     data () {
       return {
         uploadedFiles: [],
-        uploadedFileURLs: [],
         uploadError: null,
         currentStatus: null,
         uploadFieldName: 'Image',
@@ -132,79 +125,90 @@
       }
     },
     mounted () {
-      // Check File API support
       if (this.getToken === null) {
         this.$router.push('/login')
-      }
-      let filesInput = document.getElementById('files')
-      filesInput.onchange = function (event) {
-        let files = event.target.files // FileList object
-        for (var i = 0; i < files.length; i++) {
-          let file = files[i]
-          // Only preview images
-          if (!file.type.match('image')) {
-            continue
-          }
-          let picReader = new FileReader()
-          picReader.onload = function (event) {
-            let picFile = event.target
-            let preview = document.getElementById('preview')
-            preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
-              "title='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
-          }
-          // Read the image
-          picReader.readAsDataURL(file)
-        }
       }
     },
     methods: {
       reset () {
         // reset form to initial state
         this.currentStatus = STATUS_INITIAL
-        this.uploadedFileURLs = []
         this.uploadError = null
+        // Reset previous upload attempts and thumbnails
+        let preview = document.getElementById('preview')
+        preview.innerHTML = ''
+        this.uploadedFiles = []
+        this.uploadedFileURLs = []
+        this.newPost.picid = []
       },
-      update (files) {
-        // Pull image data needed for new image request
-        var imageReq = {checksum: '', extension: ''}
-        this.currentStatus = STATUS_SAVING
-        for (var i = 0; i < files.length; ++i) {
-          // Grab checksum and extension
-          imageReq.checksum = Crypto.MD5(files[i]).toString()
-          imageReq.extension = files[i].type.substring(6)
-          console.log(imageReq.checksum)
-          this.uploadedFiles.push(files[i])
+      update (event) {
+        let vm = this
+        // Grab the file object from the form input
+        let files = event.target.files
+        vm.currentStatus = STATUS_SAVING
+        // Grab updated files in latest upload
+        for (var i = 0; i < files.length; i++) {
+          let file = files[i]
+          // Don't do anything if it isn't an image
+          if (!file.type.match('image')) {
+            continue
+          }
+          // Setup a FileReader for uploading the preview to AddPost
+          let picDisplayer = new FileReader()
+          picDisplayer.onload = (function (file) {
+            return function (event) {
+              let picFile = event.target
+              let preview = document.getElementById('preview')
+              preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
+                "title='" + file.name + "' width='150px' height='150px' style='display: inline'/>"
+            }
+          })(file)
+          // Setup a FilerReader to generate a NewImageURL for each image
+          let picHasher = new FileReader()
+          picHasher.onload = (function (file) {
+            return function (event) {
+              let picFile = event.target
+              let hash = Crypto.MD5(picFile.result).toString()
+              axios({
+                method: 'post',
+                url: '/api/image/new',
+                data: {
+                  checksum: hash,
+                  extension: file.type.split('/')[1]
+                },
+                headers: {
+                  'Authorization': 'Bearer ' + vm.$store.state.token
+                }
+              })
+                .then(res => {
+                  vm.currentStatus = STATUS_SUCCESS
+                  // Push information about the file to the appropriate arrays
+                  vm.uploadedFiles.push({file: file, url: res.data.url, md5: hash})
+                  vm.newPost.picid.push(res.data.picid)
+                })
+                .catch(err => {
+                  vm.uploadError = err.response
+                  vm.currentStatus = STATUS_FAILED
+                })
+            }
+          })(file)
+          // Read the image
+          picDisplayer.readAsDataURL(file)
+          picHasher.readAsBinaryString(file)
           // upload data to the server
-          axios({
-            method: 'post',
-            url: '/api/image/new',
-            headers: {
-              'Authorization': 'Bearer ' + this.getToken
-            },
-            data: imageReq
-          })
-            .then(res => {
-              this.currentStatus = STATUS_SUCCESS
-              // Place URL and ID in new post data for saving
-              this.uploadedFileURLs.push(res.data.url)
-              this.newPost.picid.push(res.data.picid)
-            })
-            .catch(err => {
-              this.uploadError = err.response
-              this.currentStatus = STATUS_FAILED
-            })
         }
       },
       saveImages: function () {
         // Save each uploaded picture by placing its data in each URL
-        for (var i = 0; i < this.newPost.picid.length; ++i) {
+        for (var i = 0; i < this.uploadedFiles.length; i++) {
           axios({
             method: 'put',
-            url: this.uploadedFileURLs[i],
+            url: this.uploadedFiles[i].url,
             headers: {
-              'Authorization': 'Bearer ' + this.$store.state.token
+              'Content-MD5': this.uploadedFiles[i].md5,
+              'Content-Type': this.uploadedFiles[i].file.type
             },
-            data: this.uploadedFiles[i]
+            data: this.uploadedFiles[i].file
           })
             .then(res => {
             })

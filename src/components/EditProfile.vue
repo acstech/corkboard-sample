@@ -153,9 +153,6 @@ export default {
       axios({
         method: 'put',
         url: this.updateUser.url,
-        headers: {
-          'Authorization': 'Bearer ' + this.$store.state.token
-        },
         data: this.profileImage
       })
         .then(res => {
@@ -166,7 +163,6 @@ export default {
     },
     saveProfileSettings () {
       this.userProfile = this.cloneUserProfile
-
       this.saveImage()
       // Makes sure to set up data object with all data needed for vuex call
       // *Honestly this is ridiculous and needs improvement, but it works for now*
