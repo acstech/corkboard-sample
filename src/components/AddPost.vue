@@ -10,7 +10,15 @@
       <div class="modal-body">
         <b>Image</b>
         <div class="dropbox">
-          <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="update" accept="image/*" class="input-file">
+          <input
+            type="file"
+            id="files"
+            multiple
+            :name="uploadFieldName"
+            :disabled="isSaving"
+            @change="update($event.target.files)"
+            accept="image/*"
+            class="input-file">
         </div>
         <a class="reset-option" @click="reset">Reset Uploads</a>
         <div v-if="isSuccess">
