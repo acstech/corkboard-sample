@@ -12,6 +12,7 @@
         <div class="dropbox">
           <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="update($event.target.files)" accept="image/*" class="input-file">
         </div>
+        <a class="reset-option" @click="reset">Reset Uploads</a>
         <div v-if="isSuccess">
           <p>Uploaded successfully.</p>
           <!--
@@ -26,7 +27,7 @@
         <div v-if="isFailed">
           <p>Upload failed.</p>
           <p>
-            <a href="javascript:void(0)" @click="reset()">Try again</a>
+            <a href="javascript:void(0)" @click="reset">Try again</a>
           </p>
           <pre>{{ uploadError }}</pre>
         </div>
@@ -153,19 +154,18 @@
       reset () {
         // reset form to initial state
         this.currentStatus = STATUS_INITIAL
-        this.uploadedFileURLs = []
         this.uploadError = null
-      },
-      update (files) {
-        // Pull image data needed for new image request
-        var imageReq = {checksum: '', extension: ''}
-        this.currentStatus = STATUS_SAVING
         // Reset previous upload attempts and thumbnails
         let preview = document.getElementById('preview')
         preview.innerHTML = ''
         this.uploadedFiles = []
         this.uploadedFileURLs = []
         this.newPost.picid = []
+      },
+      update (files) {
+        // Pull image data needed for new image request
+        var imageReq = {checksum: '', extension: ''}
+        this.currentStatus = STATUS_SAVING
         // Grab updated files in latest upload
         for (var i = 0; i < files.length; ++i) {
           // Grab checksum and extension
