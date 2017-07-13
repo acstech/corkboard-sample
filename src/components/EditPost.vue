@@ -10,7 +10,7 @@
       <div class="modal-body">
           <label class="form-label">
             Pictures
-            <input type="file" id="files" class="form-control input-file" @change="update($event.target.files)" accept="image/*" multiple>
+            <input type="file" id="files" class="form-control input-file" @change="update" accept="image/*" multiple>
           </label>
           <div id="preview"></div>
           <label class="form-label">
@@ -101,27 +101,6 @@ export default {
     if (this.getToken === null) {
       this.router.push('/login')
     }
-    let filesInput = document.getElementById('files')
-    filesInput.onchange = function (event) {
-      // Grab the file object from the form input
-      let files = event.target.files
-      for (var i = 0; i < files.length; i++) {
-        let file = files[i]
-        // Only preview images
-        if (!file.type.match('image')) {
-          continue
-        }
-        let picReader = new FileReader()
-        picReader.onload = function (event) {
-          let picFile = event.target
-          let preview = document.getElementById('preview')
-          preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
-            "title='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
-        }
-        // Read the image
-        picReader.readAsDataURL(file)
-      }
-    }
   },
   methods: {
     reset () {
@@ -133,43 +112,65 @@ export default {
       this.uploadedFileURLs = []
       this.updatedPost.picid = []
     },
-    update (files) {
+    update (event) {
+      let vm = this
+      let files = event.target.files
       // Pull image data needed for new image request
-      var imageReq = {checksum: '', extension: ''}
       // Grab updated files in latest upload
       for (var i = 0; i < files.length; ++i) {
-        // Grab checksum and extension
-        // TODO: There seems to be a checksum generation issue. S3 will be upset
-        imageReq.checksum = Crypto.MD5(files[i]).toString()
-        imageReq.extension = files[i].type.substring(6)
-        // console.log(imageReq.checksum)
-        this.uploadedFiles.push(files[i])
-        // upload data to the server
-        axios({
-          method: 'post',
-          url: '/api/image/new',
-          headers: {
-            'Authorization': 'Bearer ' + this.getToken
-          },
-          data: imageReq
-        })
-          .then(res => {
-            // Place URL and ID in new post data for saving
-            this.uploadedFileURLs.push(res.data.url)
-            this.updatedPost.picid.push(res.data.picid)
-          })
-          .catch(err => {
-            this.uploadError = err.response
-          })
+        let file = files[i]
+        // Don't do anything if it isn't an image
+        if (!file.type.match('image')) {
+          continue
+        }
+        // Setup a FileReader for uploading the preview to AddPost
+        let picDisplayer = new FileReader()
+        picDisplayer.onload = (function (file) {
+          return function (event) {
+            let picFile = event.target
+            let preview = document.getElementById('preview')
+            preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
+              "title='" + file.name + "' width='150px' height='150px' style='display: inline'/>"
+          }
+        })(file)
+        // Setup a FilerReader to generate a NewImageURL for each image
+        let picHasher = new FileReader()
+        picHasher.onload = (function (file) {
+          return function (event) {
+            let picFile = event.target
+            axios({
+              method: 'post',
+              url: '/api/image/new',
+              data: {
+                checksum: Crypto.MD5(picFile.result).toString(),
+                extension: file.type.split('/')[1]
+              },
+              headers: {
+                'Authorization': 'Bearer ' + vm.getToken
+              }
+            })
+              .then(res => {
+                // Place URL and ID in new post data for saving
+                vm.uploadedFiles.push({file: file, url: res.data.url})
+                vm.updatedPost.picid.push(res.data.picid)
+              })
+              .catch(err => {
+                vm.uploadError = err.response
+              })
+          }
+        })(file)
+        // Read the image
+        picDisplayer.readAsDataURL(file)
+        picHasher.readAsBinaryString(file)
       }
     },
     saveImages: function () {
       // Save each uploaded picture by placing its data in each URL
-      for (var i = 0; i < this.updatedPost.picid.length; ++i) {
+      for (var i = 0; i < this.uploadedFiles.length; ++i) {
         axios({
           method: 'put',
-          url: this.uploadedFileURLs[i],
-          data: this.uploadedFiles[i]
+          url: this.uploadedFiles[i].url,
+          data: this.uploadedFiles[i].file
         })
           .then(res => {
             console.log(res)
