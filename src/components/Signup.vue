@@ -71,15 +71,15 @@ export default {
     // through regular expression
     passwordValidation () {
       var newPassword = this.newUser.password
-      var minNumberofChars = 6
+      var minNumberofChars = 8
       var maxNumberofChars = 16
-      var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
+      var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/
       if (newPassword.length < minNumberofChars || newPassword.length > maxNumberofChars) {
-        alert('Your password must be between 6-16 characters and contain at least one number and one special character !@#$%^&*')
+        alert('Your password must be between 8-16 characters and contain at least one number and one special character !@#$%^&*')
         return false
       }
       if (!regularExpression.test(newPassword)) {
-        alert('Your password must be between 6-16 characters and contain at least one number and one special character !@#$%^&*')
+        alert('Your password must be between 8-16 characters and contain at least one number and one special character !@#$%^&*')
         return false
       }
       return true
