@@ -6,7 +6,7 @@
         <a class="close" @click="cancel()">&times;</a>
       </div>
 
-      <form @submit.prevent="updatePost(currentPost)">
+      <form @submit.prevent="updatePost">
       <div class="modal-body">
           <label class="form-label">
             Pictures
@@ -55,6 +55,7 @@
 import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
 import axios from 'axios'
+import Crypto from 'crypto-js'
 export default {
   computed: {
     currentPost () {
@@ -87,7 +88,8 @@ export default {
         precision: 2,
         // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
         masked: true
-      }
+      },
+      uploadedFiles: []
     }
   },
   mounted () {
@@ -127,7 +129,37 @@ export default {
       this.uploadedFileURLs = []
       this.newPost.picid = []
     },
-    updatePost (post) {
+    update (files) {
+      // Pull image data needed for new image request
+      var imageReq = {checksum: '', extension: ''}
+      // Grab updated files in latest upload
+      for (var i = 0; i < files.length; ++i) {
+        // Grab checksum and extension
+        // TODO: There seems to be a checksum generation issue. S3 will be upset
+        imageReq.checksum = Crypto.MD5(files[i]).toString()
+        imageReq.extension = files[i].type.substring(6)
+        // console.log(imageReq.checksum)
+        this.uploadedFiles.push(files[i])
+        // upload data to the server
+        axios({
+          method: 'post',
+          url: '/api/image/new',
+          headers: {
+            'Authorization': 'Bearer ' + this.getToken
+          },
+          data: imageReq
+        })
+          .then(res => {
+            // Place URL and ID in new post data for saving
+            this.uploadedFileURLs.push(res.data.url)
+            this.newPost.picid.push(res.data.picid)
+          })
+          .catch(err => {
+            this.uploadError = err.response
+          })
+      }
+    },
+    updatePost () {
       axios({
         method: 'put',
         url: '/api/items/edit/' + this.currentPost.itemid,
