@@ -194,9 +194,6 @@
           axios({
             method: 'put',
             url: this.uploadedFileURLs[i],
-            headers: {
-              'Authorization': 'Bearer ' + this.$store.state.token
-            },
             data: this.uploadedFiles[i]
           })
             .then(res => {

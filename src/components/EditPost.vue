@@ -6,11 +6,11 @@
         <a class="close" @click="cancel()">&times;</a>
       </div>
 
-      <form @submit.prevent="updatePost(currentPost)">
+      <form @submit.prevent="updatePost">
       <div class="modal-body">
           <label class="form-label">
             Pictures
-            <input type="file" id="files" class="form-control" multiple>
+            <input type="file" id="files" class="form-control input-file" @change="update($event.target.files)" accept="image/*" multiple>
           </label>
           <div id="preview"></div>
           <label class="form-label">
@@ -55,6 +55,7 @@
 import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
 import axios from 'axios'
+import Crypto from 'crypto-js'
 export default {
   computed: {
     currentPost () {
@@ -69,25 +70,30 @@ export default {
   },
   data () {
     return {
-      itemname: '',
-      pictures: [],
-      itemprice: 0.00,
-      itemdesc: '',
-      salestatus: '',
-      moneyConfig: {
-        // The character used to show the decimal place.
-        decimal: '.',
-        // The character used to separate numbers in groups of three.
-        thousands: ',',
-        // The currency name or symbol followed by a space.
-        prefix: '$ ',
-        // The suffix (If a suffix is used by the target currency.)
-        suffix: '',
-        // Level of decimal precision. REQUIRED
-        precision: 2,
-        // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
-        masked: true
-      }
+      updatedPost: {
+        itemname: '',
+        itemprice: 0.00,
+        itemdesc: '',
+        itemcat: '',
+        salestatus: '',
+        moneyConfig: {
+          // The character used to show the decimal place.
+          decimal: '.',
+          // The character used to separate numbers in groups of three.
+          thousands: ',',
+          // The currency name or symbol followed by a space.
+          prefix: '$ ',
+          // The suffix (If a suffix is used by the target currency.)
+          suffix: '',
+          // Level of decimal precision. REQUIRED
+          precision: 2,
+          // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
+          masked: true
+        },
+        picid: []
+      },
+      uploadedFiles: [],
+      uploadedFileURLs: []
     }
   },
   mounted () {
@@ -125,9 +131,60 @@ export default {
       preview.innerHTML = ''
       this.uploadedFiles = []
       this.uploadedFileURLs = []
-      this.newPost.picid = []
+      this.updatedPost.picid = []
     },
-    updatePost (post) {
+    update (files) {
+      // Pull image data needed for new image request
+      var imageReq = {checksum: '', extension: ''}
+      // Grab updated files in latest upload
+      for (var i = 0; i < files.length; ++i) {
+        // Grab checksum and extension
+        // TODO: There seems to be a checksum generation issue. S3 will be upset
+        imageReq.checksum = Crypto.MD5(files[i]).toString()
+        imageReq.extension = files[i].type.substring(6)
+        // console.log(imageReq.checksum)
+        this.uploadedFiles.push(files[i])
+        // upload data to the server
+        axios({
+          method: 'post',
+          url: '/api/image/new',
+          headers: {
+            'Authorization': 'Bearer ' + this.getToken
+          },
+          data: imageReq
+        })
+          .then(res => {
+            // Place URL and ID in new post data for saving
+            this.uploadedFileURLs.push(res.data.url)
+            this.updatedPost.picid.push(res.data.picid)
+          })
+          .catch(err => {
+            this.uploadError = err.response
+          })
+      }
+    },
+    saveImages: function () {
+      // Save each uploaded picture by placing its data in each URL
+      for (var i = 0; i < this.updatedPost.picid.length; ++i) {
+        axios({
+          method: 'put',
+          url: this.uploadedFileURLs[i],
+          data: this.uploadedFiles[i]
+        })
+          .then(res => {
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
+    },
+    updatePost () {
+      // Save the image uploads
+      this.saveImage()
+      // Set data to update
+      this.updatedPost.itemname = this.currentPost.itemname
+      this.updatedPost.itemdesc = this.currentPost.itemdesc
+      this.updatedPost.itemcat = this.currentPost.itemcat
       axios({
         method: 'put',
         url: '/api/items/edit/' + this.currentPost.itemid,
