@@ -5,12 +5,12 @@
 ## Contributors		
 
 * Ben Wornom		
-* Savannah Barber		
+* [Savannah Barber](https://github.com/SBarber95)		
 * Jason Moore		
 * Kyle Heath		
 * Daniel Neely
 
-## Build Setup
+## Build Setup (Front-End Only)
 
 Uses the webpack scaffolding:
 
@@ -29,3 +29,9 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Detailed Information on Usage
+
+To find out how you can stand up the front-end to our API, check out our wiki page [here](https://github.com/acstech/corkboard-sample/wiki).
+
+For detailed information on our API and its setup process, [visit the corkboard API wiki](https://github.com/acstech/corkboard/wiki).
