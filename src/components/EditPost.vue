@@ -10,8 +10,9 @@
       <div class="modal-body">
           <label class="form-label">
             Pictures
-            <input type="file" class="form-control" multiple>
+            <input type="file" id="files" class="form-control" multiple>
           </label>
+          <div id="preview"></div>
           <label class="form-label">
             Title
             <p style="font-size: 12px">(Max 50 Characters)</p>
@@ -93,8 +94,39 @@ export default {
     if (this.getToken === null) {
       this.router.push('/login')
     }
+    let filesInput = document.getElementById('files')
+    filesInput.onchange = function (event) {
+      // Grab the file object from the form input
+      let files = event.target.files
+      for (var i = 0; i < files.length; i++) {
+        let file = files[i]
+        // Only preview images
+        if (!file.type.match('image')) {
+          continue
+        }
+        let picReader = new FileReader()
+        picReader.onload = function (event) {
+          let picFile = event.target
+          let preview = document.getElementById('preview')
+          preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
+            "title='" + picFile.name + "' width='150px' height='150px' style='display: inline'/>"
+        }
+        // Read the image
+        picReader.readAsDataURL(file)
+      }
+    }
   },
   methods: {
+    // TODO: This method will not work completely right now. Follow workflow and data usage of add post for this.
+    reset () {
+      this.uploadError = null
+      // Reset previous upload attempts and thumbnails
+      let preview = document.getElementById('preview')
+      preview.innerHTML = ''
+      this.uploadedFiles = []
+      this.uploadedFileURLs = []
+      this.newPost.picid = []
+    },
     updatePost (post) {
       axios({
         method: 'put',

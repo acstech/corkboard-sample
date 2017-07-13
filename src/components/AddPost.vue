@@ -15,13 +15,6 @@
         <a class="reset-option" @click="reset">Reset Uploads</a>
         <div v-if="isSuccess">
           <p>Uploaded successfully.</p>
-          <!--
-          <ul class="list-unstyled">
-            <li v-for="itemuploadedFileURLsiles">
-              <img :src="item.url" class="thumbnail" :alt="item.originalName">
-            </li>
-          </ul>
-          -->
         </div>
         <!--FAILED-->
         <div v-if="isFailed">
@@ -125,13 +118,13 @@
       }
     },
     mounted () {
-      // Check File API support
       if (this.getToken === null) {
         this.$router.push('/login')
       }
       let filesInput = document.getElementById('files')
       filesInput.onchange = function (event) {
-        let files = event.target.files // FileList object
+        // Grab the file object from the form input
+        let files = event.target.files
         for (var i = 0; i < files.length; i++) {
           let file = files[i]
           // Only preview images
@@ -169,9 +162,10 @@
         // Grab updated files in latest upload
         for (var i = 0; i < files.length; ++i) {
           // Grab checksum and extension
+          // TODO: There seems to be a checksum generation issue. S3 will be upset
           imageReq.checksum = Crypto.MD5(files[i]).toString()
           imageReq.extension = files[i].type.substring(6)
-          console.log(imageReq.checksum)
+          // console.log(imageReq.checksum)
           this.uploadedFiles.push(files[i])
           // upload data to the server
           axios({
