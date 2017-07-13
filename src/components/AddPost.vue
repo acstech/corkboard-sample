@@ -160,7 +160,7 @@
           picHasher.onload = (function (file) {
             return function (event) {
               let picFile = event.target
-              let hash = Crypto.MD5(picFile.result).toString(Crypto.enc.Base64)
+              let hash = Crypto.MD5(picFile.result).toString()
               axios({
                 method: 'post',
                 url: '/api/image/new',
