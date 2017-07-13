@@ -10,7 +10,7 @@
       <div class="modal-body">
           <label class="form-label">
             Pictures
-            <input type="file" id="files" class="form-control" multiple>
+            <input type="file" id="files" class="form-control input-file" @change="update($event.target.files)" accept="image/*" multiple>
           </label>
           <div id="preview"></div>
           <label class="form-label">
