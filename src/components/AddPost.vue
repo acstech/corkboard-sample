@@ -160,11 +160,12 @@
           picHasher.onload = (function (file) {
             return function (event) {
               let picFile = event.target
+              let hash = Crypto.MD5(picFile.result).toString(Crypto.enc.Base64)
               axios({
                 method: 'post',
                 url: '/api/image/new',
                 data: {
-                  checksum: Crypto.MD5(picFile.result).toString(Crypto.enc.Base64),
+                  checksum: hash,
                   extension: file.type.split('/')[1]
                 },
                 headers: {
@@ -174,7 +175,7 @@
                 .then(res => {
                   vm.currentStatus = STATUS_SUCCESS
                   // Push information about the file to the appropriate arrays
-                  vm.uploadedFiles.push({file: file, url: res.data.url})
+                  vm.uploadedFiles.push({file: file, url: res.data.url, md5: hash})
                   vm.newPost.picid.push(res.data.picid)
                 })
                 .catch(err => {
@@ -195,6 +196,10 @@
           axios({
             method: 'put',
             url: this.uploadedFiles[i].url,
+            headers: {
+              'Content-MD5': this.uploadedFiles[i].md5,
+              'Content-Type': this.uploadedFiles[i].file.type
+            },
             data: this.uploadedFiles[i].file
           })
             .then(res => {
