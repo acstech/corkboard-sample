@@ -164,7 +164,7 @@
                 method: 'post',
                 url: '/api/image/new',
                 data: {
-                  checksum: Crypto.MD5(picFile.result).toString(),
+                  checksum: Crypto.MD5(picFile.result).toString(Crypto.enc.Base64),
                   extension: file.type.split('/')[1]
                 },
                 headers: {
