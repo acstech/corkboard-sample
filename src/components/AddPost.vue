@@ -6,11 +6,19 @@
         <router-link class="close" to="/">&times;</router-link>
       </div>
 
-      <form enctype="multipart/form-data" @submit.prevent="savePost()" novalidate>
+      <form enctype="multipart/form-data" @submit.prevent="savePost()">
       <div class="modal-body">
         <b>Image</b>
         <div class="dropbox">
-          <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="update($event.target.files)" accept="image/*" class="input-file">
+          <input
+            type="file"
+            id="files"
+            multiple
+            :name="uploadFieldName"
+            :disabled="isSaving"
+            @change="update($event.target.files)"
+            accept="image/*"
+            class="input-file">
         </div>
         <div v-if="isSuccess">
           <p>Uploaded successfully.</p>

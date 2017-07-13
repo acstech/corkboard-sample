@@ -6,52 +6,53 @@
         <a @click="cancel()" class="close">&times;</a>
       </div>
       <form @submit.prevent="saveProfileSettings()">
-      <div class="modal-body">
-          <label class="form-label">
-            Profile Picture
-            <input type="file" class="form-control" @change="update($event.target.files)" accept="image/*">
-          </label>
-          <label class="form-label">
-            First Name
-            <input type="text" class="form-control" v-model.lazy="userProfile.firstname" maxlength="40">
-          </label>
-          <label class="form-label">
-            Last Name
-            <input type="text" class="form-control" v-model.lazy="userProfile.lastname" maxlength="40">
-          </label>
-          <label class="form-label">
-            Email
-            <input type="email" class="form-control" v-model.lazy="userProfile.email" required maxlength="40">
-          </label>
-          <label class="form-label">
-            Phone
-            <input id="phoneNumber" type="tel" class="form-control" v-model.lazy="userProfile.phone" @keypress="numberPressed" minlength="16" maxlength="16">
-          </label>
-          <label class="form-label">
-            Zip
-            <input type="text" class="form-control" v-model="userProfile.zipcode" @keypress="numberPressed" minlength="5" maxlength="5">
-          </label>
-        <div class="alert alert-danger" v-if="phoneInputError">
-          <p>{{ phoneInputError }}</p>
+        <div class="modal-body">
+            <label class="form-label">
+              Profile Picture
+              <input type="file" class="form-control" @change="update($event.target.files)" accept="image/*">
+            </label>
+            <label class="form-label">
+              First Name
+              <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="40">
+            </label>
+            <label class="form-label">
+              Last Name
+              <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="40">
+            </label>
+            <label class="form-label">
+              Email
+              <input type="email" class="form-control" v-model="cloneUserProfile.email" required maxlength="40">
+            </label>
+            <label class="form-label">
+              Phone
+              <input id="phoneNumber" type="tel" class="form-control" v-model="cloneUserProfile.phone" @keypress="numberPressed" minlength="16" maxlength="16">
+            </label>
+            <label class="form-label">
+              Zip
+              <input type="text" class="form-control" v-model="cloneUserProfile.zipcode" @keypress="numberPressed" minlength="5" maxlength="5">
+            </label>
+          <div class="alert alert-danger" v-if="phoneInputError">
+            <p>{{ phoneInputError }}</p>
+          </div>
         </div>
-      </div>
-
+      </form>
       <div class="modal-footer text-right">
         <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel()">
-        <input type="submit" class="btn btn-primary" value="Save Changes">
+        <input type="submit" class="btn btn-primary" value="Save Changes" @click="saveProfileSettings()">
       </div>
-      </form>
     </post-modal>
   </transition>
 </template>
 
 <script>
+var _ = require('lodash')
 import PostModal from './PostModal.vue'
 import axios from 'axios'
 import Crypto from 'crypto-js'
 export default {
   data () {
     return {
+      cloneUserProfile: {},
       updateUser: {
         id: '',
         picid: '',
@@ -68,7 +69,7 @@ export default {
     }
   },
   computed: {
-    userProfile () {
+    UserProfile () {
       return this.$store.state.viewedUserProfile
     },
     getCurrentUser () {
@@ -76,16 +77,12 @@ export default {
     },
     getToken () {
       return this.$store.state.token
-    },
-    getViewedProfile () {
-      return this.$store.state.viewedUserProfile
     }
   },
   mounted () {
     if (this.getToken === null) {
       this.$router.push('/login')
     } else {
-      // Phone number formatter -----------------------------------------------
       document.getElementById('phoneNumber').addEventListener('keyup', function (evt) {
         var phoneNumber = document.getElementById('phoneNumber')
         phoneNumber.value = phoneFormat(phoneNumber.value)
@@ -94,6 +91,8 @@ export default {
       // We need to manually format the phone number on page load
       document.getElementById('phoneNumber').value = phoneFormat(document.getElementById('phoneNumber').value)
     }
+
+    this.cloneUserProfile = _.cloneDeep(this.UserProfile)
 
     // A function to format text to look like a phone number
     function phoneFormat (input) {
@@ -115,6 +114,14 @@ export default {
     }
   },
   methods: {
+    validateEmail (email) {
+      if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        return true
+      } else {
+        alert('You have entered an invalid email address!')
+        this.userProfile.email = this.UserProfile.email
+      }
+    },
     update (files) {
       // Pull image data needed for new image request
       var imageReq = {checksum: '', extension: ''}
@@ -152,26 +159,24 @@ export default {
         data: this.profileImage
       })
         .then(res => {
-          this.hasPreviousImage = false
         })
         .catch(error => {
           console.log(error)
         })
     },
     saveProfileSettings () {
-      if (this.userProfile.phone.length !== 16) {
-        this.phoneInputError = 'Please enter a full phone number.'
-        return
-      }
+      this.userProfile = this.cloneUserProfile
+
+      this.saveImage()
       // Makes sure to set up data object with all data needed for vuex call
       // *Honestly this is ridiculous and needs improvement, but it works for now*
       this.updateUser.id = this.getCurrentUser
-      this.updateUser.firstname = this.userProfile.firstname
-      this.updateUser.lastname = this.userProfile.lastname
-      this.updateUser.email = this.userProfile.email
-      this.updateUser.phone = this.userProfile.phone
-      this.updateUser.items = this.userProfile.items
-      this.updateUser.zipcode = this.userProfile.zipcode
+      this.updateUser.firstname = this.cloneUserProfile.firstname
+      this.updateUser.lastname = this.cloneUserProfile.lastname
+      this.updateUser.email = this.cloneUserProfile.email
+      this.updateUser.phone = this.cloneUserProfile.phone
+      this.updateUser.items = this.cloneUserProfile.items
+      this.updateUser.zipcode = this.cloneUserProfile.zipcode
       // Make API call to update the user info and refresh data on front-end
       axios({
         method: 'put',
@@ -179,7 +184,7 @@ export default {
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         },
-        data: this.updateUser
+        data: this.userProfile
       })
         .then(res => {
           // Make API to get the user again to fully update the DOM data
@@ -208,6 +213,7 @@ export default {
         .catch(error => {
           console.log(error)
         })
+      this.validateEmail(this.userProfile.email)
     },
     numberPressed (evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode
@@ -218,6 +224,7 @@ export default {
       return true
     },
     cancel () {
+      // this.cloneUserProfile = _.cloneDeep(this.userProfile)
       this.$router.push('/viewProfile/' + this.getCurrentUser)
     }
   },
@@ -241,19 +248,5 @@ export default {
   }
   .cancel {
     float: left;
-  }
-  .input-file {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-  input {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-
-  textarea {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-
-  select {
-    box-shadow: 1px 1px 2px #4d4d4d;
   }
 </style>
