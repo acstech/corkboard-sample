@@ -152,7 +152,6 @@ export default {
         data: this.profileImage
       })
         .then(res => {
-          this.hasPreviousImage = false
         })
         .catch(error => {
           console.log(error)
@@ -163,6 +162,8 @@ export default {
         this.phoneInputError = 'Please enter a full phone number.'
         return
       }
+      // Save the image before saving the post
+      this.saveImage()
       // Makes sure to set up data object with all data needed for vuex call
       // *Honestly this is ridiculous and needs improvement, but it works for now*
       this.updateUser.id = this.getCurrentUser
