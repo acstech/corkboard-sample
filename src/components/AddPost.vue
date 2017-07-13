@@ -16,7 +16,7 @@
             multiple
             :name="uploadFieldName"
             :disabled="isSaving"
-            @change="update($event.target.files)"
+            @change="update"
             accept="image/*"
             class="input-file">
         </div>
