@@ -164,6 +164,10 @@ export default {
       axios({
         method: 'put',
         url: this.updateUser.url,
+        headers: {
+          'Content-MD5': this.profileImage.md5,
+          'Content-Type': this.profileImage.file.type
+        },
         data: this.profileImage
       })
         .then(res => {
