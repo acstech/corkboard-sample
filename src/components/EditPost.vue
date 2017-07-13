@@ -56,6 +56,7 @@ import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
 import axios from 'axios'
 import Crypto from 'crypto-js'
+import { Masonry, imagesLoaded } from '../main'
 export default {
   computed: {
     currentPost () {
@@ -123,7 +124,6 @@ export default {
     }
   },
   methods: {
-    // TODO: This method will not work completely right now. Follow workflow and data usage of add post for this.
     reset () {
       this.uploadError = null
       // Reset previous upload attempts and thumbnails
@@ -207,6 +207,15 @@ export default {
           })
             .then(res => {
               this.$store.commit('getViewedProfile', res.data)
+              var posts = document.querySelectorAll('.grid-item')
+              imagesLoaded(posts, function () {
+                // eslint-disable-next-line no-unused-vars
+                var masonry = new Masonry('.grid', {
+                  selector: '.grid-item',
+                  columnWidth: '.grid-sizer',
+                  percentPosition: true
+                })
+              })
             })
             .catch(error => {
               console.log(error)
