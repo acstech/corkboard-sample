@@ -37,8 +37,8 @@
           </label>
           <label class="form-label">
             Sale Status:
-            <input type="radio" v-model="salestatus" name="salestatus" value="Available" style="box-shadow:none"> Available
-            <input type="radio" v-model="salestatus" name="salestatus" value="Sale Pending" style="box-shadow:none"> Sale Pending
+            <input type="radio" v-model="currentPost.salestatus" name="salestatus" value="Available" style="box-shadow:none"> Available
+            <input type="radio" v-model="currentPost.salestatus" name="salestatus" value="Sale Pending" style="box-shadow:none"> Sale Pending
           </label>
       </div>
 
@@ -76,21 +76,21 @@ export default {
         itemdesc: '',
         itemcat: '',
         salestatus: '',
-        moneyConfig: {
-          // The character used to show the decimal place.
-          decimal: '.',
-          // The character used to separate numbers in groups of three.
-          thousands: ',',
-          // The currency name or symbol followed by a space.
-          prefix: '$ ',
-          // The suffix (If a suffix is used by the target currency.)
-          suffix: '',
-          // Level of decimal precision. REQUIRED
-          precision: 2,
-          // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
-          masked: true
-        },
         picid: []
+      },
+      moneyConfig: {
+        // The character used to show the decimal place.
+        decimal: '.',
+        // The character used to separate numbers in groups of three.
+        thousands: ',',
+        // The currency name or symbol followed by a space.
+        prefix: '$ ',
+        // The suffix (If a suffix is used by the target currency.)
+        suffix: '',
+        // Level of decimal precision. REQUIRED
+        precision: 2,
+        // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
+        masked: true
       },
       uploadedFiles: [],
       uploadedFileURLs: []
@@ -172,6 +172,7 @@ export default {
           data: this.uploadedFiles[i]
         })
           .then(res => {
+            console.log(res)
           })
           .catch(error => {
             console.log(error)
@@ -180,18 +181,21 @@ export default {
     },
     updatePost () {
       // Save the image uploads
-      this.saveImage()
-      // Set data to update
+      this.saveImages()
+      // Set the rest of the data to update or persist
+      this.updatedPost.itemid = this.currentPost.itemid // Should not change
       this.updatedPost.itemname = this.currentPost.itemname
       this.updatedPost.itemdesc = this.currentPost.itemdesc
       this.updatedPost.itemcat = this.currentPost.itemcat
+      this.updatedPost.itemprice = this.currentPost.itemprice
+      this.updatedPost.salestatus = this.currentPost.salestatus
       axios({
         method: 'put',
         url: '/api/items/edit/' + this.currentPost.itemid,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         },
-        data: this.currentPost
+        data: this.updatedPost
       })
         .then(res => {
           axios({
