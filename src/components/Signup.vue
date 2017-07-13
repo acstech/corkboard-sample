@@ -39,7 +39,7 @@
                         required
                 >
               <br>
-              <div v-if="newUser.password == '' && newUser.confirm == ''"></div>
+              <div v-if="newUser.password == newUser.password && newUser.confirm == ''"></div>
               <div v-else-if="!passwordAccept" class="alert alert-danger">Passwords do not match... :(</div>
               <div v-else class="alert alert-success">Passwords match!</div>
             </div>
