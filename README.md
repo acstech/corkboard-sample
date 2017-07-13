@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/acstech/corkboard-sample.svg?branch=master)](https://travis-ci.org/acstech/corkboard-sample)
 
+A sample front-end consumption of our API, [Corkboard](https://github.com/acstech/corkboard).
+
 ## Contributors		
 
 * Ben Wornom		
