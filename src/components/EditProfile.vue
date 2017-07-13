@@ -146,9 +146,6 @@ export default {
       axios({
         method: 'put',
         url: this.updateUser.url,
-        headers: {
-          'Authorization': 'Bearer ' + this.$store.state.token
-        },
         data: this.profileImage
       })
         .then(res => {

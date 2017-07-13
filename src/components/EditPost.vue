@@ -70,26 +70,30 @@ export default {
   },
   data () {
     return {
-      itemname: '',
-      pictures: [],
-      itemprice: 0.00,
-      itemdesc: '',
-      salestatus: '',
-      moneyConfig: {
-        // The character used to show the decimal place.
-        decimal: '.',
-        // The character used to separate numbers in groups of three.
-        thousands: ',',
-        // The currency name or symbol followed by a space.
-        prefix: '$ ',
-        // The suffix (If a suffix is used by the target currency.)
-        suffix: '',
-        // Level of decimal precision. REQUIRED
-        precision: 2,
-        // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
-        masked: true
+      updatedPost: {
+        itemname: '',
+        itemprice: 0.00,
+        itemdesc: '',
+        itemcat: '',
+        salestatus: '',
+        moneyConfig: {
+          // The character used to show the decimal place.
+          decimal: '.',
+          // The character used to separate numbers in groups of three.
+          thousands: ',',
+          // The currency name or symbol followed by a space.
+          prefix: '$ ',
+          // The suffix (If a suffix is used by the target currency.)
+          suffix: '',
+          // Level of decimal precision. REQUIRED
+          precision: 2,
+          // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
+          masked: true
+        },
+        picid: []
       },
-      uploadedFiles: []
+      uploadedFiles: [],
+      uploadedFileURLs: []
     }
   },
   mounted () {
@@ -127,7 +131,7 @@ export default {
       preview.innerHTML = ''
       this.uploadedFiles = []
       this.uploadedFileURLs = []
-      this.newPost.picid = []
+      this.updatedPost.picid = []
     },
     update (files) {
       // Pull image data needed for new image request
@@ -152,14 +156,35 @@ export default {
           .then(res => {
             // Place URL and ID in new post data for saving
             this.uploadedFileURLs.push(res.data.url)
-            this.newPost.picid.push(res.data.picid)
+            this.updatedPost.picid.push(res.data.picid)
           })
           .catch(err => {
             this.uploadError = err.response
           })
       }
     },
+    saveImages: function () {
+      // Save each uploaded picture by placing its data in each URL
+      for (var i = 0; i < this.updatedPost.picid.length; ++i) {
+        axios({
+          method: 'put',
+          url: this.uploadedFileURLs[i],
+          data: this.uploadedFiles[i]
+        })
+          .then(res => {
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
+    },
     updatePost () {
+      // Save the image uploads
+      this.saveImage()
+      // Set data to update
+      this.updatedPost.itemname = this.currentPost.itemname
+      this.updatedPost.itemdesc = this.currentPost.itemdesc
+      this.updatedPost.itemcat = this.currentPost.itemcat
       axios({
         method: 'put',
         url: '/api/items/edit/' + this.currentPost.itemid,
