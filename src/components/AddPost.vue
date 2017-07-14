@@ -50,9 +50,14 @@
           Category
           <select class="form-control" v-model="newPost.itemcat">
             <option value="None">None</option>
-            <option value="Category 1">Category 1</option>
-            <option value="Category 2">Category 2</option>
-            <option value="Category 3">Category 3</option>
+            <option value="Apparel">Apparel</option>
+            <option value="Appliances">Appliances</option>
+            <option value="Books and Movies">Books and Movies</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Pets">Pets</option>
+            <option value="Toys and Games">Toys and Games</option>
+            <option value="Other">Other</option>
           </select>
         </label>
       </div>
