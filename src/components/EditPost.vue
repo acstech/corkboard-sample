@@ -55,7 +55,7 @@
 import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
 import axios from 'axios'
-import Crypto from 'crypto-js'
+// import Crypto from 'crypto-js'
 import { Masonry, imagesLoaded } from '../main'
 export default {
   computed: {
@@ -137,12 +137,12 @@ export default {
         let picHasher = new FileReader()
         picHasher.onload = (function (file) {
           return function (event) {
-            let picFile = event.target
+            // let picFile = event.target
             axios({
               method: 'post',
               url: '/api/image/new',
               data: {
-                checksum: Crypto.MD5(picFile.result).toString(),
+                // checksum: Crypto.MD5(picFile.result).toString(),
                 extension: file.type.split('/')[1]
               },
               headers: {
