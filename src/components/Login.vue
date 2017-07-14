@@ -50,6 +50,7 @@ export default {
     }
   },
   methods: {
+    // Calls the Corkboard API to validate the user request to authenticate.
     logIn () {
       axios({
         method: 'post',

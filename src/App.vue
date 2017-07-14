@@ -38,6 +38,8 @@ export default {
     }
   },
   methods: {
+    /* toHome will route to the home page if the user has a valid token (is authenticated).
+    Otherwise, the application will route to login for them to authenticate. */
     toHome () {
       if (this.getToken === null) {
         this.$router.push('/login')
@@ -50,8 +52,10 @@ export default {
       this.$store.commit('getCurrentUser', null)
       this.$router.push('/login')
     },
+    /* viewSettings makes an axios call to the corkboard API using the ID of the user
+       that is currently signed in. The vuex state for the viewed profile is also changed
+       to match the data of the current user. */
     viewSettings () {
-      // Axios call to get current user by iD using this.getCurrentUser
       if (this.$router.currentRoute.path === '/') {
         axios({
           method: 'get',
@@ -65,8 +69,7 @@ export default {
             this.$router.push('/viewProfile/' + this.getCurrentUser)
           })
           .catch(error => {
-            console.log(error)
-            // Token expiry
+            // Token expiry (401). Route user to the login page
             if (error.response.status === 401) {
               this.$store.commit('authenticate', null)
               let vm = this

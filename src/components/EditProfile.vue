@@ -85,6 +85,8 @@ export default {
     if (this.getToken === null) {
       this.$router.push('/login')
     } else {
+      this.cloneUserProfile = _.cloneDeep(this.UserProfile)
+      // Begin phone number input validation ------------------
       document.getElementById('phoneNumber').addEventListener('keyup', function (evt) {
         var phoneNumber = document.getElementById('phoneNumber')
         phoneNumber.value = phoneFormat(phoneNumber.value)
@@ -93,8 +95,6 @@ export default {
       // We need to manually format the phone number on page load
       document.getElementById('phoneNumber').value = phoneFormat(document.getElementById('phoneNumber').value)
     }
-
-    this.cloneUserProfile = _.cloneDeep(this.UserProfile)
 
     // A function to format text to look like a phone number
     function phoneFormat (input) {

@@ -134,16 +134,16 @@
       }
     },
     methods: {
+      // reset form to initial state
       reset () {
-        // reset form to initial state
         this.currentStatus = STATUS_INITIAL
         this.uploadError = null
-        // Reset previous upload attempts and thumbnails
-        let preview = document.getElementById('preview')
-        preview.innerHTML = ''
         this.uploadedFiles = []
         this.uploadedFileURLs = []
         this.newPost.picid = []
+        // Reset previous upload attempts and thumbnails
+        let preview = document.getElementById('preview')
+        preview.innerHTML = ''
       },
       update (event) {
         let vm = this
@@ -161,6 +161,7 @@
           let picDisplayer = new FileReader()
           picDisplayer.onload = (function (file) {
             return function (event) {
+              // Sets a preview thumbnail for the image(s)
               let picFile = event.target
               let preview = document.getElementById('preview')
               preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
@@ -171,6 +172,8 @@
           let picHasher = new FileReader()
           picHasher.onload = (function (file) {
             return function (event) {
+              // Calls the Corkboard API to set up the new image(s)
+              // Returns a Picture ID (key) and URL
               axios({
                 method: 'post',
                 url: '/api/image/new',
@@ -196,11 +199,10 @@
           // Read the image
           picDisplayer.readAsDataURL(file)
           picHasher.readAsBinaryString(file)
-          // upload data to the server
         }
       },
+      // Saves each uploaded picture by placing its data in each URL
       saveImages: function () {
-        // Save each uploaded picture by placing its data in each URL
         for (var i = 0; i < this.uploadedFiles.length; i++) {
           axios({
             method: 'put',
@@ -217,6 +219,7 @@
       savePost: function () {
         // Populate image data and save to the URL before adding the post
         this.saveImages()
+        // Call the Corkboard API and save the new post's data
         axios({
           method: 'post',
           url: '/api/items/new',
@@ -227,8 +230,10 @@
         })
           .then(res => {
             let vm = this
+            // After saving the new post, call the API to retrieve all items after the recent
+            // addition. Helps update the DOM appropriately
             setTimeout(function () {
-              // Retrieve all items call to API
+              // Retrieve all items call to Corkboard API
               axios({
                 method: 'get',
                 url: '/api/items',
@@ -238,6 +243,7 @@
               })
                 .then(res2 => {
                   vm.$store.commit('getAllPosts', res2.data)
+                  // Reset masonry layout to prevent tile display issues
                   var posts = document.querySelectorAll('.grid-item')
                   imagesLoaded(posts, function () {
                     // eslint-disable-next-line no-unused-vars
@@ -249,8 +255,9 @@
                   })
                 })
                 .catch(error => {
+                  // Route unauthenticated users to login
                   if (error.response.status === 401) {
-                    vm.$router.push('/signup')
+                    vm.$router.push('/login')
                   }
                 })
               vm.newPost = {}
