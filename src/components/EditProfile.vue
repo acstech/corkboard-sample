@@ -268,4 +268,7 @@ export default {
   .cancel {
     float: left;
   }
+  input {
+    box-shadow: 1px 1px 2px #4d4d4d;
+  }
 </style>
