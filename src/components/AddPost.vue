@@ -20,7 +20,7 @@
             accept="image/*"
             class="input-file">
         </div>
-        <a class="reset-option" @click="reset">Reset Uploads</a>
+        <a class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</a>
         <div v-if="isSuccess">
           <p>Uploaded successfully.</p>
         </div>

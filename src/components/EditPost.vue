@@ -13,7 +13,9 @@
             <input type="file" id="files" class="form-control input-file" @change="update" accept="image/*" multiple>
           </label>
           <a @click="reset">Reset Uploads</a>
-          <div id="preview"></div>
+          <div id="preview">
+            <img class='thumbnail' v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
+          </div>
           <label class="form-label">
             Title
             <p style="font-size: 12px">(Max 50 Characters)</p>
@@ -190,6 +192,7 @@ export default {
       this.updatedPost.itemname = this.currentPost.itemname
       this.updatedPost.itemdesc = this.currentPost.itemdesc
       this.updatedPost.itemcat = this.currentPost.itemcat
+      this.updatedPost.picid = this.currentPost.picid
       this.updatedPost.itemprice = this.currentPost.itemprice
       this.updatedPost.salestatus = this.currentPost.salestatus
       axios({
@@ -273,6 +276,11 @@ export default {
   }
   .input-file {
     box-shadow: 1px 1px 2px #4d4d4d;
+  }
+  .thumbnail {
+    width: 150px;
+    height: 150px;
+    display: inline;
   }
   input {
     box-shadow: 1px 1px 2px #4d4d4d;

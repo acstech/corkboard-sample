@@ -5,13 +5,15 @@
         <h3>Edit Profile</h3>
         <a @click="cancel()" class="close">&times;</a>
       </div>
-      <form @submit.prevent="saveProfileSettings()">
+      <form @submit.prevent="saveProfileSettings()" autocomplete="off">
         <div class="modal-body">
             <label class="form-label">
               Profile Picture
               <input type="file" class="form-control" @change="update" accept="image/*">
             </label>
-            <div id="preview"></div>
+            <div id="preview">
+              <img class='thumbnail' v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url >
+            </div>
             <label class="form-label">
               First Name
               <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="40">
@@ -185,6 +187,7 @@ export default {
       this.updateUser.id = this.getCurrentUser
       this.updateUser.firstname = this.cloneUserProfile.firstname
       this.updateUser.lastname = this.cloneUserProfile.lastname
+      this.updateUser.picid = this.cloneUserProfile.picid
       this.updateUser.email = this.cloneUserProfile.email
       this.updateUser.phone = this.cloneUserProfile.phone
       this.updateUser.items = this.cloneUserProfile.items
@@ -254,10 +257,18 @@ export default {
     display: inline;
     float: right;
   }
+  .thumbnail {
+    width: 150px;
+    height: 150px;
+    display: inline;
+  }
   h3 {
     display: inline;
   }
   .cancel {
     float: left;
+  }
+  input {
+    box-shadow: 1px 1px 2px #4d4d4d;
   }
 </style>
