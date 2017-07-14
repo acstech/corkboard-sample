@@ -53,7 +53,7 @@ export default {
       this.$router.push('/login')
     },
     /* viewSettings makes an axios call to the corkboard API using the ID of the user
-       that is currently signed in. The vuew state for the viewed profile is also changed
+       that is currently signed in. The vuex state for the viewed profile is also changed
        to match the data of the current user. */
     viewSettings () {
       if (this.$router.currentRoute.path === '/') {
