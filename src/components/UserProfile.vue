@@ -8,7 +8,8 @@
             @click="editProfile"
             :src="userProfile.url"
             class="profile-pic"
-            style="cursor:pointer;padding-bottom:20px"/>
+            alt="Choose a profile picture!"
+            style="cursor:pointer;margin-bottom:20px"/>
           <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
@@ -19,7 +20,7 @@
           @click="editProfile"
           id="edit_profile"
           class="glyphicon glyphicon-pencil"
-          style="cursor:pointer; margin-left:1%; margin-top:78%">
+          style="cursor:pointer; margin-left:1%; margin-top:40%">
         </span>
       </div>
       <div class="container">
