@@ -152,7 +152,6 @@ export default {
       })
       .then(res => {
         if (glyphicon !== true) {
-          console.log(res)
           axios({
             method: 'get',
             url: '/api/users/' + post.post.userid,
@@ -161,7 +160,6 @@ export default {
             }
           })
             .then(res => {
-              console.log(res)
               this.$store.commit('getActiveSeller', {user: res.data})
               this.$store.commit('getActiveEmail', {user: res.data})
             })
