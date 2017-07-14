@@ -172,7 +172,6 @@ export default {
         data: this.profileImage
       })
         .then(res => {
-          console.log(res)
         })
         .catch(error => {
           console.log(error)

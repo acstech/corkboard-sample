@@ -171,7 +171,6 @@ export default {
           data: this.uploadedFiles[i].file
         })
           .then(res => {
-            console.log(res)
           })
           .catch(error => {
             console.log(error)
