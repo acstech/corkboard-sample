@@ -12,6 +12,7 @@
             Pictures
             <input type="file" id="files" class="form-control input-file" @change="update" accept="image/*" multiple>
           </label>
+          <a @click="reset">Reset Uploads</a>
           <div id="preview"></div>
           <label class="form-label">
             Title
