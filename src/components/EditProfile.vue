@@ -66,8 +66,9 @@ export default {
         phone: '',
         zip: ''
       },
-      profileImage: '',
-      phoneInputError: ''
+      profileImage: {},
+      phoneInputError: '',
+      imageChanged: false
     }
   },
   computed: {
@@ -155,8 +156,12 @@ export default {
           })
             .then(res => {
               // Save image Url and ID for later image saving and profile saving
-              vm.updateUser.url = res.data.url
-              vm.updateUser.picid = res.data.picid
+              vm.cloneUserProfile.url = res.data.url
+              console.log(res.data.url)
+              vm.cloneUserProfile.picid = res.data.picid
+              if (vm.UserProfile.picid !== vm.cloneUserProfile.picid) {
+                vm.ImageChanged = true
+              }
             })
             .catch(err => {
               console.log(err)
@@ -182,17 +187,18 @@ export default {
     },
     saveProfileSettings () {
       this.userProfile = this.cloneUserProfile
-      this.saveImage()
       // Makes sure to set up data object with all data needed for vuex call
       // *Honestly this is ridiculous and needs improvement, but it works for now*
       this.updateUser.id = this.getCurrentUser
       this.updateUser.firstname = this.cloneUserProfile.firstname
       this.updateUser.lastname = this.cloneUserProfile.lastname
       this.updateUser.picid = this.cloneUserProfile.picid
+      this.updateUser.url = this.cloneUserProfile.url
       this.updateUser.email = this.cloneUserProfile.email
       this.updateUser.phone = this.cloneUserProfile.phone
       this.updateUser.items = this.cloneUserProfile.items
       this.updateUser.zipcode = this.cloneUserProfile.zipcode
+      this.saveImage()
 
       if (this.validateEmail(this.userProfile.email)) {
         // Make API call to update the user info and refresh data on front-end
