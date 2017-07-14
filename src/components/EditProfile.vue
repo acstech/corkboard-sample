@@ -12,7 +12,7 @@
               <input type="file" class="form-control" @change="update" accept="image/*">
             </label>
             <div id="preview">
-              <img class='thumbnail' v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url >
+              <img class='thumbnail' v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
             </div>
             <label class="form-label">
               First Name
@@ -122,6 +122,7 @@ export default {
       } else {
         alert('You have entered an invalid email address!')
         this.userProfile.email = this.UserProfile.email
+        return false
       }
     },
     update (event) {
@@ -187,48 +188,50 @@ export default {
       this.updateUser.id = this.getCurrentUser
       this.updateUser.firstname = this.cloneUserProfile.firstname
       this.updateUser.lastname = this.cloneUserProfile.lastname
-      this.updateUser.picid = this.cloneUserProfile.picid
+      this.updateUser.picid = this.cloneUserProfile.picid  // ERROR
       this.updateUser.email = this.cloneUserProfile.email
       this.updateUser.phone = this.cloneUserProfile.phone
       this.updateUser.items = this.cloneUserProfile.items
       this.updateUser.zipcode = this.cloneUserProfile.zipcode
-      // Make API call to update the user info and refresh data on front-end
-      axios({
-        method: 'put',
-        url: '/api/users/edit/' + this.getCurrentUser,
-        headers: {
-          'Authorization': 'Bearer ' + this.$store.state.token
-        },
-        data: this.updateUser
-      })
-        .then(res => {
-          // Make API to get the user again to fully update the DOM data
-          axios({
-            method: 'get',
-            url: '/api/users/' + this.getCurrentUser,
-            headers: {
-              'Authorization': 'Bearer ' + this.$store.state.token
-            }
-          })
-            .then(res => {
-              this.$store.commit('getViewedProfile', res.data)
-              this.$router.push('/viewProfile/' + this.getCurrentUser)
-            })
-            .catch(error => {
-              // Token expiry
-              if (error.response.status === 401) {
-                this.$store.commit('authenticate', null)
-                let vm = this
-                setTimeout(function () {
-                  vm.$router.push('/login')
-                }, 100)
+
+      if (this.validateEmail(this.userProfile.email)) {
+        // Make API call to update the user info and refresh data on front-end
+        axios({
+          method: 'put',
+          url: '/api/users/edit/' + this.getCurrentUser,
+          headers: {
+            'Authorization': 'Bearer ' + this.$store.state.token
+          },
+          data: this.updateUser
+        })
+          .then(res => {
+            // Make API to get the user again to fully update the DOM data
+            axios({
+              method: 'get',
+              url: '/api/users/' + this.getCurrentUser,
+              headers: {
+                'Authorization': 'Bearer ' + this.$store.state.token
               }
             })
-        })
-        .catch(error => {
-          console.log(error)
-        })
-      this.validateEmail(this.userProfile.email)
+              .then(res => {
+                this.$store.commit('getViewedProfile', res.data)
+                this.$router.push('/viewProfile/' + this.getCurrentUser)
+              })
+              .catch(error => {
+                // Token expiry
+                if (error.response.status === 401) {
+                  this.$store.commit('authenticate', null)
+                  let vm = this
+                  setTimeout(function () {
+                    vm.$router.push('/login')
+                  }, 100)
+                }
+              })
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     },
     numberPressed (evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode
