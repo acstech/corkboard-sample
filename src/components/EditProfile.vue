@@ -9,8 +9,9 @@
         <div class="modal-body">
             <label class="form-label">
               Profile Picture
-              <input type="file" class="form-control" @change="update($event.target.files)" accept="image/*">
+              <input type="file" class="form-control" @change="update" accept="image/*">
             </label>
+            <div id="preview"></div>
             <label class="form-label">
               First Name
               <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="40">
@@ -48,7 +49,6 @@
 var _ = require('lodash')
 import PostModal from './PostModal.vue'
 import axios from 'axios'
-import Crypto from 'crypto-js'
 export default {
   data () {
     return {
@@ -122,31 +122,48 @@ export default {
         this.userProfile.email = this.UserProfile.email
       }
     },
-    update (files) {
-      // Pull image data needed for new image request
-      var imageReq = {checksum: '', extension: ''}
-      // Grab checksum and extension
-      imageReq.checksum = Crypto.MD5(files[0]).toString()
-      imageReq.extension = files[0].type.substring(6)
-      console.log(imageReq.checksum)
-      this.profileImage = files[0]
+    update (event) {
+      let vm = this
+      let file = event.target.files[0]
+      let picDisplayer = new FileReader()
+      picDisplayer.onload = (function (file) {
+        return function (event) {
+          let picFile = event.target
+          let preview = document.getElementById('preview')
+          // Erase previous image's thumbnail
+          preview.innerHTML = ''
+          preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
+            "title='" + file.name + "' width='150px' height='150px' style='display: inline'/>"
+        }
+      })(file)
+      vm.profileImage = file
       // upload data to the server
-      axios({
-        method: 'post',
-        url: '/api/image/new',
-        headers: {
-          'Authorization': 'Bearer ' + this.getToken
-        },
-        data: imageReq
-      })
-        .then(res => {
-          // Save image Url and ID for later image saving and profile saving
-          this.updateUser.url = res.data.url
-          this.updateUser.picid = res.data.picid
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      let picHasher = new FileReader()
+      picHasher.onload = (function (file) {
+        return function (event) {
+          axios({
+            method: 'post',
+            url: '/api/image/new',
+            data: {
+              extension: file.type.split('/')[1]
+            },
+            headers: {
+              'Authorization': 'Bearer ' + vm.getToken
+            }
+          })
+            .then(res => {
+              // Save image Url and ID for later image saving and profile saving
+              vm.updateUser.url = res.data.url
+              vm.updateUser.picid = res.data.picid
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
+      })(file)
+      // Read the image
+      picDisplayer.readAsDataURL(file)
+      picHasher.readAsBinaryString(file)
     },
     saveImage: function () {
       // Save the uploaded profile picture
@@ -156,6 +173,7 @@ export default {
         data: this.profileImage
       })
         .then(res => {
+          console.log(res)
         })
         .catch(error => {
           console.log(error)
@@ -180,7 +198,7 @@ export default {
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         },
-        data: this.userProfile
+        data: this.updateUser
       })
         .then(res => {
           // Make API to get the user again to fully update the DOM data
@@ -220,7 +238,6 @@ export default {
       return true
     },
     cancel () {
-      // this.cloneUserProfile = _.cloneDeep(this.userProfile)
       this.$router.push('/viewProfile/' + this.getCurrentUser)
     }
   },

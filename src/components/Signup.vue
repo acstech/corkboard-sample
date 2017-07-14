@@ -104,7 +104,7 @@ export default {
       })
       .catch(error => {
         if (error.response.status === 400) {
-          this.error = 'Email is already registered.'
+          this.error = 'The email you entered cannot be used.'
         }
       })
     }

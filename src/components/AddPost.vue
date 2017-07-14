@@ -166,7 +166,6 @@
           let picHasher = new FileReader()
           picHasher.onload = (function (file) {
             return function (event) {
-              // let hash = Crypto.MD5(picFile.result).toString()
               axios({
                 method: 'post',
                 url: '/api/image/new',
@@ -201,10 +200,6 @@
           axios({
             method: 'put',
             url: this.uploadedFiles[i].url,
-            // headers: {
-            //   'Content-MD5': this.uploadedFiles[i].md5,
-            //   'Content-Type': this.uploadedFiles[i].file.type
-            // },
             data: this.uploadedFiles[i].file
           })
             .then(res => {
