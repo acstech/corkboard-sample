@@ -188,7 +188,7 @@ export default {
       this.updateUser.id = this.getCurrentUser
       this.updateUser.firstname = this.cloneUserProfile.firstname
       this.updateUser.lastname = this.cloneUserProfile.lastname
-      this.updateUser.picid = this.cloneUserProfile.picid  // ERROR
+      this.updateUser.picid = this.cloneUserProfile.picid
       this.updateUser.email = this.cloneUserProfile.email
       this.updateUser.phone = this.cloneUserProfile.phone
       this.updateUser.items = this.cloneUserProfile.items
