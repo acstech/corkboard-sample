@@ -141,7 +141,6 @@ export default {
       let picHasher = new FileReader()
       picHasher.onload = (function (file) {
         return function (event) {
-          // let picFile = event.target
           axios({
             method: 'post',
             url: '/api/image/new',
