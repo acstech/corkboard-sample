@@ -99,7 +99,7 @@ const store = new Vuex.Store({
       state.viewedUserProfile.email = profile.email
       state.viewedUserProfile.phone = profile.phone
       state.viewedUserProfile.items = profile.items
-      state.viewedUserProfile.zip = profile.zipcode
+      state.viewedUserProfile.zipcode = profile.zipcode
     },
     getCurrentUser (state, user) {
       state.currentUser = user
