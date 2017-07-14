@@ -5,7 +5,7 @@
         <h3>Edit Profile</h3>
         <a @click="cancel()" class="close">&times;</a>
       </div>
-      <form @submit.prevent="saveProfileSettings()">
+      <form @submit.prevent="saveProfileSettings()" autocomplete="off">
         <div class="modal-body">
             <label class="form-label">
               Profile Picture
