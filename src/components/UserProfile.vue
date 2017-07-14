@@ -29,7 +29,7 @@
             <div class="thumbnail" @click="postPreview({post})">
               <!-- Show Primary image only -->
               <img v-if="shouldDisplayImage(post)" :src="post.url[0]" alt="...">
-              <img v-else :src= "$store.state.defaultPostImage" alt="...">
+              <img v-else :src= "$store.state.defaultPostImage" alt="..." style="margin-top:20px">
               <div class="caption">
                 <h4>{{ post.itemname }}</h4>
                 <h5 v-if="post.itemprice != 0">{{ post.itemprice | currency }}</h5>
@@ -227,6 +227,7 @@ export default {
   .thumbnail {
     box-shadow: 1px 1px 3px #4d4d4d;
     padding-bottom: 15px;
+    cursor: default;
     -webkit-transition: box-shadow .5s;
     transition: box-shadow .5s;
   }

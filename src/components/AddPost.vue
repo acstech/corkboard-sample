@@ -10,7 +10,15 @@
       <div class="modal-body">
         <b>Image</b>
         <div class="dropbox">
-          <input type="file" id="files" multiple :name="uploadFieldName" :disabled="isSaving" @change="update" accept="image/*" class="input-file">
+          <input
+            type="file"
+            id="files"
+            multiple
+            :name="uploadFieldName"
+            :disabled="isSaving"
+            @change="update"
+            accept="image/*"
+            class="input-file">
         </div>
         <a class="reset-option" @click="reset">Reset Uploads</a>
         <div v-if="isSuccess">
@@ -64,7 +72,6 @@
   import { Money } from 'v-money'
   import { imagesLoaded, Masonry } from '../main'
   import axios from 'axios'
-  import Crypto from 'crypto-js'
   // eslint-disable-next-line one-var
   const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3
   export default {
@@ -159,13 +166,11 @@
           let picHasher = new FileReader()
           picHasher.onload = (function (file) {
             return function (event) {
-              let picFile = event.target
-              let hash = Crypto.MD5(picFile.result).toString(Crypto.enc.Base64)
+              // let hash = Crypto.MD5(picFile.result).toString()
               axios({
                 method: 'post',
                 url: '/api/image/new',
                 data: {
-                  checksum: hash,
                   extension: file.type.split('/')[1]
                 },
                 headers: {
@@ -175,7 +180,7 @@
                 .then(res => {
                   vm.currentStatus = STATUS_SUCCESS
                   // Push information about the file to the appropriate arrays
-                  vm.uploadedFiles.push({file: file, url: res.data.url, md5: hash})
+                  vm.uploadedFiles.push({file: file, url: res.data.url})
                   vm.newPost.picid.push(res.data.picid)
                 })
                 .catch(err => {
@@ -196,10 +201,10 @@
           axios({
             method: 'put',
             url: this.uploadedFiles[i].url,
-            headers: {
-              'Content-MD5': this.uploadedFiles[i].md5,
-              'Content-Type': this.uploadedFiles[i].file.type
-            },
+            // headers: {
+            //   'Content-MD5': this.uploadedFiles[i].md5,
+            //   'Content-Type': this.uploadedFiles[i].file.type
+            // },
             data: this.uploadedFiles[i].file
           })
             .then(res => {
