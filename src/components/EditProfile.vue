@@ -11,7 +11,9 @@
               Profile Picture
               <input type="file" class="form-control" @change="update" accept="image/*">
             </label>
-            <div id="preview"></div>
+            <div id="preview">
+              <img class='thumbnail' v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url >
+            </div>
             <label class="form-label">
               First Name
               <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="40">
@@ -186,6 +188,7 @@ export default {
       this.updateUser.id = this.getCurrentUser
       this.updateUser.firstname = this.cloneUserProfile.firstname
       this.updateUser.lastname = this.cloneUserProfile.lastname
+      this.updateUser.picid = this.cloneUserProfile.picid
       this.updateUser.email = this.cloneUserProfile.email
       this.updateUser.phone = this.cloneUserProfile.phone
       this.updateUser.items = this.cloneUserProfile.items
@@ -254,6 +257,11 @@ export default {
   .close {
     display: inline;
     float: right;
+  }
+  .thumbnail {
+    width: 150px;
+    height: 150px;
+    display: inline;
   }
   h3 {
     display: inline;
