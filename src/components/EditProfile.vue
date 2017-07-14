@@ -49,7 +49,6 @@
 var _ = require('lodash')
 import PostModal from './PostModal.vue'
 import axios from 'axios'
-// import Crypto from 'crypto-js'
 export default {
   data () {
     return {
@@ -131,6 +130,8 @@ export default {
         return function (event) {
           let picFile = event.target
           let preview = document.getElementById('preview')
+          // Erase previous image's thumbnail
+          preview.innerHTML = ''
           preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
             "title='" + file.name + "' width='150px' height='150px' style='display: inline'/>"
         }
@@ -145,7 +146,6 @@ export default {
             method: 'post',
             url: '/api/image/new',
             data: {
-              // checksum: Crypto.MD5(picFile.result).toString(),
               extension: file.type.split('/')[1]
             },
             headers: {
@@ -171,10 +171,6 @@ export default {
       axios({
         method: 'put',
         url: this.updateUser.url,
-        // headers: {
-        //  'Content-MD5': this.profileImage.md5,
-        //  'Content-Type': this.profileImage.file.type
-        // },
         data: this.profileImage
       })
         .then(res => {
@@ -243,7 +239,6 @@ export default {
       return true
     },
     cancel () {
-      // this.cloneUserProfile = _.cloneDeep(this.userProfile)
       this.$router.push('/viewProfile/' + this.getCurrentUser)
     }
   },

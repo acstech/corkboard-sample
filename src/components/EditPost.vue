@@ -55,7 +55,6 @@
 import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
 import axios from 'axios'
-// import Crypto from 'crypto-js'
 import { Masonry, imagesLoaded } from '../main'
 export default {
   computed: {
@@ -142,7 +141,6 @@ export default {
               method: 'post',
               url: '/api/image/new',
               data: {
-                // checksum: Crypto.MD5(picFile.result).toString(),
                 extension: file.type.split('/')[1]
               },
               headers: {
