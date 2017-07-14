@@ -112,17 +112,16 @@ export default {
   methods: {
     reset () {
       this.uploadError = null
-      // Reset previous upload attempts and thumbnails
-      let preview = document.getElementById('preview')
-      preview.innerHTML = ''
       this.uploadedFiles = []
       this.uploadedFileURLs = []
       this.updatedPost.picid = []
+      // Reset previous upload attempts and thumbnails
+      let preview = document.getElementById('preview')
+      preview.innerHTML = ''
     },
     update (event) {
       let vm = this
       let files = event.target.files
-      // Pull image data needed for new image request
       // Grab updated files in latest upload
       for (var i = 0; i < files.length; ++i) {
         let file = files[i]
@@ -134,6 +133,7 @@ export default {
         let picDisplayer = new FileReader()
         picDisplayer.onload = (function (file) {
           return function (event) {
+            // Sets a preview thumbnail for the image(s)
             let picFile = event.target
             let preview = document.getElementById('preview')
             preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
@@ -144,6 +144,8 @@ export default {
         let picHasher = new FileReader()
         picHasher.onload = (function (file) {
           return function (event) {
+            // Calls the Corkboard API to set up the new image(s)
+            // Returns a Picture ID (key) and URL
             axios({
               method: 'post',
               url: '/api/image/new',
@@ -195,6 +197,7 @@ export default {
       this.updatedPost.picid = this.currentPost.picid
       this.updatedPost.itemprice = this.currentPost.itemprice
       this.updatedPost.salestatus = this.currentPost.salestatus
+      // Make a call to Corkboard API to update the edited post
       axios({
         method: 'put',
         url: '/api/items/edit/' + this.currentPost.itemid,
@@ -204,6 +207,8 @@ export default {
         data: this.updatedPost
       })
         .then(res => {
+          // Call the Corkboard API to retrieve user info again after
+          // updating the post.
           axios({
             method: 'get',
             url: '/api/users/' + this.getCurrentUser,
@@ -213,6 +218,7 @@ export default {
           })
             .then(res => {
               this.$store.commit('getViewedProfile', res.data)
+              // Reset masonry layout to prevent tile display issues
               var posts = document.querySelectorAll('.grid-item')
               imagesLoaded(posts, function () {
                 // eslint-disable-next-line no-unused-vars

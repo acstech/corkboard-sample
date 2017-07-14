@@ -9,18 +9,15 @@ import Axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
 
 export { Masonry, imagesLoaded }
-// export const axios = Axios.create({
-  // baseURL: process.env.API_URL,
-  // headers: {'Content-Type': 'application/json'}
-// })
 
+// Set axios API call defaults to the Corkboard API
 Axios.defaults.baseURL = process.env.API_URL
 Axios.defaults.headers.common['Content-Type'] = 'application/json'
 
+// Use the vue routing and state management tools
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
-export const eventBus = new Vue()
 const router = new VueRouter({
   routes: routes
 })
@@ -113,6 +110,7 @@ const store = new Vuex.Store({
   }
 })
 
+// Formats plain number prices to match the USD formatting
 Vue.filter('currency', function (value) {
   var formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
