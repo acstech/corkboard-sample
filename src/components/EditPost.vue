@@ -31,8 +31,12 @@
             Category
             <select class="form-control" v-model="currentPost.itemcat">
               <option value="None">None</option>
+              <option value="Apparel">Apparel</option>
               <option value="Appliances">Appliances</option>
+              <option value="Books and Movies">Books and Movies</option>
               <option value="Electronics">Electronics</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Pets">Pets</option>
               <option value="Toys and Games">Toys and Games</option>
               <option value="Other">Other</option>
             </select>
