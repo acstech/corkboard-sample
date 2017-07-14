@@ -131,8 +131,7 @@ export default {
           let picFile = event.target
           let preview = document.getElementById('preview')
           // Erase previous image's thumbnail
-          preview.innerHTML = ''
-          preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
+          preview.innerHTML = "<img class='thumbnail' src='" + picFile.result + "'" +
             "title='" + file.name + "' width='150px' height='150px' style='display: inline'/>"
         }
       })(file)
