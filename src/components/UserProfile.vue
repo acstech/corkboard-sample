@@ -8,7 +8,7 @@
             @click="editProfile"
             :src="userProfile.url"
             class="profile-pic"
-            alt="Choose a profile picture!"
+            alt="Upload a profile picture!"
             style="cursor:pointer;margin-bottom:20px"/>
           <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
@@ -193,6 +193,7 @@ export default {
   .btn {
   font-weight: bold;
   }
+
   .profile-pic {
     border: solid white 2px;
     margin-top: 10px;
