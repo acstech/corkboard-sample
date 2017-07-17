@@ -14,7 +14,7 @@
           </label>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-          <a @click="reset">Reset Uploads</a>
+          <a @click="reset" style="cursor:pointer">Reset Uploads</a>
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
           </div>
