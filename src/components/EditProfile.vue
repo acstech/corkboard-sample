@@ -5,7 +5,7 @@
         <h3>Edit Profile</h3>
         <a @click="cancel()" class="close">&times;</a>
       </div>
-      <form @submit.prevent="saveProfileSettings()" autocomplete="off">
+      <form @submit.prevent="saveProfileSettings" autocomplete="off">
         <div class="modal-body">
             <label class="form-label">
               Profile Picture
@@ -168,9 +168,6 @@ export default {
               vm.cloneUserProfile.url = res.data.url
               console.log(res.data.url)
               vm.cloneUserProfile.picid = res.data.picid
-              if (vm.UserProfile.picid !== vm.cloneUserProfile.picid) {
-                vm.ImageChanged = true
-              }
             })
             .catch(err => {
               console.log(err)
@@ -208,6 +205,7 @@ export default {
       this.updateUser.items = this.cloneUserProfile.items
       this.updateUser.zipcode = this.cloneUserProfile.zipcode
       this.saveImage()
+      this.updateUser.url = null
       if (this.validateEmail(this.userProfile.email)) {
         // Make API call to update the user info and refresh data on front-end
         axios({
@@ -229,6 +227,7 @@ export default {
             })
               .then(res => {
                 this.$store.commit('getViewedProfile', res.data)
+                this.getURL = true
                 this.$router.push('/viewProfile/' + this.getCurrentUser)
               })
               .catch(error => {

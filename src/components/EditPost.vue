@@ -175,7 +175,7 @@ export default {
               .then(res => {
                 // Place URL and ID in new post data for saving
                 vm.uploadedFiles.push({file: file, url: res.data.url})
-                vm.updatedPost.picid.push(res.data.picid)
+                vm.currentPost.picid.push(res.data.picid)
               })
               .catch(err => {
                 vm.uploadError = err.response
