@@ -8,7 +8,7 @@
 
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
       <div class="modal-body">
-        <b>Image</b>
+        <b>Images (Max 5)</b>
         <div class="dropbox">
           <input
             type="file"
@@ -21,6 +21,7 @@
             class="input-file">
         </div>
         <p v-if="!validImageSize">Please upload an image under 5MB.</p>
+        <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
         <a class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</a>
         <div v-if="isSuccess">
           <p>Uploaded successfully.</p>
@@ -110,7 +111,8 @@
           // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
           masked: true
         },
-        validImageSize: true
+        validImageSize: true,
+        validNumOfImages: true
       }
     },
     computed: {
@@ -150,8 +152,14 @@
       update (event) {
         let vm = this
         vm.validImageSize = true
+        vm.validNumOfImages = true
         // Grab the file object from the form input
         let files = event.target.files
+        // Check against the 5 maximum images constraint
+        if (files.length > 5) {
+          vm.validNumOfImages = false
+          return
+        }
         vm.currentStatus = STATUS_SAVING
         // Grab updated files in latest upload
         for (var i = 0; i < files.length; i++) {
