@@ -142,6 +142,7 @@ export default {
       let picDisplayer = new FileReader()
       picDisplayer.onload = (function (file) {
         return function (event) {
+          vm.imageChanged = true
           let picFile = event.target
           let preview = document.getElementById('preview')
           // Erase previous image's thumbnail
@@ -220,7 +221,9 @@ export default {
       this.updateUser.items = this.cloneUserProfile.items
       this.updateUser.zipcode = this.cloneUserProfile.zipcode
       let promises = []
-      promises.push(this.saveImage())
+      if (this.imageChanged) {
+        promises.push(this.saveImage())
+      }
       this.updateUser.url = null
       if (this.validateEmail(this.userProfile.email)) {
         // Make API call to update the user info and refresh data on front-end
