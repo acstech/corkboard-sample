@@ -14,7 +14,7 @@
           </label>
           <a @click="reset">Reset Uploads</a>
           <div id="preview">
-            <img class='thumbnail' v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
+            <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
           </div>
           <label class="form-label">
             Title
@@ -288,6 +288,7 @@ export default {
     height: 150px;
     display: inline;
   }
+
   input {
     box-shadow: 1px 1px 2px #4d4d4d;
   }

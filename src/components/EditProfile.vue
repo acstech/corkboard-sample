@@ -12,7 +12,7 @@
               <input type="file" class="form-control" @change="update" accept="image/*">
             </label>
             <div id="preview">
-              <img class='thumbnail' v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
+              <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
             </div>
             <label class="form-label">
               First Name
@@ -271,6 +271,7 @@ export default {
     height: 150px;
     display: inline;
   }
+
   h3 {
     display: inline;
   }

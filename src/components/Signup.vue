@@ -19,23 +19,28 @@
                         maxlength="40"
                         autofocus="autofocus"
                         onfocus="this.select()"
+                        @focus="showText()"
                 >
             </div>
+            <div id="text" style="display:none"><p style="color:#656565">(We will not spam your email, this is strictly for contact between users)</p></div>
             <div class="form-group">
                 <input
                         type="password"
                         class="form-control"
                         placeholder="Password"
                         v-model="newUser.password"
+                        @focus="showText2()"
                         required
                 >
             </div>
+            <div id="text2" style="display:none"><p style="color:#656565">(Must be between 8-16 characters and contain one number and special character !@#$%^&*)</p></div>
             <div class="form-group">
                 <input
                         type="password"
                         class="form-control"
                         placeholder="Confirm password"
                         v-model="newUser.confirm"
+                        @focus="hideText()"
                         required
                 >
               <br>
@@ -86,6 +91,26 @@ export default {
     }
   },
   methods: {
+    showText () {
+      var x = document.getElementById('text')
+      var y = document.getElementById('text2')
+      if (x.focus !== 'none') {
+        x.style.display = 'block'
+        y.style.display = 'none'
+      }
+    },
+    showText2 () {
+      var x = document.getElementById('text')
+      var y = document.getElementById('text2')
+      if (y.focus !== 'none') {
+        y.style.display = 'block'
+        x.style.display = 'none'
+      }
+    },
+    hideText () {
+      document.getElementById('text').style.display = 'none'
+      document.getElementById('text2').style.display = 'none'
+    },
     register () {
       if (!this.passwordAccept) {
         return
