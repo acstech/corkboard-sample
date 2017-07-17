@@ -26,6 +26,7 @@
       <div class="container">
       <div class="grid col-md-offset-3 col-sm-offset-4">
           <div class="grid-sizer col-xs-4"></div>
+        <h1 v-if="!this.userProfile.items || this.userProfile.items.length == 0" style="color:black">No posts yet!</h1>
           <div class="col-xs-4 grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
             <div class="thumbnail" @click="postPreview({post})">
               <!-- Show Primary image only -->
