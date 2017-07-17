@@ -5,12 +5,13 @@
         <h3>Edit Profile</h3>
         <a @click="cancel()" class="close">&times;</a>
       </div>
-      <form @submit.prevent="saveProfileSettings()" autocomplete="off">
+      <form @submit.prevent="saveProfileSettings" autocomplete="off">
         <div class="modal-body">
             <label class="form-label">
               Profile Picture
               <input type="file" class="form-control" @change="update" accept="image/*">
             </label>
+            <p v-if="!validImageSize">Please upload an image under 5MB.</p>
             <div id="preview">
               <img class='thumbnail' v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
             </div>
@@ -59,6 +60,7 @@ export default {
         id: '',
         picid: '',
         url: '',
+        postUrl: '',
         firstname: '',
         lastname: '',
         items: [],
@@ -68,7 +70,8 @@ export default {
       },
       profileImage: {},
       phoneInputError: '',
-      imageChanged: false
+      imageChanged: false,
+      validImageSize: true
     }
   },
   computed: {
@@ -128,7 +131,14 @@ export default {
     },
     update (event) {
       let vm = this
+      // Reset size check when user tries again
+      vm.validImageSize = true
       let file = event.target.files[0]
+      // For now, only allow images less than 5MB in size
+      if (file.size > 5000000) {
+        vm.validImageSize = false
+        return
+      }
       let picDisplayer = new FileReader()
       picDisplayer.onload = (function (file) {
         return function (event) {
@@ -156,12 +166,9 @@ export default {
           })
             .then(res => {
               // Save image Url and ID for later image saving and profile saving
-              vm.cloneUserProfile.url = res.data.url
+              vm.cloneUserProfile.postUrl = res.data.url
               console.log(res.data.url)
               vm.cloneUserProfile.picid = res.data.picid
-              if (vm.UserProfile.picid !== vm.cloneUserProfile.picid) {
-                vm.ImageChanged = true
-              }
             })
             .catch(err => {
               console.log(err)
@@ -174,70 +181,70 @@ export default {
     },
     saveImage: function () {
       // Save the uploaded profile picture
-      axios({
+      return axios({
         method: 'put',
-        url: this.updateUser.url,
+        url: this.updateUser.postUrl,
         data: this.profileImage
       })
-        .then(res => {
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    },
+    getProfile: function () {
+      return axios({
+        method: 'get',
+        url: '/api/users/' + this.getCurrentUser,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      })
+    },
+    updateProfile: function () {
+      return axios({
+        method: 'put',
+        url: '/api/users/edit/' + this.getCurrentUser,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
+        data: this.updateUser
+      })
     },
     saveProfileSettings () {
       this.userProfile = this.cloneUserProfile
       // Makes sure to set up data object with all data needed for vuex call
       // *Honestly this is ridiculous and needs improvement, but it works for now*
+      this.updateUser.postUrl = this.cloneUserProfile.postUrl
       this.updateUser.id = this.getCurrentUser
       this.updateUser.firstname = this.cloneUserProfile.firstname
       this.updateUser.lastname = this.cloneUserProfile.lastname
       this.updateUser.picid = this.cloneUserProfile.picid
-      this.updateUser.url = this.cloneUserProfile.url
       this.updateUser.email = this.cloneUserProfile.email
       this.updateUser.phone = this.cloneUserProfile.phone
       this.updateUser.items = this.cloneUserProfile.items
       this.updateUser.zipcode = this.cloneUserProfile.zipcode
-      this.saveImage()
-
+      let promises = []
+      promises.push(this.saveImage())
+      this.updateUser.url = null
       if (this.validateEmail(this.userProfile.email)) {
         // Make API call to update the user info and refresh data on front-end
-        axios({
-          method: 'put',
-          url: '/api/users/edit/' + this.getCurrentUser,
-          headers: {
-            'Authorization': 'Bearer ' + this.$store.state.token
-          },
-          data: this.updateUser
-        })
+        promises.push(this.updateProfile())
+      }
+      Promise.all(promises).then(res => {
+        this.getProfile()
           .then(res => {
-            // Make API to get the user again to fully update the DOM data
-            axios({
-              method: 'get',
-              url: '/api/users/' + this.getCurrentUser,
-              headers: {
-                'Authorization': 'Bearer ' + this.$store.state.token
-              }
-            })
-              .then(res => {
-                this.$store.commit('getViewedProfile', res.data)
-                this.$router.push('/viewProfile/' + this.getCurrentUser)
-              })
-              .catch(error => {
-                // Token expiry
-                if (error.response.status === 401) {
-                  this.$store.commit('authenticate', null)
-                  let vm = this
-                  setTimeout(function () {
-                    vm.$router.push('/login')
-                  }, 100)
-                }
-              })
+            this.$store.commit('getViewedProfile', res.data)
+            this.$router.push('/viewProfile/' + this.getCurrentUser)
           })
           .catch(error => {
-            console.log(error)
+            // Token expiry
+            if (error.response.status === 401) {
+              this.$store.commit('authenticate', null)
+              let vm = this
+              setTimeout(function () {
+                vm.$router.push('/login')
+              }, 100)
+            }
           })
-      }
+      }).catch(err => {
+        console.error(err)
+      })
     },
     numberPressed (evt) {
       var charCode = (evt.which) ? evt.which : evt.keyCode
