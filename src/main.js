@@ -50,6 +50,7 @@ const store = new Vuex.Store({
       email: '',
       phone: '',
       zipcode: '',
+      url: '',
       id: '',
       items: [],
       profPicLoaded: null
