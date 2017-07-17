@@ -66,7 +66,7 @@ export default {
         items: [],
         email: '',
         phone: '',
-        zip: ''
+        zipcode: ''
       },
       profileImage: {},
       phoneInputError: '',
