@@ -20,6 +20,7 @@
             accept="image/*"
             class="input-file">
         </div>
+        <p v-if="!validImageSize">Please upload an image under 5MB.</p>
         <a class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</a>
         <div v-if="isSuccess">
           <p>Uploaded successfully.</p>
@@ -108,7 +109,8 @@
           precision: 2,
           // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
           masked: true
-        }
+        },
+        validImageSize: true
       }
     },
     computed: {
@@ -147,6 +149,7 @@
       },
       update (event) {
         let vm = this
+        vm.validImageSize = true
         // Grab the file object from the form input
         let files = event.target.files
         vm.currentStatus = STATUS_SAVING
@@ -156,6 +159,11 @@
           // Don't do anything if it isn't an image
           if (!file.type.match('image')) {
             continue
+          }
+          // For now, only allow images less than 5MB in size
+          if (file.size > 5000000) {
+            vm.validImageSize = false
+            return
           }
           // Setup a FileReader for uploading the preview to AddPost
           let picDisplayer = new FileReader()

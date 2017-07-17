@@ -12,6 +12,7 @@
             Pictures
             <input type="file" id="files" class="form-control input-file" @change="update" accept="image/*" multiple>
           </label>
+          <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <a @click="reset">Reset Uploads</a>
           <div id="preview">
             <img class='thumbnail' v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
@@ -101,7 +102,8 @@ export default {
         masked: true
       },
       uploadedFiles: [],
-      uploadedFileURLs: []
+      uploadedFileURLs: [],
+      validImageSize: true
     }
   },
   mounted () {
@@ -121,6 +123,7 @@ export default {
     },
     update (event) {
       let vm = this
+      vm.validImageSize = true
       let files = event.target.files
       // Grab updated files in latest upload
       for (var i = 0; i < files.length; ++i) {
@@ -128,6 +131,11 @@ export default {
         // Don't do anything if it isn't an image
         if (!file.type.match('image')) {
           continue
+        }
+        // For now, only allow images less than 5MB in size
+        if (file.size > 5000000) {
+          vm.validImageSize = false
+          return
         }
         // Setup a FileReader for uploading the preview to AddPost
         let picDisplayer = new FileReader()
