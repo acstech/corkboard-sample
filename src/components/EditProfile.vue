@@ -11,6 +11,7 @@
               Profile Picture
               <input type="file" class="form-control" @change="update" accept="image/*">
             </label>
+            <p v-if="!validImageSize">Please upload an image under 5MB.</p>
             <div id="preview">
               <img class='thumbnail' v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
             </div>
@@ -67,7 +68,9 @@ export default {
         zip: ''
       },
       profileImage: {},
-      phoneInputError: ''
+      phoneInputError: '',
+      imageChanged: false,
+      validImageSize: true
     }
   },
   computed: {
@@ -127,7 +130,14 @@ export default {
     },
     update (event) {
       let vm = this
+      // Reset size check when user tries again
+      vm.validImageSize = true
       let file = event.target.files[0]
+      // For now, only allow images less than 5MB in size
+      if (file.size > 5000000) {
+        vm.validImageSize = false
+        return
+      }
       let picDisplayer = new FileReader()
       picDisplayer.onload = (function (file) {
         return function (event) {
@@ -207,7 +217,7 @@ export default {
           data: this.updateUser
         })
           .then(res => {
-            // Make API to get the user again to fully update the DOM data
+            // Make API call to get the user again and fully update the DOM data
             axios({
               method: 'get',
               url: '/api/users/' + this.getCurrentUser,
