@@ -104,6 +104,7 @@ export default {
       },
       uploadedFiles: [],
       uploadedFileURLs: [],
+      wasreset: false,
       validImageSize: true,
       validNumOfImages: true
     }
@@ -119,6 +120,7 @@ export default {
       this.uploadedFiles = []
       this.uploadedFileURLs = []
       this.updatedPost.picid = []
+      this.wasreset = true
       // Reset previous upload attempts and thumbnails
       let preview = document.getElementById('preview')
       preview.innerHTML = ''
@@ -188,6 +190,24 @@ export default {
       }
     },
     saveImages: function () {
+      if (this.wasreset === true) {
+        for (var j = 0; j < this.currentPost.picid.length; j++) {
+          axios({
+            method: 'delete',
+            url: '/api/images/delete/' + this.currentPost.picid[j],
+            data: this.currentPost.picid[j],
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+            .then(res => {
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        }
+        this.currentPost.picid = []
+      }
       // Save each uploaded picture by placing its data in each URL
       for (var i = 0; i < this.uploadedFiles.length; ++i) {
         axios({
