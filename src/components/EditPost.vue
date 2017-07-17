@@ -12,7 +12,7 @@
             Pictures
             <input type="file" id="files" class="form-control input-file" @change="update" accept="image/*" multiple>
           </label>
-          <a @click="reset">Reset Uploads</a>
+          <a @click="reset" style="cursor:pointer">Reset Uploads</a>
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
           </div>
