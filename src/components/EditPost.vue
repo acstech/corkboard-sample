@@ -9,9 +9,11 @@
       <form @submit.prevent="updatePost">
       <div class="modal-body">
           <label class="form-label">
-            Pictures
+            Images (Max 5)
             <input type="file" id="files" class="form-control input-file" @change="update" accept="image/*" multiple>
           </label>
+          <p v-if="!validImageSize">Please upload an image under 5MB.</p>
+          <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
           <a @click="reset" style="cursor:pointer">Reset Uploads</a>
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
@@ -101,7 +103,10 @@ export default {
         masked: true
       },
       uploadedFiles: [],
-      uploadedFileURLs: []
+      uploadedFileURLs: [],
+      wasreset: false,
+      validImageSize: true,
+      validNumOfImages: true
     }
   },
   mounted () {
@@ -115,19 +120,32 @@ export default {
       this.uploadedFiles = []
       this.uploadedFileURLs = []
       this.updatedPost.picid = []
+      this.wasreset = true
       // Reset previous upload attempts and thumbnails
       let preview = document.getElementById('preview')
       preview.innerHTML = ''
     },
     update (event) {
       let vm = this
+      vm.validImageSize = true
+      vm.validNumOfImages = true
       let files = event.target.files
+      // Check against the 5 maximum images constraint
+      if (files.length > 5) {
+        vm.validNumOfImages = false
+        return
+      }
       // Grab updated files in latest upload
       for (var i = 0; i < files.length; ++i) {
         let file = files[i]
         // Don't do anything if it isn't an image
         if (!file.type.match('image')) {
           continue
+        }
+        // For now, only allow images less than 5MB in size
+        if (file.size > 5000000) {
+          vm.validImageSize = false
+          return
         }
         // Setup a FileReader for uploading the preview to AddPost
         let picDisplayer = new FileReader()
@@ -159,7 +177,7 @@ export default {
               .then(res => {
                 // Place URL and ID in new post data for saving
                 vm.uploadedFiles.push({file: file, url: res.data.url})
-                vm.updatedPost.picid.push(res.data.picid)
+                vm.currentPost.picid.push(res.data.picid)
               })
               .catch(err => {
                 vm.uploadError = err.response
@@ -172,6 +190,24 @@ export default {
       }
     },
     saveImages: function () {
+      if (this.wasreset === true) {
+        for (var j = 0; j < this.currentPost.picid.length; j++) {
+          axios({
+            method: 'delete',
+            url: '/api/images/delete/' + this.currentPost.picid[j],
+            data: this.currentPost.picid[j],
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+            .then(res => {
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        }
+        this.currentPost.picid = []
+      }
       // Save each uploaded picture by placing its data in each URL
       for (var i = 0; i < this.uploadedFiles.length; ++i) {
         axios({

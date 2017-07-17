@@ -50,8 +50,10 @@ const store = new Vuex.Store({
       email: '',
       phone: '',
       zipcode: '',
+      url: '',
       id: '',
-      items: []
+      items: [],
+      profPicLoaded: null
     },
     activeEmail: '',
     currentUser: '',
