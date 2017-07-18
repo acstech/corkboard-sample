@@ -9,11 +9,6 @@
       <div class="modal-body">
 
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ol class="carousel-indicators" v-if="currentPost.url.length > 1" v-for="(url, index) in currentPost.url">
-            <li data-target="#myCarousel" :data-slide-to="{index}" :class="{active : index === 0}"></li>
-          </ol>
-
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
             <div :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
