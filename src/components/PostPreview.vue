@@ -49,6 +49,9 @@ export default {
     activeSeller () {
       return this.$store.state.activeSeller
     },
+    getCurrentUser () {
+      return this.$store.state.currentUser
+    },
     activeEmail () {
       return this.$store.state.activeEmail
     },

@@ -21,10 +21,6 @@
 </template>
 
 <script>
-import ProductList from './components/ProductList.vue'
-import Login from './components/Login.vue'
-import Signup from './components/Signup.vue'
-import AddPost from './components/AddPost.vue'
 import axios from 'axios'
 
 export default {
@@ -80,12 +76,6 @@ export default {
           })
       }
     }
-  },
-  components: {
-    products: ProductList,
-    login: Login,
-    signup: Signup,
-    addPost: AddPost
   }
 }
 </script>
