@@ -168,7 +168,6 @@ export default {
             .then(res => {
               // Save image Url and ID for later image saving and profile saving
               vm.cloneUserProfile.postUrl = res.data.url
-              console.log(res.data.url)
               vm.cloneUserProfile.picid = res.data.picid
             })
             .catch(err => {
