@@ -108,6 +108,8 @@ export default {
       uploadedFiles: [],
       uploadedFileURLs: [],
       wasreset: false,
+      numImages: 0,
+      numimages2: 0,
       validImageSize: true,
       validNumOfImages: true
     }
@@ -119,6 +121,7 @@ export default {
   },
   methods: {
     reset () {
+      // this.validNumOfImages = true
       this.uploadError = null
       this.uploadedFiles = []
       this.uploadedFileURLs = []
@@ -133,10 +136,21 @@ export default {
       vm.validImageSize = true
       vm.validNumOfImages = true
       let files = event.target.files
+      vm.numImages = vm.clonePost.picid.length
+      vm.numImages2 = vm.currentPost.picid.length
       // Check against the 5 maximum images constraint
-      if (files.length > 5) {
-        vm.validNumOfImages = false
-        return
+      if (vm.wasreset) {
+        console.log(files.length + vm.numImages)
+        if (files.length + vm.numImages > 5) {
+          vm.validNumOfImages = false
+          return
+        }
+      } else {
+        console.log(files.length + vm.numImages2)
+        if (files.length + vm.numImages2 > 5) {
+          vm.validNumOfImages = false
+          return
+        }
       }
       // Grab updated files in latest upload
       for (var i = 0; i < files.length; ++i) {
@@ -194,7 +208,6 @@ export default {
       }
     },
     saveImages: function () {
-//      var indexes = []
       if (this.wasreset === true) {
         var newpicid = []
         for (var j = 0; j < this.clonePost.picid.length; j++) {
@@ -208,7 +221,6 @@ export default {
           if (this.clonePost.picid.includes(this.currentPost.picid[k])) {
             continue
           } else {
-//            indexes.push(k)
             axios({
               method: 'delete',
               url: '/api/images/delete/' + this.currentPost.picid[k],
@@ -225,10 +237,6 @@ export default {
           }
         }
         this.currentPost.picid = newpicid
-//        for (var d = 0; d < indexes.length; d++) {
-//          console.log(indexes[d])
-//          this.currentPost.picid.splice(indexes[d], 1)
-//        }
       }
       // Save each uploaded picture by placing its data in each URL
       for (var i = 0; i < this.uploadedFiles.length; ++i) {
