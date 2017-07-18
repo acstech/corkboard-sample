@@ -80,6 +80,9 @@ export default {
   },
   data () {
     return {
+      clonePost: {
+        picid: []
+      },
       updatedPost: {
         itemname: '',
         itemprice: 0.00,
@@ -119,7 +122,7 @@ export default {
       this.uploadError = null
       this.uploadedFiles = []
       this.uploadedFileURLs = []
-      this.updatedPost.picid = []
+      this.clonePost.picid = []
       this.wasreset = true
       // Reset previous upload attempts and thumbnails
       let preview = document.getElementById('preview')
@@ -177,6 +180,7 @@ export default {
               .then(res => {
                 // Place URL and ID in new post data for saving
                 vm.uploadedFiles.push({file: file, url: res.data.url})
+                vm.clonePost.picid.push(res.data.picid)
                 vm.currentPost.picid.push(res.data.picid)
               })
               .catch(err => {
@@ -190,23 +194,41 @@ export default {
       }
     },
     saveImages: function () {
+//      var indexes = []
       if (this.wasreset === true) {
-        for (var j = 0; j < this.currentPost.picid.length; j++) {
-          axios({
-            method: 'delete',
-            url: '/api/images/delete/' + this.currentPost.picid[j],
-            data: this.currentPost.picid[j],
-            headers: {
-              'Authorization': 'Bearer ' + this.$store.state.token
-            }
-          })
+        var newpicid = []
+        for (var j = 0; j < this.clonePost.picid.length; j++) {
+          if (this.currentPost.picid.includes(this.clonePost.picid[j])) {
+            newpicid.push(this.clonePost.picid[j])
+          } else {
+            newpicid.push(this.clonePost.picid[j])
+          }
+        }
+        for (var k = 0; k < this.currentPost.picid.length; k++) {
+          if (this.clonePost.picid.includes(this.currentPost.picid[k])) {
+            continue
+          } else {
+//            indexes.push(k)
+            axios({
+              method: 'delete',
+              url: '/api/images/delete/' + this.currentPost.picid[k],
+              data: this.currentPost.picid[k],
+              headers: {
+                'Authorization': 'Bearer ' + this.$store.state.token
+              }
+            })
             .then(res => {
             })
             .catch(error => {
               console.log(error)
             })
+          }
         }
-        this.currentPost.picid = []
+        this.currentPost.picid = newpicid
+//        for (var d = 0; d < indexes.length; d++) {
+//          console.log(indexes[d])
+//          this.currentPost.picid.splice(indexes[d], 1)
+//        }
       }
       // Save each uploaded picture by placing its data in each URL
       for (var i = 0; i < this.uploadedFiles.length; ++i) {
