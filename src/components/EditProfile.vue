@@ -131,6 +131,9 @@ export default {
     },
     update (event) {
       let vm = this
+      if (vm.userProfile.picid.length === 0) {
+        console.log('empty')
+      }
       // Reset size check when user tries again
       vm.validImageSize = true
       let file = event.target.files[0]
