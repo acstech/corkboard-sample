@@ -154,7 +154,7 @@ export default {
       // upload data to the server
       let picHasher = new FileReader()
       picHasher.onload = (function (file) {
-        return function (event) {
+        return function () {
           axios({
             method: 'post',
             url: '/api/image/new',

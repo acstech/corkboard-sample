@@ -69,6 +69,7 @@ export default {
     if (this.getToken === null) {
       this.$router.push('/login')
     } else {
+      // Set up masonry layout for the user's posts
       var posts = document.querySelectorAll('.grid-item')
       imagesLoaded(posts, function () {
         // eslint-disable-next-line no-unused-vars

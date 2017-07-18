@@ -68,6 +68,8 @@ export default {
     }
   },
   methods: {
+    // For now, the contact seller method uses the default mailto functionality to allow the user
+    // to send them an email about the specific item they are viewing.
     contactSeller () {
       var item = this.$store.state.activePost.itemname
       var email = this.$store.state.activeEmail
