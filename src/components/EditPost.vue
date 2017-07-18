@@ -161,7 +161,7 @@ export default {
         // Setup a FilerReader to generate a NewImageURL for each image
         let picHasher = new FileReader()
         picHasher.onload = (function (file) {
-          return function (event) {
+          return function () {
             // Calls the Corkboard API to set up the new image(s)
             // Returns a Picture ID (key) and URL
             axios({

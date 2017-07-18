@@ -9,11 +9,6 @@
       <div class="modal-body">
 
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ol class="carousel-indicators" v-if="currentPost.url.length > 1" v-for="(url, index) in currentPost.url">
-            <li data-target="#myCarousel" :data-slide-to="{index}" :class="{active : index === 0}"></li>
-          </ol>
-
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
             <div :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
@@ -73,6 +68,8 @@ export default {
     }
   },
   methods: {
+    // For now, the contact seller method uses the default mailto functionality to allow the user
+    // to send them an email about the specific item they are viewing.
     contactSeller () {
       var item = this.$store.state.activePost.itemname
       var email = this.$store.state.activeEmail
