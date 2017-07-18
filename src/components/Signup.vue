@@ -18,7 +18,6 @@
                         required
                         maxlength="40"
                         autofocus="autofocus"
-                        onfocus="this.select()"
                         @focus="showText()"
                 >
             </div>
