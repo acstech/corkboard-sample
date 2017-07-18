@@ -21,10 +21,6 @@
 </template>
 
 <script>
-import ProductList from './components/ProductList.vue'
-import Login from './components/Login.vue'
-import Signup from './components/Signup.vue'
-import AddPost from './components/AddPost.vue'
 import axios from 'axios'
 import { Masonry } from './main'
 export default {
@@ -33,7 +29,6 @@ export default {
     return {
       masonry: new Masonry('.grid', {
         selector: '.grid-item',
-        columnWidth: '.grid-sizer',
         percentPosition: true
       })
     }
@@ -90,12 +85,6 @@ export default {
           })
       }
     }
-  },
-  components: {
-    products: ProductList,
-    login: Login,
-    signup: Signup,
-    addPost: AddPost
   }
 }
 </script>
