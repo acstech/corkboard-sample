@@ -22,17 +22,9 @@
 
 <script>
 import axios from 'axios'
-import { Masonry } from './main'
+
 export default {
   name: 'app',
-  data () {
-    return {
-      masonry: new Masonry('.grid', {
-        selector: '.grid-item',
-        percentPosition: true
-      })
-    }
-  },
   computed: {
     getToken () {
       return this.$store.state.token
@@ -49,7 +41,6 @@ export default {
         this.$router.push('/login')
       } else {
         this.$router.push('/')
-        this.masonry.layout()
       }
     },
     logOut () {

@@ -23,7 +23,7 @@
 
 <script>
 var glyphicon
-import { Masonry } from '../main'
+import { Masonry, imagesLoaded } from '../main'
 import axios from 'axios'
 export default {
   computed: {
@@ -32,12 +32,6 @@ export default {
     }
   },
   mounted () {
-    // eslint-disable-next-line no-unused-vars
-    var masonry = new Masonry('.grid', {
-      selector: '.grid-item',
-      columnWidth: '.grid-sizer',
-      percentPosition: true
-    })
     // Retrieve all items call to API
     axios({
       method: 'get',
@@ -48,7 +42,15 @@ export default {
     })
       .then(res => {
         this.$store.commit('getAllPosts', res.data)
-        masonry.layout()
+        var posts = document.querySelectorAll('.grid')
+        imagesLoaded(posts, function () {
+          // eslint-disable-next-line no-unused-vars
+          var masonry = new Masonry('.grid', {
+            selector: '.grid-item',
+            columnWidth: '.grid-sizer',
+            percentPosition: true
+          })
+        })
       })
       .catch(error => {
         if (error.response.status === 401) {
