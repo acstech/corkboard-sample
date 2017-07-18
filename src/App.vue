@@ -26,9 +26,18 @@ import Login from './components/Login.vue'
 import Signup from './components/Signup.vue'
 import AddPost from './components/AddPost.vue'
 import axios from 'axios'
-
+import { Masonry } from './main'
 export default {
   name: 'app',
+  data () {
+    return {
+      masonry: new Masonry('.grid', {
+        selector: '.grid-item',
+        columnWidth: '.grid-sizer',
+        percentPosition: true
+      })
+    }
+  },
   computed: {
     getToken () {
       return this.$store.state.token
@@ -45,6 +54,7 @@ export default {
         this.$router.push('/login')
       } else {
         this.$router.push('/')
+        this.masonry.layout()
       }
     },
     logOut () {
