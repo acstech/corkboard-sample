@@ -122,7 +122,7 @@ export default {
               .then(res => {
                 this.$store.commit('getViewedProfile', res.data)
                 // Refresh grid layout to account for deleted post
-                var posts = document.querySelectorAll('.grid-item')
+                var posts = document.querySelectorAll('.grid')
                 imagesLoaded(posts, function () {
                   // eslint-disable-next-line no-unused-vars
                   var masonry = new Masonry('.grid', {
