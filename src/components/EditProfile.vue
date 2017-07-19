@@ -70,6 +70,7 @@ export default {
       },
       profileImage: {},
       phoneInputError: '',
+      previouslyUsedPicId: '',
       imageChanged: false,
       validImageSize: true
     }
@@ -167,6 +168,7 @@ export default {
           })
             .then(res => {
               // Save image Url and ID for later image saving and profile saving
+              vm.previouslyUsedPicId = vm.cloneUserProfile.picid
               vm.cloneUserProfile.postUrl = res.data.url
               vm.cloneUserProfile.picid = res.data.picid
             })
@@ -179,13 +181,42 @@ export default {
       picDisplayer.readAsDataURL(file)
       picHasher.readAsBinaryString(file)
     },
+    // Saves the uploaded profile picture and
+    // deletes the previously used profile picture
+    // from the blob storage
     saveImage: function () {
-      // Save the uploaded profile picture
-      return axios({
-        method: 'put',
-        url: this.updateUser.postUrl,
-        data: this.profileImage
-      })
+      if (this.imageChanged === true) {
+        // If a new user uploads their first profile picture
+        // they will not have a defined picid for a previous picture.
+        // This if prevents an error throwing for
+        // deleting an undefined picid
+        if (this.previouslyUsedPicId == null) {
+          return axios({
+            method: 'put',
+            url: this.updateUser.postUrl,
+            data: this.profileImage
+          })
+        } else {
+          axios({
+            method: 'delete',
+            url: '/api/images/delete/' + this.previouslyUsedPicId,
+            data: this.previouslyUsedPicId,
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+          axios({
+            method: 'put',
+            url: this.updateUser.postUrl,
+            data: this.profileImage
+          })
+          .then(res => {
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+      }
     },
     getProfile: function () {
       return axios({
