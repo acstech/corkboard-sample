@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-      <div class="col-sm-4 col-md-3 sidebar">
+      <div class="col-sm-2 sidebar">
         <ul class="nav nav-sidebar">
           <h3 class="sub-header" style="padding-bottom:20px">User Profile</h3>
           <img
@@ -23,11 +23,10 @@
           style="cursor:pointer; margin-left:1%; margin-top:40%">
         </span>
       </div>
-      <div class="container">
-      <div class="grid col-md-offset-3 col-sm-offset-4">
-          <div class="grid-sizer col-xs-4"></div>
+      <div class="grid col-sm-9">
+        <div class="grid-sizer"></div>
         <h1 v-if="!this.userProfile.items || this.userProfile.items.length == 0" style="color:black">No posts yet!</h1>
-          <div class="col-xs-4 grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
+          <div class="grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
             <div class="thumbnail" @click="postPreview({post})">
               <!-- Show Primary image only -->
               <img v-if="shouldDisplayImage(post)" :src="post.url[0]" alt="...">
@@ -46,7 +45,6 @@
           </div>
         </div>
       </div>
-    </div>
 </template>
 
 <script>
@@ -75,7 +73,8 @@ export default {
         // eslint-disable-next-line no-unused-vars
         var masonry = new Masonry('.grid', {
           selector: '.grid-item',
-          columnWidth: '.grid-sizer',
+          columnWidth: 300,
+          gutter: 20,
           percentPosition: true
         })
       })
@@ -127,7 +126,8 @@ export default {
                   // eslint-disable-next-line no-unused-vars
                   var masonry = new Masonry('.grid', {
                     selector: '.grid-item',
-                    columnWidth: '.grid-sizer',
+                    columnWidth: 300,
+                    gutter: 20,
                     percentPosition: true
                   })
                 })
@@ -225,6 +225,9 @@ export default {
   }
   li {
     color: #262626;
+  }
+  .grid-item {
+    width: 300px;
   }
   .thumbnail {
     box-shadow: 1px 1px 3px #4d4d4d;

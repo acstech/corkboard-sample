@@ -47,7 +47,8 @@ export default {
           // eslint-disable-next-line no-unused-vars
           var masonry = new Masonry('.grid', {
             selector: '.grid-item',
-            columnWidth: '.grid-sizer',
+            columnWidth: 450,
+            gutter: 10,
             percentPosition: true
           })
         })
@@ -118,6 +119,9 @@ export default {
 </script>
 
 <style scoped>
+  .grid-item {
+    width: 450px;
+  }
   .thumbnail {
     box-shadow: 1px 1px 4px #4d4d4d;
     border: none;

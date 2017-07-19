@@ -7,62 +7,61 @@
       </div>
 
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
-      <div class="modal-body">
-        <b>Images (Max 5)</b>
-        <div class="dropbox">
-          <input
-            type="file"
-            id="files"
-            multiple
-            :name="uploadFieldName"
-            :disabled="isSaving"
-            @change="update"
-            accept="image/*"
-            class="input-file">
-        </div>
-        <p v-if="!validImageSize">Please upload an image under 5MB.</p>
-        <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-        <a class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</a>
-        <div v-if="isSuccess">
-          <p>Uploaded successfully.</p>
-        </div>
-        <!--FAILED-->
-        <div v-if="isFailed">
-          <p>Upload failed.</p>
-          <p>
-            <a href="javascript:void(0)" @click="reset">Try again</a>
-          </p>
-          <pre>{{ uploadError }}</pre>
-        </div>
-        <div id="preview"></div>
-        <label class="form-label">
-          Title
-          <p style="font-size: 12px">(Max 50 Characters)</p>
-          <input v-model="newPost.itemname" class="form-control" maxlength="50" required>
-        </label>
-        <label class="form-label">
-          Price
-          <money v-model="newPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
-        </label>
-        <label class="form-label">
-          Description
-          <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required maxlength="2000"></textarea>
-        </label>
-        <label class="form-label">
-          Category
-          <select class="form-control" v-model="newPost.itemcat">
-            <option value="None">None</option>
-            <option value="Apparel">Apparel</option>
-            <option value="Appliances">Appliances</option>
-            <option value="Books and Movies">Books and Movies</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Furniture">Furniture</option>
-            <option value="Pets">Pets</option>
-            <option value="Toys and Games">Toys and Games</option>
-            <option value="Other">Other</option>
-          </select>
-        </label>
-      </div>
+        <fieldset>
+          <div class="form-group label-floating">
+            <label for="files" class="control-label">Images</label>
+
+              <input  type="file"
+                      id="files"
+                      multiple
+                      :name="uploadFieldName"
+                      :disabled="isSaving"
+                      @change="update"
+                      accept="image/*"
+                      class="input-file">
+            <p v-if="!validImageSize">Please upload an image under 5MB.</p>
+            <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
+            <a class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</a>
+            <div v-if="isSuccess">
+              <p>Uploaded successfully.</p>
+            </div>
+            <!--FAILED-->
+            <div v-if="isFailed">
+              <p>Upload failed.</p>
+              <p>
+                <a href="javascript:void(0)" @click="reset">Try again</a>
+              </p>
+              <pre>{{ uploadError }}</pre>
+            </div>
+            <div id="preview"></div>
+          </div>
+          <div class="form-group label-floating">
+            <label for="title" class="control-label">Title</label>
+            <input v-model="newPost.itemname" id="title" class="form-control" maxlength="50" required>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Price</label>
+            <money style="padding-right: 4px" v-model="newPost.itemprice" id="price" v-bind="moneyConfig" class="form-control currency"></money>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Description</label>
+              <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required maxlength="2000"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Category</label>
+              <select class="form-control" v-model="newPost.itemcat">
+                <option value="None">None</option>
+                <option value="Apparel">Apparel</option>
+                <option value="Appliances">Appliances</option>
+                <option value="Books and Movies">Books and Movies</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Pets">Pets</option>
+                <option value="Toys and Games">Toys and Games</option>
+                <option value="Other">Other</option>
+              </select>
+          </div>
+        </fieldset>
 
       <div class="modal-footer text-right">
       <p align="center">
@@ -248,6 +247,7 @@
             let vm = this
             // After saving the new post, call the API to retrieve all items after the recent
             // addition. Helps update the DOM appropriately
+            // TODO: Conditional of where to make an axios call and final route depending on source page
             setTimeout(function () {
               // Retrieve all items call to Corkboard API
               axios({
@@ -265,7 +265,7 @@
                     // eslint-disable-next-line no-unused-vars
                     var masonry = new Masonry('.grid', {
                       selector: '.grid-item',
-                      columnWidth: '.grid-sizer',
+                      columnWidth: 450,
                       percentPosition: true
                     })
                   })
@@ -301,23 +301,6 @@
 </script>
 
 <style scoped>
-  .thumbnail {
-    display: inline;
-    width: 100px;
-    height: 100px;
-    margin: 10px;
-  }
-  span.glyphicon {
-    font-size: 2.0em;
-    color: black;
-  }
-  span.glyphicon:hover {
-    color: maroon;
-  }
-  span:hover {
-    text-decoration: none;
-    color: white;
-  }
   .close {
     display: inline;
     float: right;
@@ -333,31 +316,8 @@
     width: 30%;
     left: 35%;
   }
-  .dropbox {
-    justify-content: center;
-  }
-  .input-file {
-    box-shadow: 1px 1px 2px #4d4d4d;
-    min-height: 30px;
-    padding: 4px;
-    margin-left: 23%;
-    margin-top: 6px;
-    margin-bottom: 10px;
-  }
-  .dropbox p {
-    font-size: 1.2em;
-    text-align: center;
-    padding: 50px 0;
-  }
-  input {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-
-  textarea {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-
-  select {
-    box-shadow: 1px 1px 2px #4d4d4d;
+  fieldset {
+    margin-top: 12px;
+    margin-bottom: 12px;
   }
 </style>

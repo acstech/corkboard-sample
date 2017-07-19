@@ -26,6 +26,7 @@
     "v-money": "^0.3.0",
     "vee-validate": "^2.0.0-rc.5",
     "vue": "^2.3.4",
+    "vue-material": "^0.7.4",
     "vue-modal-plugin": "^0.1.1",
     "vue-router": "^2.3.1",
     "vuex": "^2.3.1",
