@@ -119,6 +119,9 @@
       isFailed () {
         return this.currentStatus === STATUS_FAILED
       },
+      getCurrentUser () {
+        return this.$store.state.currentUser
+      },
       getToken () {
         return this.$store.state.token
       }
@@ -129,8 +132,10 @@
       }
       // TODO: Conditional depending on if route is home or settings
       document.addEventListener('keydown', (e) => {
-        if (e.keyCode === 27) {
+        if (e.keyCode === 27 && this.$route.path === '/addpost') {
           this.$router.push('/')
+        } else if (e.keyCode === 27) {
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
         }
       })
     },
