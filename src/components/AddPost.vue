@@ -1,6 +1,7 @@
 <template>
   <transition name="modal">
-    <post-modal>
+    <div class="modal-mask" id="mask">
+      <div class="modal-container">
       <div class="modal-header">
         <h3>New Post</h3>
         <a class="close" @click="cancel">&times;</a>
@@ -61,7 +62,8 @@
       </p>
       </div>
       </form>
-    </post-modal>
+      </div>
+    </div>
   </transition>
 </template>
 
@@ -132,7 +134,7 @@
       }
       // Allows modal close when pressing the ESC key
       document.addEventListener('keydown', (e) => {
-        if (e.keyCode === 27 && this.$route.path === '/addpost') {
+        if (e.keyCode === 27 && (this.$route.path === '/addpost' || this.$route.path === '/')) {
           this.$router.push('/')
         } else if (e.keyCode === 27) {
           this.$router.push('/viewProfile/' + this.getCurrentUser)
@@ -141,7 +143,6 @@
     },
     methods: {
       cancel () {
-        console.log(this.$route.path)
         if (this.$route.path === '/addpost') {
           this.$router.push('/')
         } else {
