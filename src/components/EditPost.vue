@@ -7,30 +7,32 @@
       </div>
 
       <form @submit.prevent="updatePost">
-      <div class="modal-body">
-          <label class="form-label">
-            Images (Max 5)
-            <input type="file" id="files" class="form-control input-file" @change="update" accept="image/*" multiple>
-          </label>
+        <div class="md-form">
+          <label for="files" class="control-label">Images</label>
+          <div class="btn btn-primary btn-sm">
+            <span>Choose Files</span>
+            <input type="file" id="files" class="input-file" @change="update" accept="image/*" multiple>
+          </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-          <a @click="reset" style="cursor:pointer">Reset Uploads</a>
+          <p @click="reset" style="cursor:pointer">Reset Uploads</p>
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
           </div>
-          <label class="form-label">
-            Title
-            <p style="font-size: 12px">(Max 50 Characters)</p>
-            <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50" required>
-          </label>
-          <label class="form-label">
-            Price
-            <money v-model="currentPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
-          </label>
-          <label class="form-label">
-            Description
-            <textarea rows="5" class="form-control" v-model="currentPost.itemdesc" maxlength="2000" required></textarea>
-          </label>
+        </div>
+        <label class="edit-label">Title</label>
+        <div class="md-form">
+          <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50" required>
+        </div>
+        <label class="edit-label">Price</label>
+        <div class="md-form">
+          <money v-model="currentPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
+        </div>
+        <label class="edit-label">Description</label>
+        <div class="md-form">
+          <textarea rows="5" class="md-textarea" v-model="currentPost.itemdesc" maxlength="2000" required></textarea>
+        </div>
+        <div class="form-group">
           <label class="form-label">
             Category
             <select class="form-control" v-model="currentPost.itemcat">
@@ -45,13 +47,12 @@
               <option value="Other">Other</option>
             </select>
           </label>
+        </div>
           <label class="form-label">
             Sale Status:
             <input type="radio" v-model="currentPost.salestatus" name="salestatus" value="Available" style="box-shadow:none"> Available
             <input type="radio" v-model="currentPost.salestatus" name="salestatus" value="Sale Pending" style="box-shadow:none"> Sale Pending
           </label>
-      </div>
-
       <div class="modal-footer text-right">
         <button class="btn btn-danger cancel" @click.prevent="cancel()">Cancel</button>
         <input type="submit" class="btn btn-primary" value="Save Changes">
@@ -330,11 +331,6 @@ export default {
   .cancel {
     float: left;
   }
-  .currency {
-    position: relative;
-    width: 30%;
-    left: 35%;
-  }
   [type="radio"] {
     margin-left: 8px;
     margin-right: 2px;
@@ -346,24 +342,13 @@ export default {
   span.glyphicon-arrow-left:hover {
     color: lightgray;
   }
-  .input-file {
-    box-shadow: 1px 1px 2px #4d4d4d;
+  .edit-label {
+    float: left;
+    color: #5a5a5a;
   }
   .thumbnail {
     width: 150px;
     height: 150px;
     display: inline;
-  }
-
-  input {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-
-  textarea {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-
-  select {
-    box-shadow: 1px 1px 2px #4d4d4d;
   }
 </style>

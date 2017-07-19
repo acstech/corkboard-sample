@@ -9,22 +9,22 @@
             <p>{{ error }}</p>
         </div>
         <form @submit.prevent="logIn()">
-            <div class="form-group">
+            <div class="md-form">
+              <label>Enter your Email</label>
                 <input
                         type="text"
                         class="form-control"
-                        placeholder="Enter your email"
                         v-model="credentials.email"
                         required
                         maxlength="40"
                         autofocus="autofocus"
                 >
             </div>
-            <div class="form-group">
+            <div class="md-form">
+              <label>Enter your Password</label>
                 <input
                         type="password"
                         class="form-control"
-                        placeholder="Enter your password"
                         v-model="credentials.password"
                         required
                 >
@@ -84,13 +84,5 @@ export default {
       box-shadow: 4px 4px 8px #4d4d4d;
       border-radius: 3px;
       margin-bottom: 20px;
-    }
-    input {
-      box-shadow: 4px 4px 8px #4d4d4d;
-      -webkit-transition: box-shadow .5s;
-      transition: box-shadow .5s;
-    }
-    input:hover {
-      box-shadow: none;
     }
 </style>

@@ -7,21 +7,15 @@
       </div>
 
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
-        <fieldset>
-          <div class="form-group label-floating">
+          <div class="md-form">
             <label for="files" class="control-label">Images</label>
-
-              <input  type="file"
-                      id="files"
-                      multiple
-                      :name="uploadFieldName"
-                      :disabled="isSaving"
-                      @change="update"
-                      accept="image/*"
-                      class="input-file">
+            <div class="btn btn-primary btn-sm">
+              <span>Choose file</span>
+              <input type="file" @change="update" :name="uploadFieldName" accept="image/*" id="files" multiple>
+            </div>
             <p v-if="!validImageSize">Please upload an image under 5MB.</p>
             <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-            <a class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</a>
+            <p class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</p>
             <div v-if="isSuccess">
               <p>Uploaded successfully.</p>
             </div>
@@ -35,17 +29,17 @@
             </div>
             <div id="preview"></div>
           </div>
-          <div class="form-group label-floating">
-            <label for="title" class="control-label">Title</label>
-            <input v-model="newPost.itemname" id="title" class="form-control" maxlength="50" required>
+          <div class="md-form">
+            <input v-model="newPost.itemname" type="text" id="title" class="form-control" maxlength="50" required>
+            <label for="title">Title</label>
           </div>
-          <div class="form-group">
-            <label class="control-label">Price</label>
-            <money style="padding-right: 4px" v-model="newPost.itemprice" id="price" v-bind="moneyConfig" class="form-control currency"></money>
+          <div class="md-form">
+            <label>Price</label>
+            <money v-model="newPost.itemprice" id="price" v-bind="moneyConfig" class="form-control currency"></money>
           </div>
-          <div class="form-group">
+          <div class="md-form">
+            <textarea v-model="newPost.itemdesc" rows="5" class="md-textarea" required maxlength="2000"></textarea>
             <label class="control-label">Description</label>
-              <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required maxlength="2000"></textarea>
           </div>
           <div class="form-group">
             <label class="control-label">Category</label>
@@ -61,11 +55,9 @@
                 <option value="Other">Other</option>
               </select>
           </div>
-        </fieldset>
-
       <div class="modal-footer text-right">
       <p align="center">
-        <input type="submit" class="btn btn-lg btn-default" value="Post!">
+        <input type="submit" class="btn btn-raised btn-default" value="Post!">
       </p>
       </div>
       </form>
@@ -310,11 +302,6 @@
   }
   .cancel {
     float: left;
-  }
-  .currency {
-    position: relative;
-    width: 30%;
-    left: 35%;
   }
   fieldset {
     margin-top: 12px;
