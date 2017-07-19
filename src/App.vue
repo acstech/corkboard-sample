@@ -11,21 +11,17 @@
                 <a class="navbar-brand" @click="toHome" style="cursor:pointer"><img src="../static/generatedtext.png"></a>
               </div>
               <div class="navbar-collapse collapse navbar-responsive-collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav mr-auto">
                   <li @click="toHome"><router-link to="">Home</router-link></li>
                   <li><router-link to="/login" v-if="getToken == null">Login</router-link></li>
                   <li><router-link to="/signup" v-if="getToken == null">Sign Up</router-link></li>
                   <li v-if="getToken != null" @click="addPost()"><router-link to="">Add Post</router-link></li>
                   <li v-if="getToken != null" @click="viewSettings()"><router-link to="">Profile Settings</router-link></li>
-                </ul>
-                <form v-if="getToken != null" class="navbar-form navbar-right">
-                  <div class="form-group">
-                    <input type="text" class="form-control col-md-10" placeholder="Search">
-                  </div>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
                   <li v-if="getToken != null" @click="logOut()"><router-link to="">Logout</router-link></li>
                 </ul>
+                <form v-if="getToken != null" class="form-inline waves-effect waves-light">
+                    <input type="text" class="form-control" placeholder="Search" style="margin-top: 8px">
+                </form>
               </div>
             </div>
         </div>
