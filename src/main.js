@@ -7,8 +7,6 @@ import Masonry from 'masonry-layout'
 import imagesLoaded from 'imagesloaded'
 import Axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
-// import VueMaterial from 'vue-material'
-// import 'vue-material/dist/vue-material.css'
 
 export { Masonry, imagesLoaded }
 
@@ -19,7 +17,6 @@ Axios.defaults.headers.common['Content-Type'] = 'application/json'
 // Use the vue routing and state management tools
 Vue.use(VueRouter)
 Vue.use(Vuex)
-// Vue.use(VueMaterial)
 
 const router = new VueRouter({
   routes: routes
