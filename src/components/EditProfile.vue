@@ -93,6 +93,12 @@ export default {
     if (this.getToken === null) {
       this.$router.push('/login')
     } else {
+      // Allows modal close when pressing the ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.keyCode === 27) {
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        }
+      })
       this.cloneUserProfile = _.cloneDeep(this.UserProfile)
       // Begin phone number input validation ------------------
       document.getElementById('phoneNumber').addEventListener('keyup', function (evt) {
@@ -135,9 +141,6 @@ export default {
     },
     update (event) {
       let vm = this
-      if (vm.userProfile.picid.length === 0) {
-        console.log('empty')
-      }
       // Reset size check when user tries again
       vm.validImageSize = true
       let file = event.target.files[0]
@@ -196,7 +199,7 @@ export default {
         // they will not have a defined picid for a previous picture.
         // This if prevents an error throwing for
         // deleting an undefined picid
-        if (this.previouslyUsedPicId == null) {
+        if (this.previouslyUsedPicId === null) {
           return axios({
             method: 'put',
             url: this.updateUser.postUrl,

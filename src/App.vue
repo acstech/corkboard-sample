@@ -57,9 +57,9 @@ export default {
     },
     addPost () {
       if (this.$route.path === '/') {
-        this.$router.push('/addPost')
+        this.$router.push('/addpost')
       } else {
-        this.$router.push('/addPost-profile')
+        this.$router.push('/addpost-profile')
       }
     },
     logOut () {

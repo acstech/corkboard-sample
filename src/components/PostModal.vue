@@ -8,22 +8,6 @@
 
 <script>
 export default {
-  computed: {
-    getCurrentUser () {
-      return this.$store.state.currentUser
-    },
-    currentPost () {
-      return this.$store.state.activePost
-    }
-  },
-  mounted () {
-    // var vm = this
-    document.addEventListener('click', function (e) {
-      if (e.target.id === 'mask') {
-        // window.history.back()
-      }
-    })
-  }
 }
 </script>
 
