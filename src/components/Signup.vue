@@ -9,11 +9,11 @@
             <p>{{ error }}</p>
         </div>
         <form @submit.prevent="register()" onsubmit="return passwordAccept()">
-            <div class="form-group">
+            <div class="md-form">
+              <label>Email Address</label>
                 <input
                         type="email"
                         class="form-control"
-                        placeholder="Email address"
                         v-model="newUser.email"
                         required
                         maxlength="40"
@@ -22,22 +22,22 @@
                 >
             </div>
             <div id="text" style="display:none"><p style="color:#656565">(We will not spam your email, this is strictly for contact between users)</p></div>
-            <div class="form-group">
+            <div class="md-form">
+              <label>Password</label>
                 <input
                         type="password"
                         class="form-control"
-                        placeholder="Password"
                         v-model="newUser.password"
                         @focus="showText2()"
                         required
                 >
             </div>
             <div id="text2" style="display:none"><p style="color:#656565">(Must be between 8-16 characters and contain one number and special character !@#$%^&*)</p></div>
-            <div class="form-group">
+            <div class="md-form">
+              <label>Confirm Password</label>
                 <input
                         type="password"
                         class="form-control"
-                        placeholder="Confirm password"
                         v-model="newUser.confirm"
                         @focus="hideText()"
                         required
@@ -147,13 +147,5 @@ export default {
       box-shadow: 4px 4px 8px #4d4d4d;
       border-radius: 3px;
       margin-bottom: 20px;
-    }
-    input {
-      box-shadow: 4px 4px 8px #4d4d4d;
-      -webkit-transition: box-shadow .5s;
-      transition: box-shadow .5s;
-    }
-    input:hover {
-      box-shadow: none;
     }
 </style>
