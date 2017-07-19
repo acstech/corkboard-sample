@@ -259,7 +259,6 @@
               let vm = this
               // After saving the new post, call the API to retrieve all items after the recent
               // addition. Helps update the DOM appropriately
-              // TODO: Conditional of where to make an axios call and final route depending on source page
               setTimeout(function () {
                 // Retrieve all items call to Corkboard API
                 axios({
