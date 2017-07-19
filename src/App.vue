@@ -7,7 +7,7 @@
                   <li @click="toHome"><router-link to="">Home</router-link></li>
                     <li><router-link to="/login" v-if="getToken == null">Login</router-link></li>
                     <li><router-link to="/signup" v-if="getToken == null">Sign Up</router-link></li>
-                    <li v-if="getToken != null"><router-link to="/addpost">Add Post</router-link></li>
+                    <li v-if="getToken != null" @click="addPost()"><router-link to="">Add Post</router-link></li>
                     <li v-if="getToken != null" @click="viewSettings()"><router-link to="">Profile Settings</router-link></li>
                     <li v-if="getToken != null" @click="logOut()"><router-link to="">Logout</router-link></li>
                 </ul>
@@ -41,6 +41,13 @@ export default {
         this.$router.push('/login')
       } else {
         this.$router.push('/')
+      }
+    },
+    addPost () {
+      if (this.$route.path === '/') {
+        this.$router.push('/addPost')
+      } else {
+        this.$router.push('/addPost-profile')
       }
     },
     logOut () {
@@ -123,27 +130,27 @@ export default {
     }
 
     .modal-mask {
-        position: fixed;
-        z-index: 9998;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, .5);
-        transition: opacity .5s ease;
+      position: fixed;
+      z-index: 9998;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .5);
+      transition: opacity .5s ease;
     }
 
     .modal-container {
-        width: 600px;
-        max-height: 800px;
-        overflow: scroll;
-        margin: 50px auto 0;
-        padding: 20px 30px;
-        background-color: #fff;
-        border-radius: 2px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-        transition: all .5s ease;
-        font-family: Helvetica, Arial, sans-serif;
+      width: 600px;
+      max-height: 800px;
+      overflow: scroll;
+      margin: 50px auto 0;
+      padding: 20px 30px;
+      background-color: #fff;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+      transition: all .5s ease;
+      font-family: Helvetica, Arial, sans-serif;
     }
 
     .modal-header h3 {
@@ -177,12 +184,11 @@ export default {
     }
 
     .modal-enter, .modal-leave {
-        opacity: 0;
+      opacity: 0;
     }
-
     .modal-enter .modal-container,
     .modal-leave .modal-container {
-        -webkit-transform: scale(1.1);
-        transform: scale(1.1);
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
     }
 </style>

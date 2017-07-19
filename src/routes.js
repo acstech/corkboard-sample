@@ -16,6 +16,7 @@ export const routes = [
   {path: '/login', component: Login},
   {path: '/signup', component: Signup},
   {path: '/addpost', components: {default: AddPost, modal: ProductList}},
+  {path: '/addpost-profile', components: {default: AddPost, modal: UserProfile}},
   {path: '/viewPost/:post_id', components: {default: ViewPost, modal: ProductList}},
   {path: '/editPost/:post_id', components: {default: EditPost, modal: UserProfile}},
   {path: '/editProfile/:user_id', components: {default: EditProfile, modal: UserProfile}},
