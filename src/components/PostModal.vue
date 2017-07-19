@@ -18,9 +18,8 @@ export default {
   },
   mounted () {
     // var vm = this
-    document.addEventListener('click', function (e) {
-      if (e.target.id === 'mask') {
-        // window.history.back()
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 27) {
       }
     })
   }
