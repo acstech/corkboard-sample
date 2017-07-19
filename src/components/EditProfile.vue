@@ -6,38 +6,41 @@
         <a @click="cancel()" class="close">&times;</a>
       </div>
       <form @submit.prevent="saveProfileSettings" autocomplete="off">
-        <div class="modal-body">
-            <label class="form-label">
-              Profile Picture
-              <input type="file" class="form-control" @change="update" accept="image/*">
-            </label>
-            <p v-if="!validImageSize">Please upload an image under 5MB.</p>
-            <div id="preview">
-              <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
-            </div>
-            <label class="form-label">
-              First Name
-              <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="40">
-            </label>
-            <label class="form-label">
-              Last Name
-              <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="40">
-            </label>
-            <label class="form-label">
-              Email
-              <input type="email" class="form-control" v-model="cloneUserProfile.email" required maxlength="40">
-            </label>
-            <label class="form-label">
-              Phone
-              <input id="phoneNumber" type="tel" class="form-control" v-model="cloneUserProfile.phone" @keypress="numberPressed" minlength="16" maxlength="16">
-            </label>
-            <label class="form-label">
-              Zip
-              <input type="text" class="form-control" v-model="cloneUserProfile.zipcode" @keypress="numberPressed" minlength="5" maxlength="5">
-            </label>
-          <div class="alert alert-danger" v-if="phoneInputError">
-            <p>{{ phoneInputError }}</p>
+        <div class="md-form">
+          <label>Profile Picture</label>
+          <div class="btn btn-primary btn-sm">
+            <span>Choose Files</span>
+            <input type="file" class="input-file" @change="update" accept="image/*">
           </div>
+          <p v-if="!validImageSize">Please upload an image under 5MB.</p>
+          <div id="preview">
+            <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
+          </div>
+        </div>
+        <label class="edit-label">First Name</label>
+        <div class="md-form">
+          <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="40">
+        </div>
+        <label class="edit-label">First Name</label>
+        <div class="md-form">
+          <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="40">
+        </div>
+        <label class="edit-label">Email</label>
+        <div class="md-form">
+          <input type="email" class="form-control" v-model="cloneUserProfile.email" required maxlength="40">
+        </div>
+        <label class="edit-label">Phone</label>
+        <div class="md-form">
+          <input id="phoneNumber" type="tel" class="form-control" v-model="cloneUserProfile.phone"
+                 @keypress="numberPressed" minlength="16" maxlength="16">
+        </div>
+        <label class="edit-label">Zip</label>
+        <div class="md-form">
+          <input type="text" class="form-control" v-model="cloneUserProfile.zipcode" @keypress="numberPressed"
+                 minlength="5" maxlength="5">
+        </div>
+        <div class="alert alert-danger" v-if="phoneInputError">
+          <p>{{ phoneInputError }}</p>
         </div>
       </form>
       <div class="modal-footer text-right">
@@ -280,14 +283,14 @@ export default {
     height: 150px;
     display: inline;
   }
-
+  .edit-label {
+    float: left;
+    color: #5a5a5a;
+  }
   h3 {
     display: inline;
   }
   .cancel {
     float: left;
-  }
-  input {
-    box-shadow: 1px 1px 2px #4d4d4d;
   }
 </style>
