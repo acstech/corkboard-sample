@@ -191,6 +191,8 @@ export default {
   font-weight: bold;
   min-height: 400px;
   box-shadow: 1px 1px 3px #4d4d4d;
+  margin-right: .3%;
+  margin-bottom: 5%;
   }
   .btn {
   font-weight: bold;

@@ -1,13 +1,12 @@
 <template>
   <!-- This is where data should be retrieved from the DB and a v-for directive is used to iterate over the data -->
   <div class="row grid">
-    <div class="grid-sizer col-xs-4"></div>
+    <div class="grid-sizer col-xs-4"  style="margin:auto"></div>
     <h1 v-if="allPosts.length == 0" style="color:black">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
       <div class="thumbnail" @click="viewPost({post})">
         <img v-if="post.url" :src="post.url" alt="Post Picture">
         <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">
-        <!--span class="text-content" style="cursor:default"><span @click = "viewPost({post})">  Location </span></span-->
         <div class="caption">
           {{ post.itemname }}
           <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
@@ -48,7 +47,6 @@ export default {
           var masonry = new Masonry('.grid', {
             selector: '.grid-item',
             columnWidth: 450,
-            gutter: 10,
             percentPosition: true
           })
         })
@@ -121,6 +119,7 @@ export default {
 <style scoped>
   .grid-item {
     width: 450px;
+    margin: auto;
   }
   .thumbnail {
     box-shadow: 1px 1px 4px #4d4d4d;
@@ -128,8 +127,9 @@ export default {
     cursor: default;
     -webkit-transition: box-shadow .5s;
     transition: box-shadow .5s;
-    margin-left: -4%;
-    margin-top: -1%;
+    margin-left: -3%;
+    margin-right: -1%;
+    margin-top: -2%;
   }
   .thumbnail:hover {
     box-shadow: 6px 6px 10px #383838;
@@ -155,31 +155,14 @@ export default {
   span.glyphicon:hover:active {
     color: gray;
   }
-  .text-content {
-  background: rgba(0,0,0,0.8);
-  color: white;
-  cursor: pointer;
-  display: table;
-  height: 60px;
-  left: 21px;
-  position: absolute;
-  width: 89%;
-  top: 6px;
-  opacity: 0;
-  -webkit-transition: opacity 500ms;
-  -moz-transition: opacity 500ms;
-  -o-transition: opacity 500ms;
-  transition: opacity 500ms;
-  }
-  span.text-content span {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-  }
   span:hover {
     opacity: 1;
   }
   h1 {
     color: white;
+  }
+  .center {
+    margin: auto;
+    max-width: 300px;
   }
 </style>
