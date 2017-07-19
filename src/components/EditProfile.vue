@@ -1,6 +1,7 @@
 <template>
   <transition name="modal">
-    <post-modal>
+    <div class="modal-mask" id="mask" transition="modal">
+      <div class="modal-container">
       <div class="modal-header">
         <h3>Edit Profile</h3>
         <a @click="cancel()" class="close">&times;</a>
@@ -47,13 +48,13 @@
         <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel()">
         <input type="submit" class="btn btn-primary" value="Save Changes" @click="saveProfileSettings()">
       </div>
-    </post-modal>
+    </div>
+    </div>
   </transition>
 </template>
 
 <script>
 var _ = require('lodash')
-import PostModal from './PostModal.vue'
 import axios from 'axios'
 export default {
   data () {
@@ -299,9 +300,6 @@ export default {
     cancel () {
       this.$router.push('/viewProfile/' + this.getCurrentUser)
     }
-  },
-  components: {
-    postModal: PostModal
   }
 }
 </script>

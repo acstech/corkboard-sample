@@ -1,6 +1,7 @@
 <template>
   <transition name="modal">
-    <post-modal>
+    <div class="modal-mask" id="mask" transition="modal">
+      <div class="modal-container">
       <div class="modal-header">
         <h3>Edit Post</h3>
         <a class="close" @click="cancel()">&times;</a>
@@ -58,12 +59,12 @@
         <input type="submit" class="btn btn-primary" value="Save Changes">
       </div>
       </form>
-    </post-modal>
+      </div>
+    </div>
   </transition>
 </template>
 
 <script>
-import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
 import axios from 'axios'
 import { Masonry, imagesLoaded } from '../main'
@@ -316,7 +317,6 @@ export default {
     }
   },
   components: {
-    postModal: PostModal,
     money: Money
   }
 }
