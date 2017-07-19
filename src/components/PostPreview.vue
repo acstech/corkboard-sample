@@ -64,6 +64,13 @@ export default {
       this.$router.push('/login')
     }
   },
+  mounted () {
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 27) {
+        this.$router.push('/viewProfile/' + this.getCurrentUser)
+      }
+    })
+  },
   methods: {
     cancel () {
       this.$router.push('/viewProfile/' + this.getCurrentUser)
