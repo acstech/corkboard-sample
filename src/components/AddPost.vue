@@ -3,7 +3,7 @@
     <post-modal>
       <div class="modal-header">
         <h3>New Post</h3>
-        <router-link class="close" to="/">&times;</router-link>
+        <a class="close" @click="cancel">&times;</a>
       </div>
 
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
@@ -140,6 +140,14 @@
       })
     },
     methods: {
+      cancel () {
+        console.log(this.$route.path)
+        if (this.$route.path === '/addpost') {
+          this.$router.push('/')
+        } else {
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        }
+      },
       // reset form to initial state
       reset () {
         this.currentStatus = STATUS_INITIAL
@@ -238,62 +246,120 @@
         // Populate image data and save to the URL before adding the post
         this.saveImages()
         // Call the Corkboard API and save the new post's data
-        axios({
-          method: 'post',
-          url: '/api/items/new',
-          headers: {
-            'Authorization': 'Bearer ' + this.$store.state.token
-          },
-          data: this.newPost
-        })
-          .then(res => {
-            let vm = this
-            // After saving the new post, call the API to retrieve all items after the recent
-            // addition. Helps update the DOM appropriately
-            // TODO: Conditional of where to make an axios call and final route depending on source page
-            setTimeout(function () {
-              // Retrieve all items call to Corkboard API
-              axios({
-                method: 'get',
-                url: '/api/items',
-                headers: {
-                  'Authorization': 'Bearer ' + vm.$store.state.token
-                }
-              })
-                .then(res2 => {
-                  vm.$store.commit('getAllPosts', res2.data)
-                  // Reset masonry layout to prevent tile display issues
-                  var posts = document.querySelectorAll('.grid')
-                  imagesLoaded(posts, function () {
-                    // eslint-disable-next-line no-unused-vars
-                    var masonry = new Masonry('.grid', {
-                      selector: '.grid-item',
-                      columnWidth: 450,
-                      percentPosition: true
-                    })
-                  })
-                })
-                .catch(error => {
-                  // Route unauthenticated users to login
-                  if (error.response.status === 401) {
-                    vm.$router.push('/login')
+        if (this.$route.path === '/addpost') {
+          axios({
+            method: 'post',
+            url: '/api/items/new',
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            },
+            data: this.newPost
+          })
+            .then(res => {
+              let vm = this
+              // After saving the new post, call the API to retrieve all items after the recent
+              // addition. Helps update the DOM appropriately
+              // TODO: Conditional of where to make an axios call and final route depending on source page
+              setTimeout(function () {
+                // Retrieve all items call to Corkboard API
+                axios({
+                  method: 'get',
+                  url: '/api/items',
+                  headers: {
+                    'Authorization': 'Bearer ' + vm.$store.state.token
                   }
                 })
-              vm.newPost = {}
-              vm.newPost.itemprice = 0.00
-            }, 300)
+                  .then(res2 => {
+                    vm.$store.commit('getAllPosts', res2.data)
+                    // Reset masonry layout to prevent tile display issues
+                    var posts = document.querySelectorAll('.grid')
+                    imagesLoaded(posts, function () {
+                      // eslint-disable-next-line no-unused-vars
+                      var masonry = new Masonry('.grid', {
+                        selector: '.grid-item',
+                        columnWidth: 450,
+                        percentPosition: true
+                      })
+                    })
+                  })
+                  .catch(error => {
+                    // Route unauthenticated users to login
+                    if (error.response.status === 401) {
+                      vm.$router.push('/login')
+                    }
+                  })
+                vm.newPost = {}
+                vm.newPost.itemprice = 0.00
+              }, 300)
+            })
+            .catch(error => {
+              // Token expiry
+              if (error.response.status === 401) {
+                this.$store.commit('authenticate', null)
+                let vm = this
+                setTimeout(function () {
+                  vm.$router.push('/login')
+                }, 100)
+              }
+            })
+          this.$router.push('/')
+        } else {
+          axios({
+            method: 'post',
+            url: '/api/items/new',
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            },
+            data: this.newPost
           })
-          .catch(error => {
-            // Token expiry
-            if (error.response.status === 401) {
-              this.$store.commit('authenticate', null)
+            .then(res => {
               let vm = this
+              // After saving the new post, call the API to retrieve all items after the recent
+              // addition. Helps update the DOM appropriately
+              // TODO: Conditional of where to make an axios call and final route depending on source page
               setTimeout(function () {
-                vm.$router.push('/login')
-              }, 100)
-            }
-          })
-        this.$router.push('/')
+                // Call the Corkboard API to retrieve user info again after
+                // adding the post.
+                axios({
+                  method: 'get',
+                  url: '/api/users/' + vm.getCurrentUser,
+                  headers: {
+                    'Authorization': 'Bearer ' + vm.$store.state.token
+                  }
+                })
+                  .then(res => {
+                    vm.$store.commit('getViewedProfile', res.data)
+                    // Reset masonry layout to prevent tile display issues
+                    var posts = document.querySelectorAll('.grid')
+                    imagesLoaded(posts, function () {
+                      // eslint-disable-next-line no-unused-vars
+                      var masonry = new Masonry('.grid', {
+                        selector: '.grid-item',
+                        columnWidth: 300,
+                        gutter: 20,
+                        percentPosition: true
+                      })
+                    })
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  })
+                vm.newPost = {}
+                vm.newPost.itemprice = 0.00
+              }, 300)
+            })
+            .catch(error => {
+              // Token expiry
+              if (error.response.status === 401) {
+                this.$store.commit('authenticate', null)
+                let vm = this
+                setTimeout(function () {
+                  vm.$router.push('/login')
+                }, 100)
+              }
+            })
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        }
       }
     },
     components: {

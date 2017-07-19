@@ -141,9 +141,6 @@ export default {
     },
     update (event) {
       let vm = this
-      if (vm.userProfile.picid.length === 0) {
-        console.log('empty')
-      }
       // Reset size check when user tries again
       vm.validImageSize = true
       let file = event.target.files[0]
@@ -202,7 +199,7 @@ export default {
         // they will not have a defined picid for a previous picture.
         // This if prevents an error throwing for
         // deleting an undefined picid
-        if (this.previouslyUsedPicId == null) {
+        if (this.previouslyUsedPicId === null) {
           return axios({
             method: 'put',
             url: this.updateUser.postUrl,
