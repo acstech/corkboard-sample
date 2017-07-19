@@ -1,6 +1,7 @@
 <template>
   <transition name="modal">
-    <post-modal>
+    <div class="modal-mask" id="mask" transition="modal">
+      <div class="modal-container">
       <div class="modal-header">
         <h5 style="float:left; color:silver; margin-right:-70px">(Post preview)</h5>
         <h3 class="modal-title">{{ currentPost.itemname }}</h3>
@@ -34,13 +35,12 @@
         </div>
       </div>
 
-    </post-modal>
+      </div>
+    </div>
   </transition>
 </template>
 
 <script>
-// import axios from 'axios'
-import PostModal from './PostModal.vue'
 export default {
   computed: {
     currentPost () {
@@ -76,9 +76,6 @@ export default {
     cancel () {
       this.$router.push('/viewProfile/' + this.getCurrentUser)
     }
-  },
-  components: {
-    postModal: PostModal
   }
 }
 </script>

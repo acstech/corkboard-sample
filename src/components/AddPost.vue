@@ -68,7 +68,6 @@
 </template>
 
 <script>
-  import PostModal from './PostModal.vue'
   import { Money } from 'v-money'
   import { imagesLoaded, Masonry } from '../main'
   import axios from 'axios'
@@ -363,7 +362,6 @@
       }
     },
     components: {
-      postModal: PostModal,
       money: Money
     }
   }

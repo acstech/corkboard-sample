@@ -1,6 +1,7 @@
 <template>
   <transition name="modal">
-    <post-modal>
+    <div class="modal-mask" id="mask" transition="modal">
+      <div class="modal-container">
       <div class="modal-header">
         <h3 class="modal-title">{{ currentPost.itemname }}</h3>
         <router-link class="close" to="/">&times;</router-link>
@@ -40,13 +41,12 @@
           </span>
         </p>
       </div>
-    </post-modal>
+      </div>
+    </div>
   </transition>
 </template>
 
 <script>
-// import axios from 'axios'
-import PostModal from './PostModal.vue'
 export default {
   computed: {
     currentPost () {
@@ -84,9 +84,6 @@ export default {
       var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
       window.location.href = 'mailto:' + email + '?subject=' + subject
     }
-  },
-  components: {
-    postModal: PostModal
   }
 }
 </script>
