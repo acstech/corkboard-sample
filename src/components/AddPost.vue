@@ -260,7 +260,7 @@
                 .then(res2 => {
                   vm.$store.commit('getAllPosts', res2.data)
                   // Reset masonry layout to prevent tile display issues
-                  var posts = document.querySelectorAll('.grid-item')
+                  var posts = document.querySelectorAll('.grid')
                   imagesLoaded(posts, function () {
                     // eslint-disable-next-line no-unused-vars
                     var masonry = new Masonry('.grid', {
