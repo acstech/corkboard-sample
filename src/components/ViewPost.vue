@@ -67,6 +67,13 @@ export default {
       this.$router.push('/login')
     }
   },
+  mounted () {
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 27) {
+        this.$router.push('/')
+      }
+    })
+  },
   methods: {
     // For now, the contact seller method uses the default mailto functionality to allow the user
     // to send them an email about the specific item they are viewing.

@@ -93,6 +93,11 @@ export default {
     if (this.getToken === null) {
       this.$router.push('/login')
     } else {
+      document.addEventListener('keydown', (e) => {
+        if (e.keyCode === 27) {
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        }
+      })
       this.cloneUserProfile = _.cloneDeep(this.UserProfile)
       // Begin phone number input validation ------------------
       document.getElementById('phoneNumber').addEventListener('keyup', function (evt) {

@@ -127,6 +127,12 @@
       if (this.getToken === null) {
         this.$router.push('/login')
       }
+      // TODO: Conditional depending on if route is home or settings
+      document.addEventListener('keydown', (e) => {
+        if (e.keyCode === 27) {
+          this.$router.push('/')
+        }
+      })
     },
     methods: {
       // reset form to initial state

@@ -119,6 +119,11 @@ export default {
     if (this.getToken === null) {
       this.router.push('/login')
     }
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 27) {
+        this.$router.push('/viewProfile/' + this.getCurrentUser)
+      }
+    })
   },
   methods: {
     reset () {
