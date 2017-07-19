@@ -68,6 +68,7 @@ export default {
     }
   },
   mounted () {
+    // Allows modal close when pressing the ESC key
     document.addEventListener('keydown', (e) => {
       if (e.keyCode === 27) {
         this.$router.push('/')
