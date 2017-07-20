@@ -150,7 +150,7 @@ export default {
     postPreview (post) {
       axios({
         method: 'get',
-        url: '/api/items/' + post.post.itemid,
+        url: '/api/items/' + post.post.id,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         }
@@ -172,7 +172,7 @@ export default {
               console.log(error)
             })
           this.$store.commit('getActivePost', {post: res.data})
-          this.$router.push('/postPreview/' + post.post.itemid)
+          this.$router.push('/postPreview/' + post.post.id)
         }
         glyphicon = false
       })
