@@ -25,7 +25,7 @@
               </div>
             </div>
         </nav>
-        <main class="container-fluid" style="margin-top:80px">
+        <main style="margin-top:80px">
             <router-view></router-view>
             <router-view name="modal"></router-view>
         </main>
