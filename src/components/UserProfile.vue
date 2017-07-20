@@ -202,6 +202,7 @@ export default {
   .profile-pic {
     min-height: 150px;
     max-height: 200px;
+    max-width: 100%;
   }
   #edit_profile {
     margin-bottom: 12px;
