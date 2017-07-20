@@ -29,9 +29,9 @@
           </a>
         </div>
         <div class="info">
-          <h4>{{ currentPost.itemprice | currency }}</h4>
+          <h4>{{ currentPost.price | currency }}</h4>
           <h4 class="seller">Being sold by {{ activeSeller }}</h4>
-          <p>{{ currentPost.itemdesc }}</p>
+          <p>{{ currentPost.description }}</p>
         </div>
       </div>
 
