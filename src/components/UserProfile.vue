@@ -39,8 +39,8 @@
                 <h5 v-else>Free</h5>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
                 <p v-if="userProfile.id == getCurrentUser">
-                  <router-link to=""><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></router-link>
-                  <router-link to=""><span @click.prevent="deletePost({post})" class="glyphicon glyphicon-trash"></span></router-link>
+                  <a><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></a>
+                  <a><span @click.prevent="deletePost({post})" class="glyphicon glyphicon-trash"></span></a>
                 </p>
               </div>
             </div>

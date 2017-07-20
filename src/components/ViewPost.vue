@@ -36,7 +36,7 @@
 
       <div class="modal-footer">
         <p align="center">
-          <span class="btn btn-lg btn-default" style="margin-top:20px" @click="contactSeller()">
+          <span class="btn btn-lg btn-mdb" style="margin-top:20px" @click="contactSeller()">
             <span class="glyphicon glyphicon-envelope"></span> Contact
           </span>
         </p>
