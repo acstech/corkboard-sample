@@ -30,7 +30,7 @@
                 >
             </div>
             <br>
-            <input type="submit" class="btn btn-default" value="Log In">
+            <input type="submit" class="btn btn-mdb" value="Log In">
         </form>
     </div>
 </template>

@@ -10,7 +10,7 @@
       <form @submit.prevent="updatePost">
         <div class="md-form">
           <label for="files" class="control-label">Images</label>
-          <div class="btn btn-primary btn-sm">
+          <div class="btn btn-blue-grey btn-sm">
             <span>Choose Files</span>
             <input type="file" id="files" class="input-file" @change="update" accept="image/*" multiple>
           </div>
@@ -56,7 +56,7 @@
           </label>
       <div class="modal-footer text-right">
         <button class="btn btn-danger cancel" @click.prevent="cancel()">Cancel</button>
-        <input type="submit" class="btn btn-primary" value="Save Changes">
+        <input type="submit" class="btn btn-mdb" value="Save Changes">
       </div>
       </form>
       </div>
