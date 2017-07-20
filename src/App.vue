@@ -17,6 +17,17 @@
                   <li><router-link to="/signup" v-if="getToken == null">Sign Up</router-link></li>
                   <li v-if="getToken != null" @click="addPost()"><router-link to="">Add Post</router-link></li>
                   <li v-if="getToken != null" @click="viewSettings()"><router-link to="">Profile Settings</router-link></li>
+                  <li v-if="getToken != null" class="nav-item dropdown btn-group">
+                    <router-link to="" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      Sort by
+                      <span class="caret"></span>
+                    </router-link>
+                    <ul class="dropdown-menu button-group" id="sorting">
+                      <li><a value="1" class="dropdown-item" stlye="cursor:pointer">Recently added</a></li>
+                      <li><a value="2" class="dropdown-item" style="cursor:pointer">Price: low to high</a></li>
+                      <li><a value="3" class="dropdown-item" style="cursor:pointer">Price: high to low</a></li>
+                    </ul>
+                  </li>
                   <li v-if="getToken != null" @click="logOut()"><router-link to="">Logout</router-link></li>
                 </ul>
                 <form v-if="getToken != null" class="form-inline waves-effect waves-light">
