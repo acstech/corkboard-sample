@@ -5,7 +5,7 @@
           <h3 class="sub-header">User Profile</h3>
           <!-- Profile Picture -->
           <li>
-            <div class="logo-wrapper waves-light">
+            <div id="profile_pic_container" class="logo-wrapper waves-light flex-center">
               <a><img
                 v-if="userProfile.url"
                 @click="editProfile"
@@ -202,7 +202,6 @@ export default {
   .profile-pic {
     min-height: 150px;
     max-height: 200px;
-    min-width: 150px;
   }
   #edit_profile {
     margin-bottom: 12px;
