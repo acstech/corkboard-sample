@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid flex-center">
       <div class="grid">
-        <div class="col-sm-2 sidebar">
+        <div class="sidebar">
           <ul class="nav nav-sidebar">
             <h3 class="sub-header">User Profile</h3>
             <!-- Profile Picture -->
