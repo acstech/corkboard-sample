@@ -4,7 +4,7 @@
       <div class="modal-container">
       <div class="modal-header">
         <h5 style="float:left; color:silver; margin-right:-70px">(Post preview)</h5>
-        <h3 class="modal-title">{{ currentPost.itemname }}</h3>
+        <h3 class="modal-title">{{ currentPost.name }}</h3>
         <a class="close" @click="cancel()">&times;</a>
       </div>
 
@@ -29,9 +29,9 @@
           </a>
         </div>
         <div class="info">
-          <h4>{{ currentPost.itemprice | currency }}</h4>
+          <h4>{{ currentPost.price | currency }}</h4>
           <h4 class="seller">Being sold by {{ activeSeller }}</h4>
-          <p>{{ currentPost.itemdesc }}</p>
+          <p>{{ currentPost.description }}</p>
         </div>
       </div>
 
