@@ -3,6 +3,7 @@
       <div class="col-sm-2 sidebar">
         <ul class="nav nav-sidebar">
           <h3 class="sub-header" style="padding-bottom:20px">User Profile</h3>
+          <!-- Profile Picture -->
           <li>
             <div class="logo-wrapper waves-light">
               <a><img
@@ -14,18 +15,15 @@
                 style="cursor:pointer;margin-bottom:20px"/></a>
             </div>
           </li>
+          <!-- /Profile Picture -->
           <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
         </ul>
-        <span
-          v-if="userProfile.id == getCurrentUser"
-          @click="editProfile"
-          id="edit_profile"
-          class="glyphicon glyphicon-pencil"
-          style="cursor:pointer; margin-left:1%; margin-top:40%">
-        </span>
+        <a class="btn btn-mdb btn-sm" v-if="userProfile.id == getCurrentUser" @click="editProfile" id="edit_profile">
+          <span style="color: white; margin-right: 10px;" class="glyphicon glyphicon-pencil"></span>Edit Profile
+        </a>
       </div>
       <div class="grid col-sm-9">
         <div class="grid-sizer"></div>
@@ -201,16 +199,14 @@ export default {
   .btn {
   font-weight: bold;
   }
-
   .profile-pic {
     min-height: 150px;
     max-height: 200px;
     min-width: 150px;
   }
   #edit_profile {
-    display: block;
-    /* Not a good way to center, not responsive */
-    margin: 5% 0 5% 31%;
+    margin-bottom: 12px;
+    margin-top: 20px;
   }
   .profile-info {
     white-space: -moz-pre-wrap; /* Firefox */
