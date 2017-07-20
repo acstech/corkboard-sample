@@ -1,33 +1,33 @@
 <template>
-    <div>
-      <div class="col-sm-2 sidebar">
-        <ul class="nav nav-sidebar">
-          <h3 class="sub-header">User Profile</h3>
-          <!-- Profile Picture -->
-          <li>
-            <div id="profile_pic_container" class="logo-wrapper waves-light flex-center">
-              <a><img
-                v-if="userProfile.url"
-                @click="editProfile"
-                :src="userProfile.url"
-                class="profile-pic img-fluid flex-center"
-                alt="Upload a profile picture!"
-                style="cursor:pointer;margin-bottom:20px"/></a>
-            </div>
-          </li>
-          <!-- /Profile Picture -->
-          <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
-          <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
-          <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
-          <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
-        </ul>
-        <a class="btn btn-mdb btn-sm" v-if="userProfile.id == getCurrentUser" @click="editProfile" id="edit_profile">
-          <span style="color: white; margin-right: 10px;" class="glyphicon glyphicon-pencil"></span>Edit Profile
-        </a>
-      </div>
-      <div class="grid col-sm-9">
+    <div class="container-fluid flex-center">
+      <div class="grid">
+        <div class="col-sm-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <h3 class="sub-header">User Profile</h3>
+            <!-- Profile Picture -->
+            <li>
+              <div id="profile_pic_container" class="logo-wrapper waves-light flex-center">
+                <a><img
+                  v-if="userProfile.url"
+                  @click="editProfile"
+                  :src="userProfile.url"
+                  class="profile-pic img-fluid flex-center"
+                  alt="Upload a profile picture!"
+                  style="cursor:pointer;margin-bottom:20px"/></a>
+              </div>
+            </li>
+            <!-- /Profile Picture -->
+            <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
+            <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
+            <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
+            <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
+          </ul>
+          <a class="btn btn-mdb btn-sm" v-if="userProfile.id == getCurrentUser" @click="editProfile" id="edit_profile">
+            <span style="color: white; margin-right: 10px;" class="glyphicon glyphicon-pencil"></span>Edit Profile
+          </a>
+        </div>
         <div class="grid-sizer"></div>
-        <h1 v-if="!this.userProfile.items || this.userProfile.items.length == 0">No posts yet!</h1>
+        <h1 class="flex-center" v-if="!this.userProfile.items || this.userProfile.items.length == 0">No posts yet!</h1>
           <div class="grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
             <div class="thumbnail" @click="postPreview({post})">
               <!-- Show Primary image only -->
@@ -77,7 +77,7 @@ export default {
           selector: '.grid-item',
           columnWidth: 300,
           gutter: 20,
-          percentPosition: true
+          isFitWidth: true
         })
       })
     }
@@ -130,7 +130,7 @@ export default {
                     selector: '.grid-item',
                     columnWidth: 300,
                     gutter: 20,
-                    percentPosition: true
+                    isFitWidth: true
                   })
                 })
               })
@@ -192,10 +192,12 @@ export default {
   background: linear-gradient(to top, #ffffff, #d1d5d5);
   font-weight: bold;
   min-height: 400px;
+  min-width: 250px;
   box-shadow: 1px 1px 3px #4d4d4d;
   margin-right: .3%;
   margin-bottom: 5%;
   padding-bottom: 1%;
+  margin-left: 1px;
   }
   .btn {
   font-weight: bold;

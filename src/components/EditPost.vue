@@ -293,8 +293,8 @@ export default {
                 // eslint-disable-next-line no-unused-vars
                 var masonry = new Masonry('.grid', {
                   selector: '.grid-item',
-                  columnWidth: '.grid-sizer',
-                  percentPosition: true
+                  columnWidth: 300,
+                  isFitWidth: true
                 })
               })
             })
