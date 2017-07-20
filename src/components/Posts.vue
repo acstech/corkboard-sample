@@ -2,7 +2,7 @@
   <!-- This is where data should be retrieved from the DB and a v-for directive is used to iterate over the data -->
   <div class="row grid">
     <div class="grid-sizer col-xs-4"  style="margin:auto"></div>
-    <h1 v-if="allPosts.length == 0" style="color:black">No posts yet! Create one!</h1>
+    <h1 v-if="allPosts.length == 0">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
       <div class="thumbnail" @click="viewPost({post})">
         <img v-if="post.url" :src="post.url" alt="Post Picture">
@@ -159,7 +159,8 @@ export default {
     opacity: 1;
   }
   h1 {
-    color: white;
+    text-align: center;
+    color: black;
   }
   .center {
     margin: auto;
