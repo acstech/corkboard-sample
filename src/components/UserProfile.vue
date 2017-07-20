@@ -27,7 +27,7 @@
       </div>
       <div class="grid col-sm-9">
         <div class="grid-sizer"></div>
-        <h1 v-if="!this.userProfile.items || this.userProfile.items.length == 0" style="color:black">No posts yet!</h1>
+        <h1 v-if="!this.userProfile.items || this.userProfile.items.length == 0">No posts yet!</h1>
           <div class="grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
             <div class="thumbnail" @click="postPreview({post})">
               <!-- Show Primary image only -->
@@ -195,6 +195,7 @@ export default {
   box-shadow: 1px 1px 3px #4d4d4d;
   margin-right: .3%;
   margin-bottom: 5%;
+  padding-bottom: 1%;
   }
   .btn {
   font-weight: bold;
@@ -262,5 +263,9 @@ export default {
   }
   span.glyphicon-trash:hover:active {
     color: rgb(80,0,0);
+  }
+  h1 {
+    text-align: center;
+    color: black;
   }
 </style>
