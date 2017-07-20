@@ -21,13 +21,20 @@
 </template>
 
 <script>
+var _ = require('lodash')
 var glyphicon
 import { Masonry, imagesLoaded } from '../main'
 import axios from 'axios'
 export default {
   computed: {
     allPosts () {
-      return this.$store.state.allPosts
+      return _.sortBy(this.$store.state.allPosts, 'date').reverse()
+    },
+    allPostsSortLow () {
+      return _.sortBy(this.$store.state.allPosts, 'price')
+    },
+    allPostsSortHigh () {
+      return _.sortBy(this.$store.state.allPosts, 'price').reverse()
     }
   },
   mounted () {

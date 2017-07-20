@@ -10,7 +10,7 @@
         </div>
         <form @submit.prevent="logIn()">
             <div class="md-form">
-              <label>Enter your Email</label>
+              <label>Email</label>
                 <input
                         type="text"
                         class="form-control"
@@ -21,7 +21,7 @@
                 >
             </div>
             <div class="md-form">
-              <label>Enter your Password</label>
+              <label>Password</label>
                 <input
                         type="password"
                         class="form-control"

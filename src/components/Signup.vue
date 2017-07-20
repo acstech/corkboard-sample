@@ -10,7 +10,7 @@
         </div>
         <form @submit.prevent="register()" onsubmit="return passwordAccept()">
             <div class="md-form">
-              <label>Email Address</label>
+              <label>Email</label>
                 <input
                         type="email"
                         class="form-control"
