@@ -111,8 +111,8 @@ export default {
         color: #2c3e50;
     }
     .container-fluid {
-      padding-left: 3%;
-      padding-right: 3%;
+      padding-left: 2%;
+      padding-right: 2%;
     }
     .navbar {
       box-shadow: 1px 2px 5px black;

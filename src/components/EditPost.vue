@@ -8,11 +8,9 @@
       </div>
 
       <form @submit.prevent="updatePost">
-        <div class="md-form">
-          <label for="files" class="control-label">Images</label>
-          <div class="btn btn-blue-grey btn-sm">
-            <span>Choose Files</span>
-            <input type="file" id="files" class="input-file" @change="update" accept="image/*" multiple>
+          <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
+          <div class="md-form flex-center">
+            <input type="file" id="files" class="input-file btn btn-blue-grey" @change="update" accept="image/*" multiple>
           </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
@@ -20,23 +18,22 @@
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
           </div>
-        </div>
         <label class="edit-label">Title</label>
         <div class="md-form">
-          <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50" required>
+          <input type="text" v-model="currentPost.name" class="form-control" maxlength="50" required>
         </div>
         <label class="edit-label">Price</label>
         <div class="md-form">
-          <money v-model="currentPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
+          <money v-model="currentPost.price" v-bind="moneyConfig" class="form-control currency"></money>
         </div>
         <label class="edit-label">Description</label>
         <div class="md-form">
-          <textarea rows="5" class="md-textarea" v-model="currentPost.itemdesc" maxlength="2000" required></textarea>
+          <textarea rows="5" class="md-textarea" v-model="currentPost.description" maxlength="2000" required></textarea>
         </div>
         <div class="form-group">
           <label class="form-label">
             Category
-            <select class="form-control" v-model="currentPost.itemcat">
+            <select class="form-control" v-model="currentPost.category">
               <option value="None">None</option>
               <option value="Apparel">Apparel</option>
               <option value="Appliances">Appliances</option>
@@ -86,10 +83,10 @@ export default {
         picid: []
       },
       updatedPost: {
-        itemname: '',
-        itemprice: 0.00,
-        itemdesc: '',
-        itemcat: '',
+        name: '',
+        price: 0.00,
+        description: '',
+        category: '',
         salestatus: '',
         picid: []
       },
@@ -264,17 +261,17 @@ export default {
       // Save the image uploads
       this.saveImages()
       // Set the rest of the data to update or persist
-      this.updatedPost.itemid = this.currentPost.itemid // Should not change
-      this.updatedPost.itemname = this.currentPost.itemname
-      this.updatedPost.itemdesc = this.currentPost.itemdesc
-      this.updatedPost.itemcat = this.currentPost.itemcat
+      this.updatedPost.id = this.currentPost.id // Should not change
+      this.updatedPost.name = this.currentPost.name
+      this.updatedPost.description = this.currentPost.description
+      this.updatedPost.category = this.currentPost.category
       this.updatedPost.picid = this.currentPost.picid
-      this.updatedPost.itemprice = this.currentPost.itemprice
+      this.updatedPost.price = this.currentPost.price
       this.updatedPost.salestatus = this.currentPost.salestatus
       // Make a call to Corkboard API to update the edited post
       axios({
         method: 'put',
-        url: '/api/items/edit/' + this.currentPost.itemid,
+        url: '/api/items/edit/' + this.currentPost.id,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         },

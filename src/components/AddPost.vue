@@ -8,11 +8,9 @@
       </div>
 
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
-          <div class="md-form">
-            <label for="files" class="control-label">Images</label>
-            <div class="btn btn-blue-grey btn-sm">
-              <span>Choose file</span>
-              <input type="file" @change="update" :name="uploadFieldName" accept="image/*" id="files" multiple>
+            <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
+            <div class="md-form flex-center">
+              <input type="file" class="btn btn-blue-grey" @change="update" :name="uploadFieldName" accept="image/*" id="files" multiple>
             </div>
             <p v-if="!validImageSize">Please upload an image under 5MB.</p>
             <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
@@ -29,22 +27,21 @@
               <pre>{{ uploadError }}</pre>
             </div>
             <div id="preview"></div>
-          </div>
           <div class="md-form">
-            <input v-model="newPost.itemname" type="text" id="title" class="form-control" maxlength="50" required>
+            <input v-model="newPost.name" type="text" id="title" class="form-control" maxlength="50" required>
             <label for="title">Title</label>
           </div>
           <div class="md-form">
             <label>Price</label>
-            <money v-model="newPost.itemprice" id="price" v-bind="moneyConfig" class="form-control currency"></money>
+            <money v-model="newPost.price" id="price" v-bind="moneyConfig" class="form-control currency"></money>
           </div>
           <div class="md-form">
-            <textarea v-model="newPost.itemdesc" rows="5" class="md-textarea" required maxlength="2000"></textarea>
+            <textarea v-model="newPost.description" rows="5" class="md-textarea" required maxlength="2000"></textarea>
             <label class="control-label">Description</label>
           </div>
           <div class="form-group">
             <label class="control-label">Category</label>
-              <select class="form-control" v-model="newPost.itemcat">
+              <select class="form-control" v-model="newPost.category" required>
                 <option value="None">None</option>
                 <option value="Apparel">Apparel</option>
                 <option value="Appliances">Appliances</option>
@@ -82,11 +79,11 @@
         currentStatus: null,
         uploadFieldName: 'Image',
         newPost: {
-          itemname: '',
+          name: '',
           picid: [],
-          itemprice: 0.00,
-          itemdesc: '',
-          itemcat: '',
+          price: 0.00,
+          description: '',
+          category: '',
           salestatus: 'Available'
         },
         moneyConfig: {
@@ -288,7 +285,7 @@
                     }
                   })
                 vm.newPost = {}
-                vm.newPost.itemprice = 0.00
+                vm.newPost.price = 0.00
               }, 300)
             })
             .catch(error => {
@@ -344,7 +341,7 @@
                     console.log(error)
                   })
                 vm.newPost = {}
-                vm.newPost.itemprice = 0.00
+                vm.newPost.price = 0.00
               }, 300)
             })
             .catch(error => {
