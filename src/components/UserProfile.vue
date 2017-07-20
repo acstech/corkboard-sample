@@ -2,7 +2,7 @@
     <div>
       <div class="col-sm-2 sidebar">
         <ul class="nav nav-sidebar">
-          <h3 class="sub-header" style="padding-bottom:20px">User Profile</h3>
+          <h3 class="sub-header">User Profile</h3>
           <!-- Profile Picture -->
           <li>
             <div class="logo-wrapper waves-light">
@@ -186,10 +186,10 @@ export default {
 
 <style scoped>
 .sidebar {
-  background: -webkit-linear-gradient(bottom, #efe3e7, #ffffff);
-  background: -o-linear-gradient(top, #efe3e7, #ffffff);
-  background: -moz-linear-gradient(top, #efe3e7, #ffffff);
-  background: linear-gradient(to top, #efe3e7, #ffffff);
+  background: -webkit-linear-gradient(bottom, #ffffff, #d1d5d5);
+  background: -o-linear-gradient(top, #ffffff, #d1d5d5);
+  background: -moz-linear-gradient(top, #ffffff, #d1d5d5);
+  background: linear-gradient(to top, #ffffff, #d1d5d5);
   font-weight: bold;
   min-height: 400px;
   box-shadow: 1px 1px 3px #4d4d4d;
