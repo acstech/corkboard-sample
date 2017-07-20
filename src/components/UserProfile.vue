@@ -1,15 +1,19 @@
 <template>
-    <div class="row">
+    <div>
       <div class="col-sm-2 sidebar">
         <ul class="nav nav-sidebar">
           <h3 class="sub-header" style="padding-bottom:20px">User Profile</h3>
-          <img
-            v-if="userProfile.url"
-            @click="editProfile"
-            :src="userProfile.url"
-            class="profile-pic"
-            alt="Upload a profile picture!"
-            style="cursor:pointer;margin-bottom:20px"/>
+          <li>
+            <div class="logo-wrapper waves-light">
+              <a><img
+                v-if="userProfile.url"
+                @click="editProfile"
+                :src="userProfile.url"
+                class="profile-pic img-fluid flex-center"
+                alt="Upload a profile picture!"
+                style="cursor:pointer;margin-bottom:20px"/></a>
+            </div>
+          </li>
           <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
@@ -199,12 +203,6 @@ export default {
   }
 
   .profile-pic {
-    border: solid white 2px;
-    margin-top: 10px;
-    width: 50%;
-    height: 50%;
-    max-height: 200px;
-    max-width: 200px;
     min-height: 150px;
     min-width: 150px;
   }
