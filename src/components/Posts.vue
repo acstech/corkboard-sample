@@ -8,8 +8,8 @@
         <img v-if="post.url" :src="post.url" alt="Post Picture">
         <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">
         <div class="caption">
-          {{ post.itemname }}
-          <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
+          {{ post.name }}
+          <h4><div class="Price" v-if="post.price != 0">{{ post.price | currency }}</div>
             <div class="Price" v-else>Free</div>
             <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
           </h4>
@@ -70,7 +70,7 @@ export default {
       .then(res => {
         this.$store.commit('getActivePost', {post: post.post})
         this.$store.commit('getActiveEmail', {user: res.data})
-        var item = this.$store.state.activePost.itemname
+        var item = this.$store.state.activePost.name
         var email = this.$store.state.activeEmail
         var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
         window.location.href = 'mailto:' + email + '?subject=' + subject
@@ -82,7 +82,7 @@ export default {
     viewPost (post) {
       axios({
         method: 'get',
-        url: '/api/items/' + post.post.itemid,
+        url: '/api/items/' + post.post.id,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         }
@@ -104,7 +104,7 @@ export default {
               console.log(error)
             })
           this.$store.commit('getActivePost', {post: res.data})
-          this.$router.push('/viewPost/' + post.post.itemid)
+          this.$router.push('/viewPost/' + post.post.id)
         }
         glyphicon = false
       })

@@ -28,20 +28,20 @@
             </div>
             <div id="preview"></div>
           <div class="md-form">
-            <input v-model="newPost.itemname" type="text" id="title" class="form-control" maxlength="50" required>
+            <input v-model="newPost.name" type="text" id="title" class="form-control" maxlength="50" required>
             <label for="title">Title</label>
           </div>
           <div class="md-form">
             <label>Price</label>
-            <money v-model="newPost.itemprice" id="price" v-bind="moneyConfig" class="form-control currency"></money>
+            <money v-model="newPost.price" id="price" v-bind="moneyConfig" class="form-control currency"></money>
           </div>
           <div class="md-form">
-            <textarea v-model="newPost.itemdesc" rows="5" class="md-textarea" required maxlength="2000"></textarea>
+            <textarea v-model="newPost.description" rows="5" class="md-textarea" required maxlength="2000"></textarea>
             <label class="control-label">Description</label>
           </div>
           <div class="form-group">
             <label class="control-label">Category</label>
-              <select class="form-control" v-model="newPost.itemcat">
+              <select class="form-control" v-model="newPost.category" required>
                 <option value="None">None</option>
                 <option value="Apparel">Apparel</option>
                 <option value="Appliances">Appliances</option>
@@ -79,11 +79,11 @@
         currentStatus: null,
         uploadFieldName: 'Image',
         newPost: {
-          itemname: '',
+          name: '',
           picid: [],
-          itemprice: 0.00,
-          itemdesc: '',
-          itemcat: '',
+          price: 0.00,
+          description: '',
+          category: '',
           salestatus: 'Available'
         },
         moneyConfig: {
@@ -285,7 +285,7 @@
                     }
                   })
                 vm.newPost = {}
-                vm.newPost.itemprice = 0.00
+                vm.newPost.price = 0.00
               }, 300)
             })
             .catch(error => {
@@ -341,7 +341,7 @@
                     console.log(error)
                   })
                 vm.newPost = {}
-                vm.newPost.itemprice = 0.00
+                vm.newPost.price = 0.00
               }, 300)
             })
             .catch(error => {

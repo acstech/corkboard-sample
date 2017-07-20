@@ -3,7 +3,7 @@
     <div class="modal-mask" id="mask" transition="modal">
       <div class="modal-container">
       <div class="modal-header">
-        <h3 class="modal-title">{{ currentPost.itemname }}</h3>
+        <h3 class="modal-title">{{ currentPost.name }}</h3>
         <router-link class="close" to="/">&times;</router-link>
       </div>
 
@@ -28,9 +28,9 @@
           </a>
         </div>
         <div class="info">
-          <h4>{{ currentPost.itemprice | currency }}</h4>
+          <h4>{{ currentPost.price | currency }}</h4>
           <h4 class="seller">Being sold by {{ activeSeller }}</h4>
-          <p>{{ currentPost.itemdesc }}</p>
+          <p>{{ currentPost.description }}</p>
         </div>
       </div>
 
@@ -79,7 +79,7 @@ export default {
     // For now, the contact seller method uses the default mailto functionality to allow the user
     // to send them an email about the specific item they are viewing.
     contactSeller () {
-      var item = this.$store.state.activePost.itemname
+      var item = this.$store.state.activePost.name
       var email = this.$store.state.activeEmail
       var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
       window.location.href = 'mailto:' + email + '?subject=' + subject
