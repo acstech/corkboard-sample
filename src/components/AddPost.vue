@@ -78,6 +78,9 @@
         uploadError: null,
         currentStatus: null,
         uploadFieldName: 'Image',
+        countPost: {
+          picid: []
+        },
         newPost: {
           name: '',
           picid: [],
@@ -100,6 +103,9 @@
           // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
           masked: true
         },
+        wasreset: false,
+        numImages: 0,
+        numImages2: 0,
         validImageSize: true,
         validNumOfImages: true
       }
@@ -152,6 +158,8 @@
         this.uploadedFiles = []
         this.uploadedFileURLs = []
         this.newPost.picid = []
+        this.countPost.picid = []
+        this.wasreset = true
         // Reset previous upload attempts and thumbnails
         let preview = document.getElementById('preview')
         preview.innerHTML = ''
@@ -162,10 +170,19 @@
         vm.validNumOfImages = true
         // Grab the file object from the form input
         let files = event.target.files
+        vm.numImages = vm.countPost.picid.length
+        vm.numImages2 = vm.newPost.picid.length
         // Check against the 5 maximum images constraint
-        if (files.length > 5) {
-          vm.validNumOfImages = false
-          return
+        if (vm.wasreset) {
+          if (files.length + vm.numImages > 5) {
+            vm.validNumOfImages = false
+            return
+          }
+        } else {
+          if (files.length + vm.numImages2 > 5) {
+            vm.validNumOfImages = false
+            return
+          }
         }
         vm.currentStatus = STATUS_SAVING
         // Grab updated files in latest upload
@@ -212,6 +229,7 @@
                   // Push information about the file to the appropriate arrays
                   vm.uploadedFiles.push({file: file, url: res.data.url})
                   vm.newPost.picid.push(res.data.picid)
+                  vm.countPost.picid.push(res.data.picid)
                 })
                 .catch(err => {
                   vm.uploadError = err.response
