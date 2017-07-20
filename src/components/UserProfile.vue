@@ -270,4 +270,22 @@ export default {
     text-align: center;
     color: black;
   }
+  @media (max-width: 700px) {
+    .sidebar {
+      background: -webkit-linear-gradient(bottom, #ffffff, #d1d5d5);
+      background: -o-linear-gradient(top, #ffffff, #d1d5d5);
+      background: -moz-linear-gradient(top, #ffffff, #d1d5d5);
+      background: linear-gradient(to top, #ffffff, #d1d5d5);
+      font-weight: bold;
+      height: 120px;
+      width: 300px;
+      overflow: scroll;
+      min-width: 250px;
+      box-shadow: 1px 1px 3px #4d4d4d;
+      margin-right: .3%;
+      margin-bottom: 5%;
+      padding-bottom: 1%;
+      margin-left: 1px;
+    }
+  }
 </style>
