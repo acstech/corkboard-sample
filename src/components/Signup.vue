@@ -47,7 +47,7 @@
               <div v-else-if="!passwordAccept" class="alert alert-danger">Passwords do not match... :(</div>
               <div v-else class="alert alert-success">Passwords match!</div>
             </div>
-            <input type="submit" class="btn btn-default" value="Register">
+            <input type="submit" class="btn btn-mdb" value="Register">
         </form>
     </div>
 </template>

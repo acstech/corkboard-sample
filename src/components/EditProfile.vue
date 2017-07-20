@@ -9,7 +9,7 @@
       <form @submit.prevent="saveProfileSettings" autocomplete="off">
         <div class="md-form">
           <label>Profile Picture</label>
-          <div class="btn btn-primary btn-sm">
+          <div class="btn btn-blue-grey btn-sm">
             <span>Choose Files</span>
             <input type="file" class="input-file" @change="update" accept="image/*">
           </div>
@@ -46,7 +46,7 @@
       </form>
       <div class="modal-footer text-right">
         <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel()">
-        <input type="submit" class="btn btn-primary" value="Save Changes" @click="saveProfileSettings()">
+        <input type="submit" class="btn btn-mdb" value="Save Changes" @click="saveProfileSettings()">
       </div>
     </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container" style="margin: auto">
               <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -24,11 +24,11 @@
                 </form>
               </div>
             </div>
-        </div>
-        <div class="container-fluid" style="margin-top:80px">
+        </nav>
+        <main class="container-fluid" style="margin-top:80px">
             <router-view></router-view>
             <router-view name="modal"></router-view>
-        </div>
+        </main>
     </div>
 </template>
 

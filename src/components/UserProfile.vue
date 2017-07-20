@@ -1,27 +1,29 @@
 <template>
-    <div class="row">
+    <div>
       <div class="col-sm-2 sidebar">
         <ul class="nav nav-sidebar">
-          <h3 class="sub-header" style="padding-bottom:20px">User Profile</h3>
-          <img
-            v-if="userProfile.url"
-            @click="editProfile"
-            :src="userProfile.url"
-            class="profile-pic"
-            alt="Upload a profile picture!"
-            style="cursor:pointer;margin-bottom:20px"/>
+          <h3 class="sub-header">User Profile</h3>
+          <!-- Profile Picture -->
+          <li>
+            <div class="logo-wrapper waves-light">
+              <a><img
+                v-if="userProfile.url"
+                @click="editProfile"
+                :src="userProfile.url"
+                class="profile-pic img-fluid flex-center"
+                alt="Upload a profile picture!"
+                style="cursor:pointer;margin-bottom:20px"/></a>
+            </div>
+          </li>
+          <!-- /Profile Picture -->
           <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
           <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
         </ul>
-        <span
-          v-if="userProfile.id == getCurrentUser"
-          @click="editProfile"
-          id="edit_profile"
-          class="glyphicon glyphicon-pencil"
-          style="cursor:pointer; margin-left:1%; margin-top:40%">
-        </span>
+        <a class="btn btn-mdb btn-sm" v-if="userProfile.id == getCurrentUser" @click="editProfile" id="edit_profile">
+          <span style="color: white; margin-right: 10px;" class="glyphicon glyphicon-pencil"></span>Edit Profile
+        </a>
       </div>
       <div class="grid col-sm-9">
         <div class="grid-sizer"></div>
@@ -184,10 +186,10 @@ export default {
 
 <style scoped>
 .sidebar {
-  background: -webkit-linear-gradient(bottom, #efe3e7, #ffffff);
-  background: -o-linear-gradient(top, #efe3e7, #ffffff);
-  background: -moz-linear-gradient(top, #efe3e7, #ffffff);
-  background: linear-gradient(to top, #efe3e7, #ffffff);
+  background: -webkit-linear-gradient(bottom, #ffffff, #d1d5d5);
+  background: -o-linear-gradient(top, #ffffff, #d1d5d5);
+  background: -moz-linear-gradient(top, #ffffff, #d1d5d5);
+  background: linear-gradient(to top, #ffffff, #d1d5d5);
   font-weight: bold;
   min-height: 400px;
   box-shadow: 1px 1px 3px #4d4d4d;
@@ -197,21 +199,14 @@ export default {
   .btn {
   font-weight: bold;
   }
-
   .profile-pic {
-    border: solid white 2px;
-    margin-top: 10px;
-    width: 50%;
-    height: 50%;
-    max-height: 200px;
-    max-width: 200px;
     min-height: 150px;
+    max-height: 200px;
     min-width: 150px;
   }
   #edit_profile {
-    display: block;
-    /* Not a good way to center, not responsive */
-    margin: 5% 0 5% 31%;
+    margin-bottom: 12px;
+    margin-top: 20px;
   }
   .profile-info {
     white-space: -moz-pre-wrap; /* Firefox */

@@ -10,7 +10,7 @@
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
           <div class="md-form">
             <label for="files" class="control-label">Images</label>
-            <div class="btn btn-primary btn-sm">
+            <div class="btn btn-blue-grey btn-sm">
               <span>Choose file</span>
               <input type="file" @change="update" :name="uploadFieldName" accept="image/*" id="files" multiple>
             </div>
@@ -58,7 +58,7 @@
           </div>
       <div class="modal-footer text-right">
       <p align="center">
-        <input type="submit" class="btn btn-raised btn-default" value="Post!">
+        <input type="submit" class="btn btn-raised btn-mdb" value="Post!">
       </p>
       </div>
       </form>
