@@ -145,13 +145,11 @@ export default {
       vm.numImages2 = vm.currentPost.picid.length
       // Check against the 5 maximum images constraint
       if (vm.wasreset) {
-        console.log(files.length + vm.numImages)
         if (files.length + vm.numImages > 5) {
           vm.validNumOfImages = false
           return
         }
       } else {
-        console.log(files.length + vm.numImages2)
         if (files.length + vm.numImages2 > 5) {
           vm.validNumOfImages = false
           return

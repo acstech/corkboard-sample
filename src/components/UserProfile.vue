@@ -89,7 +89,7 @@ export default {
     editPost (post) {
       glyphicon = true
       this.$store.commit('getActivePost', {post: post.post})
-      this.$router.push('/editPost/' + post.post.itemid)
+      this.$router.push('/editPost/' + post.post.id)
     },
     editProfile () {
       if (this.userProfile.id !== this.getCurrentUser) {
@@ -104,11 +104,11 @@ export default {
         // AXIOS: DELETE item call
         axios({
           method: 'delete',
-          url: '/api/items/delete/' + post.post.itemid,
+          url: '/api/items/delete/' + post.post.id,
           headers: {
             'Authorization': 'Bearer ' + this.$store.state.token
           },
-          data: post.post.itemid
+          data: post.post.id
         })
           // Retrieve updated user profile page
           .then(res => {
