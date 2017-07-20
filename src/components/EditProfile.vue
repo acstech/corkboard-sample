@@ -7,17 +7,14 @@
         <a @click="cancel()" class="close">&times;</a>
       </div>
       <form @submit.prevent="saveProfileSettings" autocomplete="off">
-        <div class="md-form">
-          <label>Profile Picture</label>
-          <div class="btn btn-blue-grey btn-sm">
-            <span>Choose Files</span>
-            <input type="file" class="input-file" @change="update" accept="image/*">
+          <label style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Profile Picture</label>
+          <div class="md-form flex-center">
+            <input type="file" class="input-file btn btn-blue-grey" @change="update" accept="image/*">
           </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <div id="preview">
             <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
           </div>
-        </div>
         <label class="edit-label">First Name</label>
         <div class="md-form">
           <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="40">

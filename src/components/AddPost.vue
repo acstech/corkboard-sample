@@ -8,11 +8,9 @@
       </div>
 
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
-          <div class="md-form">
-            <label for="files" class="control-label">Images</label>
-            <div class="btn btn-blue-grey btn-sm">
-              <span>Choose file</span>
-              <input type="file" @change="update" :name="uploadFieldName" accept="image/*" id="files" multiple>
+            <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
+            <div class="md-form flex-center">
+              <input type="file" class="btn btn-blue-grey" @change="update" :name="uploadFieldName" accept="image/*" id="files" multiple>
             </div>
             <p v-if="!validImageSize">Please upload an image under 5MB.</p>
             <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
@@ -29,7 +27,6 @@
               <pre>{{ uploadError }}</pre>
             </div>
             <div id="preview"></div>
-          </div>
           <div class="md-form">
             <input v-model="newPost.itemname" type="text" id="title" class="form-control" maxlength="50" required>
             <label for="title">Title</label>
