@@ -34,8 +34,8 @@
               <img v-if="shouldDisplayImage(post)" :src="post.url[0]" alt="...">
               <img v-else :src= "$store.state.defaultPostImage" alt="..." style="margin-top:20px">
               <div class="caption">
-                <h4>{{ post.itemname }}</h4>
-                <h5 v-if="post.itemprice != 0">{{ post.itemprice | currency }}</h5>
+                <h4>{{ post.name }}</h4>
+                <h5 v-if="post.price != 0">{{ post.price | currency }}</h5>
                 <h5 v-else>Free</h5>
                 <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
                 <p v-if="userProfile.id == getCurrentUser">
