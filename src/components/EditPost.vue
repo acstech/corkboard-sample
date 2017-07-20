@@ -82,6 +82,9 @@ export default {
       clonePost: {
         picid: []
       },
+      countPost: {
+        picid: []
+      },
       updatedPost: {
         name: '',
         price: 0.00,
@@ -131,6 +134,7 @@ export default {
       this.uploadedFiles = []
       this.uploadedFileURLs = []
       this.clonePost.picid = []
+      this.countPost.picid = []
       this.wasreset = true
       // Reset previous upload attempts and thumbnails
       let preview = document.getElementById('preview')
@@ -141,7 +145,7 @@ export default {
       vm.validImageSize = true
       vm.validNumOfImages = true
       let files = event.target.files
-      vm.numImages = vm.clonePost.picid.length
+      vm.numImages = vm.countPost.picid.length
       vm.numImages2 = vm.currentPost.picid.length
       // Check against the 5 maximum images constraint
       if (vm.wasreset) {
@@ -197,6 +201,7 @@ export default {
               .then(res => {
                 // Place URL and ID in new post data for saving
                 vm.uploadedFiles.push({file: file, url: res.data.url})
+                vm.countPost.picid.push(res.data.picid)
                 vm.clonePost.picid.push(res.data.picid)
                 vm.currentPost.picid.push(res.data.picid)
               })
