@@ -27,6 +27,7 @@
                         class="form-control"
                         v-model="credentials.password"
                         required
+                        maxlength="16"
                 >
             </div>
             <br>

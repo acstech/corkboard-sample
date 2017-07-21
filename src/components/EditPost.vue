@@ -28,7 +28,7 @@
         </div>
         <label class="edit-label">Description</label>
         <div class="md-form">
-          <textarea rows="5" class="md-textarea" v-model="currentPost.description" maxlength="2000" required></textarea>
+          <textarea rows="5" class="md-textarea" v-model="currentPost.description" maxlength="500" required></textarea>
         </div>
         <div class="form-group">
           <label class="form-label">

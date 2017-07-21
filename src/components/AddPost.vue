@@ -35,7 +35,7 @@
             <money v-model="newPost.price" id="price" v-bind="moneyConfig" class="form-control currency"></money>
           </div>
           <div class="md-form">
-            <textarea v-model="newPost.description" rows="5" class="md-textarea" required maxlength="2000"></textarea>
+            <textarea v-model="newPost.description" rows="5" class="md-textarea" required maxlength="500"></textarea>
             <label class="control-label">Description</label>
           </div>
           <div class="form-group">

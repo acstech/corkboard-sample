@@ -30,6 +30,7 @@
                         v-model="newUser.password"
                         @focus="showText2()"
                         required
+                        maxlength=16
                 >
             </div>
             <div id="text2" style="display:none"><p style="color:#656565">(Must be between 8-16 characters and contain one number and special character !@#$%^&*)</p></div>
@@ -41,6 +42,7 @@
                         v-model="newUser.confirm"
                         @focus="hideText()"
                         required
+                        maxlength=16
                 >
               <br>
               <div v-if="newUser.password == newUser.password && newUser.confirm == ''"></div>

@@ -17,11 +17,11 @@
           </div>
         <label class="edit-label">First Name</label>
         <div class="md-form">
-          <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="40">
+          <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="30">
         </div>
         <label class="edit-label">First Name</label>
         <div class="md-form">
-          <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="40">
+          <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="30">
         </div>
         <label class="edit-label">Email</label>
         <div class="md-form">
@@ -104,16 +104,13 @@ export default {
         var phoneNumber = document.getElementById('phoneNumber')
         phoneNumber.value = phoneFormat(phoneNumber.value)
       })
-
       // We need to manually format the phone number on page load
       document.getElementById('phoneNumber').value = phoneFormat(document.getElementById('phoneNumber').value)
     }
-
     // A function to format text to look like a phone number
     function phoneFormat (input) {
       // Strip all characters from the input except digits
       input = input.replace(/\D/g, '')
-
       // Based upon the length of the string, we add formatting as necessary
       var size = input.length
       if (size === 0) {
