@@ -350,8 +350,7 @@
                       var masonry = new Masonry('.grid', {
                         selector: '.grid-item',
                         columnWidth: 300,
-                        gutter: 20,
-                        isFitWidth: true
+                        gutter: 20
                       })
                     })
                   })
