@@ -1,6 +1,6 @@
 <template>
   <transition name="modal">
-    <div class="modal-mask" id="mask" transition="modal">
+    <div class="modal-mask" id="mask" transition="modal" @click="close" v-show="show">
       <div class="modal-container">
       <div class="modal-header">
         <h5 style="float:left; color:silver; margin-right:-70px">(Post preview)</h5>
@@ -42,6 +42,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      show: true
+    }
+  },
   computed: {
     currentPost () {
       return this.$store.state.activePost
@@ -73,6 +78,10 @@ export default {
     })
   },
   methods: {
+    close () {
+      this.$router.push('/viewProfile/' + this.getCurrentUser)
+      this.show = false
+    },
     cancel () {
       this.$router.push('/viewProfile/' + this.getCurrentUser)
     }

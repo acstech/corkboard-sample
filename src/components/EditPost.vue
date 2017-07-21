@@ -1,6 +1,6 @@
 <template>
   <transition name="modal">
-    <div class="modal-mask" id="mask" transition="modal">
+    <div class="modal-mask" id="mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container">
       <div class="modal-header">
         <h3>Edit Post</h3>
@@ -79,6 +79,7 @@ export default {
   },
   data () {
     return {
+      show: true,
       clonePost: {
         picid: []
       },
@@ -128,6 +129,10 @@ export default {
     })
   },
   methods: {
+    close () {
+      this.$router.push('/viewProfile/' + this.getCurrentUser)
+      this.show = false
+    },
     reset () {
       // this.validNumOfImages = true
       this.uploadError = null

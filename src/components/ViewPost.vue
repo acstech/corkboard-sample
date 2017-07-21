@@ -1,6 +1,6 @@
 <template>
   <transition name="modal">
-    <div class="modal-mask" id="mask" transition="modal">
+    <div class="modal-mask" id="mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container">
       <div class="modal-header">
         <h3 class="modal-title">{{ currentPost.name }}</h3>
@@ -48,6 +48,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      show: true
+    }
+  },
   computed: {
     currentPost () {
       return this.$store.state.activePost
@@ -76,6 +81,10 @@ export default {
     })
   },
   methods: {
+    close () {
+      this.$router.push('/')
+      this.show = false
+    },
     // For now, the contact seller method uses the default mailto functionality to allow the user
     // to send them an email about the specific item they are viewing.
     contactSeller () {

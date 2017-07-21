@@ -1,6 +1,5 @@
 <template>
-  <transition name="modal">
-    <div class="modal-mask" id="mask">
+    <div class="modal-mask" id="mask" @click="close" v-show="show">
       <div class="modal-container">
       <div class="modal-header">
         <h3>New Post</h3>
@@ -61,7 +60,6 @@
       </form>
       </div>
     </div>
-  </transition>
 </template>
 
 <script>
@@ -107,7 +105,8 @@
         numImages: 0,
         numImages2: 0,
         validImageSize: true,
-        validNumOfImages: true
+        validNumOfImages: true,
+        show: true
       }
     },
     computed: {
@@ -144,6 +143,14 @@
       })
     },
     methods: {
+      close () {
+        if (this.$route.path === '/addpost') {
+          this.$router.push('/')
+        } else {
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        }
+        this.show = false
+      },
       cancel () {
         if (this.$route.path === '/addpost') {
           this.$router.push('/')
