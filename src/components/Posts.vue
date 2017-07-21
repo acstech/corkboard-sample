@@ -1,4 +1,5 @@
 <template>
+  <transition name="fade">
   <!-- This is where data should be retrieved from the DB and a v-for directive is used to iterate over the data -->
   <div class="grid container flex-center">
     <div class="grid-sizer"></div>
@@ -19,6 +20,7 @@
       </div>
     </div>
   </div>
+  </transition>
 </template>
 
 <script>
@@ -31,8 +33,10 @@
     computed: {
       allPosts () {
         if (this.$store.state.sortValue === 'sortLow') {
+          this.$store.state.sortValue = ''
           return _.sortBy(this.$store.state.allPosts, 'price')
         } else if (this.$store.state.sortValue === 'sortHigh') {
+          this.$store.state.sortValue = ''
           return _.sortBy(this.$store.state.allPosts, 'price').reverse()
         } else {
           return _.sortBy(this.$store.state.allPosts, 'date').reverse()
@@ -195,5 +199,13 @@
   .center {
     margin: auto;
     max-width: 300px;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
   }
 </style>
