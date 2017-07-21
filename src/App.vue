@@ -34,10 +34,9 @@
                 <span class="caret"></span>
               </router-link>
               <ul class="dropdown-menu button-group">
-                <li><a @click="sort('sortDate')" class="dropdown-item" stlye="cursor:pointer">Recently added</a></li>
-                <li><a @click="sort('sortLow')" class="dropdown-item" style="cursor:pointer">Price: low to high</a></li>
-                <li><a @click="sort('sortHigh')" class="dropdown-item" style="cursor:pointer">Price: high to low</a>
-                </li>
+                <li><a @click.prevent="sort('sortDate')" class="dropdown-item" stlye="cursor:pointer">Recently added</a></li>
+                <li><a @click.prevent="sort('sortLow')" class="dropdown-item" style="cursor:pointer">Price: low to high</a></li>
+                <li><a @click.prevent="sort('sortHigh')" class="dropdown-item" style="cursor:pointer">Price: high to low</a></li>
               </ul>
             </li>
             <li v-if="getToken != null" @click="logOut()">
@@ -72,6 +71,7 @@
     },
     methods: {
       sort (sortValue) {
+        this.$store.state.sortValue = ''
         this.$store.commit('setSort', sortValue)
       },
       /* toHome will route to the home page if the user has a valid token (is authenticated).
