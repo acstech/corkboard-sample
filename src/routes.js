@@ -1,7 +1,7 @@
 /**
  * Created by savannahb on 6/13/17.
  */
-import ProductList from './components/ProductList.vue'
+import Posts from './components/Posts.vue'
 import Login from './components/Login.vue'
 import Signup from './components/Signup.vue'
 import AddPost from './components/AddPost.vue'
@@ -12,12 +12,12 @@ import EditPost from './components/EditPost.vue'
 import PostPreview from './components/PostPreview.vue'
 
 export const routes = [
-  {path: '', component: ProductList},
+  {path: '', component: Posts},
   {path: '/login', component: Login},
   {path: '/signup', component: Signup},
-  {path: '/addpost', components: {default: AddPost, modal: ProductList}},
+  {path: '/addpost', components: {default: AddPost, modal: Posts}},
   {path: '/addpost-profile', components: {default: AddPost, modal: UserProfile}},
-  {path: '/viewPost/:post_id', components: {default: ViewPost, modal: ProductList}},
+  {path: '/viewPost/:post_id', components: {default: ViewPost, modal: Posts}},
   {path: '/editPost/:post_id', components: {default: EditPost, modal: UserProfile}},
   {path: '/editProfile/:user_id', components: {default: EditProfile, modal: UserProfile}},
   {path: '/viewProfile/:user_id', component: UserProfile},
