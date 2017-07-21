@@ -64,7 +64,6 @@
 <script>
 import { Money } from 'v-money'
 import axios from 'axios'
-import { Masonry, imagesLoaded } from '../main'
 export default {
   computed: {
     currentPost () {
@@ -297,17 +296,6 @@ export default {
           })
             .then(res => {
               this.$store.commit('getViewedProfile', res.data)
-              // Reset masonry layout to prevent tile display issues
-              var posts = document.querySelectorAll('.grid')
-              imagesLoaded(posts, function () {
-                // eslint-disable-next-line no-unused-vars
-                var masonry = new Masonry('.grid', {
-                  selector: '.grid-item',
-                  columnWidth: 300,
-                  gutter: 20,
-                  isFitWidth: true
-                })
-              })
             })
             .catch(error => {
               console.log(error)

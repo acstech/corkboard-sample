@@ -64,7 +64,6 @@
 
 <script>
   import { Money } from 'v-money'
-  import { imagesLoaded, Masonry } from '../main'
   import axios from 'axios'
   // eslint-disable-next-line one-var
   const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3
@@ -292,16 +291,6 @@
                 })
                   .then(res2 => {
                     vm.$store.commit('getAllPosts', res2.data)
-                    // Reset masonry layout to prevent tile display issues
-                    var posts = document.querySelectorAll('.grid')
-                    imagesLoaded(posts, function () {
-                      // eslint-disable-next-line no-unused-vars
-                      var masonry = new Masonry('.grid', {
-                        selector: '.grid-item',
-                        columnWidth: 450,
-                        isFitWidth: true
-                      })
-                    })
                   })
                   .catch(error => {
                     // Route unauthenticated users to login
@@ -337,7 +326,6 @@
               let vm = this
               // After saving the new post, call the API to retrieve all items after the recent
               // addition. Helps update the DOM appropriately
-              // TODO: Conditional of where to make an axios call and final route depending on source page
               setTimeout(function () {
                 // Call the Corkboard API to retrieve user info again after
                 // adding the post.
@@ -350,16 +338,6 @@
                 })
                   .then(res => {
                     vm.$store.commit('getViewedProfile', res.data)
-                    // Reset masonry layout to prevent tile display issues
-                    var posts = document.querySelectorAll('.grid')
-                    imagesLoaded(posts, function () {
-                      // eslint-disable-next-line no-unused-vars
-                      var masonry = new Masonry('.grid', {
-                        selector: '.grid-item',
-                        columnWidth: 300,
-                        gutter: 20
-                      })
-                    })
                   })
                   .catch(error => {
                     console.log(error)
