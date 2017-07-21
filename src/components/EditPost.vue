@@ -133,6 +133,7 @@
       })
     },
     methods: {
+      // Closes the modal if its background is clicked
       close () {
         this.$router.push('/viewProfile/' + this.getCurrentUser)
         this.show = false

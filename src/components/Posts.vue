@@ -10,8 +10,8 @@
         <div class="caption">
           {{ post.name }}
           <h4>
-            <div class="Price" v-if="post.price != 0">{{ post.price | currency }}</div>
-            <div class="Price" v-else>Free</div>
+            <div class="price" v-if="post.price != 0">{{ post.price | currency }}</div>
+            <div class="price" v-else>Free</div>
             <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})"
                   style="float:left; cursor:pointer"></span>
           </h4>
@@ -158,7 +158,7 @@
     box-shadow: 6px 6px 10px #383838;
   }
 
-  .Price {
+  .price {
     float: right;
     color: maroon;
   }

@@ -8,16 +8,14 @@
         </div>
 
         <div class="modal-body">
-
+          <!-- Carousel pictures of items-->
           <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Wrapper for slides -->
             <div class="carousel-inner">
               <div :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
                 <img :src="url" alt="Picture" style="width:100%">
               </div>
             </div>
-
-            <!-- Left and right controls -->
+            <!-- Left and right carousel controls -->
             <a class="left carousel-control" href="#myCarousel" data-slide="prev" v-if="currentPost.url.length > 1">
               <span class="glyphicon glyphicon-chevron-left"></span>
               <span class="sr-only">Previous</span>
@@ -27,6 +25,7 @@
               <span class="sr-only">Next</span>
             </a>
           </div>
+          <!-- Post information -->
           <div class="info">
             <h4>{{ currentPost.price | currency }}</h4>
             <h4 class="seller">Being sold by {{ activeSeller }}</h4>
@@ -81,6 +80,7 @@
       })
     },
     methods: {
+      // Closes the modal if its background is clicked
       close () {
         this.$router.push('/')
         this.show = false

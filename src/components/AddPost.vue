@@ -137,6 +137,7 @@
       })
     },
     methods: {
+      // Closes the modal if its background is clicked
       close () {
         if (this.$route.path === '/addpost') {
           this.$router.push('/')
