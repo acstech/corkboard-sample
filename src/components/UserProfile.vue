@@ -83,6 +83,17 @@ export default {
       })
     }
   },
+  updated () {
+    var posts = document.querySelectorAll('.grid')
+    imagesLoaded(posts, function () {
+      // eslint-disable-next-line no-unused-vars
+      var masonry = new Masonry('.grid', {
+        selector: '.grid-item',
+        columnWidth: 300,
+        gutter: 20
+      })
+    })
+  },
   methods: {
     shouldDisplayImage (post) {
       return post.url && typeof post.url === typeof [] && post.url.length > 0
@@ -123,16 +134,6 @@ export default {
             })
               .then(res => {
                 this.$store.commit('getViewedProfile', res.data)
-                // Refresh grid layout to account for deleted post
-                var posts = document.querySelectorAll('.grid')
-                imagesLoaded(posts, function () {
-                  // eslint-disable-next-line no-unused-vars
-                  var masonry = new Masonry('.grid', {
-                    selector: '.grid-item',
-                    columnWidth: 300,
-                    gutter: 20
-                  })
-                })
               })
               .catch(error => {
                 console.log(error)

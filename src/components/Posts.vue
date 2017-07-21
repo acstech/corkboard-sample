@@ -64,6 +64,17 @@ export default {
         }
       })
   },
+  updated () {
+    var posts = document.querySelectorAll('.grid')
+    imagesLoaded(posts, function () {
+      // eslint-disable-next-line no-unused-vars
+      var masonry = new Masonry('.grid', {
+        selector: '.grid-item',
+        columnWidth: 450,
+        isFitWidth: true
+      })
+    })
+  },
   methods: {
     contactSeller (post) {
       glyphicon = true
