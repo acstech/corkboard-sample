@@ -9,8 +9,9 @@
         <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">
         <div class="caption">
           {{ post.name }}
-          <h4><div class="Price" v-if="post.price != 0">{{ post.price | currency }}</div>
-            <div class="Price" v-else>Free</div>
+          <h4>
+            <div class="price" v-if="post.price != 0">{{ post.price | currency }}</div>
+            <div class="price" v-else>Free</div>
             <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
           </h4>
           <br>
@@ -21,117 +22,118 @@
 </template>
 
 <script>
-var _ = require('lodash')
-var glyphicon
-import { Masonry, imagesLoaded } from '../main'
-import axios from 'axios'
-export default {
-  computed: {
-    allPosts () {
-      if (this.$store.state.sortValue === 'sortLow') {
-        return _.sortBy(this.$store.state.allPosts, 'price')
-      } else if (this.$store.state.sortValue === 'sortHigh') {
-        return _.sortBy(this.$store.state.allPosts, 'price').reverse()
-      } else {
-        return _.sortBy(this.$store.state.allPosts, 'date').reverse()
+  var _ = require('lodash')
+  var glyphicon
+  import { Masonry, imagesLoaded } from '../main'
+  import axios from 'axios'
+
+  export default {
+    computed: {
+      allPosts () {
+        if (this.$store.state.sortValue === 'sortLow') {
+          return _.sortBy(this.$store.state.allPosts, 'price')
+        } else if (this.$store.state.sortValue === 'sortHigh') {
+          return _.sortBy(this.$store.state.allPosts, 'price').reverse()
+        } else {
+          return _.sortBy(this.$store.state.allPosts, 'date').reverse()
+        }
       }
-    }
-  },
-  mounted () {
-    // Retrieve all items call to API
-    axios({
-      method: 'get',
-      url: '/api/items',
-      headers: {
-        'Authorization': 'Bearer ' + this.$store.state.token
-      }
-    })
-      .then(res => {
-        this.$store.commit('getAllPosts', res.data)
-        var posts = document.querySelectorAll('.grid')
-        imagesLoaded(posts, function () {
-          // eslint-disable-next-line no-unused-vars
-          var masonry = new Masonry('.grid', {
-            selector: '.grid-item',
-            columnWidth: 450,
-            isFitWidth: true
+    },
+    mounted () {
+      // Retrieve all items call to API
+      axios({
+        method: 'get',
+        url: '/api/items',
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        }
+      })
+        .then(res => {
+          this.$store.commit('getAllPosts', res.data)
+          var posts = document.querySelectorAll('.grid')
+          imagesLoaded(posts, function () {
+            // eslint-disable-next-line no-unused-vars
+            var masonry = new Masonry('.grid', {
+              selector: '.grid-item',
+              columnWidth: 450,
+              isFitWidth: true
+            })
           })
         })
-      })
-      .catch(error => {
-        if (error.response.status === 401) {
-          this.$router.push('/login')
-        }
-      })
-  },
-  updated () {
-    var posts = document.querySelectorAll('.grid')
-    imagesLoaded(posts, function () {
-      // eslint-disable-next-line no-unused-vars
-      var masonry = new Masonry('.grid', {
-        selector: '.grid-item',
-        columnWidth: 450,
-        isFitWidth: true
-      })
-    })
-  },
-  methods: {
-    contactSeller (post) {
-      glyphicon = true
-      axios({
-        method: 'get',
-        url: '/api/users/' + post.post.userid,
-        headers: {
-          'Authorization': 'Bearer ' + this.$store.state.token
-        }
-      })
-      .then(res => {
-        this.$store.commit('getActivePost', {post: post.post})
-        this.$store.commit('getActiveEmail', {user: res.data})
-        var item = this.$store.state.activePost.name
-        var email = this.$store.state.activeEmail
-        var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
-        window.location.href = 'mailto:' + email + '?subject=' + subject
-      })
-      .catch(error => {
-        console.log(error)
+        .catch(error => {
+          if (error.response.status === 401) {
+            this.$router.push('/login')
+          }
+        })
+    },
+    updated () {
+      var posts = document.querySelectorAll('.grid')
+      imagesLoaded(posts, function () {
+        // eslint-disable-next-line no-unused-vars
+        var masonry = new Masonry('.grid', {
+          selector: '.grid-item',
+          columnWidth: 450,
+          isFitWidth: true
+        })
       })
     },
-    viewPost (post) {
-      axios({
-        method: 'get',
-        url: '/api/items/' + post.post.id,
-        headers: {
-          'Authorization': 'Bearer ' + this.$store.state.token
-        }
-      })
-      .then(res => {
-        if (glyphicon !== true) {
-          axios({
-            method: 'get',
-            url: '/api/users/' + post.post.userid,
-            headers: {
-              'Authorization': 'Bearer ' + this.$store.state.token
-            }
+    methods: {
+      contactSeller (post) {
+        glyphicon = true
+        axios({
+          method: 'get',
+          url: '/api/users/' + post.post.userid,
+          headers: {
+            'Authorization': 'Bearer ' + this.$store.state.token
+          }
+        })
+          .then(res => {
+            this.$store.commit('getActivePost', {post: post.post})
+            this.$store.commit('getActiveEmail', {user: res.data})
+            var item = this.$store.state.activePost.name
+            var email = this.$store.state.activeEmail
+            var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
+            window.location.href = 'mailto:' + email + '?subject=' + subject
           })
-            .then(res => {
-              this.$store.commit('getActiveSeller', {user: res.data})
-              this.$store.commit('getActiveEmail', {user: res.data})
-            })
-            .catch(error => {
-              console.log(error)
-            })
-          this.$store.commit('getActivePost', {post: res.data})
-          this.$router.push('/viewPost/' + post.post.id)
-        }
-        glyphicon = false
-      })
-      .catch(error => {
-        console.log(error)
-      })
+          .catch(error => {
+            console.log(error)
+          })
+      },
+      viewPost (post) {
+        axios({
+          method: 'get',
+          url: '/api/items/' + post.post.id,
+          headers: {
+            'Authorization': 'Bearer ' + this.$store.state.token
+          }
+        })
+          .then(res => {
+            if (glyphicon !== true) {
+              axios({
+                method: 'get',
+                url: '/api/users/' + post.post.userid,
+                headers: {
+                  'Authorization': 'Bearer ' + this.$store.state.token
+                }
+              })
+                .then(res => {
+                  this.$store.commit('getActiveSeller', {user: res.data})
+                  this.$store.commit('getActiveEmail', {user: res.data})
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+              this.$store.commit('getActivePost', {post: res.data})
+              this.$router.push('/viewPost/' + post.post.id)
+            }
+            glyphicon = false
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     }
   }
-}
 </script>
 
 <style scoped>
@@ -139,6 +141,7 @@ export default {
     width: 450px;
     margin: auto;
   }
+
   .thumbnail {
     box-shadow: 1px 1px 4px #4d4d4d;
     border: none;
@@ -149,37 +152,46 @@ export default {
     margin-right: -1%;
     margin-top: -2%;
   }
+
   .thumbnail:hover {
     box-shadow: 6px 6px 10px #383838;
   }
-  .Price {
+
+  .price {
     float: right;
     color: maroon;
   }
+
   span.glyphicon {
     font-size: 1.1em;
     color: black;
   }
+
   .caption {
     white-space: -moz-pre-wrap; /* Firefox */
-    white-space: -o-pre-wrap;   /* Opera 7 */
-    word-wrap: break-word;      /* IE */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* IE */
     font-size: 18px;
     padding-top: 12px;
   }
+
   span.glyphicon:hover {
     color: lightgray;
   }
+
   span.glyphicon:hover:active {
     color: gray;
   }
+
   span:hover {
     opacity: 1;
   }
+
   h1 {
     text-align: center;
     color: black;
   }
+
   .center {
     margin: auto;
     max-width: 300px;
