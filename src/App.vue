@@ -17,7 +17,7 @@
                   <li><router-link to="/signup" v-if="getToken == null">Sign Up</router-link></li>
                   <li v-if="getToken != null" @click="addPost()"><router-link to="">Add Post</router-link></li>
                   <li v-if="getToken != null" @click="viewSettings()"><router-link to="">Profile Settings</router-link></li>
-                  <li v-if="getToken != null" class="nav-item dropdown btn-group">
+                  <li v-if="getToken != null && this.$route.path === '/'" class="nav-item dropdown btn-group">
                     <router-link to="" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                       Sort by
                       <span class="caret"></span>
@@ -49,6 +49,9 @@ import axios from 'axios'
 export default {
   name: 'app',
   computed: {
+    routePath () {
+      return this.$route.path
+    },
     getToken () {
       return this.$store.state.token
     },
