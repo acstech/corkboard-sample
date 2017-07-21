@@ -17,15 +17,18 @@
           </div>
         <label class="edit-label">First Name</label>
         <div class="md-form">
-          <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="40">
+          <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="30">
         </div>
         <label class="edit-label">First Name</label>
         <div class="md-form">
-          <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="40">
+          <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="30">
         </div>
         <label class="edit-label">Email</label>
         <div class="md-form">
           <input type="email" class="form-control" v-model="cloneUserProfile.email" required maxlength="40">
+        </div>
+        <div class="alert alert-danger" v-if="error">
+            <p>{{ error }}</p>
         </div>
         <label class="edit-label">Phone</label>
         <div class="md-form">
@@ -71,6 +74,8 @@ export default {
       },
       profileImage: {},
       phoneInputError: '',
+      error: '',
+      isError: false,
       previouslyUsedPicId: '',
       imageChanged: false,
       validImageSize: true,
@@ -104,16 +109,13 @@ export default {
         var phoneNumber = document.getElementById('phoneNumber')
         phoneNumber.value = phoneFormat(phoneNumber.value)
       })
-
       // We need to manually format the phone number on page load
       document.getElementById('phoneNumber').value = phoneFormat(document.getElementById('phoneNumber').value)
     }
-
     // A function to format text to look like a phone number
     function phoneFormat (input) {
       // Strip all characters from the input except digits
       input = input.replace(/\D/g, '')
-
       // Based upon the length of the string, we add formatting as necessary
       var size = input.length
       if (size === 0) {
@@ -248,8 +250,17 @@ export default {
         },
         data: this.updateUser
       })
+      .then(res => {
+      })
+      .catch(error => {
+        if (error.response.status === 400) {
+          this.error = 'The email you entered cannot be used.'
+          this.isError = true
+        }
+      })
     },
     saveProfileSettings () {
+      this.isError = false
       this.userProfile = this.cloneUserProfile
       // Makes sure to set up data object with all data needed for vuex call
       // *Honestly this is ridiculous and needs improvement, but it works for now*
@@ -272,21 +283,23 @@ export default {
         promises.push(this.updateProfile())
       }
       Promise.all(promises).then(res => {
-        this.getProfile()
-          .then(res => {
-            this.$store.commit('getViewedProfile', res.data)
-            this.$router.push('/viewProfile/' + this.getCurrentUser)
-          })
-          .catch(error => {
-            // Token expiry
-            if (error.response.status === 401) {
-              this.$store.commit('authenticate', null)
-              let vm = this
-              setTimeout(function () {
-                vm.$router.push('/login')
-              }, 100)
-            }
-          })
+        if (this.isError === false) {
+          this.getProfile()
+            .then(res => {
+              this.$store.commit('getViewedProfile', res.data)
+              this.$router.push('/viewProfile/' + this.getCurrentUser)
+            })
+            .catch(error => {
+              // Token expiry
+              if (error.response.status === 401) {
+                this.$store.commit('authenticate', null)
+                let vm = this
+                setTimeout(function () {
+                  vm.$router.push('/login')
+                }, 100)
+              }
+            })
+        }
       }).catch(err => {
         console.error(err)
       })
