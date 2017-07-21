@@ -28,13 +28,13 @@ import axios from 'axios'
 export default {
   computed: {
     allPosts () {
-      return _.sortBy(this.$store.state.allPosts, 'date').reverse()
-    },
-    allPostsSortLow () {
-      return _.sortBy(this.$store.state.allPosts, 'price')
-    },
-    allPostsSortHigh () {
-      return _.sortBy(this.$store.state.allPosts, 'price').reverse()
+      if (this.$store.state.sortValue === 'sortLow') {
+        return _.sortBy(this.$store.state.allPosts, 'price')
+      } else if (this.$store.state.sortValue === 'sortHigh') {
+        return _.sortBy(this.$store.state.allPosts, 'price').reverse()
+      } else {
+        return _.sortBy(this.$store.state.allPosts, 'date').reverse()
+      }
     }
   },
   mounted () {

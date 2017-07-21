@@ -30,6 +30,7 @@ const store = new Vuex.Store({
     // Perhaps a place to store the token?
     token: null,
     defaultPostImage: 'static/posttext.png',
+    currentSort: 'sortDate',
     // Likely not best practice to place these states here globally like this
     activePost: {
       id: '',
@@ -62,6 +63,9 @@ const store = new Vuex.Store({
   mutations: {
     authenticate (state, token) {
       state.token = token
+    },
+    setSort (state, sortValue) {
+      state.sortValue = sortValue
     },
     getActivePost (state, post) {
       var idArray = []
