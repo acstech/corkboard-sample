@@ -319,6 +319,7 @@
       background: -moz-linear-gradient(top, #ffffff, #d1d5d5);
       background: linear-gradient(to top, #ffffff, #d1d5d5);
       font-weight: bold;
+      max-width: 180px;
       overflow: scroll;
       box-shadow: 1px 1px 3px #4d4d4d;
       padding-bottom: 1%;
