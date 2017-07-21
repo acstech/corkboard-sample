@@ -10,7 +10,7 @@
       <form @submit.prevent="updatePost">
           <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
           <div class="md-form flex-center">
-            <input type="file" id="files" class="input-file btn btn-blue-grey" @change="update" accept="image/*" multiple>
+            <input type="file" id="files" class="input-file btn btn-blue-grey" @change="update" accept="image/jpeg,image/jpg,image/png" multiple>
           </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
