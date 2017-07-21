@@ -1,81 +1,70 @@
 <template>
   <transition name="modal">
-    <post-modal>
+    <div class="modal-mask" id="mask">
+      <div class="modal-container">
       <div class="modal-header">
         <h3>New Post</h3>
-        <router-link class="close" to="/">&times;</router-link>
+        <a class="close" @click="cancel">&times;</a>
       </div>
 
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
-      <div class="modal-body">
-        <b>Images (Max 5)</b>
-        <div class="dropbox">
-          <input
-            type="file"
-            id="files"
-            multiple
-            :name="uploadFieldName"
-            :disabled="isSaving"
-            @change="update"
-            accept="image/*"
-            class="input-file">
-        </div>
-        <p v-if="!validImageSize">Please upload an image under 5MB.</p>
-        <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-        <a class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</a>
-        <div v-if="isSuccess">
-          <p>Uploaded successfully.</p>
-        </div>
-        <!--FAILED-->
-        <div v-if="isFailed">
-          <p>Upload failed.</p>
-          <p>
-            <a href="javascript:void(0)" @click="reset">Try again</a>
-          </p>
-          <pre>{{ uploadError }}</pre>
-        </div>
-        <div id="preview"></div>
-        <label class="form-label">
-          Title
-          <p style="font-size: 12px">(Max 50 Characters)</p>
-          <input v-model="newPost.itemname" class="form-control" maxlength="50" required>
-        </label>
-        <label class="form-label">
-          Price
-          <money v-model="newPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
-        </label>
-        <label class="form-label">
-          Description
-          <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required maxlength="500"></textarea>
-        </label>
-        <label class="form-label">
-          Category
-          <select class="form-control" v-model="newPost.itemcat">
-            <option value="None">None</option>
-            <option value="Apparel">Apparel</option>
-            <option value="Appliances">Appliances</option>
-            <option value="Books and Movies">Books and Movies</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Furniture">Furniture</option>
-            <option value="Pets">Pets</option>
-            <option value="Toys and Games">Toys and Games</option>
-            <option value="Other">Other</option>
-          </select>
-        </label>
-      </div>
-
+            <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
+            <div class="md-form flex-center">
+              <input type="file" class="btn btn-blue-grey" @change="update" :name="uploadFieldName" accept="image/*" id="files" multiple>
+            </div>
+            <p v-if="!validImageSize">Please upload an image under 5MB.</p>
+            <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
+            <p class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</p>
+            <div v-if="isSuccess">
+              <p>Uploaded successfully.</p>
+            </div>
+            <!--FAILED-->
+            <div v-if="isFailed">
+              <p>Upload failed.</p>
+              <p>
+                <a href="javascript:void(0)" @click="reset">Try again</a>
+              </p>
+              <pre>{{ uploadError }}</pre>
+            </div>
+            <div id="preview"></div>
+          <div class="md-form">
+            <input v-model="newPost.name" type="text" id="title" class="form-control" maxlength="50" required>
+            <label for="title">Title</label>
+          </div>
+          <div class="md-form">
+            <label>Price</label>
+            <money v-model="newPost.price" id="price" v-bind="moneyConfig" class="form-control currency"></money>
+          </div>
+          <div class="md-form">
+            <textarea v-model="newPost.description" rows="5" class="md-textarea" required maxlength="500"></textarea>
+            <label class="control-label">Description</label>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Category</label>
+              <select class="form-control" v-model="newPost.category" required>
+                <option value="None">None</option>
+                <option value="Apparel">Apparel</option>
+                <option value="Appliances">Appliances</option>
+                <option value="Books and Movies">Books and Movies</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Pets">Pets</option>
+                <option value="Toys and Games">Toys and Games</option>
+                <option value="Other">Other</option>
+              </select>
+          </div>
       <div class="modal-footer text-right">
       <p align="center">
-        <input type="submit" class="btn btn-lg btn-default" value="Post!">
+        <input type="submit" class="btn btn-raised btn-mdb" value="Post!">
       </p>
       </div>
       </form>
-    </post-modal>
+      </div>
+    </div>
   </transition>
 </template>
 
 <script>
-  import PostModal from './PostModal.vue'
   import { Money } from 'v-money'
   import { imagesLoaded, Masonry } from '../main'
   import axios from 'axios'
@@ -89,12 +78,15 @@
         uploadError: null,
         currentStatus: null,
         uploadFieldName: 'Image',
+        countPost: {
+          picid: []
+        },
         newPost: {
-          itemname: '',
+          name: '',
           picid: [],
-          itemprice: 0.00,
-          itemdesc: '',
-          itemcat: '',
+          price: 0.00,
+          description: '',
+          category: '',
           salestatus: 'Available'
         },
         moneyConfig: {
@@ -111,6 +103,9 @@
           // If mask is false, outputs the number to the model. Otherwise outputs the masked string.
           masked: true
         },
+        wasreset: false,
+        numImages: 0,
+        numImages2: 0,
         validImageSize: true,
         validNumOfImages: true
       }
@@ -128,6 +123,9 @@
       isFailed () {
         return this.currentStatus === STATUS_FAILED
       },
+      getCurrentUser () {
+        return this.$store.state.currentUser
+      },
       getToken () {
         return this.$store.state.token
       }
@@ -136,8 +134,23 @@
       if (this.getToken === null) {
         this.$router.push('/login')
       }
+      // Allows modal close when pressing the ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.keyCode === 27 && (this.$route.path === '/addpost' || this.$route.path === '/')) {
+          this.$router.push('/')
+        } else if (e.keyCode === 27) {
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        }
+      })
     },
     methods: {
+      cancel () {
+        if (this.$route.path === '/addpost') {
+          this.$router.push('/')
+        } else {
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        }
+      },
       // reset form to initial state
       reset () {
         this.currentStatus = STATUS_INITIAL
@@ -145,6 +158,8 @@
         this.uploadedFiles = []
         this.uploadedFileURLs = []
         this.newPost.picid = []
+        this.countPost.picid = []
+        this.wasreset = true
         // Reset previous upload attempts and thumbnails
         let preview = document.getElementById('preview')
         preview.innerHTML = ''
@@ -155,10 +170,19 @@
         vm.validNumOfImages = true
         // Grab the file object from the form input
         let files = event.target.files
+        vm.numImages = vm.countPost.picid.length
+        vm.numImages2 = vm.newPost.picid.length
         // Check against the 5 maximum images constraint
-        if (files.length > 5) {
-          vm.validNumOfImages = false
-          return
+        if (vm.wasreset) {
+          if (files.length + vm.numImages > 5) {
+            vm.validNumOfImages = false
+            return
+          }
+        } else {
+          if (files.length + vm.numImages2 > 5) {
+            vm.validNumOfImages = false
+            return
+          }
         }
         vm.currentStatus = STATUS_SAVING
         // Grab updated files in latest upload
@@ -187,7 +211,7 @@
           // Setup a FilerReader to generate a NewImageURL for each image
           let picHasher = new FileReader()
           picHasher.onload = (function (file) {
-            return function (event) {
+            return function () {
               // Calls the Corkboard API to set up the new image(s)
               // Returns a Picture ID (key) and URL
               axios({
@@ -205,6 +229,7 @@
                   // Push information about the file to the appropriate arrays
                   vm.uploadedFiles.push({file: file, url: res.data.url})
                   vm.newPost.picid.push(res.data.picid)
+                  vm.countPost.picid.push(res.data.picid)
                 })
                 .catch(err => {
                   vm.uploadError = err.response
@@ -236,88 +261,127 @@
         // Populate image data and save to the URL before adding the post
         this.saveImages()
         // Call the Corkboard API and save the new post's data
-        axios({
-          method: 'post',
-          url: '/api/items/new',
-          headers: {
-            'Authorization': 'Bearer ' + this.$store.state.token
-          },
-          data: this.newPost
-        })
-          .then(res => {
-            let vm = this
-            // After saving the new post, call the API to retrieve all items after the recent
-            // addition. Helps update the DOM appropriately
-            setTimeout(function () {
-              // Retrieve all items call to Corkboard API
-              axios({
-                method: 'get',
-                url: '/api/items',
-                headers: {
-                  'Authorization': 'Bearer ' + vm.$store.state.token
-                }
-              })
-                .then(res2 => {
-                  vm.$store.commit('getAllPosts', res2.data)
-                  // Reset masonry layout to prevent tile display issues
-                  var posts = document.querySelectorAll('.grid-item')
-                  imagesLoaded(posts, function () {
-                    // eslint-disable-next-line no-unused-vars
-                    var masonry = new Masonry('.grid', {
-                      selector: '.grid-item',
-                      columnWidth: '.grid-sizer',
-                      percentPosition: true
-                    })
-                  })
-                })
-                .catch(error => {
-                  // Route unauthenticated users to login
-                  if (error.response.status === 401) {
-                    vm.$router.push('/login')
+        if (this.$route.path === '/addpost') {
+          axios({
+            method: 'post',
+            url: '/api/items/new',
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            },
+            data: this.newPost
+          })
+            .then(res => {
+              let vm = this
+              // After saving the new post, call the API to retrieve all items after the recent
+              // addition. Helps update the DOM appropriately
+              setTimeout(function () {
+                // Retrieve all items call to Corkboard API
+                axios({
+                  method: 'get',
+                  url: '/api/items',
+                  headers: {
+                    'Authorization': 'Bearer ' + vm.$store.state.token
                   }
                 })
-              vm.newPost = {}
-              vm.newPost.itemprice = 0.00
-            }, 300)
+                  .then(res2 => {
+                    vm.$store.commit('getAllPosts', res2.data)
+                    // Reset masonry layout to prevent tile display issues
+                    var posts = document.querySelectorAll('.grid')
+                    imagesLoaded(posts, function () {
+                      // eslint-disable-next-line no-unused-vars
+                      var masonry = new Masonry('.grid', {
+                        selector: '.grid-item',
+                        columnWidth: 450,
+                        isFitWidth: true
+                      })
+                    })
+                  })
+                  .catch(error => {
+                    // Route unauthenticated users to login
+                    if (error.response.status === 401) {
+                      vm.$router.push('/login')
+                    }
+                  })
+                vm.newPost = {}
+                vm.newPost.price = 0.00
+              }, 300)
+            })
+            .catch(error => {
+              // Token expiry
+              if (error.response.status === 401) {
+                this.$store.commit('authenticate', null)
+                let vm = this
+                setTimeout(function () {
+                  vm.$router.push('/login')
+                }, 100)
+              }
+            })
+          this.$router.push('/')
+        } else {
+          axios({
+            method: 'post',
+            url: '/api/items/new',
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            },
+            data: this.newPost
           })
-          .catch(error => {
-            // Token expiry
-            if (error.response.status === 401) {
-              this.$store.commit('authenticate', null)
+            .then(res => {
               let vm = this
+              // After saving the new post, call the API to retrieve all items after the recent
+              // addition. Helps update the DOM appropriately
+              // TODO: Conditional of where to make an axios call and final route depending on source page
               setTimeout(function () {
-                vm.$router.push('/login')
-              }, 100)
-            }
-          })
-        this.$router.push('/')
+                // Call the Corkboard API to retrieve user info again after
+                // adding the post.
+                axios({
+                  method: 'get',
+                  url: '/api/users/' + vm.getCurrentUser,
+                  headers: {
+                    'Authorization': 'Bearer ' + vm.$store.state.token
+                  }
+                })
+                  .then(res => {
+                    vm.$store.commit('getViewedProfile', res.data)
+                    // Reset masonry layout to prevent tile display issues
+                    var posts = document.querySelectorAll('.grid')
+                    imagesLoaded(posts, function () {
+                      // eslint-disable-next-line no-unused-vars
+                      var masonry = new Masonry('.grid', {
+                        selector: '.grid-item',
+                        columnWidth: 300,
+                        gutter: 20
+                      })
+                    })
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  })
+                vm.newPost = {}
+                vm.newPost.price = 0.00
+              }, 300)
+            })
+            .catch(error => {
+              // Token expiry
+              if (error.response.status === 401) {
+                this.$store.commit('authenticate', null)
+                let vm = this
+                setTimeout(function () {
+                  vm.$router.push('/login')
+                }, 100)
+              }
+            })
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        }
       }
     },
     components: {
-      postModal: PostModal,
       money: Money
     }
   }
 </script>
 
 <style scoped>
-  .thumbnail {
-    display: inline;
-    width: 100px;
-    height: 100px;
-    margin: 10px;
-  }
-  span.glyphicon {
-    font-size: 2.0em;
-    color: black;
-  }
-  span.glyphicon:hover {
-    color: maroon;
-  }
-  span:hover {
-    text-decoration: none;
-    color: white;
-  }
   .close {
     display: inline;
     float: right;
@@ -328,36 +392,8 @@
   .cancel {
     float: left;
   }
-  .currency {
-    position: relative;
-    width: 30%;
-    left: 35%;
-  }
-  .dropbox {
-    justify-content: center;
-  }
-  .input-file {
-    box-shadow: 1px 1px 2px #4d4d4d;
-    min-height: 30px;
-    padding: 4px;
-    margin-left: 23%;
-    margin-top: 6px;
-    margin-bottom: 10px;
-  }
-  .dropbox p {
-    font-size: 1.2em;
-    text-align: center;
-    padding: 50px 0;
-  }
-  input {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-
-  textarea {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-
-  select {
-    box-shadow: 1px 1px 2px #4d4d4d;
+  fieldset {
+    margin-top: 12px;
+    margin-bottom: 12px;
   }
 </style>

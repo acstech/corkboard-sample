@@ -1,16 +1,15 @@
 <template>
   <!-- This is where data should be retrieved from the DB and a v-for directive is used to iterate over the data -->
-  <div class="row grid">
-    <div class="grid-sizer col-xs-4"></div>
-    <h1 v-if="allPosts.length == 0" style="color:black">No posts yet! Create one!</h1>
+  <div class="grid container flex-center">
+    <div class="grid-sizer"></div>
+    <h1 v-if="allPosts.length == 0" class="flex-center">No posts yet! Create one!</h1>
     <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
       <div class="thumbnail" @click="viewPost({post})">
         <img v-if="post.url" :src="post.url" alt="Post Picture">
         <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">
-        <!--span class="text-content" style="cursor:default"><span @click = "viewPost({post})">  Location </span></span-->
         <div class="caption">
-          {{ post.itemname }}
-          <h4><div class="Price" v-if="post.itemprice != 0">{{ post.itemprice | currency }}</div>
+          {{ post.name }}
+          <h4><div class="Price" v-if="post.price != 0">{{ post.price | currency }}</div>
             <div class="Price" v-else>Free</div>
             <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
           </h4>
@@ -22,25 +21,23 @@
 </template>
 
 <script>
+var _ = require('lodash')
 var glyphicon
 import { Masonry, imagesLoaded } from '../main'
 import axios from 'axios'
 export default {
   computed: {
     allPosts () {
-      return this.$store.state.allPosts
+      return _.sortBy(this.$store.state.allPosts, 'date').reverse()
+    },
+    allPostsSortLow () {
+      return _.sortBy(this.$store.state.allPosts, 'price')
+    },
+    allPostsSortHigh () {
+      return _.sortBy(this.$store.state.allPosts, 'price').reverse()
     }
   },
   mounted () {
-    var posts = document.querySelectorAll('.grid-item')
-    imagesLoaded(posts, function () {
-      // eslint-disable-next-line no-unused-vars
-      var masonry = new Masonry('.grid', {
-        selector: '.grid-item',
-        columnWidth: '.grid-sizer',
-        percentPosition: true
-      })
-    })
     // Retrieve all items call to API
     axios({
       method: 'get',
@@ -51,6 +48,15 @@ export default {
     })
       .then(res => {
         this.$store.commit('getAllPosts', res.data)
+        var posts = document.querySelectorAll('.grid')
+        imagesLoaded(posts, function () {
+          // eslint-disable-next-line no-unused-vars
+          var masonry = new Masonry('.grid', {
+            selector: '.grid-item',
+            columnWidth: 450,
+            isFitWidth: true
+          })
+        })
       })
       .catch(error => {
         if (error.response.status === 401) {
@@ -71,7 +77,7 @@ export default {
       .then(res => {
         this.$store.commit('getActivePost', {post: post.post})
         this.$store.commit('getActiveEmail', {user: res.data})
-        var item = this.$store.state.activePost.itemname
+        var item = this.$store.state.activePost.name
         var email = this.$store.state.activeEmail
         var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
         window.location.href = 'mailto:' + email + '?subject=' + subject
@@ -83,7 +89,7 @@ export default {
     viewPost (post) {
       axios({
         method: 'get',
-        url: '/api/items/' + post.post.itemid,
+        url: '/api/items/' + post.post.id,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         }
@@ -105,7 +111,7 @@ export default {
               console.log(error)
             })
           this.$store.commit('getActivePost', {post: res.data})
-          this.$router.push('/viewPost/' + post.post.itemid)
+          this.$router.push('/viewPost/' + post.post.id)
         }
         glyphicon = false
       })
@@ -118,14 +124,19 @@ export default {
 </script>
 
 <style scoped>
+  .grid-item {
+    width: 450px;
+    margin: auto;
+  }
   .thumbnail {
     box-shadow: 1px 1px 4px #4d4d4d;
     border: none;
     cursor: default;
     -webkit-transition: box-shadow .5s;
     transition: box-shadow .5s;
-    margin-left: -4%;
-    margin-top: -1%;
+    margin-left: -3%;
+    margin-right: -1%;
+    margin-top: -2%;
   }
   .thumbnail:hover {
     box-shadow: 6px 6px 10px #383838;
@@ -151,31 +162,15 @@ export default {
   span.glyphicon:hover:active {
     color: gray;
   }
-  .text-content {
-  background: rgba(0,0,0,0.8);
-  color: white;
-  cursor: pointer;
-  display: table;
-  height: 60px;
-  left: 21px;
-  position: absolute;
-  width: 89%;
-  top: 6px;
-  opacity: 0;
-  -webkit-transition: opacity 500ms;
-  -moz-transition: opacity 500ms;
-  -o-transition: opacity 500ms;
-  transition: opacity 500ms;
-  }
-  span.text-content span {
-  display: table-cell;
-  text-align: center;
-  vertical-align: middle;
-  }
   span:hover {
     opacity: 1;
   }
   h1 {
-    color: white;
+    text-align: center;
+    color: black;
+  }
+  .center {
+    margin: auto;
+    max-width: 300px;
   }
 </style>

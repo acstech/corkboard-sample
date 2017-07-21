@@ -9,29 +9,29 @@
             <p>{{ error }}</p>
         </div>
         <form @submit.prevent="logIn()">
-            <div class="form-group">
+            <div class="md-form">
+              <label>Email</label>
                 <input
                         type="text"
                         class="form-control"
-                        placeholder="Enter your email"
                         v-model="credentials.email"
                         required
                         maxlength="40"
                         autofocus="autofocus"
-                        onfocus="this.select()"
                 >
             </div>
-            <div class="form-group">
+            <div class="md-form">
+              <label>Password</label>
                 <input
                         type="password"
                         class="form-control"
-                        placeholder="Enter your password"
                         v-model="credentials.password"
                         required
+                        maxlength="16"
                 >
             </div>
             <br>
-            <input type="submit" class="btn btn-default" value="Log In">
+            <input type="submit" class="btn btn-mdb" value="Log In">
         </form>
     </div>
 </template>
@@ -85,13 +85,5 @@ export default {
       box-shadow: 4px 4px 8px #4d4d4d;
       border-radius: 3px;
       margin-bottom: 20px;
-    }
-    input {
-      box-shadow: 4px 4px 8px #4d4d4d;
-      -webkit-transition: box-shadow .5s;
-      transition: box-shadow .5s;
-    }
-    input:hover {
-      box-shadow: none;
     }
 </style>

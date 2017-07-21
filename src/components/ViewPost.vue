@@ -1,19 +1,15 @@
 <template>
   <transition name="modal">
-    <post-modal>
+    <div class="modal-mask" id="mask" transition="modal">
+      <div class="modal-container">
       <div class="modal-header">
-        <h3 class="modal-title">{{ currentPost.itemname }}</h3>
+        <h3 class="modal-title">{{ currentPost.name }}</h3>
         <router-link class="close" to="/">&times;</router-link>
       </div>
 
       <div class="modal-body">
 
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ol class="carousel-indicators" v-if="currentPost.url.length > 1" v-for="(url, index) in currentPost.url">
-            <li data-target="#myCarousel" :data-slide-to="{index}" :class="{active : index === 0}"></li>
-          </ol>
-
           <!-- Wrapper for slides -->
           <div class="carousel-inner">
             <div :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
@@ -32,26 +28,25 @@
           </a>
         </div>
         <div class="info">
-          <h4>{{ currentPost.itemprice | currency }}</h4>
+          <h4>{{ currentPost.price | currency }}</h4>
           <h4 class="seller">Being sold by {{ activeSeller }}</h4>
-          <p>{{ currentPost.itemdesc }}</p>
+          <p>{{ currentPost.description }}</p>
         </div>
       </div>
 
       <div class="modal-footer">
         <p align="center">
-          <span class="btn btn-lg btn-default" style="margin-top:20px" @click="contactSeller()">
+          <span class="btn btn-lg btn-mdb" style="margin-top:20px" @click="contactSeller()">
             <span class="glyphicon glyphicon-envelope"></span> Contact
           </span>
         </p>
       </div>
-    </post-modal>
+      </div>
+    </div>
   </transition>
 </template>
 
 <script>
-// import axios from 'axios'
-import PostModal from './PostModal.vue'
 export default {
   computed: {
     currentPost () {
@@ -72,16 +67,23 @@ export default {
       this.$router.push('/login')
     }
   },
+  mounted () {
+    // Allows modal close when pressing the ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 27) {
+        this.$router.push('/')
+      }
+    })
+  },
   methods: {
+    // For now, the contact seller method uses the default mailto functionality to allow the user
+    // to send them an email about the specific item they are viewing.
     contactSeller () {
-      var item = this.$store.state.activePost.itemname
+      var item = this.$store.state.activePost.name
       var email = this.$store.state.activeEmail
       var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
       window.location.href = 'mailto:' + email + '?subject=' + subject
     }
-  },
-  components: {
-    postModal: PostModal
   }
 }
 </script>

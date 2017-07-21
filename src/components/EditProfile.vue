@@ -1,56 +1,57 @@
 <template>
   <transition name="modal">
-    <post-modal>
+    <div class="modal-mask" id="mask" transition="modal">
+      <div class="modal-container">
       <div class="modal-header">
         <h3>Edit Profile</h3>
         <a @click="cancel()" class="close">&times;</a>
       </div>
       <form @submit.prevent="saveProfileSettings" autocomplete="off">
-        <div class="modal-body">
-            <label class="form-label">
-              Profile Picture
-              <input type="file" class="form-control" @change="update" accept="image/*">
-            </label>
-            <p v-if="!validImageSize">Please upload an image under 5MB.</p>
-            <div id="preview">
-              <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
-            </div>
-            <label class="form-label">
-              First Name
-              <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="30">
-            </label>
-            <label class="form-label">
-              Last Name
-              <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="30">
-            </label>
-            <label class="form-label">
-              Email
-              <input type="email" class="form-control" v-model="cloneUserProfile.email" required maxlength="40">
-            </label>
-            <label class="form-label">
-              Phone
-              <input id="phoneNumber" type="tel" class="form-control" v-model="cloneUserProfile.phone" @keypress="numberPressed" minlength="16" maxlength="16">
-            </label>
-            <label class="form-label">
-              Zip
-              <input type="text" class="form-control" v-model="cloneUserProfile.zipcode" @keypress="numberPressed" minlength="5" maxlength="5">
-            </label>
-          <div class="alert alert-danger" v-if="phoneInputError">
-            <p>{{ phoneInputError }}</p>
+          <label style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Profile Picture</label>
+          <div class="md-form flex-center">
+            <input type="file" class="input-file btn btn-blue-grey" @change="update" accept="image/*">
           </div>
+          <p v-if="!validImageSize">Please upload an image under 5MB.</p>
+          <div id="preview">
+            <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
+          </div>
+        <label class="edit-label">First Name</label>
+        <div class="md-form">
+          <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="30">
+        </div>
+        <label class="edit-label">First Name</label>
+        <div class="md-form">
+          <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="30">
+        </div>
+        <label class="edit-label">Email</label>
+        <div class="md-form">
+          <input type="email" class="form-control" v-model="cloneUserProfile.email" required maxlength="40">
+        </div>
+        <label class="edit-label">Phone</label>
+        <div class="md-form">
+          <input id="phoneNumber" type="tel" class="form-control" v-model="cloneUserProfile.phone"
+                 @keypress="numberPressed" minlength="16" maxlength="16">
+        </div>
+        <label class="edit-label">Zip</label>
+        <div class="md-form">
+          <input type="text" class="form-control" v-model="cloneUserProfile.zipcode" @keypress="numberPressed"
+                 minlength="5" maxlength="5">
+        </div>
+        <div class="alert alert-danger" v-if="phoneInputError">
+          <p>{{ phoneInputError }}</p>
         </div>
       </form>
       <div class="modal-footer text-right">
         <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel()">
-        <input type="submit" class="btn btn-primary" value="Save Changes" @click="saveProfileSettings()">
+        <input type="submit" class="btn btn-mdb" value="Save Changes" @click="saveProfileSettings()">
       </div>
-    </post-modal>
+    </div>
+    </div>
   </transition>
 </template>
 
 <script>
 var _ = require('lodash')
-import PostModal from './PostModal.vue'
 import axios from 'axios'
 export default {
   data () {
@@ -66,10 +67,11 @@ export default {
         items: [],
         email: '',
         phone: '',
-        zip: ''
+        zipcode: ''
       },
       profileImage: {},
       phoneInputError: '',
+      previouslyUsedPicId: '',
       imageChanged: false,
       validImageSize: true
     }
@@ -89,22 +91,25 @@ export default {
     if (this.getToken === null) {
       this.$router.push('/login')
     } else {
+      // Allows modal close when pressing the ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.keyCode === 27) {
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        }
+      })
       this.cloneUserProfile = _.cloneDeep(this.UserProfile)
       // Begin phone number input validation ------------------
       document.getElementById('phoneNumber').addEventListener('keyup', function (evt) {
         var phoneNumber = document.getElementById('phoneNumber')
         phoneNumber.value = phoneFormat(phoneNumber.value)
       })
-
       // We need to manually format the phone number on page load
       document.getElementById('phoneNumber').value = phoneFormat(document.getElementById('phoneNumber').value)
     }
-
     // A function to format text to look like a phone number
     function phoneFormat (input) {
       // Strip all characters from the input except digits
       input = input.replace(/\D/g, '')
-
       // Based upon the length of the string, we add formatting as necessary
       var size = input.length
       if (size === 0) {
@@ -142,6 +147,7 @@ export default {
       let picDisplayer = new FileReader()
       picDisplayer.onload = (function (file) {
         return function (event) {
+          vm.imageChanged = true
           let picFile = event.target
           let preview = document.getElementById('preview')
           // Erase previous image's thumbnail
@@ -153,7 +159,7 @@ export default {
       // upload data to the server
       let picHasher = new FileReader()
       picHasher.onload = (function (file) {
-        return function (event) {
+        return function () {
           axios({
             method: 'post',
             url: '/api/image/new',
@@ -166,8 +172,8 @@ export default {
           })
             .then(res => {
               // Save image Url and ID for later image saving and profile saving
+              vm.previouslyUsedPicId = vm.cloneUserProfile.picid
               vm.cloneUserProfile.postUrl = res.data.url
-              console.log(res.data.url)
               vm.cloneUserProfile.picid = res.data.picid
             })
             .catch(err => {
@@ -179,13 +185,42 @@ export default {
       picDisplayer.readAsDataURL(file)
       picHasher.readAsBinaryString(file)
     },
+    // Saves the uploaded profile picture and
+    // deletes the previously used profile picture
+    // from the blob storage
     saveImage: function () {
-      // Save the uploaded profile picture
-      return axios({
-        method: 'put',
-        url: this.updateUser.postUrl,
-        data: this.profileImage
-      })
+      if (this.imageChanged === true) {
+        // If a new user uploads their first profile picture
+        // they will not have a defined picid for a previous picture.
+        // This if prevents an error throwing for
+        // deleting an undefined picid
+        if (this.previouslyUsedPicId === null) {
+          return axios({
+            method: 'put',
+            url: this.updateUser.postUrl,
+            data: this.profileImage
+          })
+        } else {
+          axios({
+            method: 'delete',
+            url: '/api/images/delete/' + this.previouslyUsedPicId,
+            data: this.previouslyUsedPicId,
+            headers: {
+              'Authorization': 'Bearer ' + this.$store.state.token
+            }
+          })
+          axios({
+            method: 'put',
+            url: this.updateUser.postUrl,
+            data: this.profileImage
+          })
+          .then(res => {
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
+      }
     },
     getProfile: function () {
       return axios({
@@ -220,7 +255,9 @@ export default {
       this.updateUser.items = this.cloneUserProfile.items
       this.updateUser.zipcode = this.cloneUserProfile.zipcode
       let promises = []
-      promises.push(this.saveImage())
+      if (this.imageChanged) {
+        promises.push(this.saveImage())
+      }
       this.updateUser.url = null
       if (this.validateEmail(this.userProfile.email)) {
         // Make API call to update the user info and refresh data on front-end
@@ -257,9 +294,6 @@ export default {
     cancel () {
       this.$router.push('/viewProfile/' + this.getCurrentUser)
     }
-  },
-  components: {
-    postModal: PostModal
   }
 }
 </script>
@@ -278,14 +312,14 @@ export default {
     height: 150px;
     display: inline;
   }
-
+  .edit-label {
+    float: left;
+    color: #5a5a5a;
+  }
   h3 {
     display: inline;
   }
   .cancel {
     float: left;
-  }
-  input {
-    box-shadow: 1px 1px 2px #4d4d4d;
   }
 </style>

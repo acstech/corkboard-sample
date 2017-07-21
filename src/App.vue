@@ -1,30 +1,49 @@
 <template>
     <div id="app">
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <ul class="nav navbar-nav">
-                  <div class="navbar-brand" @click="toHome" style="cursor:pointer"><img src="../static/generatedtext.png"></div>
+            <div>
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" @click="toHome" style="cursor:pointer"><img src="../static/generatedtext.png"></a>
+              </div>
+              <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav mr-auto">
                   <li @click="toHome"><router-link to="">Home</router-link></li>
-                    <li><router-link to="/login" v-if="getToken == null">Login</router-link></li>
-                    <li><router-link to="/signup" v-if="getToken == null">Sign Up</router-link></li>
-                    <li v-if="getToken != null"><router-link to="/addpost">Add Post</router-link></li>
-                    <li v-if="getToken != null" @click="viewSettings()"><router-link to="">Profile Settings</router-link></li>
-                    <li v-if="getToken != null" @click="logOut()"><router-link to="">Logout</router-link></li>
+                  <li><router-link to="/login" v-if="getToken == null">Login</router-link></li>
+                  <li><router-link to="/signup" v-if="getToken == null">Sign Up</router-link></li>
+                  <li v-if="getToken != null" @click="addPost()"><router-link to="">Add Post</router-link></li>
+                  <li v-if="getToken != null" @click="viewSettings()"><router-link to="">Profile Settings</router-link></li>
+                  <li v-if="getToken != null" class="nav-item dropdown btn-group">
+                    <router-link to="" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      Sort by
+                      <span class="caret"></span>
+                    </router-link>
+                    <ul class="dropdown-menu button-group" id="sorting">
+                      <li><a value="1" class="dropdown-item" stlye="cursor:pointer">Recently added</a></li>
+                      <li><a value="2" class="dropdown-item" style="cursor:pointer">Price: low to high</a></li>
+                      <li><a value="3" class="dropdown-item" style="cursor:pointer">Price: high to low</a></li>
+                    </ul>
+                  </li>
+                  <li v-if="getToken != null" @click="logOut()"><router-link to="">Logout</router-link></li>
                 </ul>
+                <form v-if="getToken != null" class="form-inline waves-effect waves-light">
+                    <input type="text" class="form-control" placeholder="Search" style="margin-top: 8px">
+                </form>
+              </div>
             </div>
         </nav>
-        <div class="container" style="margin-top:80px">
+        <main style="margin-top:80px">
             <router-view></router-view>
             <router-view name="modal"></router-view>
-        </div>
+        </main>
     </div>
 </template>
 
 <script>
-import ProductList from './components/ProductList.vue'
-import Login from './components/Login.vue'
-import Signup from './components/Signup.vue'
-import AddPost from './components/AddPost.vue'
 import axios from 'axios'
 
 export default {
@@ -45,6 +64,13 @@ export default {
         this.$router.push('/login')
       } else {
         this.$router.push('/')
+      }
+    },
+    addPost () {
+      if (this.$route.path === '/') {
+        this.$router.push('/addpost')
+      } else {
+        this.$router.push('/addpost-profile')
       }
     },
     logOut () {
@@ -80,12 +106,6 @@ export default {
           })
       }
     }
-  },
-  components: {
-    products: ProductList,
-    login: Login,
-    signup: Signup,
-    addPost: AddPost
   }
 }
 </script>
@@ -101,17 +121,14 @@ export default {
         text-align: center;
         color: #2c3e50;
     }
-
+    .container-fluid {
+      padding-left: 2%;
+      padding-right: 2%;
+    }
     .navbar {
       box-shadow: 1px 2px 5px black;
       font-weight: bold;
       margin-bottom: 0;
-    }
-
-    .navbar-default {
-      background-color: white;
-      background-image: none;
-      background-repeat: no-repeat;
     }
 
     h1, h2 {
@@ -133,28 +150,27 @@ export default {
     }
 
     .modal-mask {
-        position: fixed;
-        z-index: 9998;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, .5);
-        transition: opacity .5s ease;
+      position: fixed;
+      z-index: 9998;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .5);
+      transition: opacity .5s ease;
     }
 
     .modal-container {
-        width: 600px;
-        height: auto;
-        max-height: 900px;
-        overflow: scroll;
-        margin: 50px auto 0;
-        padding: 20px 30px;
-        background-color: #fff;
-        border-radius: 2px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-        transition: all .5s ease;
-        font-family: Helvetica, Arial, sans-serif;
+      width: 600px;
+      max-height: 800px;
+      overflow: scroll;
+      margin: 50px auto 0;
+      padding: 20px 30px;
+      background-color: #fff;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+      transition: all .5s ease;
+      font-family: Helvetica, Arial, sans-serif;
     }
 
     .modal-header h3 {
@@ -170,30 +186,12 @@ export default {
         text-align: right;
     }
 
-    .form-label {
-        display: block;
-        margin-bottom: 1em;
-    }
-
-    .form-label > .form-control {
-        margin-top: 0.5em;
-    }
-
-    .form-control {
-        display: block;
-        width: 100%;
-        padding: 0.5em 1em;
-        line-height: 1.5;
-        border: 1px solid #ddd;
-    }
-
     .modal-enter, .modal-leave {
-        opacity: 0;
+      opacity: 0;
     }
-
     .modal-enter .modal-container,
     .modal-leave .modal-container {
-        -webkit-transform: scale(1.1);
-        transform: scale(1.1);
+      -webkit-transform: scale(1.1);
+      transform: scale(1.1);
     }
 </style>

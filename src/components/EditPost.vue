@@ -1,39 +1,39 @@
 <template>
   <transition name="modal">
-    <post-modal>
+    <div class="modal-mask" id="mask" transition="modal">
+      <div class="modal-container">
       <div class="modal-header">
         <h3>Edit Post</h3>
         <a class="close" @click="cancel()">&times;</a>
       </div>
 
       <form @submit.prevent="updatePost">
-      <div class="modal-body">
-          <label class="form-label">
-            Images (Max 5)
-            <input type="file" id="files" class="form-control input-file" @change="update" accept="image/*" multiple>
-          </label>
+          <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
+          <div class="md-form flex-center">
+            <input type="file" id="files" class="input-file btn btn-blue-grey" @change="update" accept="image/*" multiple>
+          </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-          <a @click="reset">Reset Uploads</a>
+          <p @click="reset" style="cursor:pointer">Reset Uploads</p>
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
           </div>
-          <label class="form-label">
-            Title
-            <p style="font-size: 12px">(Max 50 Characters)</p>
-            <input type="text" v-model="currentPost.itemname" class="form-control" maxlength="50" required>
-          </label>
-          <label class="form-label">
-            Price
-            <money v-model="currentPost.itemprice" v-bind="moneyConfig" class="form-control currency"></money>
-          </label>
-          <label class="form-label">
-            Description
-            <textarea rows="5" class="form-control" v-model="currentPost.itemdesc" maxlength="500" required></textarea>
-          </label>
+        <label class="edit-label">Title</label>
+        <div class="md-form">
+          <input type="text" v-model="currentPost.name" class="form-control" maxlength="50" required>
+        </div>
+        <label class="edit-label">Price</label>
+        <div class="md-form">
+          <money v-model="currentPost.price" v-bind="moneyConfig" class="form-control currency"></money>
+        </div>
+        <label class="edit-label">Description</label>
+        <div class="md-form">
+          <textarea rows="5" class="md-textarea" v-model="currentPost.description" maxlength="500" required></textarea>
+        </div>
+        <div class="form-group">
           <label class="form-label">
             Category
-            <select class="form-control" v-model="currentPost.itemcat">
+            <select class="form-control" v-model="currentPost.category">
               <option value="None">None</option>
               <option value="Apparel">Apparel</option>
               <option value="Appliances">Appliances</option>
@@ -45,24 +45,23 @@
               <option value="Other">Other</option>
             </select>
           </label>
+        </div>
           <label class="form-label">
             Sale Status:
             <input type="radio" v-model="currentPost.salestatus" name="salestatus" value="Available" style="box-shadow:none"> Available
             <input type="radio" v-model="currentPost.salestatus" name="salestatus" value="Sale Pending" style="box-shadow:none"> Sale Pending
           </label>
-      </div>
-
       <div class="modal-footer text-right">
         <button class="btn btn-danger cancel" @click.prevent="cancel()">Cancel</button>
-        <input type="submit" class="btn btn-primary" value="Save Changes">
+        <input type="submit" class="btn btn-mdb" value="Save Changes">
       </div>
       </form>
-    </post-modal>
+      </div>
+    </div>
   </transition>
 </template>
 
 <script>
-import PostModal from './PostModal.vue'
 import { Money } from 'v-money'
 import axios from 'axios'
 import { Masonry, imagesLoaded } from '../main'
@@ -83,11 +82,14 @@ export default {
       clonePost: {
         picid: []
       },
+      countPost: {
+        picid: []
+      },
       updatedPost: {
-        itemname: '',
-        itemprice: 0.00,
-        itemdesc: '',
-        itemcat: '',
+        name: '',
+        price: 0.00,
+        description: '',
+        category: '',
         salestatus: '',
         picid: []
       },
@@ -108,6 +110,8 @@ export default {
       uploadedFiles: [],
       uploadedFileURLs: [],
       wasreset: false,
+      numImages: 0,
+      numimages2: 0,
       validImageSize: true,
       validNumOfImages: true
     }
@@ -116,13 +120,21 @@ export default {
     if (this.getToken === null) {
       this.router.push('/login')
     }
+    // Allows modal close when pressing the ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 27) {
+        this.$router.push('/viewProfile/' + this.getCurrentUser)
+      }
+    })
   },
   methods: {
     reset () {
+      // this.validNumOfImages = true
       this.uploadError = null
       this.uploadedFiles = []
       this.uploadedFileURLs = []
       this.clonePost.picid = []
+      this.countPost.picid = []
       this.wasreset = true
       // Reset previous upload attempts and thumbnails
       let preview = document.getElementById('preview')
@@ -133,10 +145,19 @@ export default {
       vm.validImageSize = true
       vm.validNumOfImages = true
       let files = event.target.files
+      vm.numImages = vm.countPost.picid.length
+      vm.numImages2 = vm.currentPost.picid.length
       // Check against the 5 maximum images constraint
-      if (files.length > 5) {
-        vm.validNumOfImages = false
-        return
+      if (vm.wasreset) {
+        if (files.length + vm.numImages > 5) {
+          vm.validNumOfImages = false
+          return
+        }
+      } else {
+        if (files.length + vm.numImages2 > 5) {
+          vm.validNumOfImages = false
+          return
+        }
       }
       // Grab updated files in latest upload
       for (var i = 0; i < files.length; ++i) {
@@ -164,7 +185,7 @@ export default {
         // Setup a FilerReader to generate a NewImageURL for each image
         let picHasher = new FileReader()
         picHasher.onload = (function (file) {
-          return function (event) {
+          return function () {
             // Calls the Corkboard API to set up the new image(s)
             // Returns a Picture ID (key) and URL
             axios({
@@ -180,6 +201,7 @@ export default {
               .then(res => {
                 // Place URL and ID in new post data for saving
                 vm.uploadedFiles.push({file: file, url: res.data.url})
+                vm.countPost.picid.push(res.data.picid)
                 vm.clonePost.picid.push(res.data.picid)
                 vm.currentPost.picid.push(res.data.picid)
               })
@@ -194,7 +216,6 @@ export default {
       }
     },
     saveImages: function () {
-//      var indexes = []
       if (this.wasreset === true) {
         var newpicid = []
         for (var j = 0; j < this.clonePost.picid.length; j++) {
@@ -208,7 +229,6 @@ export default {
           if (this.clonePost.picid.includes(this.currentPost.picid[k])) {
             continue
           } else {
-//            indexes.push(k)
             axios({
               method: 'delete',
               url: '/api/images/delete/' + this.currentPost.picid[k],
@@ -225,10 +245,6 @@ export default {
           }
         }
         this.currentPost.picid = newpicid
-//        for (var d = 0; d < indexes.length; d++) {
-//          console.log(indexes[d])
-//          this.currentPost.picid.splice(indexes[d], 1)
-//        }
       }
       // Save each uploaded picture by placing its data in each URL
       for (var i = 0; i < this.uploadedFiles.length; ++i) {
@@ -248,17 +264,17 @@ export default {
       // Save the image uploads
       this.saveImages()
       // Set the rest of the data to update or persist
-      this.updatedPost.itemid = this.currentPost.itemid // Should not change
-      this.updatedPost.itemname = this.currentPost.itemname
-      this.updatedPost.itemdesc = this.currentPost.itemdesc
-      this.updatedPost.itemcat = this.currentPost.itemcat
+      this.updatedPost.id = this.currentPost.id // Should not change
+      this.updatedPost.name = this.currentPost.name
+      this.updatedPost.description = this.currentPost.description
+      this.updatedPost.category = this.currentPost.category
       this.updatedPost.picid = this.currentPost.picid
-      this.updatedPost.itemprice = this.currentPost.itemprice
+      this.updatedPost.price = this.currentPost.price
       this.updatedPost.salestatus = this.currentPost.salestatus
       // Make a call to Corkboard API to update the edited post
       axios({
         method: 'put',
-        url: '/api/items/edit/' + this.currentPost.itemid,
+        url: '/api/items/edit/' + this.currentPost.id,
         headers: {
           'Authorization': 'Bearer ' + this.$store.state.token
         },
@@ -277,13 +293,14 @@ export default {
             .then(res => {
               this.$store.commit('getViewedProfile', res.data)
               // Reset masonry layout to prevent tile display issues
-              var posts = document.querySelectorAll('.grid-item')
+              var posts = document.querySelectorAll('.grid')
               imagesLoaded(posts, function () {
                 // eslint-disable-next-line no-unused-vars
                 var masonry = new Masonry('.grid', {
                   selector: '.grid-item',
-                  columnWidth: '.grid-sizer',
-                  percentPosition: true
+                  columnWidth: 300,
+                  gutter: 20,
+                  isFitWidth: true
                 })
               })
             })
@@ -301,7 +318,6 @@ export default {
     }
   },
   components: {
-    postModal: PostModal,
     money: Money
   }
 }
@@ -322,11 +338,6 @@ export default {
   .cancel {
     float: left;
   }
-  .currency {
-    position: relative;
-    width: 30%;
-    left: 35%;
-  }
   [type="radio"] {
     margin-left: 8px;
     margin-right: 2px;
@@ -338,24 +349,13 @@ export default {
   span.glyphicon-arrow-left:hover {
     color: lightgray;
   }
-  .input-file {
-    box-shadow: 1px 1px 2px #4d4d4d;
+  .edit-label {
+    float: left;
+    color: #5a5a5a;
   }
   .thumbnail {
     width: 150px;
     height: 150px;
     display: inline;
-  }
-
-  input {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-
-  textarea {
-    box-shadow: 1px 1px 2px #4d4d4d;
-  }
-
-  select {
-    box-shadow: 1px 1px 2px #4d4d4d;
   }
 </style>

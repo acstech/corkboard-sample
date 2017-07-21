@@ -32,13 +32,13 @@ const store = new Vuex.Store({
     defaultPostImage: 'static/posttext.png',
     // Likely not best practice to place these states here globally like this
     activePost: {
-      itemid: '',
-      itemname: '',
-      itemprice: null,
-      itemdesc: '',
+      id: '',
+      name: '',
+      price: null,
+      description: '',
       picid: [],
       url: [],
-      itemcat: '',
+      category: '',
       salestatus: '',
       date: ''
     },
@@ -50,6 +50,7 @@ const store = new Vuex.Store({
       email: '',
       phone: '',
       zipcode: '',
+      url: '',
       id: '',
       items: [],
       profPicLoaded: null
@@ -65,10 +66,10 @@ const store = new Vuex.Store({
     getActivePost (state, post) {
       var idArray = []
       var urlArray = []
-      state.activePost.itemid = post.post.itemid
-      state.activePost.itemname = post.post.itemname
-      state.activePost.itemprice = post.post.itemprice
-      state.activePost.itemdesc = post.post.itemdesc
+      state.activePost.id = post.post.id
+      state.activePost.name = post.post.name
+      state.activePost.price = post.post.price
+      state.activePost.description = post.post.description
       if (post.post.picid && typeof post.post.picid === typeof []) {
         for (var i = 0; i < post.post.picid.length; ++i) {
           idArray.push(post.post.picid[i])
@@ -78,7 +79,7 @@ const store = new Vuex.Store({
       state.activePost.picid = idArray
       state.activePost.url = urlArray
       state.activePost.date = post.post.date
-      state.activePost.itemcat = post.post.itemcat
+      state.activePost.category = post.post.category
       state.activePost.salestatus = post.post.salestatus
     },
     getActiveEmail (state, user) {
