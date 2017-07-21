@@ -1,72 +1,73 @@
 <template>
-    <div class="modal-mask" id="mask" @click="close" v-show="show">
-      <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
+  <div class="modal-mask" id="mask" @click="close" v-show="show">
+    <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
       <div class="modal-header">
         <h3>New Post</h3>
         <a class="close" @click="cancel">&times;</a>
       </div>
 
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
-            <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
-            <div class="md-form flex-center">
-              <input type="file" class="btn btn-blue-grey" @change="update" :name="uploadFieldName" accept="image/jpeg,image/jpg,image/png" id="files" multiple>
-            </div>
-            <p v-if="!validImageSize">Please upload an image under 5MB.</p>
-            <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-            <p class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</p>
-            <div v-if="isSuccess">
-              <p>Uploaded successfully.</p>
-            </div>
-            <!--FAILED-->
-            <div v-if="isFailed">
-              <p>Upload failed.</p>
-              <p>
-                <a href="javascript:void(0)" @click="reset">Try again</a>
-              </p>
-              <pre>{{ uploadError }}</pre>
-            </div>
-            <div id="preview"></div>
-          <div class="md-form">
-            <input v-model="newPost.name" type="text" id="title" class="form-control" maxlength="50" required>
-            <label for="title">Title</label>
-          </div>
-          <div class="md-form">
-            <label>Price</label>
-            <money v-model="newPost.price" id="price" v-bind="moneyConfig" class="form-control currency"></money>
-          </div>
-          <div class="md-form">
-            <textarea v-model="newPost.description" rows="5" class="md-textarea" required maxlength="500"></textarea>
-            <label class="control-label">Description</label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Category</label>
-              <select class="form-control" v-model="newPost.category" required>
-                <option value="None">None</option>
-                <option value="Apparel">Apparel</option>
-                <option value="Appliances">Appliances</option>
-                <option value="Books and Movies">Books and Movies</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Furniture">Furniture</option>
-                <option value="Pets">Pets</option>
-                <option value="Toys and Games">Toys and Games</option>
-                <option value="Other">Other</option>
-              </select>
-          </div>
-      <div class="modal-footer text-right">
-      <p align="center">
-        <input type="submit" class="btn btn-raised btn-mdb" value="Post!">
-      </p>
-      </div>
+        <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
+        <div class="md-form flex-center">
+          <input type="file" class="btn btn-blue-grey" @change="update" :name="uploadFieldName"
+                 accept="image/jpeg,image/jpg,image/png" id="files" multiple>
+        </div>
+        <p v-if="!validImageSize">Please upload an image under 5MB.</p>
+        <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
+        <p class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</p>
+        <div v-if="isSuccess">
+          <p>Uploaded successfully.</p>
+        </div>
+        <!--FAILED-->
+        <div v-if="isFailed">
+          <p>Upload failed.</p>
+          <p>
+            <a href="javascript:void(0)" @click="reset">Try again</a>
+          </p>
+          <pre>{{ uploadError }}</pre>
+        </div>
+        <div id="preview"></div>
+        <div class="md-form">
+          <input v-model="newPost.name" type="text" id="title" class="form-control" maxlength="50" required>
+          <label for="title">Title</label>
+        </div>
+        <div class="md-form">
+          <label>Price</label>
+          <money v-model="newPost.price" id="price" v-bind="moneyConfig" class="form-control currency"></money>
+        </div>
+        <div class="md-form">
+          <textarea v-model="newPost.description" rows="5" class="md-textarea" required maxlength="500"></textarea>
+          <label class="control-label">Description</label>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Category</label>
+          <select class="form-control" v-model="newPost.category" required>
+            <option value="None">None</option>
+            <option value="Apparel">Apparel</option>
+            <option value="Appliances">Appliances</option>
+            <option value="Books and Movies">Books and Movies</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Pets">Pets</option>
+            <option value="Toys and Games">Toys and Games</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="modal-footer text-right">
+          <p align="center">
+            <input type="submit" class="btn btn-raised btn-mdb" value="Post!">
+          </p>
+        </div>
       </form>
-      </div>
     </div>
+  </div>
 </template>
 
 <script>
   import { Money } from 'v-money'
   import axios from 'axios'
   // eslint-disable-next-line one-var
-  const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3
+  const STATUS_SUCCESS = 1, STATUS_FAILED = 0
   export default {
     // Will need more data attributes
     data () {
@@ -109,12 +110,6 @@
       }
     },
     computed: {
-      isInitial () {
-        return this.currentStatus === STATUS_INITIAL
-      },
-      isSaving () {
-        return this.currentStatus === STATUS_SAVING
-      },
       isSuccess () {
         return this.currentStatus === STATUS_SUCCESS
       },
@@ -159,7 +154,7 @@
       },
       // reset form to initial state
       reset () {
-        this.currentStatus = STATUS_INITIAL
+        this.currentStatus = null
         this.uploadError = null
         this.uploadedFiles = []
         this.uploadedFileURLs = []
@@ -190,7 +185,6 @@
             return
           }
         }
-        vm.currentStatus = STATUS_SAVING
         // Grab updated files in latest upload
         for (var i = 0; i < files.length; i++) {
           let file = files[i]
@@ -210,8 +204,8 @@
               // Sets a preview thumbnail for the image(s)
               let picFile = event.target
               let preview = document.getElementById('preview')
-              preview.innerHTML += "<img class='thumbnail' src='" + picFile.result + "'" +
-                "title='" + file.name + "' width='150px' height='150px' style='display: inline'/>"
+              preview.innerHTML += '<img class=\'thumbnail\' src=\'' + picFile.result + '\'' +
+                'title=\'' + file.name + '\' width=\'150px\' height=\'150px\' style=\'display: inline\'/>'
             }
           })(file)
           // Setup a FilerReader to generate a NewImageURL for each image
@@ -371,12 +365,15 @@
     display: inline;
     float: right;
   }
+
   h3 {
     display: inline;
   }
+
   .cancel {
     float: left;
   }
+
   fieldset {
     margin-top: 12px;
     margin-bottom: 12px;
