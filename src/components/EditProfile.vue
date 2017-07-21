@@ -23,6 +23,46 @@
           <div id="preview">
             <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
           </div>
+<<<<<<< HEAD
+        <div class="alert alert-danger" v-if="error">
+              <p>{{ error }}</p>
+        </div>
+        <label class="edit-label">First Name</label>
+        <div class="md-form">
+          <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="30">
+        </div>
+        <label class="edit-label">First Name</label>
+        <div class="md-form">
+          <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="30">
+        </div>
+        <label class="edit-label">Email</label>
+        <div class="md-form">
+          <input type="email" class="form-control" v-model="cloneUserProfile.email" required maxlength="40">
+        </div>
+        <div class="alert alert-danger" v-if="emailErr">
+              <p>{{ emailErr }}</p>
+        </div>
+        <label class="edit-label">Phone</label>
+        <div class="md-form">
+          <input id="phoneNumber" type="tel" class="form-control" v-model="cloneUserProfile.phone"
+                 @keypress="numberPressed" minlength="16" maxlength="16">
+        </div>
+        <div class="alert alert-danger" v-if="phoneErr">
+              <p>{{ phoneErr }}</p>
+        </div>
+        <label class="edit-label">Zip</label>
+        <div class="md-form">
+          <input type="text" class="form-control" v-model="cloneUserProfile.zipcode" @keypress="numberPressed"
+               minlength="5" maxlength="5">
+        </div>
+        <div class="alert alert-danger" v-if="zipErr">
+              <p>{{ zipErr }}</p>
+        </div>
+      </form>
+      <div class="modal-footer text-right">
+        <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel()">
+        <input type="submit" class="btn btn-mdb" value="Save Changes" @click="saveProfileSettings()">
+=======
           <label class="edit-label">First Name</label>
           <div class="md-form">
             <input
@@ -85,12 +125,51 @@
           <input type="submit" class="btn btn-mdb" value="Save Changes" @click="saveProfileSettings()">
         </div>
 
+>>>>>>> 6abd921132b2b300ebf6b5c5e94ebc06b8828a5c
       </div>
     </div>
   </transition>
 </template>
 
 <script>
+<<<<<<< HEAD
+var _ = require('lodash')
+import axios from 'axios'
+export default {
+  data () {
+    return {
+      cloneUserProfile: {},
+      updateUser: {
+        id: '',
+        picid: '',
+        url: '',
+        postUrl: '',
+        firstname: '',
+        lastname: '',
+        items: [],
+        email: '',
+        phone: '',
+        zipcode: ''
+      },
+      profileImage: {},
+      error: '',
+      phoneErr: '',
+      zipErr: '',
+      emailErr: '',
+      isError: false,
+      previouslyUsedPicId: '',
+      imageChanged: false,
+      validImageSize: true,
+      show: true
+    }
+  },
+  computed: {
+    UserProfile () {
+      return this.$store.state.viewedUserProfile
+    },
+    getCurrentUser () {
+      return this.$store.state.currentUser
+=======
   var _ = require('lodash')
   import axios from 'axios'
 
@@ -119,6 +198,7 @@
         validImageSize: true,
         show: true
       }
+>>>>>>> 6abd921132b2b300ebf6b5c5e94ebc06b8828a5c
     },
     computed: {
       UserProfile () {
@@ -135,6 +215,23 @@
       if (this.getToken === null) {
         this.$router.push('/login')
       } else {
+<<<<<<< HEAD
+        return false
+      }
+    },
+    validatePhone (phone) {
+      if (/\+?\d? ?\(?\d{3}\)? ?\d{3} ?-? ?\d{4}/.test(phone)) {
+        return true
+      } else {
+        return false
+      }
+    },
+    validateZip (zipcode) {
+      if (zipcode.length === 0 || zipcode.length === 5) {
+        return true
+      } else {
+        return false
+=======
         // Allows modal close when pressing the ESC key
         document.addEventListener('keydown', (e) => {
           if (e.keyCode === 27) {
@@ -149,6 +246,7 @@
         })
         // We need to manually format the phone number on page load
         document.getElementById('phoneNumber').value = phoneFormat(document.getElementById('phoneNumber').value)
+>>>>>>> 6abd921132b2b300ebf6b5c5e94ebc06b8828a5c
       }
 
       // A function to format text to look like a phone number
@@ -322,6 +420,78 @@
           // Make API call to update the user info and refresh data on front-end
           promises.push(this.updateProfile())
         }
+<<<<<<< HEAD
+      })
+    },
+    updateProfile: function () {
+      return axios({
+        method: 'put',
+        url: '/api/users/edit/' + this.getCurrentUser,
+        headers: {
+          'Authorization': 'Bearer ' + this.$store.state.token
+        },
+        data: this.updateUser
+      })
+      .then(res => {
+      })
+      .catch(error => {
+        if (error.response.status === 400) {
+          this.error = 'Invalid input entered, please ensure all fields are correct.'
+          this.isError = true
+        }
+      })
+    },
+    saveProfileSettings () {
+      this.isError = false
+      this.zipErr = ''
+      this.phoneErr = ''
+      this.emailErr = ''
+      this.userProfile = this.cloneUserProfile
+      // Makes sure to set up data object with all data needed for vuex call
+      // *Honestly this is ridiculous and needs improvement, but it works for now*
+      this.updateUser.postUrl = this.cloneUserProfile.postUrl
+      this.updateUser.id = this.getCurrentUser
+      this.updateUser.firstname = this.cloneUserProfile.firstname
+      this.updateUser.lastname = this.cloneUserProfile.lastname
+      this.updateUser.picid = this.cloneUserProfile.picid
+      this.updateUser.email = this.cloneUserProfile.email
+      this.updateUser.phone = this.cloneUserProfile.phone
+      this.updateUser.items = this.cloneUserProfile.items
+      this.updateUser.zipcode = this.cloneUserProfile.zipcode
+      let promises = []
+      if (this.imageChanged) {
+        promises.push(this.saveImage())
+      }
+      this.updateUser.url = null
+      if (!this.validateEmail(this.userProfile.email)) {
+        this.emailErr = 'The email you entered cannnot be used'
+      }
+      if (!this.validatePhone(this.userProfile.phone)) {
+        this.phoneErr = 'The phone number you entered is invalid'
+      }
+      if (!this.validateZip(this.userProfile.zipcode)) {
+        this.zipErr = 'The zipcode you entered is invalid'
+      }
+      promises.push(this.updateProfile())
+      // Make API call to update the user info and refresh data on front-end
+      Promise.all(promises).then(res => {
+        if (this.isError === false) {
+          this.getProfile()
+            .then(res => {
+              this.$store.commit('getViewedProfile', res.data)
+              this.$router.push('/viewProfile/' + this.getCurrentUser)
+            })
+            .catch(error => {
+              // Token expiry
+              if (error.response.status === 401) {
+                this.$store.commit('authenticate', null)
+                let vm = this
+                setTimeout(function () {
+                  vm.$router.push('/login')
+                }, 100)
+              }
+            })
+=======
         Promise.all(promises).then(res => {
           if (this.isError === false) {
             this.getProfile()
@@ -349,6 +519,7 @@
         if ((charCode < 48 || charCode > 57)) {
           evt.preventDefault()
           return false
+>>>>>>> 6abd921132b2b300ebf6b5c5e94ebc06b8828a5c
         }
         return true
       },
