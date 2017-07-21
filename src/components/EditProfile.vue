@@ -9,7 +9,7 @@
       <form @submit.prevent="saveProfileSettings" autocomplete="off">
           <label style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Profile Picture</label>
           <div class="md-form flex-center">
-            <input type="file" class="input-file btn btn-blue-grey" @change="update" accept="image/*">
+            <input type="file" class="input-file btn btn-blue-grey" @change="update" accept="image/jpeg,image/jpg,image/png">
           </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <div id="preview">
