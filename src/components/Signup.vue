@@ -118,6 +118,8 @@
         document.getElementById('text2').style.display = 'none'
       },
       register () {
+        var email = this.newUser.email.toLowerCase()
+        this.newUser.email = email
         if (!this.passwordAccept) {
           return
         }
