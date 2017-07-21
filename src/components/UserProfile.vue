@@ -1,31 +1,32 @@
 <template>
-    <div class="container-fluid flex-center">
-      <div class="grid">
-        <div class="sidebar">
-          <ul class="nav nav-sidebar">
-            <h3 class="sub-header">User Profile</h3>
-            <!-- Profile Picture -->
-            <li>
-              <div id="profile_pic_container" class="logo-wrapper waves-light flex-center">
-                <a><img
-                  v-if="userProfile.url"
-                  @click="editProfile"
-                  :src="userProfile.url"
-                  class="profile-pic img-fluid flex-center"
-                  alt="Upload a profile picture!"
-                  style="cursor:pointer;margin-bottom:20px"/></a>
-              </div>
-            </li>
-            <!-- /Profile Picture -->
-            <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
-            <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
-            <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
-            <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
-          </ul>
-          <a class="btn btn-mdb btn-sm" v-if="userProfile.id == getCurrentUser" @click="editProfile" id="edit_profile">
-            <span style="color: white; margin-right: 10px;" class="glyphicon glyphicon-pencil"></span>Edit Profile
-          </a>
-        </div>
+    <div class="container-fluid" style="padding: 0 0 0 15px">
+      <div class="row">
+      <div class="col-md-2 col-sm-3 sidebar">
+        <ul class="nav nav-sidebar">
+          <h3 class="sub-header">User Profile</h3>
+          <!-- Profile Picture -->
+          <li>
+            <div id="profile_pic_container" class="logo-wrapper waves-light flex-center">
+              <a><img
+                v-if="userProfile.url"
+                @click="editProfile"
+                :src="userProfile.url"
+                class="profile-pic img-fluid flex-center"
+                alt="Upload a profile picture!"
+                style="cursor:pointer;margin-bottom:20px"/></a>
+            </div>
+          </li>
+          <!-- /Profile Picture -->
+          <li class="profile-info"><h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}</li><br>
+          <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li><br>
+          <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li><br>
+          <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
+        </ul>
+        <a class="btn btn-mdb btn-sm" v-if="userProfile.id == getCurrentUser" @click="editProfile" id="edit_profile">
+          <span style="color: white; margin-right: 10px;" class="glyphicon glyphicon-pencil"></span>Edit Profile
+        </a>
+      </div>
+      <div class="grid col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div class="grid-sizer"></div>
         <h1 class="flex-center" v-if="!this.userProfile.items || this.userProfile.items.length == 0">No posts yet!</h1>
           <div class="grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
@@ -46,6 +47,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
 </template>
 
@@ -76,8 +78,7 @@ export default {
         var masonry = new Masonry('.grid', {
           selector: '.grid-item',
           columnWidth: 300,
-          gutter: 20,
-          isFitWidth: true
+          gutter: 20
         })
       })
     }
@@ -129,8 +130,7 @@ export default {
                   var masonry = new Masonry('.grid', {
                     selector: '.grid-item',
                     columnWidth: 300,
-                    gutter: 20,
-                    isFitWidth: true
+                    gutter: 20
                   })
                 })
               })
@@ -192,12 +192,9 @@ export default {
   background: linear-gradient(to top, #ffffff, #d1d5d5);
   font-weight: bold;
   min-height: 400px;
-  min-width: 250px;
   box-shadow: 1px 1px 3px #4d4d4d;
-  margin-right: .3%;
-  margin-bottom: 5%;
-  padding-bottom: 1%;
-  margin-left: 1px;
+  padding: 0;
+  position: fixed;
   }
   .btn {
   font-weight: bold;
@@ -277,15 +274,30 @@ export default {
       background: -moz-linear-gradient(top, #ffffff, #d1d5d5);
       background: linear-gradient(to top, #ffffff, #d1d5d5);
       font-weight: bold;
-      height: 120px;
-      width: 300px;
       overflow: scroll;
-      min-width: 250px;
       box-shadow: 1px 1px 3px #4d4d4d;
-      margin-right: .3%;
-      margin-bottom: 5%;
       padding-bottom: 1%;
-      margin-left: 1px;
+    }
+    .grid {
+      width: 400px;
+      float: right;
     }
   }
+/* For iPhone 5, etc. */
+@media (max-width: 568px) {
+  .sidebar {
+    background: -webkit-linear-gradient(bottom, #ffffff, #d1d5d5);
+    background: -o-linear-gradient(top, #ffffff, #d1d5d5);
+    background: -moz-linear-gradient(top, #ffffff, #d1d5d5);
+    background: linear-gradient(to top, #ffffff, #d1d5d5);
+    font-weight: bold;
+    overflow: scroll;
+    box-shadow: 1px 1px 3px #4d4d4d;
+    padding-bottom: 1%;
+  }
+  .grid {
+    width: 360px;
+    float: right;
+  }
+}
 </style>
