@@ -27,6 +27,9 @@
         <div class="md-form">
           <input type="email" class="form-control" v-model="cloneUserProfile.email" required maxlength="40">
         </div>
+        <div class="alert alert-danger" v-if="error">
+            <p>{{ error }}</p>
+        </div>
         <label class="edit-label">Phone</label>
         <div class="md-form">
           <input id="phoneNumber" type="tel" class="form-control" v-model="cloneUserProfile.phone"
@@ -71,6 +74,8 @@ export default {
       },
       profileImage: {},
       phoneInputError: '',
+      error: '',
+      isError: false,
       previouslyUsedPicId: '',
       imageChanged: false,
       validImageSize: true,
@@ -245,8 +250,17 @@ export default {
         },
         data: this.updateUser
       })
+      .then(res => {
+      })
+      .catch(error => {
+        if (error.response.status === 400) {
+          this.error = 'The email you entered cannot be used.'
+          this.isError = true
+        }
+      })
     },
     saveProfileSettings () {
+      this.isError = false
       this.userProfile = this.cloneUserProfile
       // Makes sure to set up data object with all data needed for vuex call
       // *Honestly this is ridiculous and needs improvement, but it works for now*
@@ -269,21 +283,23 @@ export default {
         promises.push(this.updateProfile())
       }
       Promise.all(promises).then(res => {
-        this.getProfile()
-          .then(res => {
-            this.$store.commit('getViewedProfile', res.data)
-            this.$router.push('/viewProfile/' + this.getCurrentUser)
-          })
-          .catch(error => {
-            // Token expiry
-            if (error.response.status === 401) {
-              this.$store.commit('authenticate', null)
-              let vm = this
-              setTimeout(function () {
-                vm.$router.push('/login')
-              }, 100)
-            }
-          })
+        if (this.isError === false) {
+          this.getProfile()
+            .then(res => {
+              this.$store.commit('getViewedProfile', res.data)
+              this.$router.push('/viewProfile/' + this.getCurrentUser)
+            })
+            .catch(error => {
+              // Token expiry
+              if (error.response.status === 401) {
+                this.$store.commit('authenticate', null)
+                let vm = this
+                setTimeout(function () {
+                  vm.$router.push('/login')
+                }, 100)
+              }
+            })
+        }
       }).catch(err => {
         console.error(err)
       })

@@ -72,7 +72,7 @@ export default {
     passwordAccept () {
       return (this.newUser.password === this.newUser.confirm) && this.newUser.password.length > 0
     },
-    // Only allows passwords to contain 6-16 characters,
+    // Only allows passwords to contain 8-16 characters,
     // at least one special character, and at least one number,
     // through regular expression
     passwordValidation () {
