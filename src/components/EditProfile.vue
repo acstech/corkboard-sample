@@ -15,6 +15,9 @@
           <div id="preview">
             <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
           </div>
+        <div class="alert alert-danger" v-if="error">
+              <p>{{ error }}</p>
+        </div>
         <label class="edit-label">First Name</label>
         <div class="md-form">
           <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="30">
@@ -27,21 +30,24 @@
         <div class="md-form">
           <input type="email" class="form-control" v-model="cloneUserProfile.email" required maxlength="40">
         </div>
-        <div class="alert alert-danger" v-if="error">
-            <p>{{ error }}</p>
+        <div class="alert alert-danger" v-if="emailErr">
+              <p>{{ emailErr }}</p>
         </div>
         <label class="edit-label">Phone</label>
         <div class="md-form">
           <input id="phoneNumber" type="tel" class="form-control" v-model="cloneUserProfile.phone"
                  @keypress="numberPressed" minlength="16" maxlength="16">
         </div>
+        <div class="alert alert-danger" v-if="phoneErr">
+              <p>{{ phoneErr }}</p>
+        </div>
         <label class="edit-label">Zip</label>
         <div class="md-form">
           <input type="text" class="form-control" v-model="cloneUserProfile.zipcode" @keypress="numberPressed"
-                 minlength="5" maxlength="5">
+               minlength="5" maxlength="5">
         </div>
-        <div class="alert alert-danger" v-if="phoneInputError">
-          <p>{{ phoneInputError }}</p>
+        <div class="alert alert-danger" v-if="zipErr">
+              <p>{{ zipErr }}</p>
         </div>
       </form>
       <div class="modal-footer text-right">
@@ -73,8 +79,10 @@ export default {
         zipcode: ''
       },
       profileImage: {},
-      phoneInputError: '',
       error: '',
+      phoneErr: '',
+      zipErr: '',
+      emailErr: '',
       isError: false,
       previouslyUsedPicId: '',
       imageChanged: false,
@@ -139,8 +147,20 @@ export default {
       if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
         return true
       } else {
-        alert('You have entered an invalid email address!')
-        this.userProfile.email = this.UserProfile.email
+        return false
+      }
+    },
+    validatePhone (phone) {
+      if (/\+?\d? ?\(?\d{3}\)? ?\d{3} ?-? ?\d{4}/.test(phone)) {
+        return true
+      } else {
+        return false
+      }
+    },
+    validateZip (zipcode) {
+      if (zipcode.length === 0 || zipcode.length === 5) {
+        return true
+      } else {
         return false
       }
     },
@@ -254,13 +274,16 @@ export default {
       })
       .catch(error => {
         if (error.response.status === 400) {
-          this.error = 'The email you entered cannot be used.'
+          this.error = 'Invalid input entered, please ensure all fields are correct.'
           this.isError = true
         }
       })
     },
     saveProfileSettings () {
       this.isError = false
+      this.zipErr = ''
+      this.phoneErr = ''
+      this.emailErr = ''
       this.userProfile = this.cloneUserProfile
       // Makes sure to set up data object with all data needed for vuex call
       // *Honestly this is ridiculous and needs improvement, but it works for now*
@@ -278,10 +301,17 @@ export default {
         promises.push(this.saveImage())
       }
       this.updateUser.url = null
-      if (this.validateEmail(this.userProfile.email)) {
-        // Make API call to update the user info and refresh data on front-end
-        promises.push(this.updateProfile())
+      if (!this.validateEmail(this.userProfile.email)) {
+        this.emailErr = 'The email you entered cannnot be used'
       }
+      if (!this.validatePhone(this.userProfile.phone)) {
+        this.phoneErr = 'The phone number you entered is invalid'
+      }
+      if (!this.validateZip(this.userProfile.zipcode)) {
+        this.zipErr = 'The zipcode you entered is invalid'
+      }
+      promises.push(this.updateProfile())
+      // Make API call to update the user info and refresh data on front-end
       Promise.all(promises).then(res => {
         if (this.isError === false) {
           this.getProfile()
