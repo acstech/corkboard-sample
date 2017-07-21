@@ -9,13 +9,13 @@
 
         <form @submit.prevent="updatePost">
           <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
-          <div class="md-form flex-center">
+          <div class="md-form flex-center file-upload">
             <input type="file" id="files" class="input-file btn btn-blue-grey" @change="update"
                    accept="image/jpeg,image/jpg,image/png" multiple>
           </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-          <p @click="reset" style="cursor:pointer">Reset Uploads</p>
+          <button @click="reset" class="btn btn-sm btn-blue-grey" style="cursor:pointer">Reset Uploads</button>
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
           </div>
@@ -330,6 +330,10 @@
   .close {
     display: inline;
     float: right;
+  }
+
+  .file-upload {
+    margin-bottom: 0;
   }
 
   h3 {

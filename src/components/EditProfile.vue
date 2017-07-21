@@ -8,7 +8,7 @@
         </div>
         <form @submit.prevent="saveProfileSettings" autocomplete="off">
           <label style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Profile Picture</label>
-          <div class="md-form flex-center">
+          <div class="md-form flex-center file-upload">
             <input type="file" class="input-file btn btn-blue-grey" @change="update"
                    accept="image/jpeg,image/jpg,image/png">
           </div>
@@ -331,6 +331,10 @@
   .close {
     display: inline;
     float: right;
+  }
+
+  .file-upload {
+    margin-bottom: 0;
   }
 
   .thumbnail {

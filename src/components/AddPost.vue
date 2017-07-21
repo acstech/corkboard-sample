@@ -8,13 +8,13 @@
 
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
         <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
-        <div class="md-form flex-center">
+        <div class="md-form flex-center file-upload">
           <input type="file" class="btn btn-blue-grey" @change="update" :name="uploadFieldName"
                  accept="image/jpeg,image/jpg,image/png" id="files" multiple>
         </div>
         <p v-if="!validImageSize">Please upload an image under 5MB.</p>
         <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-        <p class="reset-option" @click="reset" style="cursor:pointer">Reset Uploads</p>
+        <button v-if="uploadedFiles.length > 0" class="btn btn-sm btn-blue-grey" @click="reset" style="cursor:pointer">Reset Uploads</button>
         <div v-if="isSuccess">
           <p>Uploaded successfully.</p>
         </div>
@@ -366,12 +366,12 @@
     float: right;
   }
 
-  h3 {
-    display: inline;
+  .file-upload {
+    margin-bottom: 0;
   }
 
-  .cancel {
-    float: left;
+  h3 {
+    display: inline;
   }
 
   fieldset {
