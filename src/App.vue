@@ -49,9 +49,6 @@ import axios from 'axios'
 export default {
   name: 'app',
   computed: {
-    routePath () {
-      return this.$route.path
-    },
     getToken () {
       return this.$store.state.token
     },
