@@ -46,7 +46,7 @@
         </label>
         <label class="form-label">
           Description
-          <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required maxlength="2000"></textarea>
+          <textarea v-model="newPost.itemdesc" rows="5" class="form-control" required maxlength="500"></textarea>
         </label>
         <label class="form-label">
           Category

@@ -17,11 +17,11 @@
             </div>
             <label class="form-label">
               First Name
-              <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="40">
+              <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="30">
             </label>
             <label class="form-label">
               Last Name
-              <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="40">
+              <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="30">
             </label>
             <label class="form-label">
               Email
