@@ -22,10 +22,10 @@
                       Sort by
                       <span class="caret"></span>
                     </router-link>
-                    <ul class="dropdown-menu button-group" id="sorting">
-                      <li><a value="1" class="dropdown-item" stlye="cursor:pointer">Recently added</a></li>
-                      <li><a value="2" class="dropdown-item" style="cursor:pointer">Price: low to high</a></li>
-                      <li><a value="3" class="dropdown-item" style="cursor:pointer">Price: high to low</a></li>
+                    <ul class="dropdown-menu button-group">
+                      <li><a @click="sort('sortDate')" class="dropdown-item" stlye="cursor:pointer">Recently added</a></li>
+                      <li><a @click="sort('sortLow')" class="dropdown-item" style="cursor:pointer">Price: low to high</a></li>
+                      <li><a @click="sort('sortHigh')" class="dropdown-item" style="cursor:pointer">Price: high to low</a></li>
                     </ul>
                   </li>
                   <li v-if="getToken != null" @click="logOut()"><router-link to="">Logout</router-link></li>
@@ -45,7 +45,6 @@
 
 <script>
 import axios from 'axios'
-
 export default {
   name: 'app',
   computed: {
@@ -57,6 +56,9 @@ export default {
     }
   },
   methods: {
+    sort (sortValue) {
+      this.$store.commit('setSort', sortValue)
+    },
     /* toHome will route to the home page if the user has a valid token (is authenticated).
     Otherwise, the application will route to login for them to authenticate. */
     toHome () {
