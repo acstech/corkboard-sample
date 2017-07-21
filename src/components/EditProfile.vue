@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
-    <div class="modal-mask" id="mask" transition="modal">
-      <div class="modal-container">
+    <div class="modal-mask" id="mask" transition="modal" @click="close" v-show="show">
+      <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
       <div class="modal-header">
         <h3>Edit Profile</h3>
         <a @click="cancel()" class="close">&times;</a>
@@ -73,7 +73,8 @@ export default {
       phoneInputError: '',
       previouslyUsedPicId: '',
       imageChanged: false,
-      validImageSize: true
+      validImageSize: true,
+      show: true
     }
   },
   computed: {
@@ -125,6 +126,10 @@ export default {
     }
   },
   methods: {
+    close () {
+      this.$router.push('/viewProfile/' + this.getCurrentUser)
+      this.show = false
+    },
     validateEmail (email) {
       if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
         return true
