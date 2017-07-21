@@ -1,6 +1,6 @@
 <template>
     <div class="modal-mask" id="mask" @click="close" v-show="show">
-      <div class="modal-container">
+      <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
       <div class="modal-header">
         <h3>New Post</h3>
         <a class="close" @click="cancel">&times;</a>

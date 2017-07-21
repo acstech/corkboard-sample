@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div class="modal-mask" id="mask" @click="close" v-show="show" transition="modal">
-      <div class="modal-container">
+      <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
       <div class="modal-header">
         <h3>Edit Post</h3>
         <a class="close" @click="cancel()">&times;</a>

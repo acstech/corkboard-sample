@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div class="modal-mask" id="mask" transition="modal" @click="close" v-show="show">
-      <div class="modal-container">
+      <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
       <div class="modal-header">
         <h5 style="float:left; color:silver; margin-right:-70px">(Post preview)</h5>
         <h3 class="modal-title">{{ currentPost.name }}</h3>
