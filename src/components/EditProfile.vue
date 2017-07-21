@@ -2,53 +2,89 @@
   <transition name="modal">
     <div class="modal-mask" id="mask" transition="modal" @click="close" v-show="show">
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
+
         <div class="modal-header">
           <h3>Edit Profile</h3>
           <a @click="cancel()" class="close">&times;</a>
         </div>
+
         <form @submit.prevent="saveProfileSettings" autocomplete="off">
           <label style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Profile Picture</label>
           <div class="md-form flex-center file-upload">
-            <input type="file" class="input-file btn btn-blue-grey" @change="update"
-                   accept="image/jpeg,image/jpg,image/png">
+            <input
+              type="file"
+              class="input-file btn btn-blue-grey"
+              @change="update"
+              accept="image/jpeg,image/jpg,image/png"
+            >
           </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
+          <!-- Where the image thumbnail appears on upload -->
           <div id="preview">
             <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
           </div>
           <label class="edit-label">First Name</label>
           <div class="md-form">
-            <input type="text" class="form-control" v-model="cloneUserProfile.firstname" maxlength="30">
+            <input
+              type="text"
+              class="form-control"
+              v-model="cloneUserProfile.firstname"
+              maxlength="30">
           </div>
           <label class="edit-label">First Name</label>
           <div class="md-form">
-            <input type="text" class="form-control" v-model="cloneUserProfile.lastname" maxlength="30">
+            <input
+              type="text"
+              class="form-control"
+              v-model="cloneUserProfile.lastname"
+              maxlength="30"
+            >
           </div>
           <label class="edit-label">Email</label>
           <div class="md-form">
-            <input type="email" class="form-control" v-model="cloneUserProfile.email" required maxlength="40">
+            <input type="email"
+                   class="form-control"
+                   v-model="cloneUserProfile.email"
+                   required
+                   maxlength="40"
+            >
           </div>
           <div class="alert alert-danger" v-if="error">
             <p>{{ error }}</p>
           </div>
           <label class="edit-label">Phone</label>
           <div class="md-form">
-            <input id="phoneNumber" type="tel" class="form-control" v-model="cloneUserProfile.phone"
-                   @keypress="numberPressed" minlength="16" maxlength="16">
+            <input
+              id="phoneNumber"
+              type="tel"
+              class="form-control"
+              v-model="cloneUserProfile.phone"
+              @keypress="numberPressed"
+              minlength="16"
+              maxlength="16"
+            >
           </div>
           <label class="edit-label">Zip</label>
           <div class="md-form">
-            <input type="text" class="form-control" v-model="cloneUserProfile.zipcode" @keypress="numberPressed"
-                   minlength="5" maxlength="5">
+            <input
+              type="text"
+              class="form-control"
+              v-model="cloneUserProfile.zipcode"
+              @keypress="numberPressed"
+              minlength="5"
+              maxlength="5"
+            >
           </div>
           <div class="alert alert-danger" v-if="phoneInputError">
             <p>{{ phoneInputError }}</p>
           </div>
         </form>
+
         <div class="modal-footer text-right">
           <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel()">
           <input type="submit" class="btn btn-mdb" value="Save Changes" @click="saveProfileSettings()">
         </div>
+
       </div>
     </div>
   </transition>

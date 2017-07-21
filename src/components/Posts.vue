@@ -12,8 +12,7 @@
           <h4>
             <div class="price" v-if="post.price != 0">{{ post.price | currency }}</div>
             <div class="price" v-else>Free</div>
-            <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})"
-                  style="float:left; cursor:pointer"></span>
+            <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
           </h4>
           <br>
         </div>

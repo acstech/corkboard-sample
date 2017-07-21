@@ -1,6 +1,7 @@
 <template>
   <div class="modal-mask" id="mask" @click="close" v-show="show">
     <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
+      
       <div class="modal-header">
         <h3>New Post</h3>
         <a class="close" @click="cancel">&times;</a>
@@ -9,12 +10,25 @@
       <form enctype="multipart/form-data" @submit.prevent="savePost()">
         <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
         <div class="md-form flex-center file-upload">
-          <input type="file" class="btn btn-blue-grey" @change="update" :name="uploadFieldName"
-                 accept="image/jpeg,image/jpg,image/png" id="files" multiple>
+          <input
+            type="file"
+            class="btn btn-blue-grey"
+            @change="update"
+            :name="uploadFieldName"
+            accept="image/jpeg,image/jpg,image/png"
+            id="files"
+            multiple
+          >
         </div>
         <p v-if="!validImageSize">Please upload an image under 5MB.</p>
         <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-        <button v-if="uploadedFiles.length > 0" class="btn btn-sm btn-blue-grey" @click="reset" style="cursor:pointer">Reset Uploads</button>
+        <button
+          v-if="uploadedFiles.length > 0"
+          class="btn btn-sm btn-blue-grey"
+          @click="reset"
+          style="cursor:pointer">
+          Reset Uploads
+        </button>
         <div v-if="isSuccess">
           <p>Uploaded successfully.</p>
         </div>
@@ -22,21 +36,39 @@
         <div v-if="isFailed">
           <p>Upload failed.</p>
           <p>
-            <a href="javascript:void(0)" @click="reset">Try again</a>
+            <a @click="reset">Try again</a>
           </p>
           <pre>{{ uploadError }}</pre>
         </div>
+        <!-- Where the image thumbnails appear on upload -->
         <div id="preview"></div>
         <div class="md-form">
-          <input v-model="newPost.name" type="text" id="title" class="form-control" maxlength="50" required>
+          <input
+            v-model="newPost.name"
+            type="text"
+            id="title"
+            class="form-control"
+            maxlength="50"
+            required
+          >
           <label for="title">Title</label>
         </div>
         <div class="md-form">
           <label>Price</label>
-          <money v-model="newPost.price" id="price" v-bind="moneyConfig" class="form-control currency"></money>
+          <money
+            v-model="newPost.price"
+            id="price"
+            v-bind="moneyConfig"
+            class="form-control currency">
+          </money>
         </div>
         <div class="md-form">
-          <textarea v-model="newPost.description" rows="5" class="md-textarea" required maxlength="500"></textarea>
+          <textarea
+            v-model="newPost.description"
+            rows="5" class="md-textarea"
+            required
+            maxlength="500">
+          </textarea>
           <label class="control-label">Description</label>
         </div>
         <div class="form-group">
@@ -53,12 +85,18 @@
             <option value="Other">Other</option>
           </select>
         </div>
+
         <div class="modal-footer text-right">
           <p align="center">
-            <input type="submit" class="btn btn-raised btn-mdb" value="Post!">
+            <input
+              type="submit"
+              class="btn btn-raised btn-mdb"
+              value="Post!"
+            >
           </p>
         </div>
       </form>
+
     </div>
   </div>
 </template>

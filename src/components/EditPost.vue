@@ -2,6 +2,7 @@
   <transition name="modal">
     <div class="modal-mask" id="mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
+
         <div class="modal-header">
           <h3>Edit Post</h3>
           <a class="close" @click="cancel()">&times;</a>
@@ -10,27 +11,49 @@
         <form @submit.prevent="updatePost">
           <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
           <div class="md-form flex-center file-upload">
-            <input type="file" id="files" class="input-file btn btn-blue-grey" @change="update"
-                   accept="image/jpeg,image/jpg,image/png" multiple>
+            <input
+              type="file"
+              id="files"
+              class="input-file btn btn-blue-grey"
+              @change="update"
+              accept="image/jpeg,image/jpg,image/png"
+              multiple
+            >
           </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
           <button @click="reset" class="btn btn-sm btn-blue-grey" style="cursor:pointer">Reset Uploads</button>
+          <!-- Where the image thumbnails appear on upload -->
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
           </div>
           <label class="edit-label">Title</label>
           <div class="md-form">
-            <input type="text" v-model="currentPost.name" class="form-control" maxlength="50" required>
+            <input
+              type="text"
+              v-model="currentPost.name"
+              class="form-control"
+              maxlength="50"
+              required
+            >
           </div>
           <label class="edit-label">Price</label>
           <div class="md-form">
-            <money v-model="currentPost.price" v-bind="moneyConfig" class="form-control currency"></money>
+            <money
+              v-model="currentPost.price"
+              v-bind="moneyConfig"
+              class="form-control currency">
+            </money>
           </div>
           <label class="edit-label">Description</label>
           <div class="md-form">
-            <textarea rows="5" class="md-textarea" v-model="currentPost.description" maxlength="500"
-                      required></textarea>
+            <textarea
+              rows="5"
+              class="md-textarea"
+              v-model="currentPost.description"
+              maxlength="500"
+              required>
+            </textarea>
           </div>
           <div class="form-group">
             <label class="form-label">
@@ -50,16 +73,26 @@
           </div>
           <label class="form-label">
             Sale Status:
-            <input type="radio" v-model="currentPost.salestatus" name="salestatus" value="Available"
-                   style="box-shadow:none"> Available
-            <input type="radio" v-model="currentPost.salestatus" name="salestatus" value="Sale Pending"
-                   style="box-shadow:none"> Sale Pending
+            <input
+              type="radio"
+              v-model="currentPost.salestatus"
+              name="salestatus"
+              value="Available"
+              style="box-shadow:none"> Available
+            <input
+              type="radio"
+              v-model="currentPost.salestatus"
+              name="salestatus"
+              value="Sale Pending"
+              style="box-shadow:none"> Sale Pending
           </label>
+
           <div class="modal-footer text-right">
             <button class="btn btn-danger cancel" @click.prevent="cancel()">Cancel</button>
             <input type="submit" class="btn btn-mdb" value="Save Changes">
           </div>
         </form>
+
       </div>
     </div>
   </transition>
