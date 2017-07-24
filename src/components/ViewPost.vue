@@ -2,6 +2,7 @@
   <transition name="modal">
     <div class="modal-mask" id="mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
+
         <div class="modal-header">
           <h3 class="modal-title">{{ currentPost.name }}</h3>
           <router-link class="close" to="/">&times;</router-link>
@@ -29,6 +30,7 @@
           </span>
           </p>
         </div>
+
       </div>
     </div>
   </transition>
@@ -38,6 +40,7 @@
   export default {
     data () {
       return {
+        // A check for whether the modal should be shown
         show: true
       }
     },

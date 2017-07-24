@@ -31,6 +31,7 @@
   export default {
     data () {
       return {
+        // A check for whether the modal should be shown
         show: true
       }
     },

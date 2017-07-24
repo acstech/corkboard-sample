@@ -19,8 +19,8 @@
           v-model="newUser.email"
           required
           maxlength="40"
-          autofocus="autofocus"
-          @focus="showText()"
+          autofocus
+          @focus="showEmailHint()"
         >
       </div>
       <div id="text" style="display:none"><p style="color:#656565">
@@ -31,9 +31,9 @@
           type="password"
           class="form-control"
           v-model="newUser.password"
-          @focus="showText2()"
+          @focus="showPasswordHint()"
           required
-          maxlength=16
+          maxlength="16"
         >
       </div>
       <div id="text2" style="display:none"><p style="color:#656565">
@@ -46,7 +46,7 @@
           v-model="newUser.confirm"
           @focus="hideText()"
           required
-          maxlength=16
+          maxlength="16"
         >
         <br>
         <div v-if="newUser.password == newUser.password && newUser.confirm == ''"></div>
@@ -97,7 +97,7 @@
       }
     },
     methods: {
-      showText () {
+      showEmailHint () {
         var x = document.getElementById('text')
         var y = document.getElementById('text2')
         if (x.focus !== 'none') {
@@ -105,7 +105,7 @@
           y.style.display = 'none'
         }
       },
-      showText2 () {
+      showPasswordHint () {
         var x = document.getElementById('text')
         var y = document.getElementById('text2')
         if (y.focus !== 'none') {
@@ -126,6 +126,7 @@
         if (!this.passwordValidation) {
           return
         }
+        // Call to Corkboard API to validate user information and store the new user in the DB
         axios({
           method: 'post',
           url: '/api/users/register',

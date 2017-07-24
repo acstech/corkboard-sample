@@ -9,6 +9,7 @@
         </div>
 
         <form @submit.prevent="saveProfileSettings" autocomplete="off">
+          <!-- Profile Picture Upload Input -->
           <label style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Profile Picture</label>
           <div class="md-form flex-center file-upload">
             <input
@@ -26,6 +27,7 @@
           <div class="alert alert-danger" v-if="error">
               <p>{{ error }}</p>
           </div>
+          <!-- First Name Input Field -->
           <label class="edit-label">First Name</label>
           <div class="md-form">
             <input
@@ -34,6 +36,7 @@
               v-model="cloneUserProfile.firstname"
               maxlength="30">
           </div>
+          <!-- Last Name Input Field -->
           <label class="edit-label">Last Name</label>
           <div class="md-form">
             <input
@@ -43,6 +46,7 @@
               maxlength="30"
             >
           </div>
+          <!-- Email Input Field -->
           <label class="edit-label">Email</label>
           <div class="md-form">
             <input type="email"
@@ -55,6 +59,7 @@
           <div class="alert alert-danger" v-if="emailErr">
                 <p>{{ emailErr }}</p>
           </div>
+          <!-- Phone Number Input Field -->
           <label class="edit-label">Phone</label>
           <div class="md-form">
             <input
@@ -70,6 +75,7 @@
           <div class="alert alert-danger" v-if="phoneErr">
                 <p>{{ phoneErr }}</p>
           </div>
+          <!-- Zip Code Input Field -->
           <label class="edit-label">Zip</label>
           <div class="md-form">
             <input
@@ -90,6 +96,7 @@
           <input type="button" class="btn btn-danger cancel" value="Cancel" @click="cancel()">
           <input type="submit" class="btn btn-mdb" value="Save Changes" @click="saveProfileSettings()">
         </div>
+
       </div>
     </div>
   </transition>
@@ -123,6 +130,7 @@ export default {
       previouslyUsedPicId: '',
       imageChanged: false,
       validImageSize: true,
+      // A check for whether the modal should be shown
       show: true
     }
   },
@@ -320,7 +328,9 @@ export default {
       .catch(error => {
         if (error.response.status === 400) {
           this.isError = true
-          if (this.validateEmail(this.userProfile.email) && this.validatePhone(this.userProfile.phone) && this.validateZip(this.userProfile.zipcode)) {
+          if (this.validateEmail(this.userProfile.email) &&
+            this.validatePhone(this.userProfile.phone) &&
+            this.validateZip(this.userProfile.zipcode)) {
             this.error = 'This email is already registered'
             this.isError = true
           } else {
@@ -360,12 +370,14 @@ export default {
       }
       promises.push(this.updateProfile())
       // if (this.imageChanged && this.isError === false) {
-      //  promises.push(this.saveImage())
-    //  }
+      //   promises.push(this.saveImage())
+      // }
       // Make API call to update the user info and refresh data on front-end
       Promise.all(promises).then(res => {
         if (this.isError === false) {
-          this.saveImage()  // If race condition occurs, getProfile may be trying to render the image before it exists, saveImage may not be fast enough in some cases
+          // If race condition occurs, getProfile may be trying to render the image before it exists,
+          // saveImage may not be fast enough in some cases
+          this.saveImage()
           this.getProfile()
             .then(res => {
               this.$store.commit('getViewedProfile', res.data)

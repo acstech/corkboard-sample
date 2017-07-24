@@ -34,6 +34,7 @@ const store = new Vuex.Store({
     defaultPostImage: 'static/posttext.png',
     currentSort: 'sortDate',
     // Likely not best practice to place these states here globally like this
+    // State for the post being viewed or previewed
     activePost: {
       id: '',
       name: '',
@@ -46,6 +47,7 @@ const store = new Vuex.Store({
       date: ''
     },
     activeSeller: '',
+    // State for the current user profile page information
     viewedUserProfile: {
       picid: '',
       firstname: '',
@@ -59,16 +61,19 @@ const store = new Vuex.Store({
       profPicLoaded: null
     },
     activeEmail: '',
+    // Represents the current user by their ID
     currentUser: '',
     allPosts: []
   },
   mutations: {
+    // Manages the token given to the user
     authenticate (state, token) {
       state.token = token
     },
     setSort (state, sortValue) {
       state.sortValue = sortValue
     },
+    // Sets the active post with the latest request information
     getActivePost (state, post) {
       var idArray = []
       var urlArray = []
@@ -98,6 +103,7 @@ const store = new Vuex.Store({
         state.activeSeller = user.user.email
       }
     },
+    // Sets the active user profile view with the latest request information
     getViewedProfile (state, profile) {
       state.viewedUserProfile.picid = profile.picid
       state.viewedUserProfile.url = profile.url
