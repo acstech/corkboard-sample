@@ -15,6 +15,7 @@
               <img :src="url" alt="Picture" style="max-width: 100%">
             </slide>
           </carousel>
+
           <div class="info">
             <h4>{{ currentPost.price | currency }}</h4>
             <h4 class="seller">Being sold by {{ activeSeller }}</h4>
