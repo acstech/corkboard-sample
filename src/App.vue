@@ -91,7 +91,7 @@
         this.$store.commit('getCurrentUser', null)
         this.$router.push('/login')
       },
-      addPost() {
+      addPost () {
         if (this.$route.path === '/') {
           this.$router.push('/addpost')
         } else {
@@ -101,7 +101,7 @@
       /* viewSettings makes an axios call to the corkboard API using the ID of the user
          that is currently signed in. The vuex state for the viewed profile is also changed
          to match the data of the current user. */
-      viewSettings() {
+      viewSettings () {
         if (this.$router.currentRoute.path === '/') {
           axios({
             method: 'get',
