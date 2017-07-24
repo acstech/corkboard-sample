@@ -264,7 +264,8 @@ export default {
     // deletes the previously used profile picture
     // from the blob storage
     saveImage: function () {
-      if (this.imageChanged === true) {
+      console.log(this.isError)
+      if (this.imageChanged === true && this.isError === false) {
         // If a new user uploads their first profile picture
         // they will not have a defined picid for a previous picture.
         // This if prevents an error throwing for
@@ -347,9 +348,6 @@ export default {
       this.updateUser.items = this.cloneUserProfile.items
       this.updateUser.zipcode = this.cloneUserProfile.zipcode
       let promises = []
-      if (this.imageChanged) {
-        promises.push(this.saveImage())
-      }
       this.updateUser.url = null
       if (!this.validateEmail(this.userProfile.email)) {
         this.emailErr = 'The email you entered cannnot be used'
@@ -359,6 +357,9 @@ export default {
       }
       if (!this.validateZip(this.userProfile.zipcode)) {
         this.zipErr = 'The zipcode you entered is invalid'
+      }
+      if (this.imageChanged) {
+        promises.push(this.saveImage())
       }
       promises.push(this.updateProfile())
       // Make API call to update the user info and refresh data on front-end
