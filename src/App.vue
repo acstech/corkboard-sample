@@ -37,11 +37,11 @@
               <span class="caret"></span>
               </router-link>
               <ul class="dropdown-menu button-group">
-                <li><a @click.prevent="sort('sortDate')" class="dropdown-item" style="cursor:pointer">Recently added</a>
+                <li><a @click="sort('sortDate')" class="dropdown-item" style="cursor:pointer">Recently added</a>
                 </li>
-                <li><a @click.prevent="sort('sortLow')" class="dropdown-item"
+                <li><a @click="sort('sortLow')" class="dropdown-item"
                        style="cursor:pointer">Price: low to high</a></li>
-                <li><a @click.prevent="sort('sortHigh')" class="dropdown-item"
+                <li><a @click="sort('sortHigh')" class="dropdown-item"
                        style="cursor:pointer">Price: high to low</a></li>
               </ul>
             </li>
@@ -50,7 +50,8 @@
             </li>
           </ul>
           <form v-if="getToken != null" class="form-inline waves-effect waves-light">
-            <input type="text" class="form-control" placeholder="Search" style="margin-top: 8px">
+            <!--input type="text" class="form-control" placeholder="Search" style="margin-top: 8px">
+            <a class="btn btn-sm"><span class="glyphicon glyphicon-search"></span></a-->
           </form>
         </div>
       </div>
@@ -221,4 +222,9 @@
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }
+
+  .glyphicon-search {
+    color: #4d4d4d;
+  }
+
 </style>
