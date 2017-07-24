@@ -9,25 +9,11 @@
         </div>
 
         <div class="modal-body">
-
-          <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-              <div :class="{item: currentPost.url, active: index === 0}" v-for="(url, index) in currentPost.url">
-                <img :src="url" alt="Picture" style="width:100%">
-              </div>
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev" v-if="currentPost.url.length > 1">
-              <span class="glyphicon glyphicon-chevron-left"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next" v-if="currentPost.url.length > 1">
-              <span class="glyphicon glyphicon-chevron-right"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
+          <carousel :perPage=1>
+            <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
+              <img :src="url" alt="Picture" style="width:100%;">
+            </slide>
+          </carousel>
           <div class="info">
             <h4>{{ currentPost.price | currency }}</h4>
             <h4 class="seller">Being sold by {{ activeSeller }}</h4>
