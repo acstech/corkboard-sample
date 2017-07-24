@@ -63,6 +63,7 @@
           data: this.credentials
         })
           .then(res => {
+            // Store generated token
             this.$store.commit('authenticate', res.data.token)
             var base64Url = res.data.token.split('.')[1]
             var base64 = base64Url.replace('-', '+').replace('_', '/')

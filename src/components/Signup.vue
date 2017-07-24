@@ -19,7 +19,7 @@
           v-model="newUser.email"
           required
           maxlength="40"
-          autofocus="autofocus"
+          autofocus
           @focus="showText()"
         >
       </div>
@@ -33,7 +33,7 @@
           v-model="newUser.password"
           @focus="showText2()"
           required
-          maxlength=16
+          maxlength="16"
         >
       </div>
       <div id="text2" style="display:none"><p style="color:#656565">
@@ -126,6 +126,7 @@
         if (!this.passwordValidation) {
           return
         }
+        // Call to Corkboard API to validate user information and store the new user in the DB
         axios({
           method: 'post',
           url: '/api/users/register',
