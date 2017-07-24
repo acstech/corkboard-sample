@@ -46,7 +46,7 @@
           v-model="newUser.confirm"
           @focus="hideText()"
           required
-          maxlength=16
+          maxlength="16"
         >
         <br>
         <div v-if="newUser.password == newUser.password && newUser.confirm == ''"></div>
