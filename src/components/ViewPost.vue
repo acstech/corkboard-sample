@@ -10,9 +10,9 @@
         <div class="modal-body">
           <!-- Carousel pictures of items-->
           <carousel :perPage=1>
-              <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
-                <img :src="url" alt="Picture" style="max-width: 100%">
-              </slide>
+            <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
+              <img :src="url" alt="Picture" style="max-width: 100%">
+            </slide>
           </carousel>
           <!-- Post information -->
           <div class="info">
