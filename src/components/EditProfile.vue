@@ -34,7 +34,7 @@
               v-model="cloneUserProfile.firstname"
               maxlength="30">
           </div>
-          <label class="edit-label">First Name</label>
+          <label class="edit-label">Last Name</label>
           <div class="md-form">
             <input
               type="text"
@@ -320,6 +320,7 @@ export default {
       })
       .catch(error => {
         if (error.response.status === 400) {
+          this.isError = true
           if (this.validateEmail(this.userProfile.email) && this.validatePhone(this.userProfile.phone) && this.validateZip(this.userProfile.zipcode)) {
             this.error = 'This email is already registered'
             this.isError = true
@@ -358,13 +359,14 @@ export default {
       if (!this.validateZip(this.userProfile.zipcode)) {
         this.zipErr = 'The zipcode you entered is invalid'
       }
-      if (this.imageChanged) {
-        promises.push(this.saveImage())
-      }
       promises.push(this.updateProfile())
+      // if (this.imageChanged && this.isError === false) {
+      //  promises.push(this.saveImage())
+    //  }
       // Make API call to update the user info and refresh data on front-end
       Promise.all(promises).then(res => {
         if (this.isError === false) {
+          this.saveImage()
           this.getProfile()
             .then(res => {
               this.$store.commit('getViewedProfile', res.data)
