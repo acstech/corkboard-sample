@@ -10,11 +10,12 @@
         </div>
 
         <div class="modal-body">
-          <carousel :perPage=1 :autoplay=true :autoplayTimeout=5000 :autoplayHoverPause=true :navigationEnabled=true>
+          <carousel :perPage=1 :autoplay=true :autoplayTimeout=5000 :autoplayHoverPause=true :navigationEnabled="(currentPost.url.length !== 1)" :loop=true>
             <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
               <img :src="url" alt="Picture" style="max-width: 100%">
             </slide>
           </carousel>
+
           <div class="info">
             <h4>{{ currentPost.price | currency }}</h4>
             <h4 class="seller">Being sold by {{ activeSeller }}</h4>
