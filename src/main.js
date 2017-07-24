@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
+import VueCarousel from 'vue-carousel'
 import { routes } from './routes'
 import Masonry from 'masonry-layout'
 import imagesLoaded from 'imagesloaded'
@@ -17,6 +18,7 @@ Axios.defaults.headers.common['Content-Type'] = 'application/json'
 // Use the vue routing and state management tools
 Vue.use(VueRouter)
 Vue.use(Vuex)
+Vue.use(VueCarousel)
 
 const router = new VueRouter({
   routes: routes

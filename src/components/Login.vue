@@ -19,7 +19,7 @@
           v-model="credentials.email"
           required
           maxlength="40"
-          autofocus="autofocus"
+          autofocus
         >
       </div>
       <div class="md-form">
@@ -55,6 +55,8 @@
     methods: {
       // Calls the Corkboard API to validate the user request to authenticate.
       logIn () {
+        var email = this.credentials.email.toLowerCase()
+        this.credentials.email = email
         axios({
           method: 'post',
           url: '/api/users/auth',
