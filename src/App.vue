@@ -29,12 +29,12 @@
             </li>
             <li v-if="getToken != null && this.$route.path === '/'" class="nav-item dropdown btn-group">
               <router-link to="/"
-              class="nav-link dropdown-toggle"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="true">
-              Sort by
-              <span class="caret"></span>
+                           class="nav-link dropdown-toggle"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="true">
+                Sort by
+                <span class="caret"></span>
               </router-link>
               <ul class="dropdown-menu button-group">
                 <li><a @click="sort('sortDate')" class="dropdown-item" style="cursor:pointer">Recently added</a>

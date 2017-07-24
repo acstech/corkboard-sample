@@ -2,6 +2,7 @@
   <transition name="modal">
     <div class="modal-mask" id="mask" transition="modal" @click="close" v-show="show">
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
+
         <div class="modal-header">
           <h5 style="float:left; color:silver; margin-right:-70px">(Post preview)</h5>
           <h3 class="modal-title">{{ currentPost.name }}</h3>
@@ -9,9 +10,9 @@
         </div>
 
         <div class="modal-body">
-          <carousel :perPage=1>
+          <carousel :perPage=1 :autoplay=true :autoplayTimeout=5000 :autoplayHoverPause=true :navigationEnabled=true>
             <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
-              <img :src="url" alt="Picture" style="height:100%;">
+              <img :src="url" alt="Picture" style="max-width: 100%">
             </slide>
           </carousel>
           <div class="info">
