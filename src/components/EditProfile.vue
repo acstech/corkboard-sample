@@ -264,7 +264,6 @@ export default {
     // deletes the previously used profile picture
     // from the blob storage
     saveImage: function () {
-      console.log(this.isError)
       if (this.imageChanged === true && this.isError === false) {
         // If a new user uploads their first profile picture
         // they will not have a defined picid for a previous picture.
@@ -366,7 +365,7 @@ export default {
       // Make API call to update the user info and refresh data on front-end
       Promise.all(promises).then(res => {
         if (this.isError === false) {
-          this.saveImage()
+          this.saveImage()  // If race condition occurs, getProfile may be trying to render the image before it exists, saveImage may not be fast enough in some cases
           this.getProfile()
             .then(res => {
               this.$store.commit('getViewedProfile', res.data)
