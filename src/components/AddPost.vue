@@ -9,6 +9,7 @@
         </div>
 
         <form enctype="multipart/form-data" @submit.prevent="savePost()">
+          <!-- Image Upload Input -->
           <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
           <div class="md-form flex-center file-upload">
             <input
@@ -43,6 +44,7 @@
           </div>
           <!-- Where the image thumbnails appear on upload -->
           <div id="preview"></div>
+          <!-- Item Name (Title) Input -->
           <div class="md-form">
             <input
               v-model="newPost.name"
@@ -54,6 +56,7 @@
             >
             <label for="title">Title</label>
           </div>
+          <!-- Item Price Input -->
           <div class="md-form">
             <label>Price</label>
             <money
@@ -63,6 +66,7 @@
               class="form-control currency">
             </money>
           </div>
+          <!-- Item Description Input -->
           <div class="md-form">
             <textarea
               v-model="newPost.description"
@@ -72,6 +76,7 @@
             </textarea>
             <label class="control-label">Description</label>
           </div>
+          <!-- Item Category Input -->
           <div class="form-group">
             <label class="control-label">Category</label>
             <select class="form-control" v-model="newPost.category" required>
@@ -146,6 +151,7 @@
         numImages2: 0,
         validImageSize: true,
         validNumOfImages: true,
+        // A check for whether the modal should be shown
         show: true
       }
     },

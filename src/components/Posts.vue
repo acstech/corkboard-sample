@@ -1,10 +1,12 @@
 <template>
   <transition name="fade">
-  <!-- This is where data should be retrieved from the DB and a v-for directive is used to iterate over the data -->
+  <!-- Masonry Grid -->
   <div class="grid container flex-center">
+    <!-- The grid sizer element for masonry config -->
     <div class="grid-sizer"></div>
     <h1 v-if="allPosts.length == 0" class="flex-center">No posts yet! Create one!</h1>
-    <div class="col-xs-4 grid-item" v-for="post in allPosts"> <!-- v-for on this element -->
+    <!-- Represents each post as a masonry grid item -->
+    <div class="col-xs-4 grid-item" v-for="post in allPosts">
       <div class="thumbnail" @click="viewPost({post})">
         <img v-if="post.url" :src="post.url" alt="Post Picture">
         <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">

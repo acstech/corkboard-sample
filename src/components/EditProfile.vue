@@ -123,6 +123,7 @@ export default {
       previouslyUsedPicId: '',
       imageChanged: false,
       validImageSize: true,
+      // A check for whether the modal should be shown
       show: true
     }
   },
