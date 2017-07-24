@@ -1,23 +1,24 @@
 <template>
   <transition name="fade">
   <!-- Masonry Grid -->
-  <div class="grid container flex-center">
-    <!-- The grid sizer element for masonry config -->
-    <div class="grid-sizer"></div>
-    <h1 v-if="allPosts.length == 0" class="flex-center">No posts yet! Create one!</h1>
-    <!-- Represents each post as a masonry grid item -->
-    <div class="col-xs-4 grid-item" v-for="post in allPosts">
-      <div class="thumbnail" @click="viewPost({post})">
-        <img v-if="post.url" :src="post.url" alt="Post Picture">
-        <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">
-        <div class="caption">
-          {{ post.name }}
-          <h4>
-            <div class="price" v-if="post.price != 0">{{ post.price | currency }}</div>
-            <div class="price" v-else>Free</div>
-            <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
-          </h4>
-          <br>
+    <div class="grid container flex-center">
+      <!-- The grid sizer element for masonry config -->
+      <div class="grid-sizer"></div>
+      <h1 v-if="allPosts.length == 0" class="flex-center">No posts yet! Create one!</h1>
+      <!-- Represents each post as a masonry grid item -->
+      <div class="col-xs-4 grid-item" v-for="post in allPosts">
+        <div class="thumbnail" @click="viewPost({post})">
+          <img v-if="post.url" :src="post.url" alt="Post Picture">
+          <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">
+          <div class="caption">
+            {{ post.name }}
+            <h4>
+              <div class="price" v-if="post.price != 0">{{ post.price | currency }}</div>
+              <div class="price" v-else>Free</div>
+              <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
+            </h4>
+            <br>
+          </div>
         </div>
       </div>
     </div>
