@@ -19,7 +19,7 @@
           v-model="credentials.email"
           required
           maxlength="40"
-          autofocus="autofocus"
+          autofocus
         >
       </div>
       <div class="md-form">

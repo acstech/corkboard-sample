@@ -28,15 +28,21 @@
               <router-link to="">Profile Settings</router-link>
             </li>
             <li v-if="getToken != null && this.$route.path === '/'" class="nav-item dropdown btn-group">
-              <router-link to="" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              <router-link to="/"
+                           class="nav-link dropdown-toggle"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
                            aria-expanded="true">
                 Sort by
                 <span class="caret"></span>
               </router-link>
               <ul class="dropdown-menu button-group">
-                <li><a @click.prevent="sort('sortDate')" class="dropdown-item" stlye="cursor:pointer">Recently added</a></li>
-                <li><a @click.prevent="sort('sortLow')" class="dropdown-item" style="cursor:pointer">Price: low to high</a></li>
-                <li><a @click.prevent="sort('sortHigh')" class="dropdown-item" style="cursor:pointer">Price: high to low</a></li>
+                <li><a @click.prevent="sort('sortDate')" class="dropdown-item" style="cursor:pointer">Recently added</a>
+                </li>
+                <li><a @click.prevent="sort('sortLow')" class="dropdown-item"
+                       style="cursor:pointer">Price: low to high</a></li>
+                <li><a @click.prevent="sort('sortHigh')" class="dropdown-item"
+                       style="cursor:pointer">Price: high to low</a></li>
               </ul>
             </li>
             <li v-if="getToken != null" @click="logOut()">
@@ -71,7 +77,7 @@
     },
     methods: {
       sort (sortValue) {
-        this.$store.state.sortValue = ''
+        this.$store.state.sortValue = 'sortDate'
         this.$store.commit('setSort', sortValue)
       },
       /* toHome will route to the home page if the user has a valid token (is authenticated).
@@ -83,17 +89,17 @@
           this.$router.push('/')
         }
       },
+      logOut () {
+        this.$store.commit('authenticate', null)
+        this.$store.commit('getCurrentUser', null)
+        this.$router.push('/login')
+      },
       addPost () {
         if (this.$route.path === '/') {
           this.$router.push('/addpost')
         } else {
           this.$router.push('/addpost-profile')
         }
-      },
-      logOut () {
-        this.$store.commit('authenticate', null)
-        this.$store.commit('getCurrentUser', null)
-        this.$router.push('/login')
       },
       /* viewSettings makes an axios call to the corkboard API using the ID of the user
          that is currently signed in. The vuex state for the viewed profile is also changed

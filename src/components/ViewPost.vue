@@ -9,22 +9,11 @@
 
         <div class="modal-body">
           <!-- Carousel pictures of items-->
-          <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-              <div :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
-                <img :src="url" alt="Picture" style="width:100%">
-              </div>
-            </div>
-            <!-- Left and right carousel controls -->
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev" v-if="currentPost.url.length > 1">
-              <span class="glyphicon glyphicon-chevron-left"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next" v-if="currentPost.url.length > 1">
-              <span class="glyphicon glyphicon-chevron-right"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
+          <carousel :perPage=1 :autoplay=true :autoplayTimeout=5000 :autoplayHoverPause=true :navigationEnabled=true>
+            <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
+              <img :src="url" alt="Picture" style="max-width: 100%">
+            </slide>
+          </carousel>
           <!-- Post information -->
           <div class="info">
             <h4>{{ currentPost.price | currency }}</h4>
