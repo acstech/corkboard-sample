@@ -28,10 +28,13 @@
               <router-link to="">Profile Settings</router-link>
             </li>
             <li v-if="getToken != null && this.$route.path === '/'" class="nav-item dropdown btn-group">
-              <router-link to="" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="true">
-                Sort by
-                <span class="caret"></span>
+              <router-link to="/"
+              class="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="true">
+              Sort by
+              <span class="caret"></span>
               </router-link>
               <ul class="dropdown-menu button-group">
                 <li><a @click.prevent="sort('sortDate')" class="dropdown-item" style="cursor:pointer">Recently added</a>
@@ -74,7 +77,7 @@
     },
     methods: {
       sort (sortValue) {
-        this.$store.state.sortValue = ''
+        this.$store.state.sortValue = 'sortDate'
         this.$store.commit('setSort', sortValue)
       },
       /* toHome will route to the home page if the user has a valid token (is authenticated).
