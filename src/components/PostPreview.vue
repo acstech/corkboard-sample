@@ -11,7 +11,7 @@
         <div class="modal-body">
           <carousel :perPage=1>
             <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
-              <img :src="url" alt="Picture" style="height:100%;">
+              <img :src="url" alt="Picture" style="height: 100%; max-height: 500px; max-width: 100%">
             </slide>
           </carousel>
           <div class="info">
