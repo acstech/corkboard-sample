@@ -34,7 +34,7 @@
               v-model="cloneUserProfile.firstname"
               maxlength="30">
           </div>
-          <label class="edit-label">First Name</label>
+          <label class="edit-label">Last Name</label>
           <div class="md-form">
             <input
               type="text"
@@ -264,7 +264,7 @@ export default {
     // deletes the previously used profile picture
     // from the blob storage
     saveImage: function () {
-      if (this.imageChanged === true) {
+      if (this.imageChanged === true && this.isError === false) {
         // If a new user uploads their first profile picture
         // they will not have a defined picid for a previous picture.
         // This if prevents an error throwing for
@@ -319,6 +319,7 @@ export default {
       })
       .catch(error => {
         if (error.response.status === 400) {
+          this.isError = true
           if (this.validateEmail(this.userProfile.email) && this.validatePhone(this.userProfile.phone) && this.validateZip(this.userProfile.zipcode)) {
             this.error = 'This email is already registered'
             this.isError = true
@@ -347,9 +348,6 @@ export default {
       this.updateUser.items = this.cloneUserProfile.items
       this.updateUser.zipcode = this.cloneUserProfile.zipcode
       let promises = []
-      if (this.imageChanged) {
-        promises.push(this.saveImage())
-      }
       this.updateUser.url = null
       if (!this.validateEmail(this.userProfile.email)) {
         this.emailErr = 'The email you entered cannnot be used'
@@ -361,9 +359,13 @@ export default {
         this.zipErr = 'The zipcode you entered is invalid'
       }
       promises.push(this.updateProfile())
+      // if (this.imageChanged && this.isError === false) {
+      //  promises.push(this.saveImage())
+    //  }
       // Make API call to update the user info and refresh data on front-end
       Promise.all(promises).then(res => {
         if (this.isError === false) {
+          this.saveImage()  // If race condition occurs, getProfile may be trying to render the image before it exists, saveImage may not be fast enough in some cases
           this.getProfile()
             .then(res => {
               this.$store.commit('getViewedProfile', res.data)
