@@ -20,7 +20,7 @@
           required
           maxlength="40"
           autofocus
-          @focus="showText()"
+          @focus="showEmailHint()"
         >
       </div>
       <div id="text" style="display:none"><p style="color:#656565">
@@ -31,7 +31,7 @@
           type="password"
           class="form-control"
           v-model="newUser.password"
-          @focus="showText2()"
+          @focus="showPasswordHint()"
           required
           maxlength="16"
         >
@@ -97,7 +97,7 @@
       }
     },
     methods: {
-      showText () {
+      showEmailHint () {
         var x = document.getElementById('text')
         var y = document.getElementById('text2')
         if (x.focus !== 'none') {
@@ -105,7 +105,7 @@
           y.style.display = 'none'
         }
       },
-      showText2 () {
+      showPasswordHint () {
         var x = document.getElementById('text')
         var y = document.getElementById('text2')
         if (y.focus !== 'none') {
