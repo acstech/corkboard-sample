@@ -21,6 +21,9 @@
             >
           </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
+          <svg class="circular-loader" v-if="isLoading">
+            <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2" />
+          </svg>
           <!-- Where the image thumbnail appears on upload -->
           <div id="preview">
             <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
@@ -132,7 +135,8 @@ export default {
       imageChanged: false,
       validImageSize: true,
       // A check for whether the modal should be shown
-      show: true
+      show: true,
+      isLoading: false
     }
   },
   computed: {
@@ -220,11 +224,13 @@ export default {
     },
     update (event) {
       let vm = this
+      vm.isLoading = true
       // Reset size check when user tries again
       vm.validImageSize = true
       let file = event.target.files[0]
       // For now, only allow images less than 5MB in size
       if (file.size > 5000000) {
+        vm.isLoading = false
         vm.validImageSize = false
         return
       }
@@ -255,12 +261,14 @@ export default {
             }
           })
             .then(res => {
+              vm.isLoading = false
               // Save image Url and ID for later image saving and profile saving
               vm.previouslyUsedPicId = vm.cloneUserProfile.picid
               vm.cloneUserProfile.postUrl = res.data.url
               vm.cloneUserProfile.picid = res.data.picid
             })
             .catch(err => {
+              vm.isLoading = false
               console.log(err)
             })
         }
@@ -446,5 +454,93 @@ h3 {
 
 .cancel {
   float: left;
+}
+
+.circular-loader {
+  -webkit-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
+  height: 100px;
+  -webkit-transform-origin: center center;
+  -ms-transform-origin: center center;
+  transform-origin: center center;
+  width: 100px;
+}
+
+.loader-path {
+  stroke-dasharray: 150,200;
+  stroke-dashoffset: -10;
+  -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -124;
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -124;
+  }
+}
+@-webkit-keyframes color {
+  0% {
+    stroke: #67737f;
+  }
+  40% {
+    stroke: #67737f;
+  }
+  66% {
+    stroke: #67737f;
+  }
+  80%, 90% {
+    stroke: #67737f;
+  }
+}
+@keyframes color {
+  0% {
+    stroke: #67737f;
+  }
+  40% {
+    stroke: #67737f;
+  }
+  66% {
+    stroke: #67737f;
+  }
+  80%, 90% {
+    stroke: #67737f;
+  }
 }
 </style>
