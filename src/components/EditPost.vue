@@ -24,6 +24,10 @@
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
           <button v-if="uploadedFiles.length > 0 || currentPost.url.length > 0" @click.prevent="reset" class="btn btn-sm btn-blue-grey" style="cursor:pointer">Reset Uploads</button>
+          <br>
+          <svg class="circular-loader" v-if="isLoading">
+            <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2" />
+          </svg>
           <!-- Where the image thumbnails appear on upload -->
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
@@ -155,7 +159,8 @@
         numImages: 0,
         numimages2: 0,
         validImageSize: true,
-        validNumOfImages: true
+        validNumOfImages: true,
+        isLoading: false
       }
     },
     mounted () {
@@ -189,6 +194,7 @@
       },
       update (event) {
         let vm = this
+        vm.isLoading = true
         vm.validImageSize = true
         vm.validNumOfImages = true
         let files = event.target.files
@@ -197,11 +203,13 @@
         // Check against the 5 maximum images constraint
         if (vm.wasreset) {
           if (files.length + vm.numImages > 5) {
+            vm.isLoading = false
             vm.validNumOfImages = false
             return
           }
         } else {
           if (files.length + vm.numImages2 > 5) {
+            vm.isLoading = false
             vm.validNumOfImages = false
             return
           }
@@ -215,6 +223,7 @@
           }
           // For now, only allow images less than 5MB in size
           if (file.size > 5000000) {
+            vm.isLoading = false
             vm.validImageSize = false
             return
           }
@@ -247,12 +256,14 @@
               })
                 .then(res => {
                   // Place URL and ID in new post data for saving
+                  vm.isLoading = false
                   vm.uploadedFiles.push({file: file, url: res.data.url})
                   vm.countPost.picid.push(res.data.picid)
                   vm.clonePost.picid.push(res.data.picid)
                   vm.currentPost.picid.push(res.data.picid)
                 })
                 .catch(err => {
+                  vm.isLoading = false
                   vm.uploadError = err.response
                 })
             }
@@ -405,5 +416,93 @@
     width: 150px;
     height: 150px;
     display: inline;
+  }
+
+  .circular-loader {
+    -webkit-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
+    height: 100px;
+    -webkit-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
+    width: 100px;
+  }
+
+  .loader-path {
+    stroke-dasharray: 150,200;
+    stroke-dashoffset: -10;
+    -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    stroke-linecap: round;
+  }
+
+  @-webkit-keyframes rotate {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rotate {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes dash {
+    0% {
+      stroke-dasharray: 1,200;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -124;
+    }
+  }
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1,200;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -124;
+    }
+  }
+  @-webkit-keyframes color {
+    0% {
+      stroke: #67737f;
+    }
+    40% {
+      stroke: #67737f;
+    }
+    66% {
+      stroke: #67737f;
+    }
+    80%, 90% {
+      stroke: #67737f;
+    }
+  }
+  @keyframes color {
+    0% {
+      stroke: #67737f;
+    }
+    40% {
+      stroke: #67737f;
+    }
+    66% {
+      stroke: #67737f;
+    }
+    80%, 90% {
+      stroke: #67737f;
+    }
   }
 </style>

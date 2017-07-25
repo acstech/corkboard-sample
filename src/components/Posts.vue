@@ -12,6 +12,8 @@
         <!-- Post Information (name, price) -->
         <div class="caption">
           {{ post.name }}
+          <br>
+          <span v-if="post.salestatus == 'Sale Pending'" class="badge red">{{ post.salestatus }}</span>
           <h4>
             <div class="price" v-if="post.price != 0">{{ post.price | currency }}</div>
             <div class="price" v-else>Free</div>

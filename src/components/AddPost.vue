@@ -1,7 +1,8 @@
 <template>
+  <!-- Intentionally left out background click modal-closing here for UX reasons -->
   <transition name="modal">
-    <div class="modal-mask" id="mask" @click="close" v-show="show">
-      <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
+    <div class="modal-mask" id="mask">
+      <div class="modal-container">
 
         <a class="close" @click="cancel">&times;</a>
 
@@ -32,6 +33,9 @@
             style="cursor:pointer">
             Reset Uploads
           </button>
+          <svg class="circular-loader" v-if="isLoading">
+            <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2" />
+          </svg>
           <div v-if="isSuccess">
             <p>Uploaded successfully.</p>
           </div>
@@ -157,8 +161,7 @@
         numImages2: 0,
         validImageSize: true,
         validNumOfImages: true,
-        // A check for whether the modal should be shown
-        show: true
+        isLoading: false
       }
     },
     computed: {
@@ -189,15 +192,6 @@
       })
     },
     methods: {
-      // Closes the modal if its background is clicked
-      close () {
-        if (this.$route.path === '/addpost') {
-          this.$router.push('/')
-        } else {
-          this.$router.push('/viewProfile/' + this.getCurrentUser)
-        }
-        this.show = false
-      },
       cancel () {
         if (this.$route.path === '/addpost') {
           this.$router.push('/')
@@ -220,6 +214,7 @@
       },
       update (event) {
         let vm = this
+        vm.isLoading = true
         vm.validImageSize = true
         vm.validNumOfImages = true
         // Grab the file object from the form input
@@ -229,11 +224,13 @@
         // Check against the 5 maximum images constraint
         if (vm.wasreset) {
           if (files.length + vm.numImages > 5) {
+            vm.isLoading = false
             vm.validNumOfImages = false
             return
           }
         } else {
           if (files.length + vm.numImages2 > 5) {
+            vm.isLoading = false
             vm.validNumOfImages = false
             return
           }
@@ -247,6 +244,7 @@
           }
           // For now, only allow images less than 5MB in size
           if (file.size > 5000000) {
+            vm.isLoading = false
             vm.validImageSize = false
             return
           }
@@ -279,12 +277,14 @@
               })
                 .then(res => {
                   vm.currentStatus = STATUS_SUCCESS
+                  vm.isLoading = false
                   // Push information about the file to the appropriate arrays
                   vm.uploadedFiles.push({file: file, url: res.data.url})
                   vm.newPost.picid.push(res.data.picid)
                   vm.countPost.picid.push(res.data.picid)
                 })
                 .catch(err => {
+                  vm.isLoading = false
                   vm.uploadError = err.response
                   vm.currentStatus = STATUS_FAILED
                 })
@@ -430,5 +430,93 @@
   fieldset {
     margin-top: 12px;
     margin-bottom: 12px;
+  }
+
+  .circular-loader {
+    -webkit-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
+    height: 100px;
+    -webkit-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
+    width: 100px;
+  }
+
+  .loader-path {
+    stroke-dasharray: 150,200;
+    stroke-dashoffset: -10;
+    -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+    stroke-linecap: round;
+  }
+
+  @-webkit-keyframes rotate {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rotate {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes dash {
+    0% {
+      stroke-dasharray: 1,200;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -124;
+    }
+  }
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1,200;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 89,200;
+      stroke-dashoffset: -124;
+    }
+  }
+  @-webkit-keyframes color {
+    0% {
+      stroke: #67737f;
+    }
+    40% {
+      stroke: #67737f;
+    }
+    66% {
+      stroke: #67737f;
+    }
+    80%, 90% {
+      stroke: #67737f;
+    }
+  }
+  @keyframes color {
+    0% {
+      stroke: #67737f;
+    }
+    40% {
+      stroke: #67737f;
+    }
+    66% {
+      stroke: #67737f;
+    }
+    80%, 90% {
+      stroke: #67737f;
+    }
   }
 </style>
