@@ -19,7 +19,7 @@
             <div class="price" v-else>Free</div>
             <!-- Show contact icon or "Your Post" label depending on if it is the user's post -->
             <span v-if="post.userid !== getCurrentUser" class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
-            <span v-else class="badge black" style="float:left">Your post!</span>
+            <span v-else class="badge darkgray" style="float:left; box-shadow:none">Your post!</span>
           </h4>
         </div>
       </div>
@@ -35,6 +35,7 @@
 
   export default {
     computed: {
+      // Function that uses lodash to sort posts on the home page
       allPosts () {
         if (this.$store.state.sortValue === 'sortLow') {
           this.$store.state.sortValue = ''
@@ -89,6 +90,7 @@
       })
     },
     methods: {
+      // Function to open email application and contact seller
       contactSeller (post) {
         glyphicon = true
         axios({
@@ -110,6 +112,7 @@
             console.log(error)
           })
       },
+      // Function that displays user information on post modal
       viewPost (post) {
         axios({
           method: 'get',
@@ -208,4 +211,5 @@
     margin: auto;
     max-width: 300px;
   }
+
 </style>

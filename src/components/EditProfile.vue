@@ -196,6 +196,7 @@ export default {
       this.$router.push('/viewProfile/' + this.getCurrentUser)
       this.show = false
     },
+    // Verfies that the email entered is entered in a valid format
     validateEmail (email) {
       if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
         return true
@@ -204,6 +205,7 @@ export default {
         return false
       }
     },
+    // Verifies that the phone number is entered in a valid format
     validatePhone (phone) {
       if (phone) {
         if (/\+?\d? ?\(?\d{3}\)? ?\d{3} ?-? ?\d{4}/.test(phone)) {
@@ -214,6 +216,7 @@ export default {
         }
       } else { return true }
     },
+    // Verifes that the zipcode is either entered as 5 digits or not at all
     validateZip (zipcode) {
       if (zipcode) {
         if (zipcode.length === 0 || zipcode.length === 5) {
@@ -345,12 +348,12 @@ export default {
             this.error = 'This email is already registered'
             this.isError = true
           } else {
-            this.error = 'Something went wrong. Please make sure all data is correct. '
             this.isError = true
           }
         }
       })
     },
+    // Clones the changes entered and saves them when "Save Profile" is clicked
     saveProfileSettings () {
       this.isError = false
       this.zipErr = ''
