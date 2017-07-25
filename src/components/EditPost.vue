@@ -166,7 +166,7 @@
     mounted () {
       if (this.getToken === null) {
         this.$router.push('/login')
-      } else if (this.getCurrentUser !== this.currentPost.userid) {
+      } else if (this.getCurrentUser !== this.currentPost.userid) {  // Temp fix
         this.$router.push('/')
       }
       // Allows modal close when pressing the ESC key
