@@ -1,64 +1,62 @@
 <template>
-  <transition name="fade">
-    <div class="container-fluid" style="padding: 0 0 0 15px">
-      <div class="row">
-        <div class="col-md-2 col-sm-3 sidebar">
-          <ul class="nav nav-sidebar">
-            <h3 class="sub-header">User Profile</h3>
-            <!-- Profile Picture -->
-            <li>
-              <div id="profile_pic_container" class="logo-wrapper waves-light flex-center">
-                <a><img
-                  v-if="userProfile.url"
-                  @click="editProfile"
-                  :src="userProfile.url"
-                  class="profile-pic img-fluid flex-center"
-                  alt="Upload a profile picture!"
-                  style="cursor:pointer;margin-bottom:20px"/></a>
-              </div>
-            </li>
-            <!-- /Profile Picture -->
-            <li class="profile-info">
-              <h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}
-            </li>
-            <br>
-            <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li>
-            <br>
-            <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li>
-            <br>
-            <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
-          </ul>
-          <a class="btn btn-mdb btn-sm" v-if="userProfile.id == getCurrentUser" @click="editProfile" id="edit_profile">
-            <span style="color: white; margin-right: 10px;" class="glyphicon glyphicon-pencil"></span>Edit Profile
-          </a>
-        </div>
-        <!-- Masonry Grid -->
-        <h1 class="flex-center" v-if="!this.userProfile.items || this.userProfile.items.length == 0">No posts yet!</h1>
-        <div class="grid col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <!-- The grid sizer element for masonry config -->
-          <div class="grid-sizer"></div>
-          <!-- Represents each post as a masonry grid item -->
-          <div class="grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
-            <div class="thumbnail" @click="postPreview({post})">
-              <!-- Show Primary image only -->
-              <img v-if="shouldDisplayImage(post)" :src="post.url[0]" alt="...">
-              <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">
-              <div class="caption">
-                <h4>{{ post.name }}</h4>
-                <h5 v-if="post.price != 0">{{ post.price | currency }}</h5>
-                <h5 v-else>Free</h5>
-                <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
-                <p v-if="userProfile.id == getCurrentUser">
-                  <a><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></a>
-                  <a><span @click.prevent="deletePost({post})" class="glyphicon glyphicon-trash"></span></a>
-                </p>
-              </div>
+  <div class="container-fluid" style="padding: 0 0 0 15px">
+    <div class="row">
+      <div class="col-md-2 col-sm-3 sidebar">
+        <ul class="nav nav-sidebar">
+          <h3 class="sub-header">User Profile</h3>
+          <!-- Profile Picture -->
+          <li>
+            <div id="profile_pic_container" class="logo-wrapper waves-light flex-center">
+              <a><img
+                v-if="userProfile.url"
+                @click="editProfile"
+                :src="userProfile.url"
+                class="profile-pic img-fluid flex-center"
+                alt="Upload a profile picture!"
+                style="cursor:pointer;margin-bottom:20px"/></a>
+            </div>
+          </li>
+          <!-- /Profile Picture -->
+          <li class="profile-info">
+            <h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}
+          </li>
+          <br>
+          <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li>
+          <br>
+          <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li>
+          <br>
+          <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
+        </ul>
+        <a class="btn btn-mdb btn-sm" v-if="userProfile.id == getCurrentUser" @click="editProfile" id="edit_profile">
+          <span style="color: white; margin-right: 10px;" class="glyphicon glyphicon-pencil"></span>Edit Profile
+        </a>
+      </div>
+      <!-- Masonry Grid -->
+      <h1 class="flex-center" v-if="!this.userProfile.items || this.userProfile.items.length == 0">No posts yet!</h1>
+      <div class="grid col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <!-- The grid sizer element for masonry config -->
+        <div class="grid-sizer"></div>
+        <!-- Represents each post as a masonry grid item -->
+        <div class="grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
+          <div class="thumbnail" @click="postPreview({post})">
+            <!-- Show Primary image only -->
+            <img v-if="shouldDisplayImage(post)" :src="post.url[0]" alt="...">
+            <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">
+            <div class="caption">
+              <h4>{{ post.name }}</h4>
+              <h5 v-if="post.price != 0">{{ post.price | currency }}</h5>
+              <h5 v-else>Free</h5>
+              <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
+              <p v-if="userProfile.id == getCurrentUser">
+                <a><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></a>
+                <a><span @click.prevent="deletePost({post})" class="glyphicon glyphicon-trash"></span></a>
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
@@ -291,14 +289,6 @@
 
   span.glyphicon-trash:hover:active {
     color: rgb(80, 0, 0);
-  }
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
-  }
-
-  .fade-enter, .fade-leave-to {
-    opacity: 0;
   }
 
   h1 {
