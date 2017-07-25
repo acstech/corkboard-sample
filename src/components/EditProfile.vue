@@ -3,9 +3,10 @@
     <div class="modal-mask" id="mask" transition="modal" @click="close" v-show="show">
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
 
+        <a @click="cancel()" class="close">&times;</a>
+
         <div class="modal-header">
           <h3>Edit Profile</h3>
-          <a @click="cancel()" class="close">&times;</a>
         </div>
 
         <form @submit.prevent="saveProfileSettings" autocomplete="off">

@@ -3,13 +3,15 @@
     <div class="modal-mask" id="mask" transition="modal" @click="close" v-show="show">
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
 
+        <h5 style="float:left; color:silver; margin-right:-70px;" v-if="currentPost.userid == getCurrentUser">(Post preview)</h5>
+        <a class="close" @click="cancel()">&times;</a>
+
         <div class="modal-header">
-          <h5 style="float:left; color:silver; margin-right:-70px" v-if="currentPost.userid == getCurrentUser">(Post preview)</h5>
           <h3 class="modal-title">{{ currentPost.name }}</h3>
-          <a class="close" @click="cancel()">&times;</a>
         </div>
 
         <div class="modal-body">
+          <!-- Carousel pictures of items using vue-carousel -->
           <carousel :perPage=1 :autoplay=true :autoplayTimeout=5000 :autoplayHoverPause=true :navigationEnabled="(currentPost.url.length > 1)" :loop=true>
             <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
               <img :src="url" alt="Picture" style="max-width: 100%">
@@ -24,6 +26,7 @@
             <p>{{ currentPost.description }}</p>
           </div>
         </div>
+
         <!-- Display contact option if the user is viewing someone else's post -->
         <div class="modal-footer" v-if="currentPost.userid !== getCurrentUser">
           <p align="center">

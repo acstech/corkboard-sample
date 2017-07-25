@@ -3,13 +3,14 @@
     <div class="modal-mask" id="mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
 
+        <router-link class="close" to="/">&times;</router-link>
+
         <div class="modal-header">
           <h3 class="modal-title">{{ currentPost.name }}</h3>
-          <router-link class="close" to="/">&times;</router-link>
         </div>
 
         <div class="modal-body">
-          <!-- Carousel pictures of items-->
+          <!-- Carousel pictures of items using vue-carousel -->
           <carousel :perPage=1 :autoplay=true :autoplayTimeout=5000 :autoplayHoverPause=true :navigationEnabled="(currentPost.url.length > 1)" :loop=true>
             <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
               <img :src="url" alt="Picture" style="max-width: 100%">
@@ -24,6 +25,7 @@
             <p>{{ currentPost.description }}</p>
           </div>
         </div>
+
         <!-- Display contact option if the user is viewing someone else's post -->
         <div class="modal-footer" v-if="currentPost.userid !== getCurrentUser">
           <p align="center">
