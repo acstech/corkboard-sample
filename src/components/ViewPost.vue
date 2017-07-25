@@ -18,7 +18,7 @@
           <!-- Post information -->
           <div class="info">
             <h4>{{ currentPost.price | currency }}</h4>
-            <h4 class="seller">Being sold by {{ activeSeller }}</h4>
+            <h4 class="seller">Being sold by <a @click="viewProfile">{{ activeSeller }}</a></h4>
             <p>{{ currentPost.description }}</p>
           </div>
         </div>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     data () {
       return {
@@ -76,6 +77,30 @@
       close () {
         this.$router.push('/')
         this.show = false
+      },
+      // Allows the user to view the seller's profile and list of posts
+      viewProfile () {
+        axios({
+          method: 'get',
+          url: '/api/users/' + this.currentPost.userid,
+          headers: {
+            'Authorization': 'Bearer ' + this.$store.state.token
+          }
+        })
+          .then(res => {
+            this.$store.commit('getViewedProfile', res.data)
+            this.$router.push('/viewProfile/' + this.currentPost.userid)
+          })
+          .catch(error => {
+            // Token expiry (401). Route user to the login page
+            if (error.response.status === 401) {
+              this.$store.commit('authenticate', null)
+              let vm = this
+              setTimeout(function () {
+                vm.$router.push('/login')
+              }, 100)
+            }
+          })
       },
       // For now, the contact seller method uses the default mailto functionality to allow the user
       // to send them an email about the specific item they are viewing.

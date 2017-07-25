@@ -4,7 +4,7 @@
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
 
         <div class="modal-header">
-          <h5 style="float:left; color:silver; margin-right:-70px">(Post preview)</h5>
+          <h5 style="float:left; color:silver; margin-right:-70px" v-if="currentPost.userid == getCurrentUser">(Post preview)</h5>
           <h3 class="modal-title">{{ currentPost.name }}</h3>
           <a class="close" @click="cancel()">&times;</a>
         </div>
@@ -21,6 +21,14 @@
             <h4 class="seller">Being sold by {{ activeSeller }}</h4>
             <p>{{ currentPost.description }}</p>
           </div>
+        </div>
+
+        <div class="modal-footer" v-if="currentPost.userid !== getCurrentUser">
+          <p align="center">
+          <span class="btn btn-md btn-mdb" style="margin-top:20px" @click="contactSeller()">
+            <span class="glyphicon glyphicon-envelope"></span> Contact
+          </span>
+          </p>
         </div>
 
       </div>
@@ -74,6 +82,14 @@
       },
       cancel () {
         this.$router.push('/viewProfile/' + this.getCurrentUser)
+      },
+      // For now, the contact seller method uses the default mailto functionality to allow the user
+      // to send them an email about the specific item they are viewing.
+      contactSeller () {
+        var item = this.$store.state.activePost.name
+        var email = this.$store.state.activeEmail
+        var subject = 'I\'m interested in your ' + item + ' on CorkBoard!'
+        window.location.href = 'mailto:' + email + '?subject=' + subject
       }
     }
   }

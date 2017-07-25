@@ -106,7 +106,8 @@
          that is currently signed in. The vuex state for the viewed profile is also changed
          to match the data of the current user. */
       viewSettings () {
-        if (this.$router.currentRoute.path === '/') {
+        // Do not try to route if they are already on their own profile page
+        if (this.$router.currentRoute.path !== ('/viewProfile/' + this.getCurrentUser)) {
           axios({
             method: 'get',
             url: '/api/users/' + this.getCurrentUser,
