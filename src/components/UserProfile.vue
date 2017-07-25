@@ -203,7 +203,7 @@
     font-weight: bold;
     min-height: 400px;
     box-shadow: 1px 1px 3px #4d4d4d;
-    padding: 0;
+    padding: 0 0 15px 0;
     position: fixed;
   }
 

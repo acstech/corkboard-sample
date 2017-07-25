@@ -19,10 +19,11 @@
           <div class="info">
             <h4>{{ currentPost.price | currency }}</h4>
             <h4 class="seller">Being sold by {{ activeSeller }}</h4>
+            <h5>Category: {{ currentPost.category }}</h5>
             <p>{{ currentPost.description }}</p>
           </div>
         </div>
-
+        <!-- Display contact option if the user is viewing someone else's post -->
         <div class="modal-footer" v-if="currentPost.userid !== getCurrentUser">
           <p align="center">
           <span class="btn btn-md btn-mdb" style="margin-top:20px" @click="contactSeller()">
@@ -70,18 +71,18 @@
       // Allows modal close when pressing the ESC key
       document.addEventListener('keydown', (e) => {
         if (e.keyCode === 27) {
-          this.$router.push('/viewProfile/' + this.getCurrentUser)
+          this.$router.push('/viewProfile/' + this.currentPost.userid)
         }
       })
     },
     methods: {
       // Closes the modal if its background is clicked
       close () {
-        this.$router.push('/viewProfile/' + this.getCurrentUser)
+        this.$router.push('/viewProfile/' + this.currentPost.userid)
         this.show = false
       },
       cancel () {
-        this.$router.push('/viewProfile/' + this.getCurrentUser)
+        this.$router.push('/viewProfile/' + this.currentPost.userid)
       },
       // For now, the contact seller method uses the default mailto functionality to allow the user
       // to send them an email about the specific item they are viewing.
