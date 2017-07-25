@@ -194,7 +194,6 @@
       },
       update (event) {
         let vm = this
-        vm.isLoading = true
         vm.validImageSize = true
         vm.validNumOfImages = true
         let files = event.target.files
@@ -216,6 +215,7 @@
         }
         // Grab updated files in latest upload
         for (var i = 0; i < files.length; ++i) {
+          vm.isLoading = true
           let file = files[i]
           // Don't do anything if it isn't an image
           if (!file.type.match('image')) {
