@@ -234,11 +234,13 @@
         // Check against the 5 maximum images constraint
         if (vm.wasreset) {
           if (files.length + vm.numImages > 5) {
+            vm.isLoading = false
             vm.validNumOfImages = false
             return
           }
         } else {
           if (files.length + vm.numImages2 > 5) {
+            vm.isLoading = false
             vm.validNumOfImages = false
             return
           }
@@ -252,6 +254,7 @@
           }
           // For now, only allow images less than 5MB in size
           if (file.size > 5000000) {
+            vm.isLoading = false
             vm.validImageSize = false
             return
           }
@@ -291,6 +294,7 @@
                   vm.countPost.picid.push(res.data.picid)
                 })
                 .catch(err => {
+                  vm.isLoading = false
                   vm.uploadError = err.response
                   vm.currentStatus = STATUS_FAILED
                 })
@@ -525,5 +529,4 @@
       stroke: #67737f;
     }
   }
-
 </style>
