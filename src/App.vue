@@ -37,12 +37,15 @@
                 <span class="caret"></span>
               </router-link>
               <ul class="dropdown-menu button-group">
-                <li><a @click="sort('sortDate')" class="dropdown-item" style="cursor:pointer">Recently added</a>
+                <li>
+                  <a @click="sort('sortDate')" class="dropdown-item" style="cursor:pointer">Recently added</a>
                 </li>
-                <li><a @click="sort('sortLow')" class="dropdown-item"
-                       style="cursor:pointer">Price: low to high</a></li>
-                <li><a @click="sort('sortHigh')" class="dropdown-item"
-                       style="cursor:pointer">Price: high to low</a></li>
+                <li>
+                  <a @click="sort('sortLow')" class="dropdown-item" style="cursor:pointer">Price: low to high</a>
+                </li>
+                <li>
+                  <a @click="sort('sortHigh')" class="dropdown-item" style="cursor:pointer">Price: high to low</a>
+                </li>
               </ul>
             </li>
             <li v-if="getToken != null" @click="logOut()">

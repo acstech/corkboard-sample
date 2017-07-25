@@ -12,12 +12,15 @@
         <!-- Post Information (name, price) -->
         <div class="caption">
           {{ post.name }}
+          <br>
+          <span v-if="post.salestatus == 'Sale Pending'" class="badge red">{{ post.salestatus }}</span>
           <h4>
             <div class="price" v-if="post.price != 0">{{ post.price | currency }}</div>
             <div class="price" v-else>Free</div>
-            <span class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
+            <!-- Show contact icon or "Your Post" label depending on if it is the user's post -->
+            <span v-if="post.userid !== getCurrentUser" class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
+            <span v-else class="badge black" style="float:left">Your post!</span>
           </h4>
-          <br>
         </div>
       </div>
     </div>
@@ -43,6 +46,9 @@
         } else {
           return _.sortBy(this.$store.state.allPosts, 'date').reverse()
         }
+      },
+      getCurrentUser () {
+        return this.$store.state.currentUser
       }
     },
     mounted () {
@@ -159,6 +165,7 @@
     margin-left: -3%;
     margin-right: -1%;
     margin-top: -2%;
+    padding-bottom: 18px;
   }
 
   .thumbnail:hover {
