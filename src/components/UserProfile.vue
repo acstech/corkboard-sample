@@ -157,6 +157,7 @@
           this.$router.push('/viewProfile/' + this.userProfile.id)
         }
       },
+      // Allows user to view their posts while on their profile
       postPreview (post) {
         axios({
           method: 'get',
@@ -332,4 +333,5 @@
       float: right;
     }
   }
+
 </style>

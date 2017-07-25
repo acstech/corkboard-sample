@@ -34,7 +34,7 @@
         <!-- Displays if the user is viewing a post they made -->
         <div class="modal-footer" v-else>
           <p align="center">
-          This is your own post!
+          This is your own post, silly!
           </p>
         </div>
 

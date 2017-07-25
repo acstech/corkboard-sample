@@ -77,6 +77,7 @@
       }
     },
     methods: {
+      // Determines which sort function to run on the home posts
       sort (sortValue) {
         this.$store.state.sortValue = 'sortDate'
         this.$store.commit('setSort', sortValue)
@@ -90,11 +91,13 @@
           this.$router.push('/')
         }
       },
+      // Logs current user out by removing token
       logOut () {
         this.$store.commit('authenticate', null)
         this.$store.commit('getCurrentUser', null)
         this.$router.push('/login')
       },
+      // Links to the AddPost file and allows user to post item
       addPost () {
         if (this.$route.path === '/') {
           this.$router.push('/addpost')

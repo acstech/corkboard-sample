@@ -195,6 +195,7 @@
         }
         this.show = false
       },
+      // Closes modal when cancel button clicked
       cancel () {
         if (this.$route.path === '/addpost') {
           this.$router.push('/')

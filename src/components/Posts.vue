@@ -32,6 +32,7 @@
 
   export default {
     computed: {
+      // Function that uses lodash to sort posts on the home page
       allPosts () {
         if (this.$store.state.sortValue === 'sortLow') {
           this.$store.state.sortValue = ''
@@ -83,6 +84,7 @@
       })
     },
     methods: {
+      // Function to open email application and contact seller
       contactSeller (post) {
         glyphicon = true
         axios({
@@ -104,6 +106,7 @@
             console.log(error)
           })
       },
+      // Function that displays user information on post modal
       viewPost (post) {
         axios({
           method: 'get',
@@ -201,4 +204,5 @@
     margin: auto;
     max-width: 300px;
   }
+
 </style>
