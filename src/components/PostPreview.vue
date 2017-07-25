@@ -19,6 +19,7 @@
           <div class="info">
             <h4>{{ currentPost.price | currency }}</h4>
             <h4 class="seller">Being sold by {{ activeSeller }}</h4>
+            <h5>Category: {{ currentPost.category }}</h5>
             <p>{{ currentPost.description }}</p>
           </div>
         </div>
