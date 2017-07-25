@@ -13,7 +13,7 @@
         <div class="modal-body">
           <!-- Carousel pictures of items using vue-carousel -->
           <carousel :perPage=1 :autoplay=true :autoplayTimeout=5000 :autoplayHoverPause=true :navigationEnabled="(currentPost.url.length > 1)" :loop=true>
-            <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
+            <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url" :key="url">
               <img :src="url" alt="Picture" style="max-width: 100%">
             </slide>
           </carousel>

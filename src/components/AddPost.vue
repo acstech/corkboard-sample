@@ -1,8 +1,8 @@
 <template>
   <!-- Intentionally left out background click modal-closing here for UX reasons -->
   <transition name="modal">
-    <div class="modal-mask" id="mask">
-      <div class="modal-container">
+    <div class="modal-mask" id="mask" @click="close" v-show="show">
+      <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
 
         <a class="close" @click="cancel">&times;</a>
 
@@ -161,7 +161,8 @@
         numImages2: 0,
         validImageSize: true,
         validNumOfImages: true,
-        isLoading: false
+        isLoading: false,
+        show: true
       }
     },
     computed: {
@@ -192,6 +193,15 @@
       })
     },
     methods: {
+      // Close the modal if its background is clicked
+      close () {
+        if (this.$route.path === '/addpost') {
+          this.$router.push('/')
+        } else {
+          this.$router.push('/viewProfile/' + this.getCurrentUser)
+        }
+        this.show = false
+      },
       cancel () {
         if (this.$route.path === '/addpost') {
           this.$router.push('/')
@@ -214,7 +224,6 @@
       },
       update (event) {
         let vm = this
-        vm.isLoading = true
         vm.validImageSize = true
         vm.validNumOfImages = true
         // Grab the file object from the form input
@@ -237,6 +246,7 @@
         }
         // Grab updated files in latest upload
         for (var i = 0; i < files.length; i++) {
+          vm.isLoading = true
           let file = files[i]
           // Don't do anything if it isn't an image
           if (!file.type.match('image')) {
