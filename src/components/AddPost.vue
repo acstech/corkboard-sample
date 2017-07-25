@@ -62,6 +62,8 @@
             <money
               v-model="newPost.price"
               id="price"
+              minlength="0"
+              maxlength="12"
               v-bind="moneyConfig"
               class="form-control currency">
             </money>
