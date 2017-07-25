@@ -44,7 +44,8 @@ const store = new Vuex.Store({
       url: [],
       category: '',
       salestatus: '',
-      date: ''
+      date: '',
+      userid: ''
     },
     activeSeller: '',
     // State for the current user profile page information
@@ -92,6 +93,7 @@ const store = new Vuex.Store({
       state.activePost.date = post.post.date
       state.activePost.category = post.post.category
       state.activePost.salestatus = post.post.salestatus
+      state.activePost.userid = post.post.userid
     },
     getActiveEmail (state, user) {
       state.activeEmail = user.user.email
