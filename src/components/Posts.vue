@@ -18,6 +18,7 @@
             <!-- Show contact icon or "Your Post" label depending on if it is the user's post -->
             <span v-if="post.userid !== getCurrentUser" class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
             <span v-else class="badge black" style="float:left">Your post!</span>
+            <span v-if="post.salestatus == 'Sale Pending'" class="badge red" style="float:left">{{ post.salestatus }}</span>
           </h4>
         </div>
       </div>

@@ -27,6 +27,8 @@
           </div>
         </div>
 
+        <p align="center" v-if="currentPost.salestatus == 'Sale Pending'"><span class="badge red">{{ currentPost.salestatus }}</span></p>
+
         <!-- Display contact option if the user is viewing someone else's post -->
         <div class="modal-footer" v-if="currentPost.userid !== getCurrentUser">
           <p align="center">
