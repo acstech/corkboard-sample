@@ -60,7 +60,6 @@
         }
       })
         .then(res => {
-          console.log(res.data)
           this.$store.commit('getAllPosts', res.data)
           var posts = document.querySelectorAll('.grid')
           imagesLoaded(posts, function () {
