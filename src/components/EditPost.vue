@@ -165,7 +165,9 @@
     },
     mounted () {
       if (this.getToken === null) {
-        this.router.push('/login')
+        this.$router.push('/login')
+      } else if (this.getCurrentUser !== this.currentPost.userid) {
+        this.$router.push('/')
       }
       // Allows modal close when pressing the ESC key
       document.addEventListener('keydown', (e) => {
