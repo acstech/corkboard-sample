@@ -23,12 +23,18 @@
             <p>{{ currentPost.description }}</p>
           </div>
         </div>
-
-        <div class="modal-footer">
+        <!-- Display contact option if the user is viewing someone else's post -->
+        <div class="modal-footer" v-if="currentPost.userid !== getCurrentUser">
           <p align="center">
           <span class="btn btn-md btn-mdb" style="margin-top:20px" @click="contactSeller()">
             <span class="glyphicon glyphicon-envelope"></span> Contact
           </span>
+          </p>
+        </div>
+        <!-- Displays if the user is viewing a post they made -->
+        <div class="modal-footer" v-else>
+          <p align="center">
+          This is your own post!
           </p>
         </div>
 
@@ -49,6 +55,9 @@
     computed: {
       currentPost () {
         return this.$store.state.activePost
+      },
+      getCurrentUser () {
+        return this.$store.state.currentUser
       },
       activeSeller () {
         return this.$store.state.activeSeller

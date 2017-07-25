@@ -23,7 +23,7 @@
             <p>{{ currentPost.description }}</p>
           </div>
         </div>
-
+        <!-- Display contact option if the user is viewing someone else's post -->
         <div class="modal-footer" v-if="currentPost.userid !== getCurrentUser">
           <p align="center">
           <span class="btn btn-md btn-mdb" style="margin-top:20px" @click="contactSeller()">
