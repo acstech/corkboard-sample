@@ -1,7 +1,8 @@
 <template>
+  <!-- Intentionally left out background click modal-closing here for UX reasons -->
   <transition name="modal">
-    <div class="modal-mask" id="mask" @click="close" v-show="show">
-      <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
+    <div class="modal-mask" id="mask">
+      <div class="modal-container">
 
         <a class="close" @click="cancel">&times;</a>
 
@@ -160,8 +161,6 @@
         numImages2: 0,
         validImageSize: true,
         validNumOfImages: true,
-        // A check for whether the modal should be shown
-        show: true,
         isLoading: false
       }
     },
@@ -193,15 +192,6 @@
       })
     },
     methods: {
-      // Closes the modal if its background is clicked
-      close () {
-        if (this.$route.path === '/addpost') {
-          this.$router.push('/')
-        } else {
-          this.$router.push('/viewProfile/' + this.getCurrentUser)
-        }
-        this.show = false
-      },
       cancel () {
         if (this.$route.path === '/addpost') {
           this.$router.push('/')
