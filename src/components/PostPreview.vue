@@ -71,18 +71,18 @@
       // Allows modal close when pressing the ESC key
       document.addEventListener('keydown', (e) => {
         if (e.keyCode === 27) {
-          this.$router.push('/viewProfile/' + this.getCurrentUser)
+          this.$router.push('/viewProfile/' + this.currentPost.userid)
         }
       })
     },
     methods: {
       // Closes the modal if its background is clicked
       close () {
-        this.$router.push('/viewProfile/' + this.getCurrentUser)
+        this.$router.push('/viewProfile/' + this.currentPost.userid)
         this.show = false
       },
       cancel () {
-        this.$router.push('/viewProfile/' + this.getCurrentUser)
+        this.$router.push('/viewProfile/' + this.currentPost.userid)
       },
       // For now, the contact seller method uses the default mailto functionality to allow the user
       // to send them an email about the specific item they are viewing.
