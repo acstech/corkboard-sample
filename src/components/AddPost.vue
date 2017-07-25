@@ -70,7 +70,8 @@
           <div class="md-form">
             <textarea
               v-model="newPost.description"
-              rows="5" class="md-textarea"
+              rows="5"
+              class="md-textarea"
               required
               maxlength="500">
             </textarea>
