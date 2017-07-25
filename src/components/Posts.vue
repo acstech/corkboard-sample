@@ -15,10 +15,10 @@
           <h4>
             <div class="price" v-if="post.price != 0">{{ post.price | currency }}</div>
             <div class="price" v-else>Free</div>
+            <!-- Show contact icon or "Your Post" label depending on if it is the user's post -->
             <span v-if="post.userid !== getCurrentUser" class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
             <span v-else class="badge black" style="float:left">Your post!</span>
           </h4>
-          <br>
         </div>
       </div>
     </div>
@@ -160,6 +160,7 @@
     margin-left: -3%;
     margin-right: -1%;
     margin-top: -2%;
+    padding-bottom: 18px;
   }
 
   .thumbnail:hover {
