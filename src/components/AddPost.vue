@@ -86,6 +86,8 @@
               <option value="None">None</option>
               <option value="Apparel">Apparel</option>
               <option value="Appliances">Appliances</option>
+              <option value="Art & Decor"></option>
+              <option value="Automotive">Automotive</option>
               <option value="Books and Movies">Books and Movies</option>
               <option value="Electronics">Electronics</option>
               <option value="Furniture">Furniture</option>
