@@ -10,6 +10,7 @@
         <div class="thumbnail" @click="viewPost({post})">
           <img v-if="post.url" :src="post.url" alt="Post Picture">
           <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">
+          <!-- Post Information (name, price) -->
           <div class="caption">
             {{ post.name }}
             <h4>
