@@ -40,7 +40,7 @@
         <div class="modal-footer" v-else>
           <p align=center>
             <span class="badge black center">
-            This is your post!
+            This is your post, silly!
             </span>
           </p>
         </div>

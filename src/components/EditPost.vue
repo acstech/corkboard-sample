@@ -273,6 +273,7 @@
           picHasher.readAsBinaryString(file)
         }
       },
+      // If images changes in user posts, this function saves the changes
       saveImages: function () {
         if (this.wasreset === true) {
           var newpicid = []
@@ -318,6 +319,7 @@
             })
         }
       },
+      // Updates all changes to the user's post
       updatePost () {
         // Save the image uploads
         this.saveImages()
