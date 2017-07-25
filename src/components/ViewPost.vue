@@ -3,13 +3,14 @@
     <div class="modal-mask" id="mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
 
+        <router-link class="close" to="/">&times;</router-link>
+
         <div class="modal-header">
           <h3 class="modal-title">{{ currentPost.name }}</h3>
-          <router-link class="close" to="/">&times;</router-link>
         </div>
 
         <div class="modal-body">
-          <!-- Carousel pictures of items-->
+          <!-- Carousel pictures of items using vue-carousel -->
           <carousel :perPage=1 :autoplay=true :autoplayTimeout=5000 :autoplayHoverPause=true :navigationEnabled="(currentPost.url.length > 1)" :loop=true>
             <slide :class="{item: currentPost.url, active: index == 0}" v-for="(url, index) in currentPost.url">
               <img :src="url" alt="Picture" style="max-width: 100%">
@@ -17,12 +18,14 @@
           </carousel>
           <!-- Post information -->
           <div class="info">
-            <h4>{{ currentPost.price | currency }}</h4>
+            <h4 v-if="currentPost.price != 0">{{ currentPost.price | currency }}</h4>
+            <h4 v-else>Free</h4>
             <h4 class="seller">Being sold by <a @click="viewProfile">{{ activeSeller }}</a></h4>
             <h5>Category: {{ currentPost.category }}</h5>
             <p>{{ currentPost.description }}</p>
           </div>
         </div>
+
         <!-- Display contact option if the user is viewing someone else's post -->
         <div class="modal-footer" v-if="currentPost.userid !== getCurrentUser">
           <p align="center">
@@ -33,8 +36,10 @@
         </div>
         <!-- Displays if the user is viewing a post they made -->
         <div class="modal-footer" v-else>
-          <p align="center">
-          This is your own post!
+          <p align=center>
+            <span class="badge black center">
+            This is your post!
+            </span>
           </p>
         </div>
 

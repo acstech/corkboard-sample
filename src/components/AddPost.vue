@@ -3,9 +3,10 @@
     <div class="modal-mask" id="mask" @click="close" v-show="show">
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
 
+        <a class="close" @click="cancel">&times;</a>
+
         <div class="modal-header">
           <h3>New Post</h3>
-          <a class="close" @click="cancel">&times;</a>
         </div>
 
         <form enctype="multipart/form-data" @submit.prevent="savePost()">
@@ -86,6 +87,8 @@
               <option value="None">None</option>
               <option value="Apparel">Apparel</option>
               <option value="Appliances">Appliances</option>
+              <option value="Art & Decor">Art & Decor</option>
+              <option value="Automotive">Automotive</option>
               <option value="Books and Movies">Books and Movies</option>
               <option value="Electronics">Electronics</option>
               <option value="Furniture">Furniture</option>
