@@ -153,6 +153,8 @@ export default {
   mounted () {
     if (this.getToken === null) {
       this.$router.push('/login')
+    } else if (this.UserProfile.id !== this.getCurrentUser) {
+      this.$router.push('/')
     } else {
       // Allows modal close when pressing the ESC key
       document.addEventListener('keydown', (e) => {
