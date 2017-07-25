@@ -19,7 +19,7 @@
             <div class="price" v-else>Free</div>
             <!-- Show contact icon or "Your Post" label depending on if it is the user's post -->
             <span v-if="post.userid !== getCurrentUser" class="glyphicon glyphicon-envelope" @click="contactSeller({post})" style="float:left; cursor:pointer"></span>
-            <span v-else class="badge black" style="float:left">Your post!</span>
+            <span v-else class="badge darkgray" style="float:left; box-shadow:none">Your post!</span>
           </h4>
         </div>
       </div>
