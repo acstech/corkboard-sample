@@ -23,10 +23,12 @@
           </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-          <button v-if="uploadedFiles.length > 0 || currentPost.url.length > 0" @click.prevent="reset" class="btn btn-sm btn-blue-grey" style="cursor:pointer">Reset Uploads</button>
+          <button v-if="uploadedFiles.length > 0 || currentPost.url.length > 0" @click.prevent="reset"
+                  class="btn btn-sm btn-blue-grey" style="cursor:pointer">Reset Uploads
+          </button>
           <br>
           <svg class="circular-loader" v-if="isLoading">
-            <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2" />
+            <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2"/>
           </svg>
           <!-- Where the image thumbnails appear on upload -->
           <div id="preview">
@@ -402,15 +404,6 @@
     margin-right: 2px;
   }
 
-  span.glyphicon-arrow-left {
-    font-size: 2.0em;
-    color: black;
-  }
-
-  span.glyphicon-arrow-left:hover {
-    color: lightgray;
-  }
-
   .edit-label {
     float: left;
     color: #5a5a5a;
@@ -433,7 +426,7 @@
   }
 
   .loader-path {
-    stroke-dasharray: 150,200;
+    stroke-dasharray: 150, 200;
     stroke-dashoffset: -10;
     -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
@@ -453,34 +446,37 @@
       transform: rotate(360deg);
     }
   }
+
   @-webkit-keyframes dash {
     0% {
-      stroke-dasharray: 1,200;
+      stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
     }
     50% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -35;
     }
     100% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -124;
     }
   }
+
   @keyframes dash {
     0% {
-      stroke-dasharray: 1,200;
+      stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
     }
     50% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -35;
     }
     100% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -124;
     }
   }
+
   @-webkit-keyframes color {
     0% {
       stroke: #67737f;
@@ -495,6 +491,7 @@
       stroke: #67737f;
     }
   }
+
   @keyframes color {
     0% {
       stroke: #67737f;
