@@ -36,8 +36,10 @@
         </div>
         <!-- Displays if the user is viewing a post they made -->
         <div class="modal-footer" v-else>
-          <p align="center">
-          This is your own post!
+          <p align=center>
+            <span class="badge black center">
+            This is your post!
+            </span>
           </p>
         </div>
 
