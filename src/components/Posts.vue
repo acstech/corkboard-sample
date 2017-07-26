@@ -62,6 +62,7 @@
       })
         .then(res => {
           this.$store.commit('getAllPosts', res.data)
+          // Set up tile layout for the list of posts
           var posts = document.querySelectorAll('.grid')
           imagesLoaded(posts, function () {
             // eslint-disable-next-line no-unused-vars
@@ -79,6 +80,7 @@
         })
     },
     updated () {
+      // Update the tile layout of posts in response to changes in post information
       var posts = document.querySelectorAll('.grid')
       imagesLoaded(posts, function () {
         // eslint-disable-next-line no-unused-vars
@@ -123,6 +125,7 @@
         })
           .then(res => {
             if (glyphicon !== true) {
+              // Grab the user information associated with the post to display to the user
               axios({
                 method: 'get',
                 url: '/api/users/' + post.post.userid,
