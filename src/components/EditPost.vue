@@ -10,6 +10,7 @@
         </div>
 
         <form @submit.prevent="updatePost">
+          <!-- Image upload input -->
           <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
           <div class="md-form flex-center file-upload">
             <input
@@ -34,6 +35,7 @@
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
           </div>
+          <!-- Item Title Input -->
           <label class="edit-label">Title</label>
           <div class="md-form">
             <input
@@ -44,6 +46,7 @@
               required
             >
           </div>
+          <!-- Item Price Input -->
           <label class="edit-label">Price</label>
           <div class="md-form">
             <money
@@ -52,6 +55,7 @@
               class="form-control currency">
             </money>
           </div>
+          <!-- Item Description Input (Textarea) -->
           <label class="edit-label">Description</label>
           <div class="md-form">
             <textarea
@@ -62,6 +66,7 @@
               required>
             </textarea>
           </div>
+          <!-- Item Category Input (Dropdown Select) -->
           <div class="form-group">
             <label class="form-label">
               Category
@@ -80,6 +85,7 @@
               </select>
             </label>
           </div>
+          <!-- Item Sale Status Input (Radio Buttons) -->
           <label class="form-label">
             Sale Status:
             <input
