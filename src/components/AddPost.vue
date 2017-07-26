@@ -102,7 +102,7 @@
             </select>
           </div>
 
-          <div class="modal-footer text-right">
+          <div class="modal-footer">
             <p align="center">
               <input
                 type="submit"

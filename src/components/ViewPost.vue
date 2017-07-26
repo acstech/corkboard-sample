@@ -139,6 +139,10 @@
     word-wrap: break-word; /* IE */
   }
 
+  img {
+    max-height: 600px;
+  }
+
   .info {
     white-space: -moz-pre-wrap; /* Firefox */
     white-space: -o-pre-wrap; /* Opera 7 */

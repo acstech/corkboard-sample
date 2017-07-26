@@ -244,6 +244,10 @@
     color: #262626;
   }
 
+  img {
+    max-height: 600px;
+  }
+
   .grid-item {
     width: 300px;
   }
