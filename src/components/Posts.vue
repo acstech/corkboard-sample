@@ -171,6 +171,10 @@
     padding-bottom: 18px;
   }
 
+  img {
+    max-height: 600px;
+  }
+
   .thumbnail:hover {
     box-shadow: 6px 6px 10px #383838;
   }
