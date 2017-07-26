@@ -384,15 +384,13 @@
           this.zipErr = 'The zipcode you entered is invalid'
         }
         promises.push(this.updateProfile())
+        promises.push(this.saveImage())
         // if (this.imageChanged && this.isError === false) {
         //   promises.push(this.saveImage())
         // }
         // Make API call to update the user info and refresh data on front-end
         Promise.all(promises).then(res => {
           if (this.isError === false) {
-            // If race condition occurs, getProfile may be trying to render the image before it exists,
-            // saveImage may not be fast enough in some cases
-            this.saveImage()
             this.getProfile()
               .then(res => {
                 this.$store.commit('getViewedProfile', res.data)
