@@ -209,7 +209,7 @@
           this.$router.push('/viewProfile/' + this.getCurrentUser)
         }
       },
-      // reset form to initial state
+      // Resets the form to its initial state
       reset () {
         this.currentStatus = null
         this.uploadError = null
@@ -222,6 +222,8 @@
         let preview = document.getElementById('preview')
         preview.innerHTML = ''
       },
+      // Updates the image uploads to the current state in preparation
+      // for saving all post information
       update (event) {
         let vm = this
         vm.validImageSize = true
