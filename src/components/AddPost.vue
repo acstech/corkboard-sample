@@ -50,6 +50,7 @@
           <!-- Where the image thumbnails appear on upload -->
           <div id="preview"></div>
           <!-- Item Name (Title) Input -->
+          <label v-if="savedPostData.name" for="title" class="edit-label">Title</label>
           <div class="md-form">
             <input
               v-model="newPost.name"
@@ -59,7 +60,7 @@
               maxlength="50"
               required
             >
-            <label for="title">Title</label>
+            <label v-if="!savedPostData.name" for="title">Title</label>
           </div>
           <!-- Item Price Input -->
           <div class="md-form">
@@ -74,6 +75,7 @@
             </money>
           </div>
           <!-- Item Description Input -->
+          <label v-if="savedPostData.description" for="title" class="edit-label">Description</label>
           <div class="md-form">
             <textarea
               v-model="newPost.description"
@@ -82,7 +84,7 @@
               required
               maxlength="500">
             </textarea>
-            <label class="control-label">Description</label>
+            <label v-if="!savedPostData.description" class="control-label">Description</label>
           </div>
           <!-- Item Category Input -->
           <div class="form-group">
@@ -177,12 +179,18 @@
       },
       getToken () {
         return this.$store.state.token
+      },
+      // Data to persist if a user exits the form without intentionally canceling
+      // (This is all Ben's idea! Don't look at me)
+      savedPostData () {
+        return this.$store.state.savedPost
       }
     },
     mounted () {
       if (this.getToken === null) {
         this.$router.push('/login')
       }
+      this.newPost = this.$store.state.savedPost
       // Allows modal close when pressing the ESC key
       document.addEventListener('keydown', (e) => {
         if (e.keyCode === 27 && (this.$route.path === '/addpost' || this.$route.path === '/')) {
@@ -195,6 +203,8 @@
     methods: {
       // Close the modal if its background is clicked
       close () {
+        this.$store.commit('getSavedPost', this.newPost)
+        this.reset()
         if (this.$route.path === '/addpost') {
           this.$router.push('/')
         } else {
@@ -417,6 +427,8 @@
             })
           this.$router.push('/viewProfile/' + this.getCurrentUser)
         }
+        // Clear any saved post data on submission
+        this.$store.state.savedPost = {}
       }
     },
     components: {
@@ -433,6 +445,11 @@
 
   .file-upload {
     margin-bottom: 0;
+  }
+
+  .edit-label {
+    float: left;
+    color: #5a5a5a;
   }
 
   h3 {
