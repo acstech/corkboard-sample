@@ -202,6 +202,7 @@
       // Close the modal if its background is clicked
       close () {
         this.$store.commit('getSavedPost', this.newPost)
+        this.reset()
         if (this.$route.path === '/addpost') {
           this.$router.push('/')
         } else {
