@@ -42,6 +42,7 @@
             <!-- Show Primary image only -->
             <img v-if="shouldDisplayImage(post)" :src="post.url[0]" alt="...">
             <img v-else :src="$store.state.defaultPostImage" alt="..." style="margin-top:20px">
+            <!-- Remainder of the post information -->
             <div class="caption">
               <h4>{{ post.name }}</h4>
               <h5 v-if="post.price != 0">{{ post.price | currency }}</h5>

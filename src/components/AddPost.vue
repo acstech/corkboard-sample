@@ -1,5 +1,4 @@
 <template>
-  <!-- Intentionally left out background click modal-closing here for UX reasons -->
   <transition name="modal">
     <div class="modal-mask" id="mask" @click="close" v-show="show">
       <div class="modal-container" @click.stop :show.sync="show" :on-close="close">
@@ -35,7 +34,7 @@
             Reset Uploads
           </button>
           <svg class="circular-loader" v-if="isLoading">
-            <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2" />
+            <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2"/>
           </svg>
           <div v-if="isSuccess">
             <p>Uploaded successfully.</p>
@@ -210,7 +209,7 @@
           this.$router.push('/viewProfile/' + this.getCurrentUser)
         }
       },
-      // reset form to initial state
+      // Resets the form to its initial state
       reset () {
         this.currentStatus = null
         this.uploadError = null
@@ -223,6 +222,8 @@
         let preview = document.getElementById('preview')
         preview.innerHTML = ''
       },
+      // Updates the image uploads to the current state in preparation
+      // for saving all post information
       update (event) {
         let vm = this
         vm.validImageSize = true
@@ -454,7 +455,7 @@
   }
 
   .loader-path {
-    stroke-dasharray: 150,200;
+    stroke-dasharray: 150, 200;
     stroke-dashoffset: -10;
     -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
@@ -474,34 +475,37 @@
       transform: rotate(360deg);
     }
   }
+
   @-webkit-keyframes dash {
     0% {
-      stroke-dasharray: 1,200;
+      stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
     }
     50% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -35;
     }
     100% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -124;
     }
   }
+
   @keyframes dash {
     0% {
-      stroke-dasharray: 1,200;
+      stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
     }
     50% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -35;
     }
     100% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -124;
     }
   }
+
   @-webkit-keyframes color {
     0% {
       stroke: #67737f;
@@ -516,6 +520,7 @@
       stroke: #67737f;
     }
   }
+
   @keyframes color {
     0% {
       stroke: #67737f;

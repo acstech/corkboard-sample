@@ -10,6 +10,7 @@
         </div>
 
         <form @submit.prevent="updatePost">
+          <!-- Image upload input -->
           <label for="files" style="color: #5a5a5a; margin-top: 10px; font-size: 14px">Images</label>
           <div class="md-form flex-center file-upload">
             <input
@@ -26,12 +27,13 @@
           <button v-if="uploadedFiles.length > 0 || currentPost.url.length > 0" @click.prevent="reset" type="button" class="btn btn-sm btn-blue-grey" style="cursor:pointer">Reset Uploads</button>
           <br>
           <svg class="circular-loader" v-if="isLoading">
-            <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2" />
+            <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2"/>
           </svg>
           <!-- Where the image thumbnails appear on upload -->
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
           </div>
+          <!-- Item Title Input -->
           <label class="edit-label">Title</label>
           <div class="md-form">
             <input
@@ -42,6 +44,7 @@
               required
             >
           </div>
+          <!-- Item Price Input -->
           <label class="edit-label">Price</label>
           <div class="md-form">
             <money
@@ -50,6 +53,7 @@
               class="form-control currency">
             </money>
           </div>
+          <!-- Item Description Input (Textarea) -->
           <label class="edit-label">Description</label>
           <div class="md-form">
             <textarea
@@ -60,6 +64,7 @@
               required>
             </textarea>
           </div>
+          <!-- Item Category Input (Dropdown Select) -->
           <div class="form-group">
             <label class="form-label">
               Category
@@ -78,6 +83,7 @@
               </select>
             </label>
           </div>
+          <!-- Item Sale Status Input (Radio Buttons) -->
           <label class="form-label">
             Sale Status:
             <input
@@ -402,15 +408,6 @@
     margin-right: 2px;
   }
 
-  span.glyphicon-arrow-left {
-    font-size: 2.0em;
-    color: black;
-  }
-
-  span.glyphicon-arrow-left:hover {
-    color: lightgray;
-  }
-
   .edit-label {
     float: left;
     color: #5a5a5a;
@@ -433,7 +430,7 @@
   }
 
   .loader-path {
-    stroke-dasharray: 150,200;
+    stroke-dasharray: 150, 200;
     stroke-dashoffset: -10;
     -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
@@ -453,34 +450,37 @@
       transform: rotate(360deg);
     }
   }
+
   @-webkit-keyframes dash {
     0% {
-      stroke-dasharray: 1,200;
+      stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
     }
     50% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -35;
     }
     100% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -124;
     }
   }
+
   @keyframes dash {
     0% {
-      stroke-dasharray: 1,200;
+      stroke-dasharray: 1, 200;
       stroke-dashoffset: 0;
     }
     50% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -35;
     }
     100% {
-      stroke-dasharray: 89,200;
+      stroke-dasharray: 89, 200;
       stroke-dashoffset: -124;
     }
   }
+
   @-webkit-keyframes color {
     0% {
       stroke: #67737f;
@@ -495,6 +495,7 @@
       stroke: #67737f;
     }
   }
+
   @keyframes color {
     0% {
       stroke: #67737f;
