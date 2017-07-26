@@ -47,6 +47,14 @@ const store = new Vuex.Store({
       date: '',
       userid: ''
     },
+    savedPost: {
+      name: '',
+      price: null,
+      description: '',
+      picid: [],
+      url: [],
+      category: ''
+    },
     activeSeller: '',
     // State for the current user profile page information
     viewedUserProfile: {
@@ -94,6 +102,22 @@ const store = new Vuex.Store({
       state.activePost.category = post.post.category
       state.activePost.salestatus = post.post.salestatus
       state.activePost.userid = post.post.userid
+    },
+    getSavedPost (state, post) {
+      var idArray = []
+      var urlArray = []
+      state.activePost.name = post.name
+      state.activePost.price = post.price
+      state.activePost.description = post.description
+      if (post.picid && typeof post.picid === typeof []) {
+        for (var i = 0; i < post.picid.length; ++i) {
+          idArray.push(post.picid[i])
+          urlArray.push(post.url[i])
+        }
+      }
+      state.activePost.picid = idArray
+      state.activePost.url = urlArray
+      state.activePost.category = post.category
     },
     getActiveEmail (state, user) {
       state.activeEmail = user.user.email
