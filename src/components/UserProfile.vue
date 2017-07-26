@@ -46,7 +46,7 @@
               <h4>{{ post.name }}</h4>
               <h5 v-if="post.price != 0">{{ post.price | currency }}</h5>
               <h5 v-else>Free</h5>
-              <p align="center" v-if="post.salestatus == 'Sale Pending'"><span class="badge red">{{ post.salestatus }}</span></p>
+              <p align="center" v-if="post.salestatus == 'Sale Pending'"><span class="badge red" style="box-shadow:none">{{ post.salestatus }}</span></p>
               <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
               <p v-if="userProfile.id == getCurrentUser">
                 <a><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></a>
