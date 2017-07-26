@@ -180,6 +180,8 @@
       getToken () {
         return this.$store.state.token
       },
+      // Data to persist if a user exits the form without intentionally canceling
+      // (This is all Ben's idea! Don't look at me)
       savedPostData () {
         return this.$store.state.savedPost
       }

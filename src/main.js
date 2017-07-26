@@ -47,6 +47,8 @@ const store = new Vuex.Store({
       date: '',
       userid: ''
     },
+    // Data to persist if a user exits the form without intentionally canceling
+    // (This is all Ben's idea! Don't look at me)
     savedPost: {
       name: '',
       price: null,
