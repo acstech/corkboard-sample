@@ -27,6 +27,7 @@
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
           <button
+            type="button"
             v-if="uploadedFiles.length > 0"
             class="btn btn-sm btn-blue-grey"
             @click="reset"
