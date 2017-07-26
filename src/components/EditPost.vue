@@ -24,9 +24,7 @@
           </div>
           <p v-if="!validImageSize">Please upload an image under 5MB.</p>
           <p v-if="!validNumOfImages">Too many selected images! Try uploading again.</p>
-          <button v-if="uploadedFiles.length > 0 || currentPost.url.length > 0" @click.prevent="reset"
-                  class="btn btn-sm btn-blue-grey" style="cursor:pointer">Reset Uploads
-          </button>
+          <button v-if="uploadedFiles.length > 0 || currentPost.url.length > 0" @click.prevent="reset" type="button" class="btn btn-sm btn-blue-grey" style="cursor:pointer">Reset Uploads</button>
           <br>
           <svg class="circular-loader" v-if="isLoading">
             <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2"/>
