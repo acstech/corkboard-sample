@@ -1,7 +1,6 @@
 <template>
   <!-- Masonry Grid -->
   <div class="grid container flex-center">
-    <!-- The grid sizer element for masonry config -->
     <h1 v-if="allPosts.length == 0" class="flex-center">No posts yet! Create one!</h1>
     <!-- Represents each post as a masonry grid item -->
     <div class="col-xs-4 grid-item" v-for="post in allPosts">
