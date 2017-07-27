@@ -7,9 +7,7 @@
         <router-link to="/login" style="font-weight:bold;color:#656565">here!</router-link>
       </p>
     </div>
-    <div class="alert alert-danger" v-if="error">
-      <p>{{ error }}</p>
-    </div>
+    <span class="badge red" v-if="error">{{ error }}</span>
     <form @submit.prevent="register()" onsubmit="return passwordAccept()">
       <div class="md-form">
         <label>Email</label>
@@ -50,8 +48,8 @@
         >
         <br>
         <div v-if="newUser.password == newUser.password && newUser.confirm == ''"></div>
-        <div v-else-if="!passwordAccept" class="alert alert-danger">Passwords do not match... :(</div>
-        <div v-else class="alert alert-success">Passwords match!</div>
+        <span v-else-if="!passwordAccept" class="badge red">Passwords do not match... :(</span>
+        <div v-else class="badge green">Passwords match!</div>
       </div>
       <input type="submit" class="btn btn-mdb" value="Register">
     </form>

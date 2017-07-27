@@ -45,7 +45,7 @@
             <p>
               <a @click="reset">Try again</a>
             </p>
-            <pre>{{ uploadError }}</pre>
+            <span class="badge red">{{ uploadError }}</span>
           </div>
           <!-- Where the image thumbnails appear on upload -->
           <div id="preview"></div>
@@ -252,6 +252,7 @@
           let file = files[i]
           // Don't do anything if it isn't an image
           if (!(file.type.match('image/jpg') || file.type.match('image/jpeg') || file.type.match('image/png'))) {
+            vm.uploadError = 'An invalid image type was used.'
             vm.currentStatus = STATUS_FAILED
             vm.isLoading = false
             return

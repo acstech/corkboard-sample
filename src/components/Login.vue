@@ -7,9 +7,7 @@
         <router-link to="/signup" style="font-weight:bold;color:#656565">here!</router-link>
       </p>
     </div>
-    <div class="alert alert-danger" v-if="error">
-      <p>{{ error }}</p>
-    </div>
+    <span class="badge red" v-if="error">{{ error }}</span>
     <form @submit.prevent="logIn()">
       <div class="md-form">
         <label>Email</label>

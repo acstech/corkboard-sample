@@ -51,7 +51,9 @@
             <money
               v-model="currentPost.price"
               v-bind="moneyConfig"
-              class="form-control currency">
+              class="form-control currency"
+              minlength="0"
+              maxlength="12">
             </money>
           </div>
           <!-- Item Description Input (Textarea) -->
