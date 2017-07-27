@@ -29,6 +29,7 @@
           <svg class="circular-loader" v-if="isLoading">
             <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2"/>
           </svg>
+          <p v-if="error">{{ error }}</p>
           <!-- Where the image thumbnails appear on upload -->
           <div id="preview">
             <img class="thumbnail" v-for="(imgSrc,index) in this.currentPost.url" :src=imgSrc>
@@ -166,7 +167,8 @@
         numimages2: 0,
         validImageSize: true,
         validNumOfImages: true,
-        isLoading: false
+        isLoading: false,
+        error: ''
       }
     },
     mounted () {
@@ -226,8 +228,10 @@
           vm.isLoading = true
           let file = files[i]
           // Don't do anything if it isn't an image
-          if (!file.type.match('image')) {
-            continue
+          if (!(file.type.match('image/jpg') || file.type.match('image/jpeg') || file.type.match('image/png'))) {
+            vm.error = 'Invalid image type used.'
+            vm.isLoading = false
+            return
           }
           // For now, only allow images less than 5MB in size
           if (file.size > 5000000) {
