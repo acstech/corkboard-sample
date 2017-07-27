@@ -196,7 +196,7 @@
 
   .modal-container {
     width: 600px;
-    max-height: 800px;
+    max-height: 80%;
     overflow: scroll;
     margin: 50px auto 0;
     padding: 20px 30px;

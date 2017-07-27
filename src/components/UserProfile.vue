@@ -40,8 +40,6 @@
       <!-- Masonry Grid -->
       <h1 class="flex-center" v-if="!this.userProfile.items || this.userProfile.items.length == 0">No posts yet!</h1>
       <div class="grid col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <!-- The grid sizer element for masonry config -->
-        <div class="grid-sizer"></div>
         <!-- Represents each post as a masonry grid item -->
         <div class="grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
           <div class="thumbnail" @click="postPreview({post})">
@@ -92,25 +90,28 @@
       } else {
         // Set up masonry layout for the user's posts
         var posts = document.querySelectorAll('.grid')
-        imagesLoaded(posts, function () {
-          // eslint-disable-next-line no-unused-vars
-          var masonry = new Masonry('.grid', {
-            selector: '.grid-item',
-            columnWidth: 300,
-            gutter: 20
-          })
-        })
-      }
-    },
-    updated () {
-      var posts = document.querySelectorAll('.grid')
-      imagesLoaded(posts, function () {
         // eslint-disable-next-line no-unused-vars
         var masonry = new Masonry('.grid', {
           selector: '.grid-item',
           columnWidth: 300,
           gutter: 20
         })
+        imagesLoaded(posts).on('progress', function () {
+          // layout Masonry after each image loads
+          masonry.layout()
+        })
+      }
+    },
+    updated () {
+      var posts = document.querySelectorAll('.grid')
+      var masonry = new Masonry('.grid', {
+        selector: '.grid-item',
+        columnWidth: 300,
+        gutter: 20
+      })
+      imagesLoaded(posts).on('progress', function () {
+        // layout Masonry after each image loads
+        masonry.layout()
       })
     },
     methods: {

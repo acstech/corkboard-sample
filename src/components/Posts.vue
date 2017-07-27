@@ -1,8 +1,6 @@
 <template>
   <!-- Masonry Grid -->
   <div class="grid container flex-center">
-    <!-- The grid sizer element for masonry config -->
-    <div class="grid-sizer"></div>
     <h1 v-if="allPosts.length == 0" class="flex-center">No posts yet! Create one!</h1>
     <!-- Represents each post as a masonry grid item -->
     <div class="col-xs-4 grid-item" v-for="post in allPosts">
@@ -62,33 +60,36 @@
       })
         .then(res => {
           this.$store.commit('getAllPosts', res.data)
-          // Set up tile layout for the list of posts
-          var posts = document.querySelectorAll('.grid')
-          imagesLoaded(posts, function () {
-            // eslint-disable-next-line no-unused-vars
-            var masonry = new Masonry('.grid', {
-              selector: '.grid-item',
-              columnWidth: 450,
-              isFitWidth: true
-            })
-          })
         })
         .catch(error => {
           if (error.response.status === 401) {
             this.$router.push('/login')
           }
         })
+      // Set up tile layout for the list of posts
+      var posts = document.querySelectorAll('.grid')
+      // eslint-disable-next-line no-unused-vars
+      var masonry = new Masonry('.grid', {
+        selector: '.grid-item',
+        columnWidth: 450,
+        isFitWidth: true
+      })
+      imagesLoaded(posts).on('progress', function () {
+        // layout Masonry after each image loads
+        masonry.layout()
+      })
     },
     updated () {
       // Update the tile layout of posts in response to changes in post information
       var posts = document.querySelectorAll('.grid')
-      imagesLoaded(posts, function () {
-        // eslint-disable-next-line no-unused-vars
-        var masonry = new Masonry('.grid', {
-          selector: '.grid-item',
-          columnWidth: 450,
-          isFitWidth: true
-        })
+      var masonry = new Masonry('.grid', {
+        selector: '.grid-item',
+        columnWidth: 450,
+        isFitWidth: true
+      })
+      imagesLoaded(posts).on('progress', function () {
+        // layout Masonry after each image loads
+        masonry.layout()
       })
     },
     methods: {
