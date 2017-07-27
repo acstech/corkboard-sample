@@ -47,14 +47,6 @@ const store = new Vuex.Store({
       date: '',
       userid: ''
     },
-    // Data to persist if a user exits the form without intentionally canceling
-    // (This is all Ben's idea! Don't look at me)
-    savedPost: {
-      name: '',
-      price: null,
-      description: '',
-      category: ''
-    },
     activeSeller: '',
     // State for the current user profile page information
     viewedUserProfile: {
@@ -102,12 +94,6 @@ const store = new Vuex.Store({
       state.activePost.category = post.post.category
       state.activePost.salestatus = post.post.salestatus
       state.activePost.userid = post.post.userid
-    },
-    getSavedPost (state, post) {
-      state.activePost.name = post.name
-      state.activePost.price = post.price
-      state.activePost.description = post.description
-      state.activePost.category = post.category
     },
     getActiveEmail (state, user) {
       state.activeEmail = user.user.email
