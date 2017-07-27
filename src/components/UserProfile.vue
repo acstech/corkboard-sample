@@ -92,25 +92,28 @@
       } else {
         // Set up masonry layout for the user's posts
         var posts = document.querySelectorAll('.grid')
-        imagesLoaded(posts, function () {
-          // eslint-disable-next-line no-unused-vars
-          var masonry = new Masonry('.grid', {
-            selector: '.grid-item',
-            columnWidth: 300,
-            gutter: 20
-          })
-        })
-      }
-    },
-    updated () {
-      var posts = document.querySelectorAll('.grid')
-      imagesLoaded(posts, function () {
         // eslint-disable-next-line no-unused-vars
         var masonry = new Masonry('.grid', {
           selector: '.grid-item',
           columnWidth: 300,
           gutter: 20
         })
+        imagesLoaded(posts).on('progress', function () {
+          // layout Masonry after each image loads
+          masonry.layout()
+        })
+      }
+    },
+    updated () {
+      var posts = document.querySelectorAll('.grid')
+      var masonry = new Masonry('.grid', {
+        selector: '.grid-item',
+        columnWidth: 300,
+        gutter: 20
+      })
+      imagesLoaded(posts).on('progress', function () {
+        // layout Masonry after each image loads
+        masonry.layout()
       })
     },
     methods: {
