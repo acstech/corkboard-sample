@@ -212,10 +212,6 @@
     color: #003458;
   }
 
-  .modal-body {
-    margin: 20px 0;
-  }
-
   .text-right {
     text-align: right;
   }
