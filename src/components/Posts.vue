@@ -1,5 +1,6 @@
 <template>
   <!-- Masonry Grid -->
+  <div>
   <div class="grid container flex-center">
     <!-- The grid sizer element for masonry config -->
     <div class="grid-sizer"></div>
@@ -25,6 +26,8 @@
       </div>
     </div>
   </div>
+  <div v-if="!masonryLoaded" class="loading"></div>
+</div>
 </template>
 
 <script>
@@ -34,6 +37,11 @@
   import axios from 'axios'
 
   export default {
+    data () {
+      return {
+        masonryLoaded: false
+      }
+    },
     computed: {
       // Function that uses lodash to sort posts on the home page
       allPosts () {
@@ -53,6 +61,7 @@
     },
     mounted () {
       // Retrieve all items call to API
+      var self = this
       axios({
         method: 'get',
         url: '/api/items',
@@ -62,36 +71,40 @@
       })
         .then(res => {
           this.$store.commit('getAllPosts', res.data)
+          // Set up tile layout for the list of posts
+          var posts = document.querySelectorAll('.grid')
+          imagesLoaded(posts, function () {
+            // eslint-disable-next-line no-unused-vars
+            var masonry = new Masonry('.grid', {
+              selector: '.grid-item',
+              columnWidth: 450,
+              isFitWidth: true
+            })
+
+            self.masonryLoaded = true
+
+            masonry.on('layoutComplete', function (items) {
+              debugger
+              self.masonryLoaded = true
+            })
+          })
         })
         .catch(error => {
-          if (error.response.status === 401) {
+          if (error && error.response && error.response.status === 401) {
             this.$router.push('/login')
           }
         })
-      // Set up tile layout for the list of posts
-      var posts = document.querySelectorAll('.grid')
-      // eslint-disable-next-line no-unused-vars
-      var masonry = new Masonry('.grid', {
-        selector: '.grid-item',
-        columnWidth: 450,
-        isFitWidth: true
-      })
-      imagesLoaded(posts).on('progress', function () {
-        // layout Masonry after each image loads
-        masonry.layout()
-      })
     },
     updated () {
       // Update the tile layout of posts in response to changes in post information
       var posts = document.querySelectorAll('.grid')
-      var masonry = new Masonry('.grid', {
-        selector: '.grid-item',
-        columnWidth: 450,
-        isFitWidth: true
-      })
-      imagesLoaded(posts).on('progress', function () {
-        // layout Masonry after each image loads
-        masonry.layout()
+      imagesLoaded(posts, function () {
+        // eslint-disable-next-line no-unused-vars
+        var masonry = new Masonry('.grid', {
+          selector: '.grid-item',
+          columnWidth: 450,
+          isFitWidth: true
+        })
       })
     },
     methods: {
@@ -161,7 +174,16 @@
     width: 450px;
     margin: auto;
   }
+  .loading {
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: #f1f1f1;
 
+  }
   .thumbnail {
     box-shadow: 1px 1px 4px #4d4d4d;
     border: none;
