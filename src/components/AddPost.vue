@@ -45,7 +45,7 @@
             <p>
               <a @click="reset">Try again</a>
             </p>
-            <pre>{{ uploadError }}</pre>
+            <span class="badge red">{{ uploadError }}</span>
           </div>
           <!-- Where the image thumbnails appear on upload -->
           <div id="preview"></div>
