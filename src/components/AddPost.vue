@@ -435,11 +435,6 @@
     margin-bottom: 0;
   }
 
-  .edit-label {
-    float: left;
-    color: #5a5a5a;
-  }
-
   h3 {
     display: inline;
   }
