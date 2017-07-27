@@ -40,8 +40,6 @@
       <!-- Masonry Grid -->
       <h1 class="flex-center" v-if="!this.userProfile.items || this.userProfile.items.length == 0">No posts yet!</h1>
       <div class="grid col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <!-- The grid sizer element for masonry config -->
-        <div class="grid-sizer"></div>
         <!-- Represents each post as a masonry grid item -->
         <div class="grid-item" v-for="post in this.userProfile.items"> <!-- v-for on this element -->
           <div class="thumbnail" @click="postPreview({post})">
