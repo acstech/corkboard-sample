@@ -17,15 +17,15 @@
             </div>
           </li>
           <!-- /Profile Picture -->
-          <li class="profile-info">
-            <h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}
-          </li>
-          <br>
-          <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li>
-          <br>
-          <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li>
-          <br>
-          <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
+            <li class="profile-info card">
+              <h4>Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}
+            </li>
+            <br>
+            <li class="profile-info card"><h4>Email</h4>{{ userProfile.email }}</li>
+            <br>
+            <li class="profile-info card"><h4>Phone</h4>{{ userProfile.phone }}</li>
+            <br>
+            <li class="profile-info card"><h4>Zip</h4>{{ userProfile.zipcode }}</li>
         </ul>
         <a class="btn btn-mdb btn-sm" v-if="userProfile.id == getCurrentUser" @click="editProfile" id="edit_profile">
           <span style="color: white; margin-right: 10px;" class="glyphicon glyphicon-pencil"></span>Edit Profile
@@ -229,7 +229,7 @@
     white-space: -moz-pre-wrap; /* Firefox */
     white-space: -o-pre-wrap; /* Opera 7 */
     word-wrap: break-word; /* IE */
-    margin-top: 8px;
+    margin: 0;
   }
 
   .profile-info-title {
