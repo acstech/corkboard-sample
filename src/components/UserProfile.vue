@@ -5,27 +5,33 @@
         <ul class="nav nav-sidebar">
           <h3 class="sub-header">User Profile</h3>
           <!-- Profile Picture -->
-          <li>
-            <div id="profile_pic_container" class="logo-wrapper waves-light flex-center">
-              <a><img
-                v-if="userProfile.url"
-                @click="editProfile"
-                :src="userProfile.url"
-                class="profile-pic img-fluid flex-center"
-                alt="Upload a profile picture!"
-                style="cursor:pointer;margin-bottom:20px"/></a>
-            </div>
-          </li>
+          <div id="profile_pic_container" class="logo-wrapper waves-light flex-center">
+            <a><img
+              v-if="userProfile.url"
+              @click="editProfile"
+              :src="userProfile.url"
+              class="profile-pic img-fluid flex-center"
+              alt="Upload a profile picture!"
+              style="cursor:pointer;margin-bottom:20px"/></a>
+          </div>
           <!-- /Profile Picture -->
-          <li class="profile-info">
-            <h4 class="profile-info-title">Name</h4>{{ userProfile.firstname }} {{ userProfile.lastname }}
+          <li class="profile-info card">
+            <h4>Name</h4>
+            <span v-if="userProfile.firstname || userProfile.lastname">{{ userProfile.firstname }} {{ userProfile.lastname }}</span>
+            <span v-else>Not Available</span>
           </li>
           <br>
-          <li class="profile-info"><h4 class="profile-info-title">Email</h4>{{ userProfile.email }}</li>
+          <li class="profile-info card"><h4>Email</h4>{{ userProfile.email }}</li>
           <br>
-          <li class="profile-info"><h4 class="profile-info-title">Phone</h4>{{ userProfile.phone }}</li>
+          <li class="profile-info card"><h4>Phone</h4>
+            <span v-if="userProfile.phone">{{ userProfile.phone }}</span>
+            <span v-else>Not Available</span>
+          </li>
           <br>
-          <li class="profile-info"><h4 class="profile-info-title">Zip</h4>{{ userProfile.zipcode }}</li>
+          <li class="profile-info card"><h4>Zip</h4>
+            <span v-if="userProfile.zipcode">{{ userProfile.zipcode }}</span>
+            <span v-else>Not Available</span>
+          </li>
         </ul>
         <a class="btn btn-mdb btn-sm" v-if="userProfile.id == getCurrentUser" @click="editProfile" id="edit_profile">
           <span style="color: white; margin-right: 10px;" class="glyphicon glyphicon-pencil"></span>Edit Profile
@@ -47,7 +53,9 @@
               <h4>{{ post.name }}</h4>
               <h5 v-if="post.price != 0">{{ post.price | currency }}</h5>
               <h5 v-else>Free</h5>
-              <p align="center" v-if="post.salestatus == 'Sale Pending'"><span class="badge red" style="box-shadow:none">{{ post.salestatus }}</span></p>
+              <p align="center" v-if="post.salestatus == 'Sale Pending'"><span class="badge red"
+                                                                               style="box-shadow:none">{{ post.salestatus
+                }}</span></p>
               <!-- Use v-if directives depending on if user is logged in, if it's their profile, etc. -->
               <p v-if="userProfile.id == getCurrentUser">
                 <a><span @click="editPost({post})" class="glyphicon glyphicon-pencil"></span></a>
@@ -229,11 +237,7 @@
     white-space: -moz-pre-wrap; /* Firefox */
     white-space: -o-pre-wrap; /* Opera 7 */
     word-wrap: break-word; /* IE */
-    margin-top: 8px;
-  }
-
-  .profile-info-title {
-    border-bottom: 2px solid #262626;
+    margin: 0;
   }
 
   h3 {
