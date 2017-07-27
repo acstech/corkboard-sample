@@ -236,6 +236,7 @@
         let file = event.target.files[0]
         // Don't do anything if it isn't an image
         if (!(file.type.match('image/jpg') || file.type.match('image/jpeg') || file.type.match('image/png'))) {
+          vm.error = 'Invalid image type used.'
           vm.isLoading = false
           return
         }
