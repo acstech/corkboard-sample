@@ -234,6 +234,11 @@
         // Reset size check when user tries again
         vm.validImageSize = true
         let file = event.target.files[0]
+        // Don't do anything if it isn't an image
+        if (!(file.type.match('image/jpg') || file.type.match('image/jpeg') || file.type.match('image/png'))) {
+          vm.isLoading = false
+          return
+        }
         // For now, only allow images less than 5MB in size
         if (file.size > 5000000) {
           vm.isLoading = false

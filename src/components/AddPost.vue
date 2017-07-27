@@ -251,8 +251,10 @@
           vm.isLoading = true
           let file = files[i]
           // Don't do anything if it isn't an image
-          if (!file.type.match('image')) {
-            continue
+          if (!(file.type.match('image/jpg') || file.type.match('image/jpeg') || file.type.match('image/png'))) {
+            vm.currentStatus = STATUS_FAILED
+            vm.isLoading = false
+            return
           }
           // For now, only allow images less than 5MB in size
           if (file.size > 5000000) {
