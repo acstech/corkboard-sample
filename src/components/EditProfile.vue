@@ -28,9 +28,7 @@
           <div id="preview">
             <img class="thumbnail" v-if="this.cloneUserProfile.picid" :src=this.cloneUserProfile.url>
           </div>
-          <div class="alert alert-danger" v-if="error">
-            <p>{{ error }}</p>
-          </div>
+          <span class="badge red" v-if="error">{{ error }}</span>
           <!-- First Name Input Field -->
           <label class="edit-label">First Name</label>
           <div class="md-form">
@@ -59,9 +57,7 @@
                    required
                    maxlength="40"
             >
-          </div>
-          <div class="alert alert-danger" v-if="emailErr">
-            <p>{{ emailErr }}</p>
+            <span class="badge red" v-if="emailErr">{{ emailErr }}</span>
           </div>
           <!-- Phone Number Input Field -->
           <label class="edit-label">Phone</label>
@@ -75,9 +71,7 @@
               minlength="16"
               maxlength="16"
             >
-          </div>
-          <div class="alert alert-danger" v-if="phoneErr">
-            <p>{{ phoneErr }}</p>
+            <span class="badge red" v-if="phoneErr">{{ phoneErr }}</span>
           </div>
           <!-- Zip Code Input Field -->
           <label class="edit-label">Zip</label>
@@ -90,9 +84,7 @@
               minlength="5"
               maxlength="5"
             >
-          </div>
-          <div class="alert alert-danger" v-if="zipErr">
-            <p>{{ zipErr }}</p>
+            <span class="badge red" v-if="zipErr">{{ zipErr }}</span>
           </div>
         </form>
 

@@ -252,6 +252,7 @@
           let file = files[i]
           // Don't do anything if it isn't an image
           if (!(file.type.match('image/jpg') || file.type.match('image/jpeg') || file.type.match('image/png'))) {
+            vm.uploadError = 'An invalid image type was used.'
             vm.currentStatus = STATUS_FAILED
             vm.isLoading = false
             return
