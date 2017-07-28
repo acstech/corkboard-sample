@@ -373,7 +373,7 @@
         let promises = []
         this.updateUser.url = null
         if (!this.validateEmail(this.userProfile.email)) {
-          this.emailErr = 'The email you entered cannnot be used'
+          this.emailErr = 'The email you entered cannot be used'
         }
         if (!this.validatePhone(this.userProfile.phone)) {
           this.phoneErr = 'The phone number you entered is invalid'
