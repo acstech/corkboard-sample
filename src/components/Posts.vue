@@ -86,7 +86,6 @@
             self.masonryLoaded = true
 
             masonry.on('layoutComplete', function (items) {
-              debugger
               self.masonryLoaded = true
             })
           })
