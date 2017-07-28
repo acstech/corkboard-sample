@@ -12,9 +12,6 @@
         </div>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav mr-auto">
-            <li @click="toHome">
-              <router-link to="">Home</router-link>
-            </li>
             <li>
               <router-link to="/login" v-if="getToken == null">Login</router-link>
             </li>
@@ -22,7 +19,7 @@
               <router-link to="/signup" v-if="getToken == null">Sign Up</router-link>
             </li>
             <li v-if="getToken != null" @click="addPost()">
-              <router-link to="">Add Post</router-link>
+              <router-link to="" class="btn btn-sm btn-mdb add-post">Add Post</router-link>
             </li>
             <li v-if="getToken != null" @click="viewSettings()">
               <router-link to="">Profile Settings</router-link>
@@ -144,6 +141,10 @@
 <style>
   body {
     background-color: #f1f1f1;
+  }
+
+  .add-post {
+    font-weight: bold;
   }
 
   #app {
