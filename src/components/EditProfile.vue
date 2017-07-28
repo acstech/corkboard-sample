@@ -209,7 +209,7 @@
           }
         } else { return true }
       },
-      // Verifes that the zipcode is either entered as 5 digits or not at all
+      // Verifies that the zipcode is either entered as 5 digits or not at all
       validateZip (zipcode) {
         if (zipcode) {
           if (zipcode.length === 0 || zipcode.length === 5) {
