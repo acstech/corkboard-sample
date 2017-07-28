@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <div v-if="true" class="loading">
+  <div v-if="!masonryLoaded" class="loading">
     <svg class="circular-loader">
       <circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#67737f" stroke-width="2"/>
     </svg>
