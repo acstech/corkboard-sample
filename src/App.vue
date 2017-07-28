@@ -19,7 +19,7 @@
               <router-link to="/signup" v-if="getToken == null">Sign Up</router-link>
             </li>
             <li v-if="getToken != null" @click="addPost()">
-              <router-link to="" class="btn btn-sm btn-mdb add-post">Add Post</router-link>
+              <router-link to="" class="btn btn-sm btn-blue-grey add-post">Add Post</router-link>
             </li>
             <li v-if="getToken != null" @click="viewSettings()">
               <router-link to="">Profile Settings</router-link>
