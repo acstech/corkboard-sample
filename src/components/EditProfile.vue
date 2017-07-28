@@ -209,7 +209,7 @@
           }
         } else { return true }
       },
-      // Verifes that the zipcode is either entered as 5 digits or not at all
+      // Verifies that the zipcode is either entered as 5 digits or not at all
       validateZip (zipcode) {
         if (zipcode) {
           if (zipcode.length === 0 || zipcode.length === 5) {
@@ -373,7 +373,7 @@
         let promises = []
         this.updateUser.url = null
         if (!this.validateEmail(this.userProfile.email)) {
-          this.emailErr = 'The email you entered cannnot be used'
+          this.emailErr = 'The email you entered cannot be used'
         }
         if (!this.validatePhone(this.userProfile.phone)) {
           this.phoneErr = 'The phone number you entered is invalid'
