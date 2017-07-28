@@ -344,7 +344,7 @@
               if (this.validateEmail(this.userProfile.email) &&
                 this.validatePhone(this.userProfile.phone) &&
                 this.validateZip(this.userProfile.zipcode)) {
-                this.error = 'This email is already registered'
+                this.emailErr = 'This email is already registered'
                 this.isError = true
               } else {
                 this.isError = true
