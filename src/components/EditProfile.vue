@@ -388,8 +388,8 @@
         // }
         // Make API call to update the user info and refresh data on front-end
         Promise.all(promises).then(res => {
-          this.cloneUserProfile.url = null
-          this.updateUser.url = null
+          this.cloneUserProfile.postUrl = null
+          this.updateUser.postUrl = null
           if (this.isError === false) {
             this.getProfile()
               .then(res => {
