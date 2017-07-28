@@ -189,7 +189,7 @@
         this.$router.push('/viewProfile/' + this.getCurrentUser)
         this.show = false
       },
-      // Verfies that the email entered is entered in a valid format
+      // Verifies that the email entered is entered in a valid format
       validateEmail (email) {
         if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
           return true
