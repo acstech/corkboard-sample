@@ -249,11 +249,11 @@
   .circular-loader {
     -webkit-animation: rotate 2s linear infinite;
     animation: rotate 2s linear infinite;
-    height: 200px;
+    height: 100px;
     -webkit-transform-origin: center center;
     -ms-transform-origin: center center;
     transform-origin: center center;
-    width: 200px;
+    width: 100px;
     margin-top: 50px;
   }
 
